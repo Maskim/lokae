@@ -22,32 +22,14 @@ class The7_Theme_Support {
 	}
 
 	public function overwrite_config_base_init() {
-		$footer_source = 'the7';
-		$show_footer = true;
-		$document = The7_Elementor_Compatibility::get_frontend_document();
-		$main_post_id = self::config_page_id_filter( get_the_ID() );
-
 		$header_id = The7_Elementor_Compatibility::get_document_id_for_location( 'header' );
 		if ( $header_id ) {
-			add_filter( 'presscore_show_header', [ $this, 'do_header' ], 0 );
+			presscore_config_populate_header_options( $header_id );
+			add_filter( 'presscore_before_main_container', [ $this, 'do_header' ], 17 );
 		}
 
 		$footer_id = The7_Elementor_Compatibility::get_document_id_for_location( 'footer' );
 		if ( $footer_id ) {
-			$footer_source = 'elementor';
-		}
-		if ( $document && ! ( $document instanceof Footer ) ) {
-			//always use elementor footer source for elementor footers
-		if ( metadata_exists( 'post', $main_post_id, '_dt_footer_elementor_source' ) ) {
-			$footer_source = get_post_meta( $main_post_id, '_dt_footer_elementor_source', true );
-		}
-
-		if ( metadata_exists( 'post', $main_post_id, '_dt_footer_show' ) ) {
-			$show_footer = get_post_meta( $main_post_id, '_dt_footer_show', true );
-		}
-		}
-
-		if ( $show_footer && $footer_source === 'elementor' ) { //use elementor footer
 			presscore_config()->set( 'template.bottom_bar.enabled', false );
 			add_filter( 'presscore_replace_footer', '__return_true' );
 			add_action( 'presscore_before_footer_widgets', [ $this, 'do_footer' ], 0 );
@@ -61,8 +43,6 @@ class The7_Theme_Support {
 
 	public function do_header() {
 		elementor_theme_do_location( 'header' );
-
-		return false; //return false to disable header
 	}
 
 	public function do_footer() {

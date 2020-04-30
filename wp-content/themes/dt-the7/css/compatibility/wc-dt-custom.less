@@ -4294,6 +4294,12 @@ form.cart:after {
 					}
 				}
 			}
+			.plus-border (@a) when (@a > 0) {
+				border-left: none !important;
+			}
+			.minus-border (@a) when (@a > 0) {
+				border-right: none !important;
+			}
 			.quantity {
 				.woocommerce-cart-wrap &,
 				.woocommerce-variation-add-to-cart &,
@@ -4315,10 +4321,10 @@ form.cart:after {
 					    box-shadow: none !important;
 					}
 					& .plus {
-						border-left: none !important;
+						.plus-border (@right-input-border-width);
 					}
 					& .minus {
-						border-right: none !important;
+						.minus-border (@left-input-border-width);
 					}
 			    }
 			}

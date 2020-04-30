@@ -486,7 +486,7 @@ if ( ! function_exists( 'presscore_body_class' ) ) :
 				unset( $classes['header_background'] );
 
 			}
-		} elseif ( is_single() && 'disabled' === $config->get( 'header_title' ) ) {
+		} elseif ( 'disabled' === $config->get( 'header_title' ) ) {
 			$classes[] = 'title-off';
 
 		}

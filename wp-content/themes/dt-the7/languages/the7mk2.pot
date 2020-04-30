@@ -2,9 +2,9 @@
 # This file is distributed under the This WordPress theme is comprised of two parts: (1) The PHP code and integrated HTML are licensed under the GPL license as is WordPress itself.  You will find a copy of the license text in the same directory as this text file. Or you can read it here: http://wordpress.org/about/gpl/ (2) All other parts of the theme including, but not limited to the CSS code, images, and design are licensed according to the license purchased. Read about licensing details here: http://themeforest.net/licenses/regular_extended.=!>
 msgid ""
 msgstr ""
-"Project-Id-Version: The7 8.6.0\n"
+"Project-Id-Version: The7 8.7.1\n"
 "Report-Msgid-Bugs-To: https://support.dream-theme.com/\n"
-"POT-Creation-Date: 2020-04-30 07:41:22+00:00\n"
+"POT-Creation-Date: 2020-04-30 07:25:45+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -131,6 +131,30 @@ msgstr ""
 
 #: footer.php:40
 msgid "Go to Top"
+msgstr ""
+
+#: footer.php:57
+msgid "Close (Esc)"
+msgstr ""
+
+#: footer.php:58
+msgid "Share"
+msgstr ""
+
+#: footer.php:59
+msgid "Toggle fullscreen"
+msgstr ""
+
+#: footer.php:60
+msgid "Zoom in/out"
+msgstr ""
+
+#: footer.php:72
+msgid "Previous (arrow left)"
+msgstr ""
+
+#: footer.php:74
+msgid "Next (arrow right)"
 msgstr ""
 
 #: header-single.php:41
@@ -756,7 +780,7 @@ msgstr ""
 #: inc/admin/screens/the7-status.php:316
 msgid ""
 "<span class=\"error\">No</span><br> Seems that your server is blocking "
-"connections to your own site. It may brake theme db update process and lead "
+"connections to your own site. It may break theme db update process and lead "
 "to style corruption. Please, make sure that remote requests to %s are not "
 "blocked."
 msgstr ""
@@ -1538,10 +1562,10 @@ msgid "Other"
 msgstr ""
 
 #: inc/helpers.php:450
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2516
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2556
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2050
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2104
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2522
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2562
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2056
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2110
 msgid "Post image"
 msgstr ""
 
@@ -1593,7 +1617,21 @@ msgstr ""
 msgid "The7 Icons"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:362
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:361
+msgid "side"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:364
+msgid "side line"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:381
+msgid ""
+"A %s header is being used. “Transparent” and “below the slideshow” options "
+"will not affect it"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:422
 msgid ""
 "A <a href=\"%s\" target=\"_blank\">page template</a> is being applied to "
 "this page. To edit individual page settings, please exclude this page from "
@@ -1601,11 +1639,26 @@ msgid ""
 "\"Default\"."
 msgstr ""
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:383
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:443
 msgid ""
 "A <a href=\"%s\" target=\"_blank\">page template</a> is being applied to "
 "this page. However, it will not take effect unless you change the Page "
 "Layout to \"Default\"."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:470
+msgid ""
+"A <a href=\"%1$s\" target=\"_blank\">%2$s template</a>  is being applied to "
+"this page. To edit individual %2$s settings, please exclude this page from "
+"template display conditions."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:478
+msgid "header"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:497
+msgid "footer"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/class-the7-elementor-schemes-manager-control.php:117
@@ -1618,7 +1671,7 @@ msgid ""
 "and force Elementor to use presets from The7 theme options."
 msgstr ""
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-widgets.php:81
+#: inc/mods/compatibility/elementor/class-the7-elementor-widgets.php:103
 msgid "The7 elements"
 msgstr ""
 
@@ -1626,18 +1679,22 @@ msgstr ""
 msgid "Archive (current query)"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:19
-#: inc/mods/compatibility/elementor/page-settings/footer.php:18
+#: inc/mods/compatibility/elementor/elementor-functions.php:34
+msgid ""
+"The corresponding post type is disabled. Please make sure to 1) install "
+"The7 Elements plugin under The7 > Plugins and 2) enable desired post types "
+"under The7 > My The7, in the Settings section."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/page-settings/footer.php:19
 msgid "Footer settings"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:61
-#: inc/mods/compatibility/elementor/page-settings/footer.php:28
+#: inc/mods/compatibility/elementor/page-settings/footer.php:61
 msgid "Footer"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:65
-#: inc/mods/compatibility/elementor/page-settings/footer.php:32
+#: inc/mods/compatibility/elementor/page-settings/footer.php:65
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:15
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:15
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:15
@@ -1645,21 +1702,11 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:66
-#: inc/mods/compatibility/elementor/page-settings/footer.php:33
+#: inc/mods/compatibility/elementor/page-settings/footer.php:66
 msgid "Hide"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:75
-msgid "Footer source"
-msgstr ""
-
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:80
-msgid "Elementor"
-msgstr ""
-
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:92
-#: inc/mods/compatibility/elementor/page-settings/footer.php:42
+#: inc/mods/compatibility/elementor/page-settings/footer.php:75
 msgid "Footer widget area"
 msgstr ""
 
@@ -1691,27 +1738,27 @@ msgstr ""
 msgid "Left padding"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:19
-msgid "Page header settings"
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:17
+msgid "none"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:61
-msgid "Page title"
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:29
+msgid "Slider Revolution"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:65
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:41
+msgid "LayerSlider"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:46
 msgid "Show page title"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:66
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:47
 msgid "Hide page title"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:67
-msgid "Fancy title"
-msgstr ""
-
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:68
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:50
 #: inc/shortcodes/vc-bridges/the7-blog-scroller-old-bridge.php:180
 #: inc/shortcodes/vc-bridges/the7-blog-scroller-old-bridge.php:193
 #: inc/shortcodes/vc-bridges/the7-blog-scroller-old-bridge.php:212
@@ -1719,13 +1766,43 @@ msgstr ""
 msgid "Slideshow"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:78
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:163
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:55
+msgid "Page header settings"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:97
+msgid "Page title"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:107
+msgid "Slideshow options"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:118
+msgid "Slideshow type"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:131
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:144
+msgid "Choose slider"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:157
+msgid "Enable slideshow background and paddings"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:171
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:266
+msgid "Header options"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:183
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:292
 msgid "Header style"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:82
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:167
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:187
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:296
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1277
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1331
 #: inc/shortcodes/vc-bridges/the7-default-button-bridge.php:160
@@ -1738,37 +1815,37 @@ msgstr ""
 msgid "Normal"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:83
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:168
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:188
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:297
 msgid "Transparent"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:94
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:191
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:198
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:307
 msgid "Color scheme"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:98
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:195
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:202
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:311
 msgid "From options"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:99
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:196
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:203
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:312
 msgid "Light"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:123
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:220
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:227
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:336
 msgid "Top bar color"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:148
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:245
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:252
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:361
 msgid "Transparent background color"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:179
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:278
 msgid "Show header below slideshow"
 msgstr ""
 
@@ -1781,10 +1858,12 @@ msgid "Sidebar position"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/page-settings/sidebar.php:64
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:107
 msgid "Left"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/page-settings/sidebar.php:65
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:115
 msgid "Right"
 msgstr ""
 
@@ -1828,6 +1907,30 @@ msgstr ""
 msgid "Accent"
 msgstr ""
 
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:61
+msgid "Button background normal"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:62
+msgid "Button background hover"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:63
+msgid "Button text normal"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:64
+msgid "Button text hover"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:65
+msgid "Button border normal"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:66
+msgid "Button border hover"
+msgstr ""
+
 #: inc/mods/compatibility/elementor/schemes/class-the7-elementor-color-scheme.php:48
 msgid "The7 palette"
 msgstr ""
@@ -1849,6 +1952,60 @@ msgstr ""
 
 #: inc/mods/compatibility/elementor/schemes/class-the7-elementor-typography-scheme.php:65
 msgid "Elementor uses The7 fonts"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:24
+msgid "The7 Breadcrumbs"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:44
+#: inc/shortcodes/js_composer_bridge.php:145
+#: inc/shortcodes/js_composer_bridge.php:189
+#: inc/shortcodes/js_composer_bridge.php:205
+#: inc/shortcodes/js_composer_bridge.php:377
+#: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:125
+#: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:82
+#: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:109
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:69
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:81
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:84
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:96
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:116
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:128
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:149
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:161
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:174
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:186
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:199
+#: inc/shortcodes/vc-bridges/the7-call-to-action-bridge.php:38
+#: inc/shortcodes/vc-bridges/the7-teaser-bridge.php:249
+msgid "Style"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:51
+msgid "Separator Between"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:62
+msgid "Separator Color"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:73
+msgid "Text Color"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:84
+msgid "Link Color"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:103
+#: inc/shortcodes/vc-bridges/the7-breadcrumbs-bridge.php:105
+#: inc/shortcodes/vc-bridges/the7-social-icons-bridge.php:20
+msgid "Alignment"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:111
+msgid "Center"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:40
@@ -3379,8 +3536,8 @@ msgstr ""
 msgid "Bullets Position"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2480
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2007
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2486
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2013
 msgid "Details link"
 msgstr ""
 
@@ -4792,29 +4949,6 @@ msgstr ""
 msgid "Title size"
 msgstr ""
 
-#: inc/shortcodes/js_composer_bridge.php:145
-#: inc/shortcodes/js_composer_bridge.php:189
-#: inc/shortcodes/js_composer_bridge.php:205
-#: inc/shortcodes/js_composer_bridge.php:377
-#: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:125
-#: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:82
-#: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:109
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:69
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:81
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:84
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:96
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:116
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:128
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:149
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:161
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:174
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:186
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:199
-#: inc/shortcodes/vc-bridges/the7-call-to-action-bridge.php:38
-#: inc/shortcodes/vc-bridges/the7-teaser-bridge.php:249
-msgid "Style"
-msgstr ""
-
 #: inc/shortcodes/js_composer_bridge.php:161
 msgid "Tour"
 msgstr ""
@@ -5907,11 +6041,6 @@ msgstr ""
 
 #: inc/shortcodes/vc-bridges/the7-breadcrumbs-bridge.php:99
 msgid "Position"
-msgstr ""
-
-#: inc/shortcodes/vc-bridges/the7-breadcrumbs-bridge.php:105
-#: inc/shortcodes/vc-bridges/the7-social-icons-bridge.php:20
-msgid "Alignment"
 msgstr ""
 
 #: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:7

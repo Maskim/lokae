@@ -316,10 +316,12 @@ endif;
 
 if ( ! function_exists( 'presscore_config_populate_header_options' ) ) :
 
-	function presscore_config_populate_header_options() {
+	function presscore_config_populate_header_options( $post_id = null) {
 
 		$config = Presscore_Config::get_instance();
-		$post_id = $config->get( 'post_id' );
+		if (! $post_id ) {
+			$post_id = $config->get( 'post_id' );
+		}
 
 		///////////////////////
 		// Header settings //

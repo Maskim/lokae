@@ -26,3 +26,10 @@ function the7_elementor_elements_widget_post_types() {
 
 	return $supported_post_types;
 }
+
+/**
+ * @return string
+ */
+function the7_elementor_get_message_about_disabled_post_type() {
+	return '<p>' . esc_html__( 'The corresponding post type is disabled. Please make sure to 1) install The7 Elements plugin under The7 > Plugins and 2) enable desired post types under The7 > My The7, in the Settings section.', 'the7mk2' ) . '</p>';
+}

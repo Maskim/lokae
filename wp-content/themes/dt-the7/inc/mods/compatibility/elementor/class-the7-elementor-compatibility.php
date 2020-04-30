@@ -1,9 +1,10 @@
 <?php
 /**
  * The7 Elementor plugin compatibility class.
- * @since 7.7.0
+ * @since   7.7.0
  * @package The7
  */
+
 
 use The7\Adapters\Elementor\The7_Elementor_Page_Settings;
 use The7\Adapters\Elementor\The7_Elementor_Widgets;
@@ -21,10 +22,11 @@ defined( 'ABSPATH' ) || exit;
  * Class The7_Elementor_Compatibility
  */
 class The7_Elementor_Compatibility {
+
 	/**
 	 * Instance.
 	 * Holds the plugin instance.
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 * @access public
 	 * @static
 	 * @var Plugin
@@ -38,6 +40,7 @@ class The7_Elementor_Compatibility {
 	public $theme_builder_adapter;
 	public $kit_manager_control;
 	public $scheme_manager_control;
+
 	/**
 	 * Bootstrap module.
 	 */
@@ -91,7 +94,7 @@ class The7_Elementor_Compatibility {
 	/**
 	 * Instance.
 	 * Ensures only one instance of the plugin class is loaded or can be loaded.
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 * @access public
 	 * @static
 	 * @return Plugin An instance of the class.
