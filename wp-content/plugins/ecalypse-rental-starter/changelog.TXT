@@ -1,0 +1,9 @@
+// Ecalypse Rental Starter WP Plugin - change log // 
+
+== 2018-07-31 ==
+v 4.0.7
+- fixed book now button bug
+
+== 2017-10-23 ==
+v 4.0
+- first version of the free version of the plugin
