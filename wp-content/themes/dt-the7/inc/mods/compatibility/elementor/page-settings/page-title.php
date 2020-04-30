@@ -12,7 +12,43 @@ use The7_Elementor_Compatibility;
 defined( 'ABSPATH' ) || exit;
 
 $template_option_name = The7_Elementor_Compatibility::instance()->page_settings->template_option_name;
-$template_condition   = [ PageTemplatesModule::TEMPLATE_CANVAS ];
+$template_condition = [ PageTemplatesModule::TEMPLATE_CANVAS ];
+
+$rev_sliders = $layer_sliders = array( 'none' => __( 'none', 'the7mk2' ) );
+$slideshow_mode_options = array();
+
+if ( class_exists( 'RevSlider' ) ) {
+
+	$rev = new \RevSlider();
+
+	$arrSliders = $rev->getArrSliders();
+	foreach ( (array) $arrSliders as $revSlider ) {
+		$rev_sliders[ $revSlider->getAlias() ] = $revSlider->getTitle();
+	}
+
+	$slideshow_mode_options['revolution'] = array( __( 'Slider Revolution', 'the7mk2' ) );
+}
+
+if ( function_exists( 'lsSliders' ) ) {
+
+	$layerSliders = lsSliders( 9999 );
+
+	foreach ( $layerSliders as $lSlide ) {
+
+		$layer_sliders[ $lSlide['id'] ] = $lSlide['name'];
+	}
+
+	$slideshow_mode_options['layer'] = array( __( 'LayerSlider', 'the7mk2' ) );
+}
+reset( $slideshow_mode_options );
+
+$title_options = [
+	'enabled'  => __( 'Show page title', 'the7mk2' ),
+	'disabled' => __( 'Hide page title', 'the7mk2' ),
+];
+if ( ! empty( $slideshow_mode_options ) ) {
+	$title_options['slideshow'] = __( 'Slideshow', 'the7mk2' );
+}
 
 return [
 	'args'     => [
@@ -55,23 +91,92 @@ return [
 		],
 	],
 	'controls' => [
-		'the7_document_title'                            => [
+		'the7_document_title'                  => [
 			'meta' => '_dt_header_title',
 			'args' => [
 				'label'     => __( 'Page title', 'the7mk2' ),
 				'type'      => Controls_Manager::SELECT,
 				'default'   => 'enabled',
-				'options'   => [
-					'enabled'   => __( 'Show page title', 'the7mk2' ),
-					'disabled'  => __( 'Hide page title', 'the7mk2' ),
-					'fancy'     => __( 'Fancy title', 'the7mk2' ),
-					'slideshow' => __( 'Slideshow', 'the7mk2' ),
-				],
+				'options'   => $title_options,
 				'separator' => 'none',
+			],
+		],
+		//slider options
+		'the7_document_slideshow_mode_heading' => [
+			'args' => [
+				'label'     => __( 'Slideshow options', 'the7mk2' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [
+					'the7_document_title' => 'slideshow',
+				],
+			],
+		],
+		'the7_document_slideshow_mode'         => [
+			'meta' => '_dt_slideshow_mode',
+			'args' => [
+				'label'     => __( 'Slideshow type', 'the7mk2' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => key( $slideshow_mode_options ),
+				'options'   => $slideshow_mode_options,
+				'condition' => [
+					'the7_document_title' => 'slideshow',
+				],
+			],
+		],
+
+		'the7_document_slideshow_revolution_slider'          => [
+			'meta' => '_dt_slideshow_revolution_slider',
+			'args' => [
+				'label'     => __( 'Choose slider', 'the7mk2' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => 'none',
+				'options'   => $rev_sliders,
+				'condition' => [
+					'the7_document_title'          => 'slideshow',
+					'the7_document_slideshow_mode' => 'revolution',
+				],
+			],
+		],
+		'the7_document_slideshow_layer_slider'               => [
+			'meta' => '_dt_slideshow_layer_slider',
+			'args' => [
+				'label'     => __( 'Choose slider', 'the7mk2' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => 'none',
+				'options'   => $layer_sliders,
+				'condition' => [
+					'the7_document_title'          => 'slideshow',
+					'the7_document_slideshow_mode' => 'layer',
+				],
+			],
+		],
+		'the7_document_slideshow_layer_show_bg_and_paddings' => [
+			'meta' => '_dt_header_layer_show_bg_and_paddings',
+			'args' => [
+				'label'        => __( 'Enable slideshow background and paddings', 'the7mk2' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'enabled',
+				'default'      => '',
+				'condition'    => [
+					'the7_document_title'          => 'slideshow',
+					'the7_document_slideshow_mode' => 'layer',
+				],
 			],
 		],
 
 		// Disabled page title.
+		'the7_document_disabled_header_heading'              => [
+			'args' => [
+				'label'     => __( 'Header options', 'the7mk2' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [
+					'the7_document_title' => 'disabled',
+				],
+			],
+		],
+
 		'the7_document_disabled_header_style'            => [
 			'meta' => '_dt_header_disabled_background',
 			'args' => [
@@ -82,7 +187,6 @@ return [
 					'normal'      => __( 'Normal', 'the7mk2' ),
 					'transparent' => __( 'Transparent', 'the7mk2' ),
 				],
-				'separator' => 'none',
 				'condition' => [
 					'the7_document_title' => 'disabled',
 				],
@@ -157,23 +261,18 @@ return [
 		],
 
 		// Fancy titles and slideshow.
-		'the7_document_fancy_header_style'               => [
-			'meta' => '_dt_header_background',
+		'the7_document_header_heading'       => [
 			'args' => [
-				'label'     => __( 'Header style', 'the7mk2' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'normal',
-				'options'   => [
-					'normal'      => __( 'Normal', 'the7mk2' ),
-					'transparent' => __( 'Transparent', 'the7mk2' ),
-				],
-				'separator' => 'none',
+				'label'     => __( 'Header options', 'the7mk2' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
 				'condition' => [
-					'the7_document_title' => [ 'fancy', 'slideshow' ],
+					'the7_document_title' => [ 'slideshow' ],
 				],
 			],
 		],
-		'the7_document__background_below_slideshow'      => [
+
+		'the7_document__background_below_slideshow' => [
 			'meta' => '_dt_header_background_below_slideshow',
 			'args' => [
 				'label'        => __( 'Show header below slideshow', 'the7mk2' ),
@@ -185,7 +284,24 @@ return [
 				],
 			],
 		],
-		'the7_document_fancy_header_color_scheme'        => [
+
+
+		'the7_document_fancy_header_style'            => [
+			'meta' => '_dt_header_background',
+			'args' => [
+				'label'     => __( 'Header style', 'the7mk2' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => 'normal',
+				'options'   => [
+					'normal'      => __( 'Normal', 'the7mk2' ),
+					'transparent' => __( 'Transparent', 'the7mk2' ),
+				],
+				'condition' => [
+					'the7_document_title' => [ 'slideshow' ],
+				],
+			],
+		],
+		'the7_document_fancy_header_color_scheme'     => [
 			'meta' => '_dt_header_transparent_bg_color_scheme',
 			'args' => [
 				'label'     => __( 'Color scheme', 'the7mk2' ),
@@ -197,12 +313,12 @@ return [
 				],
 				'separator' => 'none',
 				'condition' => [
-					'the7_document_title'              => [ 'fancy', 'slideshow' ],
+					'the7_document_title'              => [ 'slideshow' ],
 					'the7_document_fancy_header_style' => 'transparent',
 				],
 			],
 		],
-		'the7_document_fancy_header_top_bar_color'       => [
+		'the7_document_fancy_header_top_bar_color'    => [
 			'meta'      => [
 				'color'   => '_dt_header_transparent_top_bar_bg_color',
 				'opacity' => '_dt_header_transparent_top_bar_bg_opacity',
@@ -222,12 +338,12 @@ return [
 				'default'   => 'rgba(255,255,255,0.25)',
 				'separator' => 'none',
 				'condition' => [
-					'the7_document_title'              => [ 'fancy', 'slideshow' ],
+					'the7_document_title'              => [ 'slideshow' ],
 					'the7_document_fancy_header_style' => 'transparent',
 				],
 			],
 		],
-		'the7_document_fancy_header_backgraund_color'    => [
+		'the7_document_fancy_header_backgraund_color' => [
 			'meta'      => [
 				'color'   => '_dt_header_transparent_bg_color',
 				'opacity' => '_dt_header_transparent_bg_opacity',
@@ -247,7 +363,7 @@ return [
 				'default'   => 'rgba(0,0,0,0.5)',
 				'separator' => 'none',
 				'condition' => [
-					'the7_document_title'              => [ 'fancy', 'slideshow' ],
+					'the7_document_title'              => [ 'slideshow' ],
 					'the7_document_fancy_header_style' => 'transparent',
 				],
 			],

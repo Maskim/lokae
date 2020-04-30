@@ -796,7 +796,7 @@ class The7_Elementor_Elements_Widget extends The7_Elementor_Widget_Base {
 			[
 				'name'           => 'post_title',
 				'label'          => __( 'Typography', 'the7mk2' ),
-				'selector'       => '{{WRAPPER}} .entry-title a',
+				'selector'       => '{{WRAPPER}} .entry-title',
 				'fields_options' => [
 					'font_family' => [
 						'default' => '',
@@ -930,7 +930,7 @@ class The7_Elementor_Elements_Widget extends The7_Elementor_Widget_Base {
 						],
 					],
 				],
-				'selector'       => '{{WRAPPER}} .entry-meta > a, {{WRAPPER}} .entry-meta > span, {{WRAPPER}} .entry-meta span a',
+				'selector'       => '{{WRAPPER}} .entry-meta, {{WRAPPER}} .entry-meta > span, {{WRAPPER}} .entry-meta',
 			]
 		);
 
@@ -1897,10 +1897,16 @@ class The7_Elementor_Elements_Widget extends The7_Elementor_Widget_Base {
 	 * Render widget.
 	 */
 	protected function render() {
+		$settings = $this->get_settings_for_display();
+
+		if ( $settings['post_type'] !== 'current_query' && ! post_type_exists( $settings['post_type'] ) ) {
+			echo the7_elementor_get_message_about_disabled_post_type();
+
+			return;
+		}
+
 		$has_img_preload_me_filter = has_filter( 'dt_get_thumb_img-args', 'presscore_add_preload_me_class_to_images' );
 		remove_filter( 'dt_get_thumb_img-args', 'presscore_add_preload_me_class_to_images' );
-
-		$settings = $this->get_settings_for_display();
 
 		$this->print_inline_css();
 
@@ -2316,8 +2322,8 @@ class The7_Elementor_Elements_Widget extends The7_Elementor_Widget_Base {
 		}
 
 		if ( $settings['show_categories_filter'] ) {
-			$terms = (array) get_the_terms( $post->ID, $settings['taxonomy'] );
-			if ( $terms ) {
+			$terms = get_the_terms( $post->ID, $settings['taxonomy'] );
+			if ( is_array( $terms ) ) {
 				foreach ( $terms as $term ) {
 					$class[] = sanitize_html_class( 'category-' . $term->term_id );
 				}

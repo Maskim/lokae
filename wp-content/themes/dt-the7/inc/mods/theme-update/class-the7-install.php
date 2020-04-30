@@ -178,6 +178,10 @@ class The7_Install {
 		'8.6.0' => array(
 			'the7_update_860_db_version',
 		),
+		'8.7.0' => array(
+			'the7_update_purge_elementor_cache',
+			'the7_update_870_db_version',
+		),
 	);
 
     public static function init() {

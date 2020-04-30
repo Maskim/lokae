@@ -224,6 +224,13 @@
 .portfolio-shortcode .entry-excerpt {
   overflow: hidden;
 }
+.elementor-element .entry-title a,
+.elementor-element .entry-meta > a,
+.elementor-element .entry-meta > span,
+.elementor-element .portfolio-categories > a,
+.elementor-element .portfolio-categories > span {
+  text-decoration: inherit;
+}
 .portfolio-shortcode .post-entry-content .entry-title a,
 .portfolio-shortcode .post-entry-title-content .entry-title a {
   transition: color 0.35s;
@@ -243,10 +250,6 @@
 .portfolio-shortcode .entry-meta > span a,
 .albums-shortcode .entry-meta > span a {
   display: inline-block;
-}
-.portfolio-shortcode .entry-meta a:hover,
-.albums-shortcode .entry-meta a:hover {
-  text-decoration: underline;
 }
 .portfolio-shortcode .entry-meta *,
 .albums-shortcode .entry-meta * {

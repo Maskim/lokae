@@ -243,6 +243,16 @@ article.is-clicked .post-thumbnail:not(.overlay-placeholder) > .post-thumbnail-r
   }
 }
 
+.elementor-element {
+  .entry-title a,
+  .entry-meta > a,
+  .entry-meta > span,
+  .portfolio-categories > a,
+  .portfolio-categories > span {
+    text-decoration: inherit;
+  }
+}
+
 .post-entry-content .entry-title a,
 .post-entry-title-content .entry-title a {
   .portfolio-shortcode & {
@@ -262,9 +272,6 @@ article.is-clicked .post-thumbnail:not(.overlay-placeholder) > .post-thumbnail-r
     }
     & > span a {
       display: inline-block;
-    }
-    & a:hover {
-      text-decoration: underline;
     }
   }
 }

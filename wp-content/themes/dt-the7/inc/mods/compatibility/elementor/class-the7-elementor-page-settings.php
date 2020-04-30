@@ -9,6 +9,7 @@ namespace The7\Adapters\Elementor;
 use Elementor\Controls_Manager;
 use Elementor\Plugin;
 use ElementorPro\Modules\ThemeBuilder\Documents\Theme_Page_Document;
+use The7\Adapters\Elementor\Pro\ThemeSupport\The7_Theme_Support;
 use The7_Elementor_Compatibility;
 
 defined( 'ABSPATH' ) || exit;
@@ -38,6 +39,7 @@ class The7_Elementor_Page_Settings {
 
 		$this->maybe_override_post_meta( The7_Elementor_Compatibility::get_frontend_document() );
 		$this->maybe_override_post_meta( The7_Elementor_Compatibility::get_document_applied_for_location( 'footer' ) );
+		$this->maybe_override_post_meta( The7_Elementor_Compatibility::get_document_applied_for_location( 'header' ) );
 	}
 
 	/**
@@ -112,7 +114,11 @@ class The7_Elementor_Page_Settings {
 				}
 
 				if ( isset( $control['meta'] ) && $this->metadata_exists( $post_id, $control['meta'] ) ) {
-					$page_settings[ $control_id ] = $document->get_meta( $control['meta'], true );
+					$is_single = true;
+					if ( isset( $control['args']['multiple'] ) ) {
+						$is_single = ! $control['args']['multiple'];
+					}
+					$page_settings[ $control_id ] = get_post_meta( $post_id, $control['meta'], $is_single );
 				}
 			}
 
@@ -135,6 +141,8 @@ class The7_Elementor_Page_Settings {
 
 		$controls = $this->get_sections_controls( $this->get_sections( $document ) );
 
+		$post = $document->get_post();
+		$post_id = $post->ID;
 		foreach ( $controls as $control_id => $control ) {
 			$val = isset( $control['args']['default'] ) ? $control['args']['default'] : '';
 			if ( isset( $data['settings'][ $control_id ] ) ) {
@@ -151,12 +159,23 @@ class The7_Elementor_Page_Settings {
 			}
 
 			if ( isset( $control['meta'] ) && is_string( $control['meta'] ) ) {
-				$document->update_meta( $control['meta'], $val );
+				if ( isset( $control['args']['multiple'] ) && $control['args']['multiple'] ) {
+					$old = get_post_meta( $post_id, $control['meta'], false );
+					foreach ( $val as $new_value ) {
+						if ( ! in_array( $new_value, $old ) ) {
+							add_metadata( 'post', $post_id, $control['meta'], $new_value, false );
+						}
+					}
+					foreach ( $old as $old_value ) {
+						if ( ! in_array( $old_value, $val ) ) {
+							delete_metadata( "post", $post_id, $control['meta'], $old_value );
+						}
+					}
+				} else {
+					$document->update_meta( $control['meta'], $val );
+				}
 			}
 		}
-
-		$post = $document->get_post();
-		$post_id = $post->ID;
 
 		// Fill revision meta fields from the main post.
 		if ( $post->post_type === 'revision' ) {
@@ -212,7 +231,7 @@ class The7_Elementor_Page_Settings {
 	protected function get_sections( $document ) {
 		$sections_definition = [
 			'the7_document_title_section' => [
-				'exclude_documents' => [ 'footer', 'header', 'section' ],
+				'exclude_documents' => [ 'footer', 'section' ],
 				'file'              => 'page-title.php',
 			],
 			'the7_document_sidebar'       => [
@@ -228,9 +247,6 @@ class The7_Elementor_Page_Settings {
 				'file'              => 'paddings.php',
 			],
 		];
-		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
-			$sections_definition['the7_document_footer']['file'] = 'footer-pro.php';
-		}
 
 		$sections = [];
 
@@ -333,12 +349,51 @@ class The7_Elementor_Page_Settings {
 	}
 
 	protected function inject_template_notices_in_document( $document ) {
-		$not_allowed_documents = [ 'footer', 'header', 'section', 'archive'];
-		if ( !$document || in_array( $document->get_name(), $not_allowed_documents, true ) ) {
+		if ( ! $document ) {
 			return;
 		}
-
+		$not_allowed_documents = [ 'footer', 'section', 'widget' ];
+		if ( ! in_array( $document->get_name(), $not_allowed_documents, true ) ) {
+			$header_layout = of_get_option( 'header-layout' );
+			if ( $header_layout == 'side' || $header_layout == 'side_line' ) {
+				$header_name = '';
+				if ( $header_layout == 'side' ){
+					$header_name =  __( 'side', 'the7mk2' );
+				}
+				else if ($header_layout == 'side_line') {
+					$header_name = __( 'side line', 'the7mk2' );
+				}
+				$elements = [
+					"the7_document_disabled_header_heading" => [
+						'the7_document_title' => [ 'disabled' ],
+					],
+					"the7_document_header_heading"          => [
+						'the7_document_title' => [ 'slideshow' ],
+					],
+				];
+				foreach ( $elements as $key => $val ) {
+					$document->start_injection( [
+						'of' => $key,
+						'at' => 'after',
+					] );
+					$document->add_control( $key . '_transparent_header_restriction_message', [
+						'type'            => Controls_Manager::RAW_HTML,
+						'raw'             => sprintf( __( 'A %s header is being used. “Transparent” and “below the slideshow” options will not affect it', 'the7mk2' ), $header_name ),
+						'separator'       => 'none',
+						'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
+						'condition'       => $val,
+					] );
+					$document->end_injection();
+				}
+			}
+		}
+		$not_allowed_documents = [ 'footer', 'header', 'section', 'archive', 'widget' ];
+		if ( in_array( $document->get_name(), $not_allowed_documents, true ) ) {
+			return;
+		}
 		$applied_archive_template_id = '';
+		$applied_header_template_id = '';
+		$applied_footer_template_id = '';
 		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
 			//check if archive applied
 			$template_id = The7_Elementor_Compatibility::get_applied_archive_page_id( $applied_archive_template_id );
@@ -349,6 +404,11 @@ class The7_Elementor_Page_Settings {
 					$applied_archive_template_id = $template_id;
 				}
 			}
+			//check if header applied
+			$applied_header_template_id = The7_Elementor_Compatibility::get_document_id_for_location( 'header', $applied_header_template_id );
+			//check if footer applied
+			$applied_footer_template_id = The7_Elementor_Compatibility::get_document_id_for_location( 'footer', $applied_footer_template_id );
+
 		}
 		$document->start_injection( [
 			'of'       => 'post_status',
@@ -407,6 +467,43 @@ class The7_Elementor_Page_Settings {
 		] );
 		$document->end_injection();
 
+		$document_template_message = __( 'A <a href="%1$s" target="_blank">%2$s template</a>  is being applied to this page. To edit individual %2$s settings, please exclude this page from template display conditions.', 'the7mk2' );
+		if ( ! empty( $applied_header_template_id ) ) {
+			$document->start_injection( [
+				'of' => 'the7_document_title',
+				'at' => 'before',
+			] );
+			$document->add_control( 'the7_document_header_template_applied_message', [
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => sprintf($document_template_message , Plugin::$instance->documents->get( $applied_header_template_id )->get_edit_url(), __( 'header', 'the7mk2' )),
+				'separator'       => 'none',
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
+			] );
+			$document->add_control( 'the7_document_header_template_applied', [
+				'type'        => Controls_Manager::HIDDEN,
+				'default'     => $applied_header_template_id,
+				'render_type' => 'none',
+			] );
+			$document->end_injection();
+		}
 
+		if ( ! empty( $applied_footer_template_id ) ) {
+			$document->start_injection( [
+				'of' => 'the7_document_show_footer_wa',
+				'at' => 'before',
+			] );
+			$document->add_control( 'the7_document_footer_template_applied_message', [
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => sprintf($document_template_message , Plugin::$instance->documents->get( $applied_footer_template_id )->get_edit_url(), __( 'footer', 'the7mk2' )),
+				'separator'       => 'none',
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
+			] );
+			$document->add_control( 'the7_document_footer_template_applied', [
+				'type'        => Controls_Manager::HIDDEN,
+				'default'     => $applied_footer_template_id,
+				'render_type' => 'none',
+			] );
+			$document->end_injection();
+		}
 	}
 }
