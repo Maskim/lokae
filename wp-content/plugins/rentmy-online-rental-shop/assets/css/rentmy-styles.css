@@ -1,0 +1,2296 @@
+/** Common CSS */
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-categories{
+    list-style: none;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-parent-category{
+    cursor: pointer;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-list-children-wrapper{
+    margin-left: 15px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rent-my-list-link .dashicons, .rentmy-parent-category .dashicons {
+    margin-left: 10px;
+    margin-top: 8px;
+    font-size: 13px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-billing .btn,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-fullfilment .btn,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment .btn,
+.rentmy-page .rentmy-plugin-manincontent .checkout-complete .btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-billing label,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-fullfilment label,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment label,
+.rentmy-page .rentmy-plugin-manincontent .checkout-complete label {
+    width: 100%;
+    color: #777 !important;
+    display: block;
+    font-weight: 500 !important;
+    margin-bottom: 0;
+    font-size: 18px !important;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .custom-control.custom-radio {
+  margin-bottom: 10px;
+}
+.rentmy-page .rentmy-plugin-manincontent .custom-control.custom-radio label {
+  line-height: 25px !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color: #333 !important;
+    background-color: #333 !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .radio-container {
+    display: inline-block;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 0;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    line-height: 20px;
+    margin-right: 10px;
+}
+.rentmy-page .rentmy-plugin-manincontent .radio-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.rentmy-page .rentmy-plugin-manincontent .radio-container .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 21px;
+    width: 21px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+.rentmy-page .rentmy-plugin-manincontent .radio-container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+.rentmy-page .rentmy-plugin-manincontent .radio-container input:checked ~ .checkmark {
+    background-color: #111;
+}
+.rentmy-page .rentmy-plugin-manincontent .radio-container .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+.rentmy-page .rentmy-plugin-manincontent .radio-container input:checked ~ .checkmark:after {
+    display: block;
+}
+.rentmy-page .rentmy-plugin-manincontent .radio-container .checkmark:after {
+    top: 7px;
+    left: 7px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: white;
+}
+.rentmy-page .rentmy-plugin-manincontent .custom-control-label::before {
+    left: 0 !important;
+    top: 0 !important;
+    border: none;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-billing input,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-billing select,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-billing textarea,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-fullfilment input,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-fullfilment select,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-fullfilment textarea,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment input,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment select,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment textarea,
+.rentmy-page .rentmy-plugin-manincontent .checkout-complete input,
+.rentmy-page .rentmy-plugin-manincontent .checkout-complete select,
+.rentmy-page .rentmy-plugin-manincontent .checkout-complete textarea {
+    background-color: #fff !important;
+    outline: none !important;
+    outline-offset: none !important;
+    height: 50px;
+    margin-bottom: 0 !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-mb-0 {
+    margin-bottom: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-mt-0 {
+    margin-top: 0;
+}
+
+
+/** Product  List*/
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid {
+    width: 330px;
+    padding: 0 15px !important;
+    text-align: center !important;
+    margin-bottom: 20px !important;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid-inner {
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    padding-bottom: 20px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid-inner:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, .3);  
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid .product-grid-img {
+    position: relative;
+    overflow: hidden;
+    height: 220px;
+    padding: 20px 0;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid .product-grid-img img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid .product-grid-img .product-overley {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid:hover .product-overley {
+    opacity: unset;
+    background-color: rgba(0, 0, 0, .3);
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid .product-overley a {
+    background-color: #fff;
+    color: #555 !important;
+    width: 90%;
+    position: absolute;
+    bottom: 10px;
+    left: 5%;
+    height: 45px;
+    line-height: 45px;
+    letter-spacing: 1px;
+    font-weight: 400 !important;
+    border-top: 1px solid #eee;
+    right: 5%;
+    border-bottom: none;
+    box-shadow: none;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid .product-overley a i {
+    font-size: 12px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid .product-grid-body {
+    padding: 0 15px;
+    border-top: 1px solid #eee;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid .product-name {
+    display: table;
+    width: 100%;
+    height: 60px;
+    padding-top: 15px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid .product-name a {
+    text-decoration: none;
+    box-shadow: none;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid h4 {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 15px !important;
+    letter-spacing: 0px !important;
+    margin-top: 20px !important;
+    font-weight: 600 !important;
+    margin-bottom: 10px;
+    line-height: 22px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid .price {
+    width: 100%;
+    font-size: 15px !important;
+    margin-bottom: 18px !important;
+    display: inline-block !important;
+    line-height: 22px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid-body .button {
+    width: 48%;
+    height: 42px;
+    background-color: #2e353b;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500 !important;
+    display: inline-block;
+    text-transform: capitalize;
+    line-height: 42px;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 3px !important;
+    letter-spacing: 0.046875em !important;
+    cursor: pointer;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid-body .button:hover {
+    background-color: #444e56 !important;
+}
+
+/** Product Details */
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .images,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .details {
+    float: left;
+    width: 50%;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .images img {
+    width: 100%;
+    border: 5px solid #f5f5f5;
+    margin-bottom: 20px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .details {
+    padding-left: 20px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .details h1 {
+    margin-top: 10px;
+    font-size: 35px !important;
+    font-weight: 500 !important;
+    margin: 0 0;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details h1:not(.site-title):before, h2:before {
+    display: none !important;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .details .buy h6,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .details .rent h6 {
+    font-size: 30px;
+    font-weight: 400;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .details .rental-type {
+    margin-bottom: 15px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .radio-container {
+    display: inline-block;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    line-height: 20px;
+    margin-right: 10px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .radio-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 21px;
+    width: 21px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .radio-container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .radio-container input:checked ~ .checkmark {
+    background-color: #111;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .radio-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .radio-container .checkmark:after {
+    top: 7px;
+    left: 7px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: white;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .price-options {
+    margin-bottom: 10px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .quantity label {
+    width: 100%;
+    display: inline-block;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .quantity input {
+    width: 100px !important;
+    display: unset !important;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .availability span {
+    font-size: 15px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .entry .entry-content p.price {
+    font-weight: 500;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .entry .entry-content p.price small {
+    font-weight: 400;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="text"],
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="email"],
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="url"],
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="password"],
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="search"],
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="number"],
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="tel"],
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="range"],
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="date"],
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="month"],
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="week"],
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="time"],
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="datetime"],
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="datetime-local"],
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="color"],
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details textarea {
+    padding: 0.10rem 0.66rem !important;
+    height: 45px;
+    font-size: 15px !important;
+    border-radius: 4px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .button,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details button,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="button"],
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="reset"],
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="submit"] {
+    line-height: 0;
+    height: 46px;
+    border-radius: 4px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .available-variations {
+    font-weight: 500 !important;
+    margin-top: 0;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .variants {
+    margin-bottom: 20px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .form-group {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .variants label {
+    width: 100%;
+    display: inline-block;
+    font-weight: 600 !important;
+    font-size: 18px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .variants select {
+    border: 1px solid #eee;
+    border-radius: 4px;
+    min-width: 100px;
+    height: 40px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    width: 100%;
+    padding: 0 5px !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-rental-daterange {
+    padding-top: 15px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .daterange {
+    margin-top: 0;
+    width: auto;
+}
+
+
+/* package details css */
+.rentmy-page .rentmy-plugin-manincontent .package-items h5 {
+    margin: 0;
+    padding: 10px 0
+}
+.rentmy-page .rentmy-plugin-manincontent .package-items ul {
+    padding-left: 0 !important;
+    margin: 0;
+    list-style: none;
+}
+.rentmy-page .rentmy-plugin-manincontent .package-items ul li h6 {
+    margin: 0;
+    padding: 5px 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .package-items select {
+    height: 45px;
+    padding: 0 15px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+
+/** Cart List */
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-table table thead,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-table table tbody,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table thead,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table tbody {
+    border-left: 1px solid #f2f3f8;
+    border-right: 1px solid #f2f3f8;
+}
+
+.rentmy-page .rentmy-plugin-manincontent rentmy-table table,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table {
+    border: 1px solid #f2f3f8;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-table th,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-table td,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form th,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form td {
+    border: none;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-table table th,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-table table td,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table td,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table th {
+    vertical-align: middle !important;
+    text-align: left;
+    border-top: 1px solid #f2f3f8;
+    padding: .75rem .95rem;
+    color: #555;
+    font-size: 15px !important;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-table table th,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table th {
+    border-bottom: 1px;
+    background-color: #f2f3f8;
+    color: #444;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table thead th:nth-of-type(1) {
+    width: 60px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-table table td img,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table td img,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table th img {
+    width: 60px;
+    padding: .25rem;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+    max-width: 100%;
+    height: auto;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-table table td p,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table td p,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table th p {
+    margin: 0 !important;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-table table td a,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table td a,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table th a {
+    color: #555;
+    box-shadow: none;
+    font-size: 20px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-table table tbody tr:last-of-type td,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table tbody tr:last-of-type td {
+    font-weight: 600;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .cart-checkout-area,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .cart-summery-area {
+    float: left;
+    width: 50%;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .cart-checkout-area {
+    padding-right: 10px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .cart-total-title {
+    background-color: #f2f3f8;
+    padding: 10px 15px 8px;
+    margin-bottom: 0 !important;
+    margin-top: 0;
+    font-size: 22px !important;
+    text-transform: capitalize;
+    color: #111;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .size,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .quantity {
+    width: 100%;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .btn-dark {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border-radius: 0 !important;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .btn-group-sm > .btn, 
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .btn-sm {
+    padding: 3px 6px !important;
+    font-size: 10px!important;
+    line-height: 1.5;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .quantity .cart-qunt {
+    width: 30px !important;
+    border: 1px solid;
+    cursor: initial;
+    border-radius: 0px;
+    margin-left: -5px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .product-quantity {
+    width: 110px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .cart-plus {
+    margin-left: -5px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .coupon-code {
+    margin-bottom: 20px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .coupon-code input {
+    display: inline-block;
+    width: 180px;
+    font-size: 12px;
+    height: 40px;
+    color: #888;
+    padding-left: 15px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .coupon-code a {
+    display: inline-block;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .cart-checkout-area a {
+    height: 42px !important;
+    background-color: #2e353b;
+    color: #fff;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    display: inline-block;
+    text-transform: capitalize;
+    line-height: 42px !important;
+    padding: 0 15px !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 3px !important;
+    letter-spacing: 0.046875em !important;
+    cursor: pointer;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .cart-checkout-area a:hover {
+    color: #eee !important;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .coupon-btn,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .continue-btn {
+    float: right;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .remove {
+    background-color: transparent !important;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .checkout-button:after {
+    display: none;
+}
+
+@media (max-width: 1299px) {
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .cart-checkout-area {
+        width: 58%;
+    }
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .cart-summery-area {
+        width: 42%;
+    }
+
+}
+@media (max-width: 867px) {
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .cart-checkout-area {
+        width: 100%;
+    }
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .cart-summery-area {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+}
+
+
+/** Checkout-billing */
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-progressbar {
+    position: relative;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-progressbar:before {
+    top: 14px;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+    z-index: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-progressbar li {
+    display: inline-block;
+    width: 24%;
+    text-align: center;
+    font-weight: 500;
+    font-size: 18px !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-progressbar .btn-circle {
+    background-color: #eee;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0 !important;
+    font-size: 12px;
+    line-height: 18px !important;
+    border-radius: 15px !important;
+    border: none;
+    box-shadow: none !important;
+    position: relative;
+    margin-bottom: 10px;
+    text-decoration: none !important;
+    color: #111 !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-progressbar li.active .btn-circle {
+    color: #fff !important;
+    background-color: #111 !important;
+    border-color: #32355d !important;
+    box-shadow: none !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-progressbar .btn-circle:hover,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-progressbar .btn-circle:active,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-progressbar .btn-circle:focus {
+    box-shadow: none !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-form-group {
+    margin-bottom: 15px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-form-group select {
+    width: 350px;
+}
+.rentmy-page .rentmy-plugin-manincontent .checkout-header h2 {
+    font-size: 30px !important;
+    padding-left: 5px;
+    color: #111 !important;
+    font-weight: 600 !important;
+    padding-top: 10px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-billing .rentmy-form-group {
+    width: 49% !important;
+    display: inline-block;
+    padding: 0 5px !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-billing input {
+    width: 100% !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .checkout-back-continue {
+    width: 100%;
+    display: inline-block;
+    margin-top: 15px;
+}
+.rentmy-page .rentmy-plugin-manincontent .checkout-continue-btn {
+    float: right;
+}
+
+
+
+/** Checkout-Fulfillment */
+.rentmy-page .rentmy-plugin-manincontent #checkout-fulfillment ul {
+    list-style: none;
+}
+
+.rentmy-page .rentmy-plugin-manincontent #checkout-fulfillment ul li {
+    display: inline-block;
+    width: 32%;
+    text-align: center;
+}
+
+.rentmy-page .rentmy-plugin-manincontent #checkout-fulfillment ul li img {
+    width: 70px;
+    cursor: pointer;
+    border: 1px solid #555;
+    border-radius: 50%;
+    padding: 5px;
+    margin-bottom: 15px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent #checkout-fulfillment ul li.active img {
+    border: 5px solid #041531;
+}
+
+.rentmy-page .rentmy-plugin-manincontent #checkout-fulfillment ul li span {
+    display: inline-block;
+    width: 100%;
+    float: left;
+    margin: auto;
+    margin-top: -15px;
+    font-size: 18px !important;
+    font-weight: 600;
+}
+
+.rentmy-page .rentmy-plugin-manincontent #checkout-payment .form-group,
+.rentmy-page .rentmy-plugin-manincontent #checkout-fulfillment .form-group {
+    margin-bottom: 15px !important;
+    width: 49% !important;
+    display: inline-block !important;
+    float: left !important;
+    padding: 0 5px !important;
+}
+
+.rentmy-page .rentmy-plugin-manincontent #checkout-payment .rentmy-form-group,
+.rentmy-page .rentmy-plugin-manincontent #checkout-fulfillment .rentmy-form-group {
+    padding-left: 5px;
+}
+
+
+.rentmy-page .rentmy-plugin-manincontent #checkout-info .rentmy-form-group select,
+.rentmy-page .rentmy-plugin-manincontent #checkout-payment .form-group select,
+.rentmy-page .rentmy-plugin-manincontent #checkout-payment .rentmy-form-group select,
+.rentmy-page .rentmy-plugin-manincontent #checkout-payment .form-group input,
+.rentmy-page .rentmy-plugin-manincontent #checkout-fulfillment .rentmy-form-group .form-control,
+.rentmy-page .rentmy-plugin-manincontent #checkout-payment .form-group input,
+.rentmy-page .rentmy-plugin-manincontent #checkout-fulfillment .form-group input,
+.rentmy-page .rentmy-plugin-manincontent #checkout-payment .rentmy-note-group input,
+.rentmy-page .rentmy-plugin-manincontent #checkout-payment .form-group .form-control,
+.rentmy-page .rentmy-plugin-manincontent #checkout-fulfillment .form-group .form-control {
+    background-color: #fff !important;
+    width: 100% !important;
+    border: 1px solid #eee !important;
+    color: #888 !important;
+    height: 50px !important;
+    padding-left: 15px !important;
+    font-size: 16px !important;
+}
+
+.rentmy-page .rentmy-plugin-manincontent #checkout-payment .algolia-places,
+.rentmy-page .rentmy-plugin-manincontent #checkout-fulfillment .algolia-places {
+    width: 100% !important;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .checkout-button::after {
+    display: none;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .checkout-complete .cart-summery-area {
+    float: right;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .checkout-complete .cart-summery-area a {
+    height: 42px !important;
+    background-color: #2e353b;
+    color: #fff;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    display: inline-block;
+    text-transform: capitalize;
+    line-height: 42px !important;
+    padding: 0 15px !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 3px !important;
+    letter-spacing: 0.046875em !important;
+    cursor: pointer;
+    text-decoration: none !important;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .download-receipt {
+    text-align: center;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .checkout-complete .cart-summery-area a {
+    color: #fff !important;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-success-msg {
+    background-color: #b8d4b8;
+    padding: 15px;
+    display: block;
+    width: 100%;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-errore-msg {
+    background-color: #ce7979;
+    padding: 15px;
+    display: block;
+    width: 100%;
+    color: #ffffff;
+}
+.rentmy-page .rentmy-plugin-manincontent .checkout-back-continue .back-continue-btn {
+    display: inline-block ;
+    background-color: #111 !important;
+    color: #fff;
+    border: none;
+    font-weight: 500 !important;
+    font-size: 16px !important;
+    height: 50px !important;
+    padding: 0 20px !important;
+    line-height: 50px !important;
+    border-radius: 3px !important;
+    width: auto !important;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+.rentmy-page .rentmy-plugin-manincontent .checkout-back-continue .back-continue-btn:hover {
+    background-color: #333;
+    color: #fff !important;
+}
+
+
+/** Checkout-Paymentment */
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment .payment-type ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    justify-content: center;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment .payment-type ul li {
+    width: 25%;
+    display: inline-block;
+    text-align: center;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment .payment-type ul li img {
+    width: 70px;
+    cursor: pointer;
+    border: 1px solid #555;
+    border-radius: 50%;
+    padding: 5px;
+    margin-bottom: 15px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment .payment-type ul li.active img {
+    border: 5px solid #041531;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment .payment-type ul li span {
+    display: inline-block;
+    width: 100%;
+    float: left;
+    margin: auto;
+    margin-top: -15px;
+    font-size: 18px !important;
+    font-weight: 600;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment .expiration-date-group {
+    display: inline-block;
+    width: 100%;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment .expiration-date-group label {
+    padding-left: 5px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-form-row {
+    /*display: flex;*/
+    /*flex-wrap: wrap;*/
+}
+.rentmy-page .rentmy-plugin-manincontent #checkout-payment .form-group {
+    margin-bottom: 15px !important;
+    width: 100% !important;
+    display: inline-block !important;
+    float: left !important;
+    padding: 0 5px !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-form-row #card-element{
+    float: left;
+    width: 98.5%;
+    display: inline-block;
+    height: 50px;
+    padding: 15px;
+    border: 1px solid #eee !important;
+    margin-left: 5px;
+    border-radius: 4px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-form-row .__PrivateStripeElement {
+    border: 1px solid red !important;
+    height: 50px;
+    padding: 15px!important;
+}
+.ElementsApp {
+    font-size: 14px;
+    line-height: 1.2em;
+    height: 1.2em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border: 1px solid #eee;
+    padding: 15px;
+    height: 50px;
+    line-height: 50px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-form-row iframe {
+    height: 50px !important;
+    border: 1px solid #eee !important;
+    padding: 15px !important;
+}
+/*.rentmy-page .rentmy-plugin-manincontent .rentmy-form-row .CardField CardField--ltr {*/
+/*    padding: 15px;*/
+/*    border: 1px solid #eee;*/
+/*    left: 5px;*/
+/*    right: 30px;*/
+/*}*/
+
+.rentmy-page .rentmy-plugin-manincontent .error {
+    color: #e80707;
+    display: block;
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+}
+
+/* theme twentyseventeen css */
+.rentmy-page .rentmy-plugin-manincontent .theme-twentyseventeen .content-area {
+    width: 100% !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .theme-twentyseventeen .entry-header {
+    width: 100% !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .theme-twentyseventeen .entry-content {
+    width: 100% !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .theme-twentyseventeen .page .wrap {
+    padding: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .theme-twentyseventeen .content-are {
+    width: 100% !important;
+}
+
+/* custome checkbox css */
+.rentmy-page .rentmy-plugin-manincontent .checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    line-height: 25px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-plugin-categorytagsearch-area .checkbox-container {
+    margin-bottom: 0 !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .checkbox-container .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 22px;
+    width: 22px;
+    background-color: #eee;
+}
+.rentmy-page .rentmy-plugin-manincontent .checkbox-container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+.rentmy-page .rentmy-plugin-manincontent .checkbox-container input:checked ~ .checkmark {
+    background-color: #111;
+}
+.rentmy-page .rentmy-plugin-manincontent .checkbox-container .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+.rentmy-page .rentmy-plugin-manincontent .checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+.rentmy-page .rentmy-plugin-manincontent .checkbox-container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+/* pagination css */
+.rentmy-page .rentmy-plugin-manincontent div.rentmy-pagination {
+    padding: 3px;
+    margin: 3px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent div.rentmy-pagination a {
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    border: 1px solid #AAAADD;
+
+    text-decoration: none; /* no underline */
+    color: #000099;
+}
+.rentmy-page .rentmy-plugin-manincontent div.rentmy-pagination a:hover, div.rentmy-pagination a:active {
+    border: 1px solid #000099;
+
+    color: #000;
+}
+.rentmy-page .rentmy-plugin-manincontent div.rentmy-pagination span.current {
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    border: 1px solid #000099;
+
+    font-weight: bold;
+    background-color: #000099;
+    color: #FFF;
+}
+.rentmy-page .rentmy-plugin-manincontent div.rentmy-pagination span.disabled {
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    border: 1px solid #EEE;
+
+    color: #DDD;
+}
+
+.rentmy-page .rentmy-plugin-manincontent button:disabled {
+    opacity: 0.6;
+}
+
+
+/* Radio button csss */
+.rentmy-page .rentmy-plugin-manincontent .checkout-fulfillment-message {
+    margin: 5px 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-radio-text,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-radio-price {
+    display: inline-block;
+    width: 100%;
+    font-weight: 600;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-radio-text {
+    font-size: 20px;
+    color: #333;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-radio-price {
+    font-size: 12px;
+    color: #888;
+}
+.rentmy-page .rentmy-plugin-manincontent .checkout-fulfillment-message .radio-container .checkmark {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    height: 21px;
+    width: 21px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* widget area css */
+.right-sidebar #secondary {
+    padding-left: 0 !important;
+}
+.rentmy-page .widget-area {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-plugin-categorytagsearch-area h3{
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-plugin-categorytagsearch-area h3 {
+    background-color: #f2f3f8;
+    padding: 10px 15px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-plugin-categorytagsearch-area #rentmy-search-form .coupon-code {
+    display: flex;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-plugin-categorytagsearch-area #rentmy-search-form input {
+    width: 200px;
+    height: 40px;
+    padding-left: 10px;
+    border-radius: 3px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-plugin-categorytagsearch-area #rentmy-search-form .rentmy-button {
+    background-color: #111;
+    border: none;
+    height: 40px;
+    line-height: 36px;
+    padding: 4px 10px;
+    color: #fff;
+    border-radius: 3px;
+    font-weight: 400;
+    font-size: 12px;
+    margin-left: 5px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-categories {
+    padding: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-categories li{
+    color: #444;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-categories li a {
+    color: #444;
+    display: inline-block;
+    width: 100%;
+    padding: 10px 15px !important;
+    border-bottom: 1px solid #eee;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-categories li.rentmy-list-children-wrapper a {
+    color: #666;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-list-children-wrapper {
+    margin-left: 10px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-responsive-image {
+    width: 50px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-categories .checkbox-container .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #ebecf1;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-categories .checkbox-container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.rentmy-page .rentmy-plugin-manincontent .checkbox-container input:checked ~ .checkmark.rentmy-no-check {
+    background-color: #eee;
+}
+.rentmy-page .rentmy-plugin-manincontent .checkbox-container input:checked ~ .checkmark.rentmy-no-check:after {
+    display: none;
+}
+.rentmy-page .rentmy-plugin-manincontent table tr th,
+.rentmy-page .rentmy-plugin-manincontent table tr td {
+    word-break: normal!important;
+}
+
+
+@media (max-width:991px) {
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .cart-checkout-area a {
+        padding: 0 10px !important;
+    }
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-progressbar li {
+        font-size: 12px !important;
+    }
+
+}
+@media (max-width:767px) {
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid {
+        width: 50% !important;
+    }
+    .rentmy-page .rentmy-plugin-manincontent table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .images, 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .details {
+        width: 100%;
+    }
+}
+@media (max-width:575px) {
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-list .products .product-grid {
+        width: 100% !important;
+    }
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .cart-checkout-area a {
+        padding: 0 10px !important;
+        font-size: 10px !important;
+    }
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-progressbar {
+        margin: 0;
+    }
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-progressbar li {
+        font-size: 9px !important;
+    }
+    .rentmy-page .rentmy-plugin-manincontent .checkout-header h2 {
+        font-size: 22px !important;
+    }
+    .rentmy-page .rentmy-plugin-manincontent .back-continue-btn {
+        margin-bottom: 15px;
+    }
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-billing label, 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-fullfilment label, 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment label, 
+    .rentmy-page .rentmy-plugin-manincontent .checkout-complete label {
+        font-size: 14px !important;
+    }
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment .payment-type ul li {
+        width: 50%;
+    }
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .details h1 {
+        font-size: 30px !important;
+    }
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-table table td img, 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table td img, 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table th img {
+        width: 40px;
+        padding: 0;
+        max-width: unset;
+        height: 40px;
+    }
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .product-quantity {
+        width: 132px;
+        padding: 0;
+    }
+    
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-table table th, 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-table table td, 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table td, 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form table th {
+        font-size: 13px !important;
+    }
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .size, 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .quantity {
+        width: 68px;
+    }
+
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="text"], 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="email"], 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="url"], 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="password"], 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="search"], 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="number"], 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="tel"], 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="range"], 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="date"], 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="month"], 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="week"], 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="time"], 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="datetime"], 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="datetime-local"], 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details input[type="color"], 
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details textarea {
+        font-size: 13px !important;
+    }
+    .rentmy-page .rentmy-plugin-manincontent .rentmy-product-details .daterange {
+        font-size: 13px !important;
+        display: inline-block;
+        width: 290px;
+    }
+}
+
+.rentmy-page .rentmy-plugin-manincontent .date-range-selection-change{
+  cursor: pointer;
+}
+
+
+
+/*-- product list layout2 --*/
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid {
+    text-align: center;
+    padding: 0 0;
+    border: 1px solid #f2f3f8;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 20px;
+    transition: all .3s ease 0s;
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .rm-product-image {
+    position: relative;
+    transition: all .3s ease 0s;
+    border-bottom: 1px solid #f2f3f8;
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .rm-product-image a {
+    display: block;
+    box-shadow: none;
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .rm-product-image img {
+    width: 100%;
+    height: auto
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .rm-pic-1 {
+    opacity: 1;
+    transition: all .3s ease-out 0s
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid:hover .rm-pic-1 {
+    opacity: 1
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .rm-view-cart-btn {
+    width: 150px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    opacity: 0;
+    transform: translateY(-50%) translateX(-50%);
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    z-index: 1;
+    transition: all .3s ease 0s
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid:hover .rm-view-cart-btn {
+    opacity: 1;
+    top: 50%
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .rm-view-cart-btn li {
+    display: inline-block
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .rm-view-cart-btn li a {
+    color: #fff;
+    background-color: #111;
+    font-size: 16px;
+    line-height: 40px;
+    text-align: center;
+    height: 40px;
+    width: 40px;
+    margin: 0 2px;
+    display: block;
+    position: relative;
+    transition: all .3s ease-in-out;
+    box-shadow: none;
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .rm-view-cart-btn li a:hover {
+    color: #fff;
+    background-color: #444;
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .rm-view-cart-btn li a:after,
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .rm-view-cart-btn li a:before {
+    content: attr(data-tip);
+    color: #fff;
+    background-color: #000;
+    font-size: 12px;
+    letter-spacing: 1px;
+    line-height: 20px;
+    padding: 1px 5px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-50%);
+    position: absolute;
+    left: 50%;
+    top: -30px
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .rm-view-cart-btn li a:after {
+    content: '';
+    height: 15px;
+    width: 15px;
+    border-radius: 0;
+    transform: translateX(-50%) rotate(45deg);
+    top: -20px;
+    z-index: -1
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .rm-view-cart-btn li a:hover:after,
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .rm-view-cart-btn li a:hover:before {
+    opacity: 1
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .rm-product-discount-label,
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .rm-product-new-label {
+    color: #fff;
+    background-color: #ef5777;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 0
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .rm-product-discount-label {
+    background-color: #333;
+    left: auto;
+    right: 0
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .rm-product-content {
+    background-color: #f2f3f8;
+    text-align: center;
+    padding: 15px 10px;
+    margin: 0 auto;
+    z-index: 1;
+    transition: all .3s
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .title {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: .5px;
+    text-transform: capitalize;
+    margin: 0 0 10px;
+    transition: all .3s ease 0s;
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .title a {
+    color: #828282;
+    box-shadow: none !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .title a:hover,
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid:hover .title a {
+    color: #ef5777
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .price {
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    margin-bottom: 8px;
+    text-align: center;
+    transition: all .3s;
+    line-height: 20px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .price span {
+    display: inline-block
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .add-to-cart {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    background-color: #333;
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-product-grid .add-to-cart:hover {
+    color: #fff;
+    background-color: #444;
+}
+
+@media only screen and (max-width:990px) {
+    .rentmy-page .rentmy-plugin-manincontent .rm-product-grid {
+        margin-bottom: 30px
+    }
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .date-range-selection-active input {
+  height: 45px;
+  padding-left: 15px
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-cart-form .date-range-selection-active button {
+  height: 45px;
+  border-radius: 2px
+}
+.rentmy-page .rentmy-plugin-manincontent .date-range input,
+.rentmy-page .rentmy-plugin-manincontent .quantity .form-control {
+    width: 200px !important;
+    height: 40px !important;
+    box-shadow: none;
+    font-size: 13px;
+    border: 1px solid #eee;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .signature-pad{
+    border: 1px solid #eee;
+    border-bottom: 2px solid black;
+}
+.rentmy-page .rentmy-plugin-manincontent .clear-signature{
+    cursor: pointer;
+    color: red;
+    text-decoration: underline;
+    float: right;
+}
+.rentmy-page .rentmy-plugin-manincontent .signature-pad-wrapper p {
+    margin-top: 20px;
+    width: 500px;
+}
+.rentmy-page .rentmy-plugin-manincontent #rentmy-rent-item{
+    margin-top: 20px;
+}
+
+/*slider css starts product detauls page*/
+.rentmy-page .rentmy-plugin-manincontent .product-view-area {
+    display: flex;
+    flex-direction: row;
+}
+.rentmy-page .rentmy-plugin-manincontent .image-list li {
+    margin: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .product-view-image img, .image-list img {
+    width: 100%;
+}
+.rentmy-page .rentmy-plugin-manincontent .product-view-image {
+    display: block;
+}
+.rentmy-page .rentmy-plugin-manincontent .product-view-image img.active {
+    display: block;
+    margin: 0 0 0.75rem 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .image-list-area {
+    margin-right: 20px;
+}
+.rentmy-page .rentmy-plugin-manincontent .image-list {
+    /*overflow: hidden;*/
+    width: 80px;
+    list-style: none;
+    position: relative;
+    margin-left: 0 !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .image-list li {
+    margin: 0;
+    position: relative;
+}
+.rentmy-page .rentmy-plugin-manincontent .active-viewimg::after{
+    content: " ";
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 100%;
+    height: 100%;
+    left: 0;
+    border: 1px solid #fff;
+}
+.rentmy-page .rentmy-plugin-manincontent .image-list li:nth-child(3) {
+    margin: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .image-list img {
+    height: 80px;
+    width: 80px !important;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #f2f3f8 !important;
+    padding: 0 !important;
+    object-fit: contain;
+}
+.rentmy-page .rentmy-plugin-manincontent .image-list img:hover {
+    opacity: 0.7;
+}
+@keyframes fadeImg {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 1350px) {
+    .rentmy-page .rentmy-plugin-manincontent .image-list {
+        width: 80px;
+    }
+    .rentmy-page .rentmy-plugin-manincontent .image-list img {
+        height: 74px;
+    }
+}
+@media (max-width: 1199px) {
+    .rentmy-page .rentmy-plugin-manincontent .image-list {
+        width: 80px;
+    }
+}
+@media (max-width: 575px){
+    .rentmy-page .rentmy-plugin-manincontent .image-list img {
+        height: 60px;
+        width: 60px;
+    }
+}
+.rentmy-page .rentmy-plugin-manincontent .addon-small-img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border: 2px solid #f2f3f8;
+}
+/*slider css ends*/
+
+.rentmy-page #toast-container .toast, 
+.rentmy-page #toast-container>div {
+    width: auto !important;
+    max-width: max-content !important;
+}
+.rentmy-page .toast-message, 
+.rentmy-page .toast-title {
+    font-size: 15px !important;
+}
+
+/*-- pop-up-content --*/
+.rentmy-page .rentmy-plugin-manincontent .pop-up-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%) scale(0.9);
+    -moz-transform: translate(-50%, -50%) scale(0.9);
+    -ms-transform: translate(-50%, -50%) scale(0.9);
+    -o-transform: translate(-50%, -50%) scale(0.9);
+    transform: translate(-50%, -50%) scale(0.9);
+    box-shadow: 0 0px 60px 1px rgba(51, 77, 136, 0.08);
+    border: 1px solid #f2f3f8;
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    z-index: 99;
+    background-color: #ffffff;
+    width: 100%;
+    height: 100%;
+}
+
+@media (min-width: 768px) {
+    .rentmy-page .rentmy-plugin-manincontent .pop-up-content {
+        width: calc(100% - 40px);
+        height: auto;
+        max-width: 900px;
+    }
+}
+
+.rentmy-page .rentmy-plugin-manincontent .pop-up-content .content {
+    width: 100%;
+    max-width: 900px;
+    position: relative;
+    min-height: 100vh;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .pop-up-content .content .popup-container {
+    padding: 20px;
+}
+
+@media (min-width: 768px) {
+    .rentmy-page .rentmy-plugin-manincontent .pop-up-content .content {
+        min-height: inherit;
+    }
+}
+
+.rentmy-page .rentmy-plugin-manincontent .pop-up-content .content .close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.1rem;
+    letter-spacing: 0.05rem;
+    color: #3e4146;
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .pop-up-content .content .close:hover {
+    cursor: pointer;
+    color: #f66867;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .popup-conetent-pragraph-inner p span {
+    font-size: 15px !important;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .pop-up-content.open {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transform: translate(-50%, -50%) scale(1);
+    -moz-transform: translate(-50%, -50%) scale(1);
+    -ms-transform: translate(-50%, -50%) scale(1);
+    -o-transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.rentmy-page .rentmy-plugin-manincontent .pop-up-content.open img {
+    opacity: 1;
+    -webkit-transition: 1s;
+    -moz-transition: 1s;
+    -o-transition: 1s;
+    transition: 1s;
+    -webkit-transition-delay: 0.3s;
+    -moz-transition-delay: 0.3s;
+    -o-transition-delay: 0.3s;
+    transition-delay: 0.3s;
+    -webkit-transform: translateX(0px);
+    -moz-transform: translateX(0px);
+    -ms-transform: translateX(0px);
+    -o-transform: translateX(0px);
+    transform: translateX(0px);
+}
+.rentmy-page .rentmy-plugin-manincontent .popup-title {
+    height: 55px;
+    border-bottom: 1px solid #f2f3f8;
+    padding: 0 20px;
+}
+.rentmy-page .rentmy-plugin-manincontent .popup-title h1 {
+    font-size: 25px;
+    line-height: 55px;
+    margin: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .popup-conetent-pragraph {
+    background-color: #f6f8fb;
+    border-color: #f6f8fb;
+    height: 400px;
+    text-align: left;
+    padding: 15px 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .popup-conetent-pragraph-inner {
+    color: #555 !important;
+    line-height: 25px;
+    overflow: auto;
+    height: 380px;
+    padding: 0 10px 15px 20px;
+    font-size: 15px;
+}
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f2f3f8;
+}
+::-webkit-scrollbar-thumb {
+    background: #ddd;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .popup-footer {
+    padding: 20px 0 0;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .popup-checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 18px !important;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.rentmy-page .rentmy-plugin-manincontent .popup-checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 22px;
+    width: 22px;
+    background-color: #eee;
+}
+.rentmy-page .rentmy-plugin-manincontent .popup-checkbox-container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+.rentmy-page .rentmy-plugin-manincontent .popup-checkbox-container input:checked ~ .checkmark {
+    background-color: #333;
+}
+.rentmy-page .rentmy-plugin-manincontent .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+.rentmy-page .rentmy-plugin-manincontent .popup-checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+.rentmy-page .rentmy-plugin-manincontent .popup-checkbox-container .checkmark:after {
+    left: 8px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.rentmy-page .rentmy-plugin-manincontent .popup-btn-area {
+    padding-top: 15px;
+}
+.rentmy-page .rentmy-plugin-manincontent .popup-back-btn {
+    background-color: #333;
+    padding: 10px 20px;
+    color: #fff;
+    outline: 0;
+    border: none;
+    font-size: 15px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+.rentmy-page .rentmy-plugin-manincontent .popup-continue-btn {
+    background-color: #333;
+    padding: 10px 20px;
+    color: #fff;
+    outline: 0;
+    border: none;
+    font-size: 15px;
+    border-radius: 2px;
+    float: right;
+    cursor: pointer;
+}
+.rentmy-page .rentmy-plugin-manincontent .popup-continue-didabledbtn {
+    padding: 10px 20px;
+    color: #fff;
+    outline: 0;
+    border: none;
+    font-size: 15px;
+    border-radius: 2px;
+    float: right;
+    cursor: pointer;
+    background: #333;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .popup-continue-didabledbtn[disabled],
+.rentmy-page .rentmy-plugin-manincontent .popup-continue-didabledbtn[type=button][disabled],
+.rentmy-page .rentmy-plugin-manincontent .popup-continue-didabledbtn[type=reset][disabled],
+.rentmy-page .rentmy-plugin-manincontent .popup-continue-didabledbtn[type=submit][disabled] {
+    opacity: .5;
+    cursor: no-drop;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list.related-producst-list .products .product-grid {
+    width: 33.3333333%;
+    padding: 0 15px !important;
+    text-align: center !important;
+    margin-bottom: 20px !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .related-product-title {
+    height: 55px;
+    background-color: #f2f3f8;
+    line-height: 55px;
+    padding: 0 15px;
+    font-size: 22px;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+.rentmy-page .rentmy-plugin-manincontent .related-producst-list {
+    float: left;
+    width: 100%;
+}
+.rentmy-page .rentmy-plugin-manincontent .related-product-title h4 {
+    line-height: 55px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list.related-producst-list .products .product-grid-body .button {
+    font-size: 11px;
+}
+
+/*related product cart*/
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list.cart-related-producst-list .products .product-grid {
+    width: 16.3333333%;
+    padding: 0 10px !important;
+    text-align: center !important;
+    margin-bottom: 20px !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list.cart-related-producst-list .products .product-grid h4 {
+    font-size: 14px !important;
+    line-height: 20px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list.cart-related-producst-list .products .product-grid .price {
+    margin-bottom: 0 !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .related-product-title {
+    height: 55px;
+    background-color: #f2f3f8;
+    line-height: 55px;
+    padding: 0 15px;
+    font-size: 22px;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list.cart-related-producst-list .products .product-grid-body .button i{
+    line-height: 42px;
+    font-size: 18px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list.cart-related-producst-list .products .product-grid .product-grid-img {
+    height: 96px;
+    padding: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-list.cart-related-producst-list .products .product-grid .product-grid-img img {
+    width: 100%;
+    height: 95px;
+    object-fit: contain;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-categories {
+    padding: 0 15px 15px 15px;
+    margin: 0 !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-categories {
+    padding: 0 !important;
+    width: 100%;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-categories li {
+    padding: 0;
+    margin-left: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-list-children-wrapper {
+    margin-left: 0;
+    padding: 0 0 !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-categories li.rentmy-list-children-wrapper a {
+    color: #666;
+    display: block;
+}
+.rentmy-page .rentmy-plugin-manincontent .rent-my-list-link .dashicons, .rentmy-parent-category .dashicons {
+    margin-top: 4px;
+    font-size: 13px;
+    float: right;
+    text-decoration: none;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-categories a {
+    text-decoration: none !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-plugin-categorytagsearch-area {
+    box-shadow: 0 0 30px 0 rgba(51, 77, 136, 0.08);
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-plugin-categorytagsearch-area form  {
+    margin: 0;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-plugin-categorytagsearch-area form table {
+    margin: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-plugin-categorytagsearch-area form h5,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-plugin-categorytagsearch-area form h6 {
+    margin: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .cart-checkout-area {
+    padding: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent #rentmy-search-form .cart-checkout-area {
+    padding: 22px 15px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-plugin-categorytagsearch-area br {
+    display: none;
+}
+.rentmy-page .rentmy-plugin-manincontent .cart-checkout-area button[type="submit"] {
+    margin-bottom: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .dashicons.dashicons-arrow-down-alt2 {
+    float: right;
+    font-size: 15px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-list-children-sub {
+    padding-left: 25px !important;
+    border-bottom: 1px solid #eee;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-list-children-sub:nth-child(2) {
+    border-top: 1px solid #eee;
+    margin-top: 6px;
+ }
+ .rentmy-page .rentmy-plugin-manincontent .rentmy-list-children-sub:last-child {
+    border-bottom: none;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-plugin-categorytagsearch-area h3 {
+    margin-bottom: 0;
+    margin-top: 0;
+    width: 100%;
+    display: inline-block;
+}
+.rentmy-page .rentmy-plugin-manincontent .filter-rentmy {
+    padding: 10px 0 !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .price-rentmy {
+    padding: 15px 15px !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .type-area {
+    padding: 15px 15px 5px !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .filter-rentmy .tag-filter {
+    padding: 5px 15px;
+}
+/*ends*/
+
+/*type and price filter option*/
+.rentmy-page .rentmy-plugin-manincontent .lbtn-sm {
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none !important;
+    border-radius: 2px;
+}
+.rentmy-page .rentmy-plugin-manincontent .radius {
+    border-radius: 50px;
+}
+.rentmy-page .rentmy-plugin-manincontent .button {
+    font-family: 'Roboto', sans-serif;
+    display: inline-block;
+    font-weight: 400;
+    font-size: 15px;
+    border-radius: 0;
+    text-align: center;
+    transition: all .5s;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    letter-spacing: 0.2px;
+    /*background: transparent;*/
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    padding: 0 20px;
+}
+.rentmy-page .rentmy-plugin-manincontent .cart-body .button {
+    text-transform: capitalize;
+    padding: 8px 20px;
+    border-radius: 4px;
+}
+.rentmy-page .rentmy-plugin-manincontent .custom-control {
+    margin-bottom: 10px;
+}
+.rentmy-page .rentmy-plugin-manincontent .custom-control-label {
+    font-weight: 300 !important;
+}
+/* The container */
+.rentmy-page .rentmy-plugin-manincontent .type-area-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.rentmy-page .rentmy-plugin-manincontent .type-area-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.rentmy-page .rentmy-plugin-manincontent .type-area-checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 22px;
+    width: 22px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+.rentmy-page .rentmy-plugin-manincontent .type-area-container:hover input ~ .type-area-checkmark {
+    background-color: #ccc;
+}
+.rentmy-page .rentmy-plugin-manincontent .type-area-container input:checked ~ .type-area-checkmark {
+    background-color: #333;
+}
+.rentmy-page .rentmy-plugin-manincontent .type-area-checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+.rentmy-page .rentmy-plugin-manincontent .type-area-container input:checked ~ .type-area-checkmark:after {
+    display: block;
+}
+.rentmy-page .rentmy-plugin-manincontent .type-area-container .type-area-checkmark:after {
+    top: 7px;
+    left: 7px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+.rentmy-page .rentmy-plugin-manincontent .price-rentmy .form-row{
+    margin-bottom: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .value-price-filter{
+    font-size: 14px;
+    margin-bottom: 0 !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .value-price-filter:active,
+.rentmy-page .rentmy-plugin-manincontent .value-price-filter:focus{
+    box-shadow: none;
+    border: 1px solid #eee;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-categories ul {
+    list-style: none;
+    margin-left: 0 !important;
+    padding: 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-product-categories ul li a {
+    padding-left: 30px !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .shipping-choose-label {
+    padding: 15px 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .radio-container.radiolist-container {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f2f3f8;
+}
+.rentmy-page .rentmy-plugin-manincontent .checkout-fulfillment-message .radio-container.radiolist-container .checkmark {
+    top: 15px;
+}
+.rentmy-page .rentmy-plugin-manincontent .radio-container.radiolist-container .shipping-choose-label {
+    color: #111;
+}
+.rentmy-page .rentmy-plugin-manincontent .radio-container.radiolist-container .shipping-method-loader {
+    margin: 0 auto;
+}
+.rentmy-page .rentmy-plugin-manincontent .radio-container.radiolist-container .rentmy-radio-text,
+.rentmy-page .rentmy-plugin-manincontent .radio-container.radiolist-container .rentmy-radio-price {
+    display: inline-block;
+    width: 100%;
+    font-weight: 600;
+    font-size: 15px !important;
+}
+.rentmy-page .rentmy-plugin-manincontent .radio-container.radiolist-container .rentmy-radio-price,
+.rentmy-page .rentmy-plugin-manincontent .radio-container.radiolist-container .rentmy-radio-day,
+.rentmy-page .rentmy-plugin-manincontent .radio-container.radiolist-container .rentmy-radio-date {
+    font-size: 13px;
+}
+.rentmy-page .rentmy-plugin-manincontent .radio-container.radiolist-container .rentmy-radio-price {
+    position: absolute;
+    width: unset;
+    right: 0;
+    top: 23px;
+}
+.rentmy-page .rentmy-plugin-manincontent .loader-main-area {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    padding: 10px 0;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment .custom-control.custom-radio label {
+    line-height: 25px !important;
+    padding-left: 20px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment .custom-control-label::before {
+    width: 22px;
+    height: 22px;
+    left: -15px !important;
+    top: 2px !important;
+    background-color: #e2e3e8;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment .custom-control-label::after {
+    background-color: #fff;
+    border-radius: 50px;
+    top: 9px;
+    left: -8px;
+    width: 8px;
+    height: 8px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-card-payment-container h6 {
+    padding-bottom: 15px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rm-card-payment-container #tamount {
+    font-size: 15px;
+}
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-billing input,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-billing select,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-billing textarea,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-fullfilment input,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-fullfilment select,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-fullfilment textarea,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment input,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment select,
+.rentmy-page .rentmy-plugin-manincontent .rentmy-checkout-payment textarea,
+.rentmy-page .rentmy-plugin-manincontent .checkout-complete input,
+.rentmy-page .rentmy-plugin-manincontent .checkout-complete select, .checkout-complete textarea {
+    font-size: 15px;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .rm-instore-container .radio-container {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+.rentmy-page .rentmy-plugin-manincontent .cart_p .pre,
+.rentmy-page .rentmy-plugin-manincontent .cart_p .amount {
+    font-size: 14px;
+}
+.rentmy-page .rentmy-plugin-manincontent .table.cart tr td:nth-child(1) {
+    padding-left: 15px;
+}
+.rentmy-page .rentmy-plugin-manincontent .table.cart tr td:nth-child(2) {
+    text-align: right;
+    padding-right: 20px;
+}
+.rentmy-page .rentmy-plugin-manincontent .text-right {
+    text-align: right;
+}
+.rentmy-page .rentmy-plugin-manincontent #rm_quantity {
+    text-align: center;
+}
+
+.rentmy-page .rentmy-plugin-manincontent .image-item, .rentmy-page .rentmy-plugin-manincontent .view-image {
+    outline: none;
+}
+/*ends*/
+
