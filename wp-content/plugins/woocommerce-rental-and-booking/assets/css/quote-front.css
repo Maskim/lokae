@@ -1,0 +1,44 @@
+/* QUOTE MESSAGE */
+ul.quote-message {
+  list-style: none;
+}
+ul.quote-message li .quote-message-content {
+  margin-bottom: 10px;
+  padding: 10px;
+  background: #efefef;
+  position: relative;
+}
+ul.quote-message li .quote-message-content.customer {
+  background: #2d2d2d;
+  color: #ffffff;
+}
+ul.quote-message li .quote-message-content:after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -10px;
+  left: 20px;
+  width: 0;
+  height: 0;
+  border-width: 10px 10px 0 0;
+  border-style: solid;
+  border-color: #efefef transparent;
+}
+ul.quote-message li .quote-message-content.customer:after {
+  border-color: #2d2d2d transparent;
+}
+
+/* MAGNIFIC POPUP */
+.rnb-popup {
+  padding: 100px 100px 50px;
+  position: relative;
+  background: #FFF;
+  width: auto;
+  width: 50%;
+  margin: 20px auto;
+}
+
+.rnb-popup input, .rnb-popup textarea {
+  width: 100%;
+}
+

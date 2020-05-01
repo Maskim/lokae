@@ -1,0 +1,8 @@
+
+.order_item dt.variation-pickup_hidden_datetime, .order_item dd.variation-pickup_hidden_datetime,
+.order_item dt.variation-return_hidden_datetime, .order_item dd.variation-return_hidden_datetime{
+	display: none !important;
+}
+
+
+

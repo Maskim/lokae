@@ -1,0 +1,260 @@
+h4.redq-headings {
+  padding-left: 13px;
+}
+
+.redq-show-bar {
+  background: #f4f4f4;
+  padding: 10px;
+  margin: 10px;
+  height: 42px;
+  border: 1px solid #eee;
+}
+
+#woocommerce-coupon-data ul.wc-tabs li.rental_inventory_options a:before,
+#woocommerce-product-data ul.wc-tabs li.rental_inventory_options a:before,
+.woocommerce ul.wc-tabs li.rental_inventory_options a:before {
+  content: '\f533';
+  font-family: Dashicons;
+}
+
+#woocommerce-coupon-data ul.wc-tabs li.price_calculation_options a:before,
+#woocommerce-product-data ul.wc-tabs li.price_calculation_options a:before,
+.woocommerce ul.wc-tabs li.price_calculation_options a:before {
+  content: '\f488';
+  font-family: Dashicons;
+}
+
+#woocommerce-coupon-data ul.wc-tabs li.price_discount_options a:before,
+#woocommerce-product-data ul.wc-tabs li.price_discount_options a:before,
+.woocommerce ul.wc-tabs li.price_discount_options a:before {
+  content: '\f328';
+  font-family: Dashicons;
+}
+
+#woocommerce-coupon-data ul.wc-tabs li.availability_options a:before,
+#woocommerce-product-data ul.wc-tabs li.availability_options a:before,
+.woocommerce ul.wc-tabs li.availability_options a:before {
+  content: '\f508';
+  font-family: Dashicons;
+}
+
+#woocommerce-coupon-data ul.wc-tabs li.resources_options a:before,
+#woocommerce-product-data ul.wc-tabs li.resources_options a:before,
+.woocommerce ul.wc-tabs li.resources_options a:before {
+  content: '\f118';
+  font-family: Dashicons;
+}
+
+#woocommerce-coupon-data ul.wc-tabs li.person_options a:before,
+#woocommerce-product-data ul.wc-tabs li.person_options a:before,
+.woocommerce ul.wc-tabs li.person_options a:before {
+  content: '\f307';
+  font-family: Dashicons;
+}
+
+#woocommerce-coupon-data ul.wc-tabs li.security_deposite_options a:before,
+#woocommerce-product-data ul.wc-tabs li.security_deposite_options a:before,
+.woocommerce ul.wc-tabs li.security_deposite_options a:before {
+  content: '\f112';
+  font-family: Dashicons;
+}
+
+#woocommerce-coupon-data ul.wc-tabs li.locations_options a:before,
+#woocommerce-product-data ul.wc-tabs li.locations_options a:before,
+.woocommerce ul.wc-tabs li.locations_options a:before {
+  content: '\f230';
+  font-family: Dashicons;
+}
+
+#woocommerce-coupon-data ul.wc-tabs li.settings_options a:before,
+#woocommerce-product-data ul.wc-tabs li.settings_options a:before,
+.woocommerce ul.wc-tabs li.settings_options a:before {
+  content: '\f107';
+  font-family: Dashicons;
+}
+
+.own_availibility .from_date input,
+.own_availibility .to_date input,
+.own_availibility .select select {
+  width: 100% !important;
+}
+
+/*  from to date of inventory 13/5/16 */
+
+.own_availibility .remove button,
+.own_availibility .inventory-remove button {
+  display: inline-block;
+  padding: 3px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+  outline: 0;
+  transition: all 0.3s ease;
+}
+
+.own_availibility .remove button:hover,
+.own_availibility .remove button:focus,
+.own_availibility .inventory-remove button:hover,
+.own_availibility .inventory-remove button:focus {
+  color: #fff;
+  background-color: #c9302c;
+  border-color: #ac2925;
+}
+
+.inventory-form-to-input {
+  position: relative;
+}
+
+.inventory-form-to-input input {
+  padding-left: 25px;
+}
+
+.inventory-form-to-input img {
+  position: absolute;
+  top: 7px;
+  left: 5px;
+}
+
+/*  ui tab */
+
+#product_settings_data .ui-widget-header {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #d3d3d3;
+  border-radius: 0;
+  padding-left: 20px;
+}
+
+#product_settings_data .ui-widget.ui-widget-content {
+  border: 0;
+}
+
+#product_settings_data .ui-state-default,
+#product_settings_data .ui-widget-content .ui-state-default,
+#product_settings_data .ui-widget-header .ui-state-default {
+  /* background: #EEEEEE; */
+  border-radius: 0;
+  margin-right: 8px;
+  outline: 0;
+}
+
+#product_settings_data .ui-widget-header .ui-state-default a {
+  padding: 13px 10px;
+}
+
+/*FULLCALENDAR*/
+
+.white-popup-block {
+  background: #fff;
+  padding: 20px 30px;
+  text-align: left;
+  max-width: 650px;
+  margin: 40px auto;
+  position: relative;
+}
+
+#eventProduct {
+  color: #23282d;
+  text-decoration: none;
+}
+
+.fc td.fc-widget-content,
+.fc th.fc-widget-header {
+  background: #fff;
+}
+
+.redq-rental-display-meta tr:last-child th,
+.redq-rental-display-meta tr:last-child td {
+  border-top: 1px solid #ddd;
+}
+
+.fc-event {
+  border-radius: 0;
+}
+
+#redq_rental_lang_month_name_title,
+#redq_rental_lang_weekday_name_title {
+  width: 100%;
+}
+
+.fixed .column-slug {
+  width: 13%;
+}
+
+.rnb-inventory-ref {
+  font-size: 13px;
+  font-weight: bold;
+  color: black;
+}
+
+/* ---------------------------------
+admin rnb inventory table  
+--------------------------------- */
+
+body.post-type-inventory .wp-list-table tr th {
+  vertical-align: top;
+}
+
+body.post-type-inventory .widefat tfoot td.check-column,
+body.post-type-inventory .widefat thead td.check-column {
+  padding-top: 10px;
+  vertical-align: top;
+}
+
+/* Add ons */
+
+.wrap.woocommerce.wc_addons_wrap.rnb_addons_wrap {
+  margin-top: 50px;
+}
+
+.wrap.woocommerce.wc_addons_wrap.rnb_addons_wrap .addons-banner-block {
+  padding-bottom: 50px;
+}
+
+.rnb-addon.rnb-addon-seasonal-pricing {
+  width: 100%;
+}
+
+.rnb-addon.rnb-addon-seasonal-pricing {
+  background: none !important;
+}
+
+.rnb-addon.rnb-addon-seasonal-pricing a img {
+  width: 400px;
+  height: 100%;
+  margin-right: 30px;
+}
+
+.rnb-addon.rnb-addon-seasonal-pricing h2 {
+  font-size: 1.5em !important;
+}
+
+.rnb-addon.rnb-addon-seasonal-pricing p {
+  max-width: 100% !important;
+}
+
+.rnb-addon.rnb-addon-seasonal-pricing p .button {
+  padding: 5px 20px;
+  margin-right: 10px;
+}
+
+.subsubsub li.wc-rnb-fake-order {
+  display: none;
+}
