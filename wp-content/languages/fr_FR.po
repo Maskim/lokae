@@ -2,12 +2,12 @@
 # This file is distributed under the same license as the WordPress - 5.4.x - Development package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2020-04-23 12:17:12+0000\n"
+"PO-Revision-Date: 2020-05-18 12:44:25+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: GlotPress/2.4.0-alpha\n"
+"X-Generator: GlotPress/3.0.0-alpha\n"
 "Language: fr\n"
 "Project-Id-Version: WordPress - 5.4.x - Development\n"
 
@@ -1444,11 +1444,11 @@ msgstr "Parcourez la bibliothèque pour en savoir plus sur ce que fait chaque bl
 
 #: wp-includes/js/dist/block-editor.js:18011
 msgid "There are blocks available for all kinds of content: insert text, headings, images, lists, videos, tables, and lots more."
-msgstr "Il existe des blocs pour toutes sortes de contenus : insérer du texte, des en-têtes, des images, des listes, des vidéos, des tableaux, et bien plus encore."
+msgstr "Il existe des blocs pour toutes sortes de contenus : insérer du texte, des titres, des images, des listes, des vidéos, des tableaux, et bien plus encore."
 
 #: wp-includes/js/dist/block-editor.js:18011
 msgid "Welcome to the wonderful world of blocks! Blocks are the basis of all content within the editor."
-msgstr "Vous voici dans le monde merveilleux des blocs ! Les blocs sont la base de tous les contenus au sein de l’éditeur."
+msgstr "Bienvenue dans le monde merveilleux des blocs ! Les blocs sont la base de tous les contenus au sein de l’éditeur."
 
 #: wp-includes/js/dist/block-editor.js:18011
 msgid "Content blocks"
@@ -1639,7 +1639,7 @@ msgstr "En apprendre plus sur le débogage de WordPress."
 #: wp-includes/class-wp-fatal-error-handler.php:190
 #: wp-includes/functions.php:5156
 msgid "https://wordpress.org/support/article/debugging-in-wordpress/"
-msgstr "https://wordpress.org/support/article/debugging-in-wordpress/"
+msgstr "https://fr.wordpress.org/support/article/debugging-in-wordpress/"
 
 #: wp-includes/class-wp-fatal-error-handler.php:183
 msgid "There has been a critical error on your website."
@@ -3825,7 +3825,7 @@ msgstr "Panneaux avancés"
 
 #: wp-includes/js/dist/edit-post.js:3878 wp-includes/js/dist/edit-post.js:5599
 msgid "Discussion"
-msgstr "Discussion"
+msgstr "Commentaires"
 
 #: wp-includes/js/dist/edit-post.js:3858
 msgid "Document panels"
@@ -3898,7 +3898,7 @@ msgstr "Raccourcis pour les blocs"
 
 #: wp-includes/js/dist/block-editor.js:25293
 msgid "Select all text when typing. Press again to select all blocks."
-msgstr "Sélectionner tout le texte lors de la saisie. Appuyez à nouveau pour sélectionner tous les blocs."
+msgstr "Sélectionner tout le texte lors de la saisie. Réappuyez pour sélectionner tous les blocs."
 
 #: wp-includes/js/dist/edit-post.js:3188
 msgid "Selection shortcuts"
@@ -4598,7 +4598,7 @@ msgstr "Ajouter aux blocs réutilisables"
 msgid "Remove Block"
 msgid_plural "Remove Blocks"
 msgstr[0] "Retirer le bloc"
-msgstr[1] ""
+msgstr[1] "Retirer les blocs"
 
 #: wp-includes/js/dist/block-editor.js:24615
 msgid "Insert After"
@@ -6479,7 +6479,7 @@ msgstr "Trier les thèmes (%s)"
 
 #: wp-includes/customize/class-wp-customize-themes-section.php:124
 msgid "Back to theme sources"
-msgstr "Retour vers les sources du thème"
+msgstr "Retour aux sources du thème"
 
 #: wp-includes/customize/class-wp-customize-themes-section.php:103
 msgid "Search WordPress.org themes"
@@ -6734,7 +6734,7 @@ msgstr "Vous devez fournir une date future pour activer la planification."
 
 #: wp-includes/class-wp-customize-manager.php:2632
 msgid "The previous set of changes has already been published. Please try saving your current set of changes again."
-msgstr "Le jeu de modifications précédent a déjà été publié. Veuillez essayer d’enregistrer votre jeu de modification actuel à nouveau."
+msgstr "Le jeu de modifications précédent a déjà été publié. Veuillez réessayer d’enregistrer votre jeu de modification actuel."
 
 #: wp-includes/admin-bar.php:812
 msgid "Edit User"
@@ -14975,7 +14975,7 @@ msgstr "Cette action a été désactivée par l’administrateur."
 
 #: wp-signup.php:978
 msgid "You are logged in already. No need to register again!"
-msgstr "Vous êtes déjà connecté. Inutile de vous inscrire à nouveau !"
+msgstr "Vous êtes déjà connecté. Inutile de vous réinscrire !"
 
 #. translators: %s: Login URL.
 #: wp-signup.php:938
