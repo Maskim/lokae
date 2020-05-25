@@ -1,4 +1,4 @@
-jQuery(document).ready(function($) {
+;jQuery(document).ready(function($) {
     "use strict";
 
     const
@@ -481,7 +481,7 @@ jQuery(document).ready(function($) {
             },
             success:function(data) {
                 $(".htwptmessage").show();
-                var tmediturl = HTTM.adminURL+"/post.php?post="+ data.id +"&action=elementor";
+                var tmediturl = HTTM.adminURL+"post.php?post="+ data.id +"&action=elementor";
                 $('.htwpt-edit').html('<a href="'+ tmediturl +'" target="_blank">'+ data.edittxt +'</a>');
             },
             complete:function(data){

@@ -2,8 +2,8 @@
 Contributors: hasthemes, htplugins, devitemsllc
 Tags: Elementor, Elementor Addons, Elementor Widgets, elementor page builder, Elementor Blocks
 Requires at least: 4.7
-Tested up to: 5.4
-Stable tag: 1.4.0
+Tested up to: 5.4.1
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -189,6 +189,13 @@ August 05 - 2019:
 Visit [HasThemes](https://hasthemes.com/) for more details about HTML, Shopify and WordPress products and services.
 
 == Changelog ==
+
+= Version: 1.4.1 - Date: 2020-05-11 =
+* Working process Icon style Option added.
+* Template library blocks search problem solved.
+* Section Wise Blocks Template added.
+* Template library cache remove for plugin multiple activation.
+* Style dependency added in image justify and image compare.
 
 = Version: 1.4.0 - Date: 2020-04-13 =
 * Single Post Title Length option added.

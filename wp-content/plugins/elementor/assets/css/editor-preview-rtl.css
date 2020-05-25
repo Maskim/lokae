@@ -1,4 +1,4 @@
-/*! elementor - v2.9.8 - 21-04-2020 */
+/*! elementor - v2.9.9 - 24-05-2020 */
 @charset "UTF-8";
 .elementor-control-unit-1 {
   width: 27px; }
@@ -986,7 +986,7 @@ a.elementor-responsive-switcher {
 .elementor-control-media.elementor-media-empty .elementor-control-media-area {
   display: none; }
 
-.elementor-control-media:not(.elementor-media-empty) .elementor-control-media-upload-button {
+.elementor-control-media:not(.elementor-media-empty) .elementor-control-media__content__upload-button {
   display: none; }
 
 .elementor-control-media .elementor-control-input-wrapper {
@@ -1002,7 +1002,7 @@ a.elementor-responsive-switcher {
   color: #fff;
   font-size: 20px; }
 
-.elementor-control-media-upload-button {
+.elementor-control-media__content__upload-button {
   background-color: #d5dadf; }
 
 .elementor-control-media__preview {
@@ -1090,8 +1090,6 @@ a.elementor-responsive-switcher {
     background-color: rgba(109, 120, 130, 0.95); }
 
 .elementor-control-media__remove {
-  position: absolute;
-  z-index: 1;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1104,24 +1102,100 @@ a.elementor-responsive-switcher {
   -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -webkit-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out; }
+
+.elementor-control-media__content__remove {
+  position: absolute;
+  z-index: 1;
   top: 10px;
   left: 10px;
   width: 20px;
   height: 20px;
   font-size: 11px;
-  background-color: rgba(255, 255, 255, 0.9);
   color: #a4afb7;
+  background-color: rgba(255, 255, 255, 0.9);
   -webkit-border-radius: 3px;
           border-radius: 3px;
   -webkit-box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.1);
-          box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.1);
-  -webkit-transition: all .3s ease-in-out;
-  -o-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out; }
-  .elementor-control-media__remove:hover {
+          box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.1); }
+  .elementor-control-media__content__remove:hover {
     background-color: white;
     -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
             box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4); }
+
+.elementor-control-media.elementor-media-empty .elementor-control-file-area {
+  display: none; }
+
+.elementor-control-media__file {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  margin-top: 10px;
+  border: 1px solid #d5dadf; }
+  .elementor-control-media__file__content {
+    padding-right: 5px;
+    font-size: 12px; }
+    .elementor-control-media__file__content__label {
+      color: #a4afb7;
+      font-style: italic; }
+    .elementor-control-media__file__content__info {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
+      font-weight: 500; }
+      .elementor-control-media__file__content__info__icon {
+        margin-left: 5px; }
+  .elementor-control-media__file__controls {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    border-right: 1px solid #d5dadf; }
+    .elementor-control-media__file__controls__upload-button, .elementor-control-media__file__controls__remove {
+      width: 27px;
+      height: 27px;
+      cursor: pointer;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+          -ms-flex-align: center;
+              align-items: center; }
+    .elementor-control-media__file__controls__upload-button {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+          -ms-flex-pack: center;
+              justify-content: center; }
+    .elementor-control-media__file__controls__remove {
+      border-left: 1px solid #d5dadf; }
+
+.elementor-control-media:not(.elementor-media-empty) .elementor-control-media__file__content__label {
+  display: none; }
+
+.elementor-control-media.elementor-media-empty .elementor-control-media__file__content__info {
+  display: none; }
+
+.elementor-control-media.elementor-media-empty .elementor-control-media__file__controls__remove {
+  display: none; }
 
 .elementor-control-media .elementor-control-dynamic-switcher {
   border: none;

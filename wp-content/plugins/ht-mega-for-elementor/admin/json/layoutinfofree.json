@@ -405,8 +405,8 @@
             "id": "cleaning_servicepage",
             "shareId": "cleaning service",
             "title": "Service Page",
-            "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/cleaning-service.png",
-            "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/cleaning-service.png",
+            "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/cleaning-servicepage.png",
+            "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/cleaning-servicepage.png",
             "author": "HasThemes",
             "url": "#",
             "demoUrl": "http://demo.wphash.com/ht-cleaning/service/",
@@ -3811,7 +3811,7 @@
         },
         {
             "id": "accordion_style_1",
-            "shareId": "blocks",
+            "shareId": "accordion",
             "title": "Accordion Style 1 (Icon Left )",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/accordion_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/accordion_style_1.png",
@@ -3834,7 +3834,7 @@
         },
         {
             "id": "accordion_style_2",
-            "shareId": "blocks",
+            "shareId": "accordion",
             "title": "Accordion Style 1 (Icon Right )",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/accordion_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/accordion_style_2.png",
@@ -3857,7 +3857,7 @@
         },
         {
             "id": "accordion_style_3",
-            "shareId": "blocks",
+            "shareId": "accordion",
             "title": "Accordion Style 1 ( Elementor Template )",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/accordion_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/accordion_style_3.png",
@@ -3880,7 +3880,7 @@
         },
         {
             "id": "accordion_style_4",
-            "shareId": "blocks",
+            "shareId": "accordion",
             "title": "Accordion Style 1 ( Round Shape)",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/accordion_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/accordion_style_4.png",
@@ -3903,7 +3903,7 @@
         },
         {
             "id": "accordion_style_5",
-            "shareId": "blocks",
+            "shareId": "accordion",
             "title": "Accordion Style 1 (Transparent)",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/accordion_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/accordion_style_5.png",
@@ -3926,7 +3926,7 @@
         },
         {
             "id": "accordion_style_6",
-            "shareId": "blocks",
+            "shareId": "accordion",
             "title": "Accordion Style 1 (Box Shadow)",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/accordion_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/accordion_style_6.png",
@@ -3949,7 +3949,7 @@
         },
         {
             "id": "accordion_style_7",
-            "shareId": "blocks",
+            "shareId": "accordion",
             "title": "Accordion Image Gallery - Style 2",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/accordion_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/accordion_style_7.png",
@@ -3972,7 +3972,7 @@
         },
         {
             "id": "accordion_style_8",
-            "shareId": "blocks",
+            "shareId": "accordion",
             "title": "Image Accordion (Vertical) - Style 3",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/accordion_style_8.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/accordion_style_8.png",
@@ -3995,7 +3995,7 @@
         },
         {
             "id": "accordion_style_9",
-            "shareId": "blocks",
+            "shareId": "accordion",
             "title": "Image Accordion (Horizontal) - Style 4",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/accordion_style_9.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/accordion_style_9.png",
@@ -4018,7 +4018,7 @@
         },
         {
             "id": "animated_heading_style_1",
-            "shareId": "blocks",
+            "shareId": "animated-heading",
             "title": "Animated Heading Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/animated_heading_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/animated_heading_style_1.png",
@@ -4041,7 +4041,7 @@
         },
         {
             "id": "animated_heading_style_2",
-            "shareId": "blocks",
+            "shareId": "animated-heading",
             "title": "Animated Heading Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/animated_heading_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/animated_heading_style_2.png",
@@ -4064,7 +4064,7 @@
         },
         {
             "id": "animated_heading_style_3",
-            "shareId": "blocks",
+            "shareId": "animated-heading",
             "title": "Animated Heading Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/animated_heading_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/animated_heading_style_3.png",
@@ -4087,7 +4087,7 @@
         },
         {
             "id": "animated_heading_style_4",
-            "shareId": "blocks",
+            "shareId": "animated-heading",
             "title": "Animated Heading Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/animated_heading_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/animated_heading_style_4.png",
@@ -4110,7 +4110,7 @@
         },
         {
             "id": "animated_heading_style_5",
-            "shareId": "blocks",
+            "shareId": "animated-heading",
             "title": "Animated Heading Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/animated_heading_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/animated_heading_style_5.png",
@@ -4133,7 +4133,7 @@
         },
         {
             "id": "animated_heading_style_6",
-            "shareId": "blocks",
+            "shareId": "animated-heading",
             "title": "Animated Heading Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/animated_heading_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/animated_heading_style_6.png",
@@ -4156,7 +4156,7 @@
         },
         {
             "id": "animated_heading_style_7",
-            "shareId": "blocks",
+            "shareId": "animated-heading",
             "title": "Animated Heading Style Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/animated_heading_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/animated_heading_style_7.png",
@@ -4179,7 +4179,7 @@
         },
         {
             "id": "banner_style_1",
-            "shareId": "blocks",
+            "shareId": "banner",
             "title": "Banner Default Style",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/banner_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/banner_style_1.png",
@@ -4202,7 +4202,7 @@
         },
         {
             "id": "banner_style_2",
-            "shareId": "blocks",
+            "shareId": "banner",
             "title": "Banner Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/banner_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/banner_style_2.png",
@@ -4225,7 +4225,7 @@
         },
         {
             "id": "banner_style_3",
-            "shareId": "blocks",
+            "shareId": "banner",
             "title": "Banner Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/banner_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/banner_style_3.png",
@@ -4248,7 +4248,7 @@
         },
         {
             "id": "banner_style_4",
-            "shareId": "blocks",
+            "shareId": "banner",
             "title": "Banner Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/banner_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/banner_style_4.png",
@@ -4271,7 +4271,7 @@
         },
         {
             "id": "blockquote_style_1",
-            "shareId": "blocks",
+            "shareId": "blockquote",
             "title": "Blockquote Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/blockquote_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/blockquote_style_1.png",
@@ -4294,7 +4294,7 @@
         },
         {
             "id": "blockquote_style_2",
-            "shareId": "blocks",
+            "shareId": "blockquote",
             "title": "Blockquote Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/blockquote_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/blockquote_style_2.png",
@@ -4317,7 +4317,7 @@
         },
         {
             "id": "blockquote_style_3",
-            "shareId": "blocks",
+            "shareId": "blockquote",
             "title": "Blockquote Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/blockquote_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/blockquote_style_3.png",
@@ -4340,7 +4340,7 @@
         },
         {
             "id": "blockquote_style_4",
-            "shareId": "blocks",
+            "shareId": "blockquote",
             "title": "Blockquote Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/blockquote_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/blockquote_style_4.png",
@@ -4363,7 +4363,7 @@
         },
         {
             "id": "blockquote_style_5",
-            "shareId": "blocks",
+            "shareId": "blockquote",
             "title": "Blockquote Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/blockquote_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/blockquote_style_5.png",
@@ -4386,7 +4386,7 @@
         },
         {
             "id": "brand_style_1",
-            "shareId": "blocks",
+            "shareId": "brands",
             "title": "Brands Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/brand_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/brand_style_1.png",
@@ -4409,7 +4409,7 @@
         },
         {
             "id": "brand_style_2",
-            "shareId": "blocks",
+            "shareId": "brands",
             "title": "Brands Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/brand_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/brand_style_2.png",
@@ -4432,7 +4432,7 @@
         },
         {
             "id": "brand_style_3",
-            "shareId": "blocks",
+            "shareId": "brands",
             "title": "Brands Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/brand_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/brand_style_3.png",
@@ -4455,7 +4455,7 @@
         },
         {
             "id": "brand_style_4",
-            "shareId": "blocks",
+            "shareId": "brands",
             "title": "Brands Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/brand_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/brand_style_4.png",
@@ -4478,7 +4478,7 @@
         },
         {
             "id": "brand_style_5",
-            "shareId": "blocks",
+            "shareId": "brands",
             "title": "Brands Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/brand_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/brand_style_5.png",
@@ -4501,7 +4501,7 @@
         },
         {
             "id": "brand_style_6",
-            "shareId": "blocks",
+            "shareId": "brands",
             "title": "Brands Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/brand_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/brand_style_6.png",
@@ -4524,7 +4524,7 @@
         },
         {
             "id": "brand_style_7",
-            "shareId": "blocks",
+            "shareId": "brands",
             "title": "Brands Style Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/brand_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/brand_style_7.png",
@@ -4547,7 +4547,7 @@
         },
         {
             "id": "business_hours_style_1",
-            "shareId": "blocks",
+            "shareId": "business-hours",
             "title": "Business Hours Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/business_hours_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/business_hours_style_1.png",
@@ -4570,7 +4570,7 @@
         },
         {
             "id": "business_hours_style_2",
-            "shareId": "blocks",
+            "shareId": "business-hours",
             "title": "Business Hours Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/business_hours_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/business_hours_style_2.png",
@@ -4593,7 +4593,7 @@
         },
         {
             "id": "business_hours_style_3",
-            "shareId": "blocks",
+            "shareId": "business-hours",
             "title": "Business Hours Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/business_hours_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/business_hours_style_3.png",
@@ -4616,7 +4616,7 @@
         },
         {
             "id": "business_hours_style_4",
-            "shareId": "blocks",
+            "shareId": "business-hours",
             "title": "Business Hours Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/business_hours_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/business_hours_style_4.png",
@@ -4639,7 +4639,7 @@
         },
         {
             "id": "business_hours_style_5",
-            "shareId": "blocks",
+            "shareId": "business-hours",
             "title": "Business Hours Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/business_hours_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/business_hours_style_5.png",
@@ -4662,7 +4662,7 @@
         },
         {
             "id": "button_style_1",
-            "shareId": "blocks",
+            "shareId": "button",
             "title": "Button Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/button_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/button_style_1.png",
@@ -4685,7 +4685,7 @@
         },
         {
             "id": "button_style_2",
-            "shareId": "blocks",
+            "shareId": "button",
             "title": "Button Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/button_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/button_style_2.png",
@@ -4708,7 +4708,7 @@
         },
         {
             "id": "button_style_3",
-            "shareId": "blocks",
+            "shareId": "button",
             "title": "Button Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/button_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/button_style_3.png",
@@ -4731,7 +4731,7 @@
         },
         {
             "id": "button_style_4",
-            "shareId": "blocks",
+            "shareId": "button",
             "title": "Button Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/button_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/button_style_4.png",
@@ -4754,7 +4754,7 @@
         },
         {
             "id": "button_style_5",
-            "shareId": "blocks",
+            "shareId": "button",
             "title": "Button Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/button_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/button_style_5.png",
@@ -4777,7 +4777,7 @@
         },
         {
             "id": "button_style_6",
-            "shareId": "blocks",
+            "shareId": "button",
             "title": "Button Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/button_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/button_style_6.png",
@@ -4800,7 +4800,7 @@
         },
         {
             "id": "button_style_7",
-            "shareId": "blocks",
+            "shareId": "button",
             "title": "Button Style Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/button_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/button_style_7.png",
@@ -4823,7 +4823,7 @@
         },
         {
             "id": "button_style_8",
-            "shareId": "blocks",
+            "shareId": "button",
             "title": "Button Style Eight",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/button_style_8.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/button_style_8.png",
@@ -4846,7 +4846,7 @@
         },
         {
             "id": "call_to_action_style_1",
-            "shareId": "blocks",
+            "shareId": "call-to-action",
             "title": "Call to Action Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/call_to_action_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/call_to_action_style_1.png",
@@ -4869,7 +4869,7 @@
         },
         {
             "id": "call_to_action_style_2",
-            "shareId": "blocks",
+            "shareId": "call-to-action",
             "title": "Call to Action Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/call_to_action_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/call_to_action_style_2.png",
@@ -4892,7 +4892,7 @@
         },
         {
             "id": "call_to_action_style_3",
-            "shareId": "blocks",
+            "shareId": "call-to-action",
             "title": "Call to Action Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/call_to_action_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/call_to_action_style_3.png",
@@ -4915,7 +4915,7 @@
         },
         {
             "id": "call_to_action_style_4",
-            "shareId": "blocks",
+            "shareId": "call-to-action",
             "title": "Call to Action Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/call_to_action_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/call_to_action_style_4.png",
@@ -4938,7 +4938,7 @@
         },
         {
             "id": "call_to_action_style_5",
-            "shareId": "blocks",
+            "shareId": "call-to-action",
             "title": "Call to Action Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/call_to_action_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/call_to_action_style_5.png",
@@ -4961,7 +4961,7 @@
         },
         {
             "id": "call_to_action_style_6",
-            "shareId": "blocks",
+            "shareId": "call-to-action",
             "title": "Call to Action Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/call_to_action_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/call_to_action_style_6.png",
@@ -4984,7 +4984,7 @@
         },
         {
             "id": "call_to_action_style_7",
-            "shareId": "blocks",
+            "shareId": "call-to-action",
             "title": "Call to Action Style Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/call_to_action_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/call_to_action_style_7.png",
@@ -5007,7 +5007,7 @@
         },
         {
             "id": "contact_form_style_1",
-            "shareId": "blocks",
+            "shareId": "contact-form",
             "title": "Contact form Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/contact_form_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/contact_form_style_1.png",
@@ -5030,7 +5030,7 @@
         },
         {
             "id": "contact_form_style_2",
-            "shareId": "blocks",
+            "shareId": "contact-form",
             "title": "Contact form Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/contact_form_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/contact_form_style_2.png",
@@ -5053,7 +5053,7 @@
         },
         {
             "id": "contact_form_style_3",
-            "shareId": "blocks",
+            "shareId": "contact-form",
             "title": "Contact form Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/contact_form_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/contact_form_style_3.png",
@@ -5076,7 +5076,7 @@
         },
         {
             "id": "contact_form_style_4",
-            "shareId": "blocks",
+            "shareId": "contact-form",
             "title": "Contact form Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/contact_form_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/contact_form_style_4.png",
@@ -5099,7 +5099,7 @@
         },
         {
             "id": "contact_form_style_5",
-            "shareId": "blocks",
+            "shareId": "contact-form",
             "title": "Contact form Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/contact_form_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/contact_form_style_5.png",
@@ -5122,7 +5122,7 @@
         },
         {
             "id": "contact_form_style_6",
-            "shareId": "blocks",
+            "shareId": "contact-form",
             "title": "Contact form Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/contact_form_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/contact_form_style_6.png",
@@ -5145,7 +5145,7 @@
         },
         {
             "id": "contact_form_style_7",
-            "shareId": "blocks",
+            "shareId": "contact-form",
             "title": "Contact form Style Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/contact_form_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/contact_form_style_7.png",
@@ -5168,7 +5168,7 @@
         },
         {
             "id": "countdown_style_1",
-            "shareId": "blocks",
+            "shareId": "countdown",
             "title": "Countdown Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/countdown_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/countdown_style_1.png",
@@ -5191,7 +5191,7 @@
         },
         {
             "id": "countdown_style_2",
-            "shareId": "blocks",
+            "shareId": "countdown",
             "title": "Countdown Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/countdown_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/countdown_style_2.png",
@@ -5214,7 +5214,7 @@
         },
         {
             "id": "countdown_style_3",
-            "shareId": "blocks",
+            "shareId": "countdown",
             "title": "Countdown Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/countdown_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/countdown_style_3.png",
@@ -5237,7 +5237,7 @@
         },
         {
             "id": "countdown_style_4",
-            "shareId": "blocks",
+            "shareId": "countdown",
             "title": "Countdown Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/countdown_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/countdown_style_4.png",
@@ -5260,7 +5260,7 @@
         },
         {
             "id": "countdown_style_5",
-            "shareId": "blocks",
+            "shareId": "countdown",
             "title": "Countdown Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/countdown_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/countdown_style_5.png",
@@ -5283,7 +5283,7 @@
         },
         {
             "id": "countdown_style_6",
-            "shareId": "blocks",
+            "shareId": "countdown",
             "title": "Countdown Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/countdown_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/countdown_style_6.png",
@@ -5306,7 +5306,7 @@
         },
         {
             "id": "countdown_style_7",
-            "shareId": "blocks",
+            "shareId": "countdown",
             "title": "Countdown Style Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/countdown_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/countdown_style_7.png",
@@ -5329,7 +5329,7 @@
         },
         {
             "id": "counter_style_1",
-            "shareId": "blocks",
+            "shareId": "counter-up",
             "title": "Counter Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/counter_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/counter_style_1.png",
@@ -5337,7 +5337,7 @@
             "url": "#",
             "demoUrl": "http://demo.wphash.com/htmega/element-counter/",
             "category": "blocks",
-            "tags": ["counter","blocks"],
+            "tags": ["counter","counter up","blocks"],
             "isPro": "1",
             "tmpType": "pro",
             "builder": ["elementor"],
@@ -5352,7 +5352,7 @@
         },
         {
             "id": "counter_style_2",
-            "shareId": "blocks",
+            "shareId": "counter-up",
             "title": "Counter Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/counter_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/counter_style_2.png",
@@ -5375,7 +5375,7 @@
         },
         {
             "id": "counter_style_3",
-            "shareId": "blocks",
+            "shareId": "counter-up",
             "title": "Counter Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/counter_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/counter_style_3.png",
@@ -5398,7 +5398,7 @@
         },
         {
             "id": "counter_style_4",
-            "shareId": "blocks",
+            "shareId": "counter-up",
             "title": "Counter Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/counter_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/counter_style_4.png",
@@ -5421,7 +5421,7 @@
         },
         {
             "id": "counter_style_5",
-            "shareId": "blocks",
+            "shareId": "counter-up",
             "title": "Counter Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/counter_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/counter_style_5.png",
@@ -5444,7 +5444,7 @@
         },
         {
             "id": "counter_style_6",
-            "shareId": "blocks",
+            "shareId": "counter-up",
             "title": "Counter Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/counter_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/counter_style_6.png",
@@ -5467,7 +5467,7 @@
         },
         {
             "id": "custom_carousel_style_1",
-            "shareId": "blocks",
+            "shareId": "custom-carousel",
             "title": "Custom Carousel Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/custom_carousel_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/custom_carousel_style_1.png",
@@ -5490,7 +5490,7 @@
         },
         {
             "id": "custom_carousel_style_2",
-            "shareId": "blocks",
+            "shareId": "custom-carousel",
             "title": "Custom Carousel Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/custom_carousel_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/custom_carousel_style_2.png",
@@ -5513,7 +5513,7 @@
         },
         {
             "id": "custom_carousel_style_3",
-            "shareId": "blocks",
+            "shareId": "custom-carousel",
             "title": "Custom Carousel Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/custom_carousel_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/custom_carousel_style_3.png",
@@ -5536,7 +5536,7 @@
         },
         {
             "id": "custom_carousel_style_4",
-            "shareId": "blocks",
+            "shareId": "custom-carousel",
             "title": "Custom Carousel Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/custom_carousel_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/custom_carousel_style_4.png",
@@ -5559,7 +5559,7 @@
         },
         {
             "id": "custom_carousel_style_5",
-            "shareId": "blocks",
+            "shareId": "custom-carousel",
             "title": "Custom Carousel Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/custom_carousel_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/custom_carousel_style_5.png",
@@ -5582,7 +5582,7 @@
         },
         {
             "id": "custom_carousel_style_6",
-            "shareId": "blocks",
+            "shareId": "custom-carousel",
             "title": "Custom Carousel Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/custom_carousel_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/custom_carousel_style_6.png",
@@ -5605,7 +5605,7 @@
         },
         {
             "id": "custom_carousel_style_7",
-            "shareId": "blocks",
+            "shareId": "custom-carousel",
             "title": "Custom Carousel Style Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/custom_carousel_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/custom_carousel_style_7.png",
@@ -5628,7 +5628,7 @@
         },
         {
             "id": "data_table_style_1",
-            "shareId": "blocks",
+            "shareId": "data-table",
             "title": "Data Table Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/data_table_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/data_table_style_1.png",
@@ -5651,7 +5651,7 @@
         },
         {
             "id": "data_table_style_2",
-            "shareId": "blocks",
+            "shareId": "data-table",
             "title": "Data Table Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/data_table_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/data_table_style_2.png",
@@ -5674,7 +5674,7 @@
         },
         {
             "id": "data_table_style_3",
-            "shareId": "blocks",
+            "shareId": "data-table",
             "title": "Data Table Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/data_table_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/data_table_style_3.png",
@@ -5697,7 +5697,7 @@
         },
         {
             "id": "double_button_style_1",
-            "shareId": "blocks",
+            "shareId": "double-button",
             "title": "Double Button Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/double_button_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/double_button_style_1.png",
@@ -5720,7 +5720,7 @@
         },
         {
             "id": "double_button_style_2",
-            "shareId": "blocks",
+            "shareId": "double-button",
             "title": "Double Button Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/double_button_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/double_button_style_2.png",
@@ -5743,7 +5743,7 @@
         },
         {
             "id": "double_button_style_3",
-            "shareId": "blocks",
+            "shareId": "double-button",
             "title": "Double Button Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/double_button_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/double_button_style_3.png",
@@ -5766,7 +5766,7 @@
         },
         {
             "id": "double_button_style_4",
-            "shareId": "blocks",
+            "shareId": "double-button",
             "title": "Double Button Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/double_button_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/double_button_style_4.png",
@@ -5789,7 +5789,7 @@
         },
         {
             "id": "double_button_style_5",
-            "shareId": "blocks",
+            "shareId": "double-button",
             "title": "Double Button Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/double_button_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/double_button_style_5.png",
@@ -5812,7 +5812,7 @@
         },
         {
             "id": "dropcaps_style_1",
-            "shareId": "blocks",
+            "shareId": "dropcaps",
             "title": "Dropcaps Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/dropcaps_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/dropcaps_style_1.png",
@@ -5835,7 +5835,7 @@
         },
         {
             "id": "dropcaps_style_2",
-            "shareId": "blocks",
+            "shareId": "dropcaps",
             "title": "Dropcaps Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/dropcaps_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/dropcaps_style_2.png",
@@ -5858,7 +5858,7 @@
         },
         {
             "id": "dropcaps_style_3",
-            "shareId": "blocks",
+            "shareId": "dropcaps",
             "title": "Dropcaps Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/dropcaps_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/dropcaps_style_3.png",
@@ -5881,7 +5881,7 @@
         },
         {
             "id": "dropcaps_style_4",
-            "shareId": "blocks",
+            "shareId": "dropcaps",
             "title": "Dropcaps Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/dropcaps_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/dropcaps_style_4.png",
@@ -5904,7 +5904,7 @@
         },
         {
             "id": "dropcaps_style_5",
-            "shareId": "blocks",
+            "shareId": "dropcaps",
             "title": "Dropcaps Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/dropcaps_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/dropcaps_style_5.png",
@@ -5927,7 +5927,7 @@
         },
         {
             "id": "faq_style_1",
-            "shareId": "blocks",
+            "shareId": "faq",
             "title": "Faq Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/faq_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/faq_style_1.png",
@@ -5950,7 +5950,7 @@
         },
         {
             "id": "faq_style_2",
-            "shareId": "blocks",
+            "shareId": "faq",
             "title": "Faq Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/faq_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/faq_style_2.png",
@@ -5973,7 +5973,7 @@
         },
         {
             "id": "faq_style_3",
-            "shareId": "blocks",
+            "shareId": "faq",
             "title": "Faq Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/faq_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/faq_style_3.png",
@@ -5996,7 +5996,7 @@
         },
         {
             "id": "faq_style_4",
-            "shareId": "blocks",
+            "shareId": "faq",
             "title": "Faq Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/faq_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/faq_style_4.png",
@@ -6019,7 +6019,7 @@
         },
         {
             "id": "faq_style_5",
-            "shareId": "blocks",
+            "shareId": "faq",
             "title": "Faq Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/faq_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/faq_style_5.png",
@@ -6042,7 +6042,7 @@
         },
         {
             "id": "flipbox_style_1",
-            "shareId": "blocks",
+            "shareId": "flipbox",
             "title": "Flipbox Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/flipbox_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/flipbox_style_1.png",
@@ -6065,7 +6065,7 @@
         },
         {
             "id": "flipbox_style_2",
-            "shareId": "blocks",
+            "shareId": "flipbox",
             "title": "Flipbox Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/flipbox_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/flipbox_style_2.png",
@@ -6088,7 +6088,7 @@
         },
         {
             "id": "flipbox_style_3",
-            "shareId": "blocks",
+            "shareId": "flipbox",
             "title": "Flipbox Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/flipbox_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/flipbox_style_3.png",
@@ -6111,7 +6111,7 @@
         },
         {
             "id": "flipbox_style_4",
-            "shareId": "blocks",
+            "shareId": "flipbox",
             "title": "Flipbox Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/flipbox_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/flipbox_style_4.png",
@@ -6134,7 +6134,7 @@
         },
         {
             "id": "flipbox_style_5",
-            "shareId": "blocks",
+            "shareId": "flipbox",
             "title": "Flipbox Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/flipbox_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/flipbox_style_5.png",
@@ -6157,7 +6157,7 @@
         },
         {
             "id": "google_map_style_1",
-            "shareId": "blocks",
+            "shareId": "google-map",
             "title": "Google Map Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/google_map_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/google_map_style_1.png",
@@ -6180,7 +6180,7 @@
         },
         {
             "id": "google_map_style_2",
-            "shareId": "blocks",
+            "shareId": "google-map",
             "title": "Google Map Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/google_map_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/google_map_style_2.png",
@@ -6203,7 +6203,7 @@
         },
         {
             "id": "google_map_style_3",
-            "shareId": "blocks",
+            "shareId": "google-map",
             "title": "Google Map Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/google_map_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/google_map_style_3.png",
@@ -6226,7 +6226,7 @@
         },
         {
             "id": "google_map_style_4",
-            "shareId": "blocks",
+            "shareId": "google-map",
             "title": "Google Map Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/google_map_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/google_map_style_4.png",
@@ -6249,7 +6249,7 @@
         },
         {
             "id": "google_map_style_5",
-            "shareId": "blocks",
+            "shareId": "google-map",
             "title": "Google Map Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/google_map_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/google_map_style_5.png",
@@ -6272,7 +6272,7 @@
         },
         {
             "id": "google_map_style_6",
-            "shareId": "blocks",
+            "shareId": "google-map",
             "title": "Google Map Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/google_map_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/google_map_style_6.png",
@@ -6295,7 +6295,7 @@
         },
         {
             "id": "google_map_style_7",
-            "shareId": "blocks",
+            "shareId": "google-map",
             "title": "Google Map Style Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/google_map_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/google_map_style_7.png",
@@ -6318,7 +6318,7 @@
         },
         {
             "id": "heading_style_1",
-            "shareId": "blocks",
+            "shareId": "heading",
             "title": "Heading Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/heading_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/heading_style_1.png",
@@ -6341,7 +6341,7 @@
         },
         {
             "id": "heading_style_2",
-            "shareId": "blocks",
+            "shareId": "heading",
             "title": "Heading Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/heading_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/heading_style_2.png",
@@ -6364,7 +6364,7 @@
         },
         {
             "id": "heading_style_3",
-            "shareId": "blocks",
+            "shareId": "heading",
             "title": "Heading Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/heading_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/heading_style_3.png",
@@ -6387,7 +6387,7 @@
         },
         {
             "id": "heading_style_4",
-            "shareId": "blocks",
+            "shareId": "heading",
             "title": "Heading Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/heading_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/heading_style_4.png",
@@ -6410,7 +6410,7 @@
         },
         {
             "id": "heading_style_5",
-            "shareId": "blocks",
+            "shareId": "heading",
             "title": "Heading Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/heading_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/heading_style_5.png",
@@ -6433,7 +6433,7 @@
         },
         {
             "id": "heading_style_6",
-            "shareId": "blocks",
+            "shareId": "heading",
             "title": "Heading Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/heading_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/heading_style_6.png",
@@ -6456,7 +6456,7 @@
         },
         {
             "id": "heading_style_7",
-            "shareId": "blocks",
+            "shareId": "heading",
             "title": "Heading Style Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/heading_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/heading_style_7.png",
@@ -6479,7 +6479,7 @@
         },
         {
             "id": "image_comparison_style_1",
-            "shareId": "blocks",
+            "shareId": "image-comparison",
             "title": "Image Comparison Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_comparison_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_comparison_style_1.png",
@@ -6502,7 +6502,7 @@
         },
         {
             "id": "image_comparison_style_2",
-            "shareId": "blocks",
+            "shareId": "image-comparison",
             "title": "Image Comparison Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_comparison_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_comparison_style_2.png",
@@ -6525,7 +6525,7 @@
         },
         {
             "id": "image_comparison_style_3",
-            "shareId": "blocks",
+            "shareId": "image-comparison",
             "title": "Image Comparison Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_comparison_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_comparison_style_3.png",
@@ -6548,7 +6548,7 @@
         },
         {
             "id": "image_comparison_style_4",
-            "shareId": "blocks",
+            "shareId": "image-comparison",
             "title": "Image Comparison Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_comparison_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_comparison_style_4.png",
@@ -6571,7 +6571,7 @@
         },
         {
             "id": "image_comparison_style_5",
-            "shareId": "blocks",
+            "shareId": "image-comparison",
             "title": "Image Comparison Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_comparison_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_comparison_style_5.png",
@@ -6594,7 +6594,7 @@
         },
         {
             "id": "image_justify_style_1",
-            "shareId": "blocks",
+            "shareId": "image-justify",
             "title": "Image Justify Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_justify_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_justify_style_1.png",
@@ -6617,7 +6617,7 @@
         },
         {
             "id": "image_justify_style_2",
-            "shareId": "blocks",
+            "shareId": "image-justify",
             "title": "Image Justify Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_justify_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_justify_style_2.png",
@@ -6640,7 +6640,7 @@
         },
         {
             "id": "image_justify_style_3",
-            "shareId": "blocks",
+            "shareId": "image-justify",
             "title": "Image Justify Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_justify_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_justify_style_3.png",
@@ -6663,7 +6663,7 @@
         },
         {
             "id": "image_justify_style_4",
-            "shareId": "blocks",
+            "shareId": "image-justify",
             "title": "Image Justify Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_justify_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_justify_style_4.png",
@@ -6686,7 +6686,7 @@
         },
         {
             "id": "image_magnifier_style_1",
-            "shareId": "blocks",
+            "shareId": "image-magnifier",
             "title": "Image Magnifier Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_magnifier_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_magnifier_style_1.png",
@@ -6709,7 +6709,7 @@
         },
         {
             "id": "image_magnifier_style_2",
-            "shareId": "blocks",
+            "shareId": "image-magnifier",
             "title": "Image Magnifier Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_magnifier_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_magnifier_style_2.png",
@@ -6732,7 +6732,7 @@
         },
         {
             "id": "image_magnifier_style_3",
-            "shareId": "blocks",
+            "shareId": "image-magnifier",
             "title": "Image Magnifier Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_magnifier_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_magnifier_style_3.png",
@@ -6755,7 +6755,7 @@
         },
         {
             "id": "image_marker_style_1",
-            "shareId": "blocks",
+            "shareId": "image-marker",
             "title": "Image Marker Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_marker_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_marker_style_1.png",
@@ -6778,7 +6778,7 @@
         },
         {
             "id": "image_marker_style_2",
-            "shareId": "blocks",
+            "shareId": "image-marker",
             "title": "Image Marker Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_marker_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_marker_style_2.png",
@@ -6801,7 +6801,7 @@
         },
         {
             "id": "image_marker_style_3",
-            "shareId": "blocks",
+            "shareId": "image-marker",
             "title": "Image Marker Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_marker_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_marker_style_3.png",
@@ -6824,7 +6824,7 @@
         },
         {
             "id": "image_marker_style_4",
-            "shareId": "blocks",
+            "shareId": "image-marker",
             "title": "Image Marker Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_marker_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_marker_style_4.png",
@@ -6847,7 +6847,7 @@
         },
         {
             "id": "image_marker_style_5",
-            "shareId": "blocks",
+            "shareId": "image-marker",
             "title": "Image Marker Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_marker_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_marker_style_5.png",
@@ -6870,7 +6870,7 @@
         },
         {
             "id": "image_masonry_style_1",
-            "shareId": "blocks",
+            "shareId": "image-masonry",
             "title": "Image Masonry Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_masonry_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_masonry_style_1.png",
@@ -6893,7 +6893,7 @@
         },
         {
             "id": "image_masonry_style_2",
-            "shareId": "blocks",
+            "shareId": "image-masonry",
             "title": "Image Masonry Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_masonry_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_masonry_style_2.png",
@@ -6916,7 +6916,7 @@
         },
         {
             "id": "image_masonry_style_3",
-            "shareId": "blocks",
+            "shareId": "image-masonry",
             "title": "Image Masonry Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_masonry_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_masonry_style_3.png",
@@ -6939,7 +6939,7 @@
         },
         {
             "id": "image_masonry_style_4",
-            "shareId": "blocks",
+            "shareId": "image-masonry",
             "title": "Image Masonry Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_masonry_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_masonry_style_4.png",
@@ -6962,7 +6962,7 @@
         },
         {
             "id": "image_masonry_style_5",
-            "shareId": "blocks",
+            "shareId": "image-masonry",
             "title": "Image Masonry Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/image_masonry_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/image_masonry_style_5.png",
@@ -6985,7 +6985,7 @@
         },
         {
             "id": "inline_menu_style_1",
-            "shareId": "blocks",
+            "shareId": "inline-menu",
             "title": "Inline Menu Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/inline_menu_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/inline_menu_style_1.png",
@@ -7008,7 +7008,7 @@
         },
         {
             "id": "inline_menu_style_2",
-            "shareId": "blocks",
+            "shareId": "inline-menu",
             "title": "Inline Menu Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/inline_menu_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/inline_menu_style_2.png",
@@ -7031,7 +7031,7 @@
         },
         {
             "id": "inline_menu_style_3",
-            "shareId": "blocks",
+            "shareId": "inline-menu",
             "title": "Inline Menu Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/inline_menu_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/inline_menu_style_3.png",
@@ -7054,7 +7054,7 @@
         },
         {
             "id": "inline_menu_style_4",
-            "shareId": "blocks",
+            "shareId": "inline-menu",
             "title": "Inline Menu Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/inline_menu_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/inline_menu_style_4.png",
@@ -7077,7 +7077,7 @@
         },
         {
             "id": "inline_menu_style_5",
-            "shareId": "blocks",
+            "shareId": "inline-menu",
             "title": "Inline Menu Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/inline_menu_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/inline_menu_style_5.png",
@@ -7100,7 +7100,7 @@
         },
         {
             "id": "inline_menu_style_6",
-            "shareId": "blocks",
+            "shareId": "inline-menu",
             "title": "Inline Menu Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/inline_menu_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/inline_menu_style_6.png",
@@ -7123,7 +7123,7 @@
         },
         {
             "id": "inline_menu_style_7",
-            "shareId": "blocks",
+            "shareId": "inline-menu",
             "title": "Inline Menu Style Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/inline_menu_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/inline_menu_style_7.png",
@@ -7146,7 +7146,7 @@
         },
         {
             "id": "instagram_feed_style_1",
-            "shareId": "blocks",
+            "shareId": "instagram",
             "title": "Instagram Feed Style One (Third party)",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/instagram_feed_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/instagram_feed_style_1.png",
@@ -7169,7 +7169,7 @@
         },
         {
             "id": "instagram_style_1",
-            "shareId": "blocks",
+            "shareId": "instagram",
             "title": "Instagram Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/instagram_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/instagram_style_1.png",
@@ -7192,7 +7192,7 @@
         },
         {
             "id": "instagram_style_2",
-            "shareId": "blocks",
+            "shareId": "instagram",
             "title": "Instagram Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/instagram_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/instagram_style_2.png",
@@ -7215,7 +7215,7 @@
         },
         {
             "id": "instagram_style_3",
-            "shareId": "blocks",
+            "shareId": "instagram",
             "title": "Instagram Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/instagram_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/instagram_style_3.png",
@@ -7238,7 +7238,7 @@
         },
         {
             "id": "instagram_style_4",
-            "shareId": "blocks",
+            "shareId": "instagram",
             "title": "Instagram Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/instagram_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/instagram_style_4.png",
@@ -7261,7 +7261,7 @@
         },
         {
             "id": "instagram_style_5",
-            "shareId": "blocks",
+            "shareId": "instagram",
             "title": "Instagram Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/instagram_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/instagram_style_5.png",
@@ -7284,7 +7284,7 @@
         },
         {
             "id": "light_box_style_1",
-            "shareId": "blocks",
+            "shareId": "light-box",
             "title": "Light Box Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/light_box_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/light_box_style_1.png",
@@ -7307,7 +7307,7 @@
         },
         {
             "id": "light_box_style_2",
-            "shareId": "blocks",
+            "shareId": "light-box",
             "title": "Light Box Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/light_box_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/light_box_style_2.png",
@@ -7330,7 +7330,7 @@
         },
         {
             "id": "light_box_style_3",
-            "shareId": "blocks",
+            "shareId": "light-box",
             "title": "Light Box Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/light_box_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/light_box_style_3.png",
@@ -7353,7 +7353,7 @@
         },
         {
             "id": "light_box_style_4",
-            "shareId": "blocks",
+            "shareId": "light-box",
             "title": "Light Box Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/light_box_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/light_box_style_4.png",
@@ -7376,7 +7376,7 @@
         },
         {
             "id": "modal_style_1",
-            "shareId": "blocks",
+            "shareId": "modal",
             "title": "Modal Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/modal_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/modal_style_1.png",
@@ -7399,7 +7399,7 @@
         },
         {
             "id": "modal_style_2",
-            "shareId": "blocks",
+            "shareId": "modal",
             "title": "Modal Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/modal_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/modal_style_2.png",
@@ -7422,7 +7422,7 @@
         },
         {
             "id": "news_ticker_style_1",
-            "shareId": "blocks",
+            "shareId": "news-ticker",
             "title": "News Ticker Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/news_ticker_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/news_ticker_style_1.png",
@@ -7445,7 +7445,7 @@
         },
         {
             "id": "news_ticker_style_2",
-            "shareId": "blocks",
+            "shareId": "news-ticker",
             "title": "News Ticker Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/news_ticker_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/news_ticker_style_2.png",
@@ -7468,7 +7468,7 @@
         },
         {
             "id": "news_ticker_style_3",
-            "shareId": "blocks",
+            "shareId": "news-ticker",
             "title": "News Ticker Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/news_ticker_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/news_ticker_style_3.png",
@@ -7491,7 +7491,7 @@
         },
         {
             "id": "news_ticker_style_4",
-            "shareId": "blocks",
+            "shareId": "news-ticker",
             "title": "News Ticker Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/news_ticker_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/news_ticker_style_4.png",
@@ -7514,7 +7514,7 @@
         },
         {
             "id": "news_ticker_style_5",
-            "shareId": "blocks",
+            "shareId": "news-ticker",
             "title": "News Ticker Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/news_ticker_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/news_ticker_style_5.png",
@@ -7537,7 +7537,7 @@
         },
         {
             "id": "news_ticker_style_6",
-            "shareId": "blocks",
+            "shareId": "news-ticker",
             "title": "News Ticker Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/news_ticker_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/news_ticker_style_6.png",
@@ -7560,7 +7560,7 @@
         },
         {
             "id": "news_ticker_style_7",
-            "shareId": "blocks",
+            "shareId": "news-ticker",
             "title": "News Ticker Style Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/news_ticker_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/news_ticker_style_7.png",
@@ -7583,7 +7583,7 @@
         },
         {
             "id": "notification_style_1",
-            "shareId": "blocks",
+            "shareId": "notification",
             "title": "Notification Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/notification_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/notification_style_1.png",
@@ -7606,7 +7606,7 @@
         },
         {
             "id": "notification_style_2",
-            "shareId": "blocks",
+            "shareId": "notification",
             "title": "Notification Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/notification_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/notification_style_2.png",
@@ -7629,7 +7629,7 @@
         },
         {
             "id": "offcanvas_style_1",
-            "shareId": "blocks",
+            "shareId": "off-canvas",
             "title": "Off canvas Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/offcanvas_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/offcanvas_style_1.png",
@@ -7652,7 +7652,7 @@
         },
         {
             "id": "offcanvas_style_2",
-            "shareId": "blocks",
+            "shareId": "off-canvas",
             "title": "Off canvas Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/offcanvas_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/offcanvas_style_2.png",
@@ -7675,7 +7675,7 @@
         },
         {
             "id": "offcanvas_style_3",
-            "shareId": "blocks",
+            "shareId": "off-canvas",
             "title": "Off canvas Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/offcanvas_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/offcanvas_style_3.png",
@@ -7698,7 +7698,7 @@
         },
         {
             "id": "offcanvas_style_4",
-            "shareId": "blocks",
+            "shareId": "off-canvas",
             "title": "Off canvas Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/offcanvas_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/offcanvas_style_4.png",
@@ -7721,7 +7721,7 @@
         },
         {
             "id": "page_not_found_content_styel_1",
-            "shareId": "blocks",
+            "shareId": "404",
             "title": "Page Not Found Content Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/page_not_found_content_styel_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/page_not_found_content_styel_1.png",
@@ -7744,7 +7744,7 @@
         },
         {
             "id": "page_not_found_content_styel_2",
-            "shareId": "blocks",
+            "shareId": "404",
             "title": "Page Not Found Content Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/page_not_found_content_styel_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/page_not_found_content_styel_2.png",
@@ -7767,7 +7767,7 @@
         },
         {
             "id": "page_not_found_content_styel_3",
-            "shareId": "blocks",
+            "shareId": "404",
             "title": "Page Not Found Content Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/page_not_found_content_styel_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/page_not_found_content_styel_3.png",
@@ -7790,7 +7790,7 @@
         },
         {
             "id": "page_not_found_content_styel_4",
-            "shareId": "blocks",
+            "shareId": "404",
             "title": "Page Not Found Content Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/page_not_found_content_styel_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/page_not_found_content_styel_4.png",
@@ -7813,7 +7813,7 @@
         },
         {
             "id": "panel_slider_style_1",
-            "shareId": "blocks",
+            "shareId": "panel-slider",
             "title": "Panel Slider Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/panel_slider_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/panel_slider_style_1.png",
@@ -7836,7 +7836,7 @@
         },
         {
             "id": "panel_slider_style_2",
-            "shareId": "blocks",
+            "shareId": "panel-slider",
             "title": "Panel Slider Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/panel_slider_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/panel_slider_style_2.png",
@@ -7859,7 +7859,7 @@
         },
         {
             "id": "panel_slider_style_3",
-            "shareId": "blocks",
+            "shareId": "panel-slider",
             "title": "Panel Slider Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/panel_slider_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/panel_slider_style_3.png",
@@ -7882,7 +7882,7 @@
         },
         {
             "id": "panel_slider_style_4",
-            "shareId": "blocks",
+            "shareId": "panel-slider",
             "title": "Panel Slider Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/panel_slider_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/panel_slider_style_4.png",
@@ -7905,7 +7905,7 @@
         },
         {
             "id": "popover_style_1",
-            "shareId": "blocks",
+            "shareId": "popover",
             "title": "Popover Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/popover_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/popover_style_1.png",
@@ -7928,7 +7928,7 @@
         },
         {
             "id": "popover_style_2",
-            "shareId": "blocks",
+            "shareId": "popover",
             "title": "Popover Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/popover_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/popover_style_2.png",
@@ -7951,7 +7951,7 @@
         },
         {
             "id": "popover_style_3",
-            "shareId": "blocks",
+            "shareId": "popover",
             "title": "Popover Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/popover_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/popover_style_3.png",
@@ -7974,7 +7974,7 @@
         },
         {
             "id": "pos_slider_style_1",
-            "shareId": "blocks",
+            "shareId": "post-slider",
             "title": "Post Slider Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/pos_slider_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/pos_slider_style_1.png",
@@ -7997,7 +7997,7 @@
         },
         {
             "id": "pos_slider_style_2",
-            "shareId": "blocks",
+            "shareId": "post-slider",
             "title": "Post Slider Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/pos_slider_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/pos_slider_style_2.png",
@@ -8020,7 +8020,7 @@
         },
         {
             "id": "pos_slider_style_3",
-            "shareId": "blocks",
+            "shareId": "post-slider",
             "title": "Post Slider Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/pos_slider_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/pos_slider_style_3.png",
@@ -8043,7 +8043,7 @@
         },
         {
             "id": "pos_slider_style_4",
-            "shareId": "blocks",
+            "shareId": "post-slider",
             "title": "Post Slider Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/pos_slider_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/pos_slider_style_4.png",
@@ -8066,7 +8066,7 @@
         },
         {
             "id": "pos_slider_style_5",
-            "shareId": "blocks",
+            "shareId": "post-slider",
             "title": "Post Slider Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/pos_slider_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/pos_slider_style_5.png",
@@ -8089,7 +8089,7 @@
         },
         {
             "id": "post_carosul_style_1",
-            "shareId": "blocks",
+            "shareId": "post-carousel",
             "title": "Post Carousel Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/post_carosul_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/post_carosul_style_1.png",
@@ -8112,7 +8112,7 @@
         },
         {
             "id": "post_carosul_style_2",
-            "shareId": "blocks",
+            "shareId": "post-carousel",
             "title": "Post Carousel Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/post_carosul_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/post_carosul_style_2.png",
@@ -8135,7 +8135,7 @@
         },
         {
             "id": "post_carosul_style_3",
-            "shareId": "blocks",
+            "shareId": "post-carousel",
             "title": "Post Carousel Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/post_carosul_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/post_carosul_style_3.png",
@@ -8158,7 +8158,7 @@
         },
         {
             "id": "post_carosul_style_4",
-            "shareId": "blocks",
+            "shareId": "post-carousel",
             "title": "Post Carousel Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/post_carosul_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/post_carosul_style_4.png",
@@ -8181,7 +8181,7 @@
         },
         {
             "id": "post_carosul_style_5",
-            "shareId": "blocks",
+            "shareId": "post-carousel",
             "title": "Post Carousel Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/post_carosul_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/post_carosul_style_5.png",
@@ -8204,7 +8204,7 @@
         },
         {
             "id": "post_grid_style_1",
-            "shareId": "blocks",
+            "shareId": "post-grid",
             "title": "Post Grid Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/post_grid_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/post_grid_style_1.png",
@@ -8227,7 +8227,7 @@
         },
         {
             "id": "post_grid_style_2",
-            "shareId": "blocks",
+            "shareId": "post-grid",
             "title": "Post Grid Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/post_grid_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/post_grid_style_2.png",
@@ -8250,7 +8250,7 @@
         },
         {
             "id": "post_grid_style_3",
-            "shareId": "blocks",
+            "shareId": "post-grid",
             "title": "Post Grid Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/post_grid_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/post_grid_style_3.png",
@@ -8273,7 +8273,7 @@
         },
         {
             "id": "post_grid_style_4",
-            "shareId": "blocks",
+            "shareId": "post-grid",
             "title": "Post Grid Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/post_grid_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/post_grid_style_4.png",
@@ -8296,7 +8296,7 @@
         },
         {
             "id": "post_grid_style_5",
-            "shareId": "blocks",
+            "shareId": "post-grid",
             "title": "Post Grid Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/post_grid_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/post_grid_style_5.png",
@@ -8319,7 +8319,7 @@
         },
         {
             "id": "post_grid_tab_style_1",
-            "shareId": "blocks",
+            "shareId": "post-grid-tab",
             "title": "Post Grid Tab Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/post_grid_tab_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/post_grid_tab_style_1.png",
@@ -8342,7 +8342,7 @@
         },
         {
             "id": "post_grid_tab_style_2",
-            "shareId": "blocks",
+            "shareId": "post-grid-tab",
             "title": "Post Grid Tab Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/post_grid_tab_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/post_grid_tab_style_2.png",
@@ -8365,7 +8365,7 @@
         },
         {
             "id": "post_grid_tab_style_3",
-            "shareId": "blocks",
+            "shareId": "post-grid-tab",
             "title": "Post Grid Tab Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/post_grid_tab_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/post_grid_tab_style_3.png",
@@ -8388,7 +8388,7 @@
         },
         {
             "id": "post_grid_tab_style_4",
-            "shareId": "blocks",
+            "shareId": "post-grid-tab",
             "title": "Post Grid Tab Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/post_grid_tab_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/post_grid_tab_style_4.png",
@@ -8411,7 +8411,7 @@
         },
         {
             "id": "post_grid_tab_style_5",
-            "shareId": "blocks",
+            "shareId": "post-grid-tab",
             "title": "Post Grid Tab Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/post_grid_tab_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/post_grid_tab_style_5.png",
@@ -8434,7 +8434,7 @@
         },
         {
             "id": "pricing_list_view_style_1",
-            "shareId": "blocks",
+            "shareId": "pricing-list",
             "title": "Pricing List View Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/pricing_list_view_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/pricing_list_view_style_1.png",
@@ -8457,7 +8457,7 @@
         },
         {
             "id": "pricing_list_view_style_2",
-            "shareId": "blocks",
+            "shareId": "pricing-list",
             "title": "Pricing List View Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/pricing_list_view_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/pricing_list_view_style_2.png",
@@ -8480,7 +8480,7 @@
         },
         {
             "id": "pricing_list_view_style_3",
-            "shareId": "blocks",
+            "shareId": "pricing-list",
             "title": "Pricing List View Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/pricing_list_view_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/pricing_list_view_style_3.png",
@@ -8503,7 +8503,7 @@
         },
         {
             "id": "pricing_table_style_1",
-            "shareId": "blocks",
+            "shareId": "pricing-table",
             "title": "Pricing Table Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/pricing_table_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/pricing_table_style_1.png",
@@ -8526,7 +8526,7 @@
         },
         {
             "id": "pricing_table_style_2",
-            "shareId": "blocks",
+            "shareId": "pricing-table",
             "title": "Pricing Table Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/pricing_table_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/pricing_table_style_2.png",
@@ -8549,7 +8549,7 @@
         },
         {
             "id": "pricing_table_style_3",
-            "shareId": "blocks",
+            "shareId": "pricing-table",
             "title": "Pricing Table Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/pricing_table_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/pricing_table_style_3.png",
@@ -8572,7 +8572,7 @@
         },
         {
             "id": "pricing_table_style_4",
-            "shareId": "blocks",
+            "shareId": "pricing-table",
             "title": "Pricing Table Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/pricing_table_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/pricing_table_style_4.png",
@@ -8595,7 +8595,7 @@
         },
         {
             "id": "pricing_table_style_5",
-            "shareId": "blocks",
+            "shareId": "pricing-table",
             "title": "Pricing Table Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/pricing_table_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/pricing_table_style_5.png",
@@ -8618,7 +8618,7 @@
         },
         {
             "id": "pricing_table_style_6",
-            "shareId": "blocks",
+            "shareId": "pricing-table",
             "title": "Pricing Table Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/pricing_table_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/pricing_table_style_6.png",
@@ -8641,7 +8641,7 @@
         },
         {
             "id": "pricing_table_style_7",
-            "shareId": "blocks",
+            "shareId": "pricing-table",
             "title": "Pricing Table Style Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/pricing_table_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/pricing_table_style_7.png",
@@ -8664,7 +8664,7 @@
         },
         {
             "id": "progress_bar_style_1",
-            "shareId": "blocks",
+            "shareId": "progress-bar",
             "title": "Progress Bar Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/progress_bar_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/progress_bar_style_1.png",
@@ -8687,7 +8687,7 @@
         },
         {
             "id": "progress_bar_style_2",
-            "shareId": "blocks",
+            "shareId": "progress-bar",
             "title": "Progress Bar Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/progress_bar_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/progress_bar_style_2.png",
@@ -8710,7 +8710,7 @@
         },
         {
             "id": "progress_bar_style_3",
-            "shareId": "blocks",
+            "shareId": "progress-bar",
             "title": "Progress Bar Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/progress_bar_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/progress_bar_style_3.png",
@@ -8733,7 +8733,7 @@
         },
         {
             "id": "progress_bar_style_4",
-            "shareId": "blocks",
+            "shareId": "progress-bar",
             "title": "Progress Bar Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/progress_bar_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/progress_bar_style_4.png",
@@ -8756,7 +8756,7 @@
         },
         {
             "id": "progress_bar_style_5",
-            "shareId": "blocks",
+            "shareId": "progress-bar",
             "title": "Progress Bar Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/progress_bar_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/progress_bar_style_5.png",
@@ -8779,7 +8779,7 @@
         },
         {
             "id": "progress_bar_style_6",
-            "shareId": "blocks",
+            "shareId": "progress-bar",
             "title": "Progress Bar Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/progress_bar_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/progress_bar_style_6.png",
@@ -8802,7 +8802,7 @@
         },
         {
             "id": "progress_bar_style_7",
-            "shareId": "blocks",
+            "shareId": "progress-bar",
             "title": "Progress Bar Style Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/progress_bar_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/progress_bar_style_7.png",
@@ -8825,7 +8825,7 @@
         },
         {
             "id": "progress_bar_style_8",
-            "shareId": "blocks",
+            "shareId": "progress-bar",
             "title": "Progress Bar Style Eight",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/progress_bar_style_8.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/progress_bar_style_8.png",
@@ -8848,7 +8848,7 @@
         },
         {
             "id": "progress_bar_style_9",
-            "shareId": "blocks",
+            "shareId": "progress-bar",
             "title": "Progress Bar Style Nine",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/progress_bar_style_9.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/progress_bar_style_9.png",
@@ -8871,7 +8871,7 @@
         },
         {
             "id": "progress_bar_style_10",
-            "shareId": "blocks",
+            "shareId": "progress-bar",
             "title": "Progress Bar Style Ten",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/progress_bar_style_10.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/progress_bar_style_10.png",
@@ -8894,7 +8894,7 @@
         },
         {
             "id": "progress_bar_style_11",
-            "shareId": "blocks",
+            "shareId": "progress-bar",
             "title": "Progress Bar Style Eleven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/progress_bar_style_11.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/progress_bar_style_11.png",
@@ -8917,7 +8917,7 @@
         },
         {
             "id": "scroll_image_style_1",
-            "shareId": "blocks",
+            "shareId": "scroll-image",
             "title": "Scroll Image Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/scroll_image_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/scroll_image_style_1.png",
@@ -8940,7 +8940,7 @@
         },
         {
             "id": "scroll_image_style_2",
-            "shareId": "blocks",
+            "shareId": "scroll-image",
             "title": "Scroll Image Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/scroll_image_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/scroll_image_style_2.png",
@@ -8963,7 +8963,7 @@
         },
         {
             "id": "scroll_navigation_style_1",
-            "shareId": "blocks",
+            "shareId": "scroll-navigation",
             "title": "Scroll Navigation Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/scroll_navigation_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/scroll_navigation_style_1.png",
@@ -8971,7 +8971,7 @@
             "url": "#",
             "demoUrl": "http://demo.wphash.com/htmega/element-scroll-navigation/",
             "category": "blocks",
-            "tags": "Scroll Navigation",
+            "tags": ["scroll navigation","scroll","navigation"],
             "isPro": "1",
             "tmpType": "pro",
             "builder": ["elementor"],
@@ -8986,7 +8986,7 @@
         },
         {
             "id": "search_form_style_1",
-            "shareId": "blocks",
+            "shareId": "search-form",
             "title": "Search Form Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/search_form_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/search_form_style_1.png",
@@ -9009,7 +9009,7 @@
         },
         {
             "id": "search_form_style_2",
-            "shareId": "blocks",
+            "shareId": "search-form",
             "title": "Search Form Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/search_form_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/search_form_style_2.png",
@@ -9032,7 +9032,7 @@
         },
         {
             "id": "search_form_style_3",
-            "shareId": "blocks",
+            "shareId": "search-form",
             "title": "Search Form Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/search_form_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/search_form_style_3.png",
@@ -9055,7 +9055,7 @@
         },
         {
             "id": "search_form_style_4",
-            "shareId": "blocks",
+            "shareId": "search-form",
             "title": "Search Form Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/search_form_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/search_form_style_4.png",
@@ -9078,7 +9078,7 @@
         },
         {
             "id": "search_form_style_5",
-            "shareId": "blocks",
+            "shareId": "search-form",
             "title": "Search Form Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/search_form_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/search_form_style_5.png",
@@ -9101,7 +9101,7 @@
         },
         {
             "id": "services_style_1",
-            "shareId": "blocks",
+            "shareId": "services",
             "title": "Services Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/services_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/services_style_1.png",
@@ -9124,7 +9124,7 @@
         },
         {
             "id": "services_style_2",
-            "shareId": "blocks",
+            "shareId": "services",
             "title": "Services Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/services_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/services_style_2.png",
@@ -9147,7 +9147,7 @@
         },
         {
             "id": "services_style_3",
-            "shareId": "blocks",
+            "shareId": "services",
             "title": "Services Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/services_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/services_style_3.png",
@@ -9170,7 +9170,7 @@
         },
         {
             "id": "services_style_4",
-            "shareId": "blocks",
+            "shareId": "services",
             "title": "Services Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/services_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/services_style_4.png",
@@ -9193,7 +9193,7 @@
         },
         {
             "id": "services_style_5",
-            "shareId": "blocks",
+            "shareId": "services",
             "title": "Services Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/services_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/services_style_5.png",
@@ -9216,7 +9216,7 @@
         },
         {
             "id": "services_style_6",
-            "shareId": "blocks",
+            "shareId": "services",
             "title": "Services Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/services_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/services_style_6.png",
@@ -9239,7 +9239,7 @@
         },
         {
             "id": "services_style_7",
-            "shareId": "blocks",
+            "shareId": "services",
             "title": "Services Style Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/services_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/services_style_7.png",
@@ -9262,7 +9262,7 @@
         },
         {
             "id": "single_post_style_1",
-            "shareId": "blocks",
+            "shareId": "single-post",
             "title": "Single Post Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/single_post_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/single_post_style_1.png",
@@ -9285,7 +9285,7 @@
         },
         {
             "id": "single_post_style_2",
-            "shareId": "blocks",
+            "shareId": "single-post",
             "title": "Single Post Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/single_post_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/single_post_style_2.png",
@@ -9308,7 +9308,7 @@
         },
         {
             "id": "single_post_style_3",
-            "shareId": "blocks",
+            "shareId": "single-post",
             "title": "Single Post Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/single_post_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/single_post_style_3.png",
@@ -9331,7 +9331,7 @@
         },
         {
             "id": "single_post_style_4",
-            "shareId": "blocks",
+            "shareId": "single-post",
             "title": "Single Post Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/single_post_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/single_post_style_4.png",
@@ -9354,7 +9354,7 @@
         },
         {
             "id": "single_post_style_5",
-            "shareId": "blocks",
+            "shareId": "single-post",
             "title": "Single Post Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/single_post_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/single_post_style_5.png",
@@ -9377,7 +9377,7 @@
         },
         {
             "id": "social_share_style_1",
-            "shareId": "blocks",
+            "shareId": "social-share",
             "title": "Social Share Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/social_share_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/social_share_style_1.png",
@@ -9400,7 +9400,7 @@
         },
         {
             "id": "social_share_style_2",
-            "shareId": "blocks",
+            "shareId": "social-share",
             "title": "Social Share Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/social_share_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/social_share_style_2.png",
@@ -9423,7 +9423,7 @@
         },
         {
             "id": "social_share_style_3",
-            "shareId": "blocks",
+            "shareId": "social-share",
             "title": "Social Share Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/social_share_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/social_share_style_3.png",
@@ -9446,7 +9446,7 @@
         },
         {
             "id": "social_share_style_4",
-            "shareId": "blocks",
+            "shareId": "social-share",
             "title": "Social Share Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/social_share_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/social_share_style_4.png",
@@ -9469,7 +9469,7 @@
         },
         {
             "id": "social_share_style_5",
-            "shareId": "blocks",
+            "shareId": "social-share",
             "title": "Social Share Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/social_share_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/social_share_style_5.png",
@@ -9492,7 +9492,7 @@
         },
         {
             "id": "social_share_style_6",
-            "shareId": "blocks",
+            "shareId": "social-share",
             "title": "Social Share Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/social_share_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/social_share_style_6.png",
@@ -9515,7 +9515,7 @@
         },
         {
             "id": "social_share_style_7",
-            "shareId": "blocks",
+            "shareId": "social-share",
             "title": "Social Share Style Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/social_share_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/social_share_style_7.png",
@@ -9538,7 +9538,7 @@
         },
         {
             "id": "social_share_style_8",
-            "shareId": "blocks",
+            "shareId": "social-share",
             "title": "Social Share Style Eight",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/social_share_style_8.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/social_share_style_8.png",
@@ -9561,7 +9561,7 @@
         },
         {
             "id": "social_share_style_9",
-            "shareId": "blocks",
+            "shareId": "social-share",
             "title": "Social Share Style Nine",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/social_share_style_9.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/social_share_style_9.png",
@@ -9584,7 +9584,7 @@
         },
         {
             "id": "subscribe_style_1",
-            "shareId": "blocks",
+            "shareId": "subscribe",
             "title": "Subscribe Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/subscribe_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/subscribe_style_1.png",
@@ -9607,7 +9607,7 @@
         },
         {
             "id": "subscribe_style_2",
-            "shareId": "blocks",
+            "shareId": "subscribe",
             "title": "Subscribe Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/subscribe_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/subscribe_style_2.png",
@@ -9630,7 +9630,7 @@
         },
         {
             "id": "subscribe_style_3",
-            "shareId": "blocks",
+            "shareId": "subscribe",
             "title": "Subscribe Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/subscribe_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/subscribe_style_3.png",
@@ -9653,7 +9653,7 @@
         },
         {
             "id": "subscribe_style_4",
-            "shareId": "blocks",
+            "shareId": "subscribe",
             "title": "Subscribe Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/subscribe_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/subscribe_style_4.png",
@@ -9676,7 +9676,7 @@
         },
         {
             "id": "subscribe_style_5",
-            "shareId": "blocks",
+            "shareId": "subscribe",
             "title": "Subscribe Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/subscribe_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/subscribe_style_5.png",
@@ -9699,7 +9699,7 @@
         },
         {
             "id": "switcher_style_1",
-            "shareId": "blocks",
+            "shareId": "switcher",
             "title": "Switcher Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/switcher_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/switcher_style_1.png",
@@ -9722,7 +9722,7 @@
         },
         {
             "id": "switcher_style_2",
-            "shareId": "blocks",
+            "shareId": "switcher",
             "title": "Switcher Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/switcher_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/switcher_style_2.png",
@@ -9745,7 +9745,7 @@
         },
         {
             "id": "switcher_style_3",
-            "shareId": "blocks",
+            "shareId": "switcher",
             "title": "Switcher Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/switcher_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/switcher_style_3.png",
@@ -9768,7 +9768,7 @@
         },
         {
             "id": "tab_style_1",
-            "shareId": "blocks",
+            "shareId": "tab",
             "title": "Tab Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/tab_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/tab_style_1.png",
@@ -9791,7 +9791,7 @@
         },
         {
             "id": "tab_style_2",
-            "shareId": "blocks",
+            "shareId": "tab",
             "title": "Tab Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/tab_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/tab_style_2.png",
@@ -9814,7 +9814,7 @@
         },
         {
             "id": "tab_style_3",
-            "shareId": "blocks",
+            "shareId": "tab",
             "title": "Tab Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/tab_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/tab_style_3.png",
@@ -9837,7 +9837,7 @@
         },
         {
             "id": "tab_style_4",
-            "shareId": "blocks",
+            "shareId": "tab",
             "title": "Tab Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/tab_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/tab_style_4.png",
@@ -9860,7 +9860,7 @@
         },
         {
             "id": "tab_style_5",
-            "shareId": "blocks",
+            "shareId": "tab",
             "title": "Tab Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/tab_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/tab_style_5.png",
@@ -9883,7 +9883,7 @@
         },
         {
             "id": "team_member_style_1",
-            "shareId": "blocks",
+            "shareId": "team-member",
             "title": "Team Member Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/team_member_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/team_member_style_1.png",
@@ -9906,7 +9906,7 @@
         },
         {
             "id": "team_member_style_2",
-            "shareId": "blocks",
+            "shareId": "team-member",
             "title": "Team Member Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/team_member_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/team_member_style_2.png",
@@ -9929,7 +9929,7 @@
         },
         {
             "id": "team_member_style_3",
-            "shareId": "blocks",
+            "shareId": "team-member",
             "title": "Team Member Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/team_member_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/team_member_style_3.png",
@@ -9952,7 +9952,7 @@
         },
         {
             "id": "team_member_style_4",
-            "shareId": "blocks",
+            "shareId": "team-member",
             "title": "Team Member Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/team_member_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/team_member_style_4.png",
@@ -9975,7 +9975,7 @@
         },
         {
             "id": "team_member_style_5",
-            "shareId": "blocks",
+            "shareId": "team-member",
             "title": "Team Member Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/team_member_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/team_member_style_5.png",
@@ -9998,7 +9998,7 @@
         },
         {
             "id": "team_member_style_6",
-            "shareId": "blocks",
+            "shareId": "team-member",
             "title": "Team Member Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/team_member_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/team_member_style_6.png",
@@ -10021,7 +10021,7 @@
         },
         {
             "id": "team_member_style_7",
-            "shareId": "blocks",
+            "shareId": "team-member",
             "title": "Team Member Style Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/team_member_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/team_member_style_7.png",
@@ -10044,7 +10044,7 @@
         },
         {
             "id": "team_member_style_8",
-            "shareId": "blocks",
+            "shareId": "team-member",
             "title": "Team Member Style Eight",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/team_member_style_8.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/team_member_style_8.png",
@@ -10067,7 +10067,7 @@
         },
         {
             "id": "testimonial_carosel_style_1",
-            "shareId": "blocks",
+            "shareId": "testimonial-carousel",
             "title": "Testimonial Carousel Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/testimonial_carosel_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/testimonial_carosel_style_1.png",
@@ -10090,7 +10090,7 @@
         },
         {
             "id": "testimonial_carosel_style_2",
-            "shareId": "blocks",
+            "shareId": "testimonial-carousel",
             "title": "Testimonial Carousel Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/testimonial_carosel_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/testimonial_carosel_style_2.png",
@@ -10113,7 +10113,7 @@
         },
         {
             "id": "testimonial_carosel_style_3",
-            "shareId": "blocks",
+            "shareId": "testimonial-carousel",
             "title": "Testimonial Carousel Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/testimonial_carosel_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/testimonial_carosel_style_3.png",
@@ -10136,7 +10136,7 @@
         },
         {
             "id": "testimonial_carosel_style_4",
-            "shareId": "blocks",
+            "shareId": "testimonial-carousel",
             "title": "Testimonial Carousel Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/testimonial_carosel_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/testimonial_carosel_style_4.png",
@@ -10159,7 +10159,7 @@
         },
         {
             "id": "testimonial_carosel_style_5",
-            "shareId": "blocks",
+            "shareId": "testimonial-carousel",
             "title": "Testimonial Carousel Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/testimonial_carosel_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/testimonial_carosel_style_5.png",
@@ -10182,7 +10182,7 @@
         },
         {
             "id": "testimonial_carosel_style_6",
-            "shareId": "blocks",
+            "shareId": "testimonial-carousel",
             "title": "Testimonial Carousel Style Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/testimonial_carosel_style_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/testimonial_carosel_style_6.png",
@@ -10205,7 +10205,7 @@
         },
         {
             "id": "testimonial_carosel_style_7",
-            "shareId": "blocks",
+            "shareId": "testimonial-carousel",
             "title": "Testimonial Carousel Style Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/testimonial_carosel_style_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/testimonial_carosel_style_7.png",
@@ -10228,7 +10228,7 @@
         },
         {
             "id": "testimonial_carosel_style_8",
-            "shareId": "blocks",
+            "shareId": "testimonial-carousel",
             "title": "Testimonial Carousel Style Eight",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/testimonial_carosel_style_8.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/testimonial_carosel_style_8.png",
@@ -10251,7 +10251,7 @@
         },
         {
             "id": "testimonial_carosel_style_9",
-            "shareId": "blocks",
+            "shareId": "testimonial-carousel",
             "title": "Testimonial Carousel Style Nine",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/testimonial_carosel_style_9.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/testimonial_carosel_style_9.png",
@@ -10274,7 +10274,7 @@
         },
         {
             "id": "testimonial_grid_style_1",
-            "shareId": "blocks",
+            "shareId": "testimonial-grid",
             "title": "Testimonial Grid Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/testimonial_grid_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/testimonial_grid_style_1.png",
@@ -10297,7 +10297,7 @@
         },
         {
             "id": "testimonial_grid_style_2",
-            "shareId": "blocks",
+            "shareId": "testimonial-grid",
             "title": "Testimonial Grid Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/testimonial_grid_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/testimonial_grid_style_2.png",
@@ -10320,7 +10320,7 @@
         },
         {
             "id": "testimonial_grid_style_3",
-            "shareId": "blocks",
+            "shareId": "testimonial-grid",
             "title": "Testimonial Grid Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/testimonial_grid_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/testimonial_grid_style_3.png",
@@ -10343,7 +10343,7 @@
         },
         {
             "id": "testimonial_grid_style_4",
-            "shareId": "blocks",
+            "shareId": "testimonial-grid",
             "title": "Testimonial Grid Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/testimonial_grid_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/testimonial_grid_style_4.png",
@@ -10366,7 +10366,7 @@
         },
         {
             "id": "testimonial_grid_style_5",
-            "shareId": "blocks",
+            "shareId": "testimonial-grid",
             "title": "Testimonial Grid Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/testimonial_grid_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/testimonial_grid_style_5.png",
@@ -10389,7 +10389,7 @@
         },
         {
             "id": "thumbnails_gallery_style_1",
-            "shareId": "blocks",
+            "shareId": "thumbnails-gallery",
             "title": "Thumbnails Gallery Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/thumbnails_gallery_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/thumbnails_gallery_style_1.png",
@@ -10412,7 +10412,7 @@
         },
         {
             "id": "thumbnails_gallery_style_2",
-            "shareId": "blocks",
+            "shareId": "thumbnails-gallery",
             "title": "Thumbnails Gallery Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/thumbnails_gallery_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/thumbnails_gallery_style_2.png",
@@ -10435,7 +10435,7 @@
         },
         {
             "id": "thumbnails_gallery_style_3",
-            "shareId": "blocks",
+            "shareId": "thumbnails-gallery",
             "title": "Thumbnails Gallery Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/thumbnails_gallery_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/thumbnails_gallery_style_3.png",
@@ -10458,7 +10458,7 @@
         },
         {
             "id": "thumbnails_gallery_style_4",
-            "shareId": "blocks",
+            "shareId": "thumbnails-gallery",
             "title": "Thumbnails Gallery Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/thumbnails_gallery_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/thumbnails_gallery_style_4.png",
@@ -10481,7 +10481,7 @@
         },
         {
             "id": "toggle_style_1",
-            "shareId": "blocks",
+            "shareId": "toggle",
             "title": "Toggle Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/toggle_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/toggle_style_1.png",
@@ -10504,7 +10504,7 @@
         },
         {
             "id": "toggle_style_2",
-            "shareId": "blocks",
+            "shareId": "toggle",
             "title": "Toggle Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/toggle_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/toggle_style_2.png",
@@ -10527,7 +10527,7 @@
         },
         {
             "id": "toggle_style_3",
-            "shareId": "blocks",
+            "shareId": "toggle",
             "title": "Toggle Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/toggle_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/toggle_style_3.png",
@@ -10550,7 +10550,7 @@
         },
         {
             "id": "tooltip_style_1",
-            "shareId": "blocks",
+            "shareId": "tooltip",
             "title": "Tooltip",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/tooltip_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/tooltip_style_1.png",
@@ -10573,7 +10573,7 @@
         },
         {
             "id": "twitter_feed_style_1",
-            "shareId": "blocks",
+            "shareId": "twitter-feed",
             "title": "Twitter Feed Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/twitter_feed_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/twitter_feed_style_1.png",
@@ -10596,7 +10596,7 @@
         },
         {
             "id": "twitter_feed_style_2",
-            "shareId": "blocks",
+            "shareId": "twitter-feed",
             "title": "Twitter Feed Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/twitter_feed_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/twitter_feed_style_2.png",
@@ -10619,7 +10619,7 @@
         },
         {
             "id": "twitter_feed_style_3",
-            "shareId": "blocks",
+            "shareId": "twitter-feed",
             "title": "Twitter Feed Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/twitter_feed_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/twitter_feed_style_3.png",
@@ -10642,7 +10642,7 @@
         },
         {
             "id": "twitter_feed_style_4",
-            "shareId": "blocks",
+            "shareId": "twitter-feed",
             "title": "Twitter Feed Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/twitter_feed_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/twitter_feed_style_4.png",
@@ -10665,7 +10665,7 @@
         },
         {
             "id": "twitter_feed_style_5",
-            "shareId": "blocks",
+            "shareId": "twitter-feed",
             "title": "Twitter Feed Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/twitter_feed_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/twitter_feed_style_5.png",
@@ -10688,7 +10688,7 @@
         },
         {
             "id": "user_login_form_style_1",
-            "shareId": "blocks",
+            "shareId": "user-login-form",
             "title": "User Login Form Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/user_login_form_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/user_login_form_style_1.png",
@@ -10711,7 +10711,7 @@
         },
         {
             "id": "user_login_form_style_2",
-            "shareId": "blocks",
+            "shareId": "user-login-form",
             "title": "User Login Form Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/user_login_form_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/user_login_form_style_2.png",
@@ -10734,7 +10734,7 @@
         },
         {
             "id": "user_login_form_style_3",
-            "shareId": "blocks",
+            "shareId": "user-login-form",
             "title": "User Login Form Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/user_login_form_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/user_login_form_style_3.png",
@@ -10757,7 +10757,7 @@
         },
         {
             "id": "user_login_form_style_4",
-            "shareId": "blocks",
+            "shareId": "user-login-form",
             "title": "User Login Form Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/user_login_form_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/user_login_form_style_4.png",
@@ -10780,7 +10780,7 @@
         },
         {
             "id": "user_login_form_style_5",
-            "shareId": "blocks",
+            "shareId": "user-login-form",
             "title": "User Login Form Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/user_login_form_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/user_login_form_style_5.png",
@@ -10803,7 +10803,7 @@
         },
         {
             "id": "user_register_style_1",
-            "shareId": "blocks",
+            "shareId": "user-register-form",
             "title": "User Register Form Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/user_register_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/user_register_style_1.png",
@@ -10826,7 +10826,7 @@
         },
         {
             "id": "user_register_style_2",
-            "shareId": "blocks",
+            "shareId": "user-register-form",
             "title": "User Register Form Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/user_register_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/user_register_style_2.png",
@@ -10849,7 +10849,7 @@
         },
         {
             "id": "user_register_style_3",
-            "shareId": "blocks",
+            "shareId": "user-register-form",
             "title": "User Register Form Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/user_register_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/user_register_style_3.png",
@@ -10872,7 +10872,7 @@
         },
         {
             "id": "user_register_style_4",
-            "shareId": "blocks",
+            "shareId": "user-register-form",
             "title": "User Register Form Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/user_register_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/user_register_style_4.png",
@@ -10895,7 +10895,7 @@
         },
         {
             "id": "user_register_style_5",
-            "shareId": "blocks",
+            "shareId": "user-register-form",
             "title": "User Register Form Style Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/user_register_style_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/user_register_style_5.png",
@@ -10918,7 +10918,7 @@
         },
         {
             "id": "vertical_timeline_style_1",
-            "shareId": "blocks",
+            "shareId": "vertical-timeline",
             "title": "Vertical Timeline Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/vertical_timeline_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/vertical_timeline_style_1.png",
@@ -10941,7 +10941,7 @@
         },
         {
             "id": "vertical_timeline_style_2",
-            "shareId": "blocks",
+            "shareId": "vertical-timeline",
             "title": "Vertical Timeline Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/vertical_timeline_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/vertical_timeline_style_2.png",
@@ -10964,7 +10964,7 @@
         },
         {
             "id": "vertical_timeline_style_3",
-            "shareId": "blocks",
+            "shareId": "vertical-timeline",
             "title": "Vertical Timeline Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/vertical_timeline_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/vertical_timeline_style_3.png",
@@ -10987,7 +10987,7 @@
         },
         {
             "id": "video_player_style_1",
-            "shareId": "blocks",
+            "shareId": "video-player",
             "title": "Video Player Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/video_player_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/video_player_style_1.png",
@@ -11010,7 +11010,7 @@
         },
         {
             "id": "video_player_style_2",
-            "shareId": "blocks",
+            "shareId": "video-player",
             "title": "Video Player Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/video_player_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/video_player_style_2.png",
@@ -11033,7 +11033,7 @@
         },
         {
             "id": "video_player_style_3",
-            "shareId": "blocks",
+            "shareId": "video-player",
             "title": "Video Player Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/video_player_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/video_player_style_3.png",
@@ -11056,7 +11056,7 @@
         },
         {
             "id": "video_player_style_4",
-            "shareId": "blocks",
+            "shareId": "video-player",
             "title": "Video Player Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/video_player_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/video_player_style_4.png",
@@ -11079,7 +11079,7 @@
         },
         {
             "id": "weather_style_1",
-            "shareId": "blocks",
+            "shareId": "weather",
             "title": "Weather Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/weather_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/weather_style_1.png",
@@ -11102,7 +11102,7 @@
         },
         {
             "id": "woocommerce_add_to_cart_button",
-            "shareId": "blocks",
+            "shareId": "woocommerce",
             "title": "WooCommerce Add To Cart",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/woocommerce_add_to_cart_button.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/woocommerce_add_to_cart_button.png",
@@ -11125,7 +11125,7 @@
         },
         {
             "id": "woocommerce_cart_page",
-            "shareId": "blocks",
+            "shareId": "woocommerce",
             "title": "WooCommerce Cart Page",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/woocommerce_cart_page.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/woocommerce_cart_page.png",
@@ -11148,7 +11148,7 @@
         },
         {
             "id": "woocommerce_category",
-            "shareId": "blocks",
+            "shareId": "woocommerce",
             "title": "WooCommerce Category Page",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/woocommerce_category.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/woocommerce_category.png",
@@ -11171,7 +11171,7 @@
         },
         {
             "id": "woocommerce_checkout_page",
-            "shareId": "blocks",
+            "shareId": "woocommerce",
             "title": "WooCommerce Checkout Page",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/woocommerce_checkout_page.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/woocommerce_checkout_page.png",
@@ -11194,7 +11194,7 @@
         },
         {
             "id": "working_process_style_1",
-            "shareId": "blocks",
+            "shareId": "working-progress",
             "title": "Working Progress Style One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/working_process_style_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/working_process_style_1.png",
@@ -11217,7 +11217,7 @@
         },
         {
             "id": "working_process_style_2",
-            "shareId": "blocks",
+            "shareId": "working-progress",
             "title": "Working Progress Style Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/working_process_style_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/working_process_style_2.png",
@@ -11240,7 +11240,7 @@
         },
         {
             "id": "working_process_style_3",
-            "shareId": "blocks",
+            "shareId": "working-progress",
             "title": "Working Progress Style Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/working_process_style_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/working_process_style_3.png",
@@ -11263,7 +11263,7 @@
         },
         {
             "id": "working_process_style_4",
-            "shareId": "blocks",
+            "shareId": "working-progress",
             "title": "Working Progress Style Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/working_process_style_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/working_process_style_4.png",
@@ -11286,7 +11286,7 @@
         },
 		{
             "id": "mega-menu-layout-1",
-            "shareId": "mega menu",
+            "shareId": "mega-menu",
             "title": "Menu Layout One",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/menu_layout_1.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/menu_layout_1.png",
@@ -11307,7 +11307,7 @@
         },
         {
             "id": "mega-menu-layout-2",
-            "shareId": "mega menu",
+            "shareId": "mega-menu",
             "title": "Menu Layout Two",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/menu_layout_2.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/menu_layout_2.png",
@@ -11328,7 +11328,7 @@
         },
         {
             "id": "mega-menu-layout-3",
-            "shareId": "mega menu",
+            "shareId": "mega-menu",
             "title": "Menu Layout Three",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/menu_layout_3.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/menu_layout_3.png",
@@ -11349,7 +11349,7 @@
         },
         {
             "id": "mega-menu-layout-4",
-            "shareId": "mega menu",
+            "shareId": "mega-menu",
             "title": "Menu Layout Four",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/menu_layout_4.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/menu_layout_4.png",
@@ -11370,7 +11370,7 @@
         },
         {
             "id": "mega-menu-layout-5",
-            "shareId": "mega menu",
+            "shareId": "mega-menu",
             "title": "Menu Layout Five",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/menu_layout_5.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/menu_layout_5.png",
@@ -11391,7 +11391,7 @@
         },
         {
             "id": "mega-menu-layout-6",
-            "shareId": "mega menu",
+            "shareId": "mega-menu",
             "title": "Menu Layout Six",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/menu_layout_6.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/menu_layout_6.png",
@@ -11414,7 +11414,7 @@
         },
         {
             "id": "mega-menu-layout-7",
-            "shareId": "mega menu",
+            "shareId": "mega-menu",
             "title": "Menu Layout Seven",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/menu_layout_7.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/menu_layout_7.png",
@@ -11437,7 +11437,7 @@
         },
         {
             "id": "mega-menu-layout-8",
-            "shareId": "mega menu",
+            "shareId": "mega-menu",
             "title": "Menu Layout Eight",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/menu_layout_8.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/menu_layout_8.png",
@@ -11460,7 +11460,7 @@
         },
         {
             "id": "mega-menu-layout-9",
-            "shareId": "mega menu",
+            "shareId": "mega-menu",
             "title": "Menu Layout Nine",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/menu_layout_9.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/menu_layout_9.png",
@@ -11483,7 +11483,7 @@
         },
         {
             "id": "mega-menu-layout-10",
-            "shareId": "mega menu",
+            "shareId": "mega-menu",
             "title": "Menu Layout Ten",
             "thumbnail": "https://api.hasthemes.com/api/htmega/v1/layout-img/thumb/menu_layout_10.png",
             "fullimage": "https://api.hasthemes.com/api/htmega/v1/layout-img/full/menu_layout_10.png",

@@ -1,4 +1,4 @@
-/*! elementor - v2.9.8 - 21-04-2020 */
+/*! elementor - v2.9.9 - 24-05-2020 */
 .dialog-widget-content {
   background-color: #fff;
   position: absolute;
@@ -1310,79 +1310,88 @@ ul.elementor-icon-list-items.elementor-inline-items {
     -webkit-border-radius: 6px;
             border-radius: 6px; }
 
-.elementor-button-align-center .elementor-field-type-submit button, .elementor-button-align-start .elementor-field-type-submit button, .elementor-button-align-end .elementor-field-type-submit button {
-  -webkit-flex-basis: initial;
-      -ms-flex-preferred-size: initial;
-          flex-basis: initial; }
+.elementor-button-align-stretch .elementor-field-type-submit:not(.e-form__buttons__wrapper) .elementor-button {
+  -webkit-flex-basis: 100%;
+      -ms-flex-preferred-size: 100%;
+          flex-basis: 100%; }
 
-.elementor-button-align-center .elementor-field-type-submit {
+.elementor-button-align-stretch .e-form__buttons__wrapper, .elementor-button-align-stretch .e-form__buttons__wrapper__button {
+  -webkit-flex-basis: 100%;
+      -ms-flex-preferred-size: 100%;
+          flex-basis: 100%; }
+
+.elementor-button-align-center .elementor-field-type-submit,
+.elementor-button-align-center .e-form__buttons {
   -webkit-box-pack: center;
   -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center; }
 
-.elementor-button-align-stretch .elementor-field-type-submit button {
-  -webkit-flex-basis: 100%;
-      -ms-flex-preferred-size: 100%;
-          flex-basis: 100%; }
-
-.elementor-button-align-start .elementor-field-type-submit {
+.elementor-button-align-start .elementor-field-type-submit,
+.elementor-button-align-start .e-form__buttons {
   -webkit-box-pack: end;
   -webkit-justify-content: flex-end;
       -ms-flex-pack: end;
           justify-content: flex-end; }
 
-.elementor-button-align-end .elementor-field-type-submit {
+.elementor-button-align-end .elementor-field-type-submit,
+.elementor-button-align-end .e-form__buttons {
   -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
       -ms-flex-pack: start;
           justify-content: flex-start; }
 
 @media screen and (max-width: 1024px) {
-  .elementor-tablet-button-align-center .elementor-field-type-submit button, .elementor-tablet-button-align-start .elementor-field-type-submit button, .elementor-tablet-button-align-end .elementor-field-type-submit button {
-    -webkit-flex-basis: initial;
-        -ms-flex-preferred-size: initial;
-            flex-basis: initial; }
-  .elementor-tablet-button-align-center .elementor-field-type-submit {
+  .elementor-tablet-button-align-stretch .elementor-field-type-submit:not(.e-form__buttons__wrapper) .elementor-button {
+    -webkit-flex-basis: 100%;
+        -ms-flex-preferred-size: 100%;
+            flex-basis: 100%; }
+  .elementor-tablet-button-align-stretch .e-form__buttons__wrapper, .elementor-tablet-button-align-stretch .e-form__buttons__wrapper__button {
+    -webkit-flex-basis: 100%;
+        -ms-flex-preferred-size: 100%;
+            flex-basis: 100%; }
+  .elementor-tablet-button-align-center .elementor-field-type-submit,
+  .elementor-tablet-button-align-center .e-form__buttons {
     -webkit-box-pack: center;
     -webkit-justify-content: center;
         -ms-flex-pack: center;
             justify-content: center; }
-  .elementor-tablet-button-align-stretch .elementor-field-type-submit button {
-    -webkit-flex-basis: 100%;
-        -ms-flex-preferred-size: 100%;
-            flex-basis: 100%; }
-  .elementor-tablet-button-align-start .elementor-field-type-submit {
+  .elementor-tablet-button-align-start .elementor-field-type-submit,
+  .elementor-tablet-button-align-start .e-form__buttons {
     -webkit-box-pack: end;
     -webkit-justify-content: flex-end;
         -ms-flex-pack: end;
             justify-content: flex-end; }
-  .elementor-tablet-button-align-end .elementor-field-type-submit {
+  .elementor-tablet-button-align-end .elementor-field-type-submit,
+  .elementor-tablet-button-align-end .e-form__buttons {
     -webkit-box-pack: start;
     -webkit-justify-content: flex-start;
         -ms-flex-pack: start;
             justify-content: flex-start; } }
 
 @media screen and (max-width: 767px) {
-  .elementor-mobile-button-align-center .elementor-field-type-submit button, .elementor-mobile-button-align-start .elementor-field-type-submit button, .elementor-mobile-button-align-end .elementor-field-type-submit button {
-    -webkit-flex-basis: initial;
-        -ms-flex-preferred-size: initial;
-            flex-basis: initial; }
-  .elementor-mobile-button-align-center .elementor-field-type-submit {
+  .elementor-mobile-button-align-stretch .elementor-field-type-submit:not(.e-form__buttons__wrapper) .elementor-button {
+    -webkit-flex-basis: 100%;
+        -ms-flex-preferred-size: 100%;
+            flex-basis: 100%; }
+  .elementor-mobile-button-align-stretch .e-form__buttons__wrapper, .elementor-mobile-button-align-stretch .e-form__buttons__wrapper__button {
+    -webkit-flex-basis: 100%;
+        -ms-flex-preferred-size: 100%;
+            flex-basis: 100%; }
+  .elementor-mobile-button-align-center .elementor-field-type-submit,
+  .elementor-mobile-button-align-center .e-form__buttons {
     -webkit-box-pack: center;
     -webkit-justify-content: center;
         -ms-flex-pack: center;
             justify-content: center; }
-  .elementor-mobile-button-align-stretch .elementor-field-type-submit button {
-    -webkit-flex-basis: 100%;
-        -ms-flex-preferred-size: 100%;
-            flex-basis: 100%; }
-  .elementor-mobile-button-align-start .elementor-field-type-submit {
+  .elementor-mobile-button-align-start .elementor-field-type-submit,
+  .elementor-mobile-button-align-start .e-form__buttons {
     -webkit-box-pack: end;
     -webkit-justify-content: flex-end;
         -ms-flex-pack: end;
             justify-content: flex-end; }
-  .elementor-mobile-button-align-end .elementor-field-type-submit {
+  .elementor-mobile-button-align-end .elementor-field-type-submit,
+  .elementor-mobile-button-align-end .e-form__buttons {
     -webkit-box-pack: start;
     -webkit-justify-content: flex-start;
         -ms-flex-pack: start;
@@ -1416,8 +1425,7 @@ ul.elementor-icon-list-items.elementor-inline-items {
 
 .elementor-form .elementor-button {
   padding-top: 0;
-  padding-bottom: 0;
-  border: 0 none; }
+  padding-bottom: 0; }
   .elementor-form .elementor-button > span {
     display: -webkit-box;
     display: -webkit-flex;
@@ -1814,22 +1822,22 @@ ul.elementor-icon-list-items.elementor-inline-items {
 .elementor-widget-google_maps iframe {
   height: 300px; }
 
-.elementor-widget-heading .elementor-heading-title {
+.elementor-heading-title {
   padding: 0;
   margin: 0;
   line-height: 1; }
-  .elementor-widget-heading .elementor-heading-title > a {
+  .elementor-heading-title > a {
     color: inherit;
     font-size: inherit; }
-  .elementor-widget-heading .elementor-heading-title.elementor-size-small {
+  .elementor-heading-title.elementor-size-small {
     font-size: 15px; }
-  .elementor-widget-heading .elementor-heading-title.elementor-size-medium {
+  .elementor-heading-title.elementor-size-medium {
     font-size: 19px; }
-  .elementor-widget-heading .elementor-heading-title.elementor-size-large {
+  .elementor-heading-title.elementor-size-large {
     font-size: 29px; }
-  .elementor-widget-heading .elementor-heading-title.elementor-size-xl {
+  .elementor-heading-title.elementor-size-xl {
     font-size: 39px; }
-  .elementor-widget-heading .elementor-heading-title.elementor-size-xxl {
+  .elementor-heading-title.elementor-size-xxl {
     font-size: 59px; }
 
 .elementor-icon {
@@ -3724,12 +3732,11 @@ button.swiper-pagination-bullet {
   display: block;
   position: absolute;
   min-width: 200px;
-  left: 67px;
-  top: 60px;
+  left: 2.8em;
+  top: 3em;
   background-color: #fff;
   -webkit-border-radius: 3px;
           border-radius: 3px;
-  font-size: 16px;
   padding: 14px 20px;
   -webkit-transform: scale(0);
       -ms-transform: scale(0);
@@ -3756,15 +3763,15 @@ button.swiper-pagination-bullet {
     .elementor-slideshow__share-links a:hover {
       color: #000; }
     .elementor-slideshow__share-links a i {
-      margin-left: 10px;
-      font-size: 15px; }
+      font-size: 1.25em;
+      margin-left: 0.75em; }
   .elementor-slideshow__share-links:before {
     content: '';
     display: block;
     position: absolute;
-    top: 0;
-    left: 15px;
-    border: 9px solid;
+    top: 1px;
+    left: 0.5em;
+    border: .45em solid;
     border-color: transparent transparent #fff transparent;
     -webkit-transform: translateY(-100%) scaleX(0.7);
         -ms-transform: translateY(-100%) scaleX(0.7);

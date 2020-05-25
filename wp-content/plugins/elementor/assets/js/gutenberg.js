@@ -1,4 +1,4 @@
-/*! elementor - v2.9.8 - 21-04-2020 */
+/*! elementor - v2.9.9 - 24-05-2020 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -82,7 +82,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 619);
+/******/ 	return __webpack_require__(__webpack_require__.s = 620);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -252,7 +252,7 @@ $export($export.P + $export.F * forced, 'Array', {
     return $find(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
   }
 });
-__webpack_require__(75)(KEY);
+__webpack_require__(76)(KEY);
 
 
 /***/ }),
@@ -558,7 +558,18 @@ module.exports = function (key) {
 
 /***/ }),
 
-/***/ 619:
+/***/ 62:
+/***/ (function(module, exports) {
+
+module.exports = function (it) {
+  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
+  return it;
+};
+
+
+/***/ }),
+
+/***/ 620:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -672,17 +683,6 @@ __webpack_require__(15);
 
 /***/ }),
 
-/***/ 62:
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
-  return it;
-};
-
-
-/***/ }),
-
 /***/ 64:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -695,7 +695,7 @@ module.exports = function (it) {
 
 /***/ }),
 
-/***/ 75:
+/***/ 76:
 /***/ (function(module, exports, __webpack_require__) {
 
 // 22.1.3.31 Array.prototype[@@unscopables]

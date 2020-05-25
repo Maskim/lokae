@@ -21,6 +21,12 @@ class HTMega_Elementor_Widget_Gallery_Justify extends Widget_Base {
         return [ 'htmega-addons' ];
     }
 
+    public function get_style_depends() {
+        return [
+            'justify-gallery',
+        ];
+    }
+
     public function get_script_depends() {
         return [
             'justified-gallery',

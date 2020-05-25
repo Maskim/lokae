@@ -13004,7 +13004,7 @@ a.htmega-downloadbtn {
   color: #fff;
   font-size: 30px;
   height: 50px;
-  left: -80px;
+  left: -20px;
   margin: 0;
   padding: 0;
   position: absolute;
@@ -13013,11 +13013,12 @@ a.htmega-downloadbtn {
   transition: all 0.4s ease-in-out 0s;
   width: 50px;
   line-height: 0;
+  z-index: 9999;
 }
 
 .post-carousel-wrapper button.htmega-carosul-next.slick-arrow {
   left: auto;
-  right: -80px;
+  right: -20px;
 }
 
 .post-carousel-wrapper .htmega-single-post-slide .content .post-inner ul.meta li{

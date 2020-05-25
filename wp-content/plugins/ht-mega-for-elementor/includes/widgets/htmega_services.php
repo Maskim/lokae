@@ -1017,6 +1017,8 @@ class HTMega_Elementor_Widget_Service extends Widget_Base {
         $this->add_render_attribute( 'htmega_service_attr', 'class', 'htmega-service' );
         $this->add_render_attribute( 'htmega_service_attr', 'class', 'htmega-service-style-'. $settings['htmega_service_style'] );
 
+        $service_image = '';
+
         // Link Generate
         if ( !empty( $settings['service_link']['url'] ) ) {
 
@@ -1029,16 +1031,20 @@ class HTMega_Elementor_Widget_Service extends Widget_Base {
             }
             $this->add_render_attribute( 'url', 'class', 'readmore_btn');
 
-            $service_image = '<a href="'.esc_url( $settings['service_link']['url'] ).'">'.Group_Control_Image_Size::get_attachment_image_html( $settings, 'service_imagesize', 'service_image' ).'</a>';
+            if( !empty( $settings['service_image']['url'] ) ){
+                $service_image = '<a href="'.esc_url( $settings['service_link']['url'] ).'">'.Group_Control_Image_Size::get_attachment_image_html( $settings, 'service_imagesize', 'service_image' ).'</a>';
+            }
 
         }else{
-            $service_image = Group_Control_Image_Size::get_attachment_image_html( $settings, 'service_imagesize', 'service_image' );
+            if( !empty( $settings['service_image']['url'] ) ){
+                $service_image = Group_Control_Image_Size::get_attachment_image_html( $settings, 'service_imagesize', 'service_image' );
+            }
         }
        
         ?>
             <div <?php echo $this->get_render_attribute_string( 'htmega_service_attr' ); ?> >
                 <?php
-                    if( $settings['htmega_service_icon_type'] == 'img' ){
+                    if( $settings['htmega_service_icon_type'] == 'img' && $service_image !='' ){
                         echo '<div class="thumb">'.$service_image.'</div>';
                     }else{
                         if( !empty( $settings['service_link']['url'] ) ){

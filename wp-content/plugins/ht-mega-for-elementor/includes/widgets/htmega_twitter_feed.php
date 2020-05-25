@@ -25,6 +25,12 @@ class HTMega_Elementor_Widget_Twitter_Feed extends Widget_Base {
         return [ 'htmega-addons' ];
     }
 
+    public function get_style_depends() {
+        return [
+            'slick',
+        ];
+    }
+
     public function get_script_depends() {
         return [
             'slick',

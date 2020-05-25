@@ -50,6 +50,22 @@ class HTMega_Template_Library{
         self::$templateapi = $templateapi;
     }
 
+    // Get Endpoint
+    public static function get_api_endpoint(){
+        if( is_plugin_active('htmega-pro/htmega_pro.php') && function_exists('htmega_pro_template_endpoint') ){
+            self::$endpoint = htmega_pro_template_endpoint();
+        }
+        return self::$endpoint;
+    }
+    
+    // Get Template API
+    public static function get_api_templateapi(){
+        if( is_plugin_active('htmega-pro/htmega_pro.php') && function_exists('htmega_pro_template_url') ){
+            self::$templateapi = htmega_pro_template_url();
+        }
+        return self::$templateapi;
+    }
+
     // Plugins Library Register
     function admin_menu() {
         add_submenu_page(
@@ -75,7 +91,7 @@ class HTMega_Template_Library{
         global $wp_version;
         $body_args = apply_filters( 'htmegatemplates/api/get_templates/body_args', self::$api_args );
         $request = wp_remote_get(
-            self::$endpoint,
+            self::get_api_endpoint(),
             [
                 'timeout'    => $force_update ? 25 : 10,
                 'user-agent' => 'WordPress/' . $wp_version . '; ' . home_url(),
@@ -145,7 +161,7 @@ class HTMega_Template_Library{
             $template_title     = $_REQUEST['httitle'];
             $page_title         = $_REQUEST['pagetitle'];
 
-            $templateurl    = sprintf( self::$templateapi, $template_id );
+            $templateurl    = sprintf( self::get_api_templateapi(), $template_id );
             $response_data  = $this->templates_get_content_remote_request( $templateurl );
             $defaulttitle   = ucfirst( $template_parentid ) .' -> '.$template_title;
 

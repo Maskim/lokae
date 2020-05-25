@@ -590,6 +590,100 @@ class HTMega_Elementor_Widget_Working_Process extends Widget_Base {
 
         $this->end_controls_section();
 
+        // Process Icon Style tab section
+        $this->start_controls_section(
+            'process_icon_style_section',
+            [
+                'label' => __( 'Icon', 'htmega-addons' ),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+            $this->add_control(
+                'icon_color',
+                [
+                    'label' => __( 'Color', 'htmega-addons' ),
+                    'type' => Controls_Manager::COLOR,
+                    'scheme' => [
+                        'type' => Scheme_Color::get_type(),
+                        'value' => Scheme_Color::COLOR_1,
+                    ],
+                    'default' => '#555555',
+                    'selectors' => [
+                        '{{WRAPPER}} .htmega-process-area .htmega-single-process .icon' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .htmega-process-area .htmega-single-process .icon i' => 'color: {{VALUE}}',
+                    ],
+                ]
+            );
+
+            $this->add_control(
+                'icon_font_size',
+                [
+                    'label' => __( 'Font Size', 'htmega-addons' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 20,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .htmega-process-area .htmega-single-process .icon i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    ],
+                ]
+            );
+
+            $this->add_group_control(
+                Group_Control_Border::get_type(),
+                [
+                    'name' => 'icon_border',
+                    'label' => __( 'Border', 'htmega-addons' ),
+                    'selector' => '{{WRAPPER}} .htmega-process-area .htmega-single-process .icon',
+                ]
+            );
+
+            $this->add_responsive_control(
+                'icon_border_radius',
+                [
+                    'label' => esc_html__( 'Border Radius', 'htmega-addons' ),
+                    'type' => Controls_Manager::DIMENSIONS,
+                    'selectors' => [
+                        '{{WRAPPER}} .htmega-process-area .htmega-single-process .icon' => 'border-radius: {{TOP}}px {{RIGHT}}px {{BOTTOM}}px {{LEFT}}px;',
+                    ],
+                ]
+            );
+
+            $this->add_group_control(
+                Group_Control_Background::get_type(),
+                [
+                    'name' => 'icon_background',
+                    'label' => __( 'Background', 'htmega-addons' ),
+                    'types' => [ 'classic', 'gradient' ],
+                    'selector' => '{{WRAPPER}} .htmega-process-area .htmega-single-process .icon',
+                ]
+            );
+
+            $this->add_group_control(
+                Group_Control_Box_Shadow::get_type(),
+                [
+                    'name' => 'icon_box_shadow',
+                    'label' => __( 'Box Shadow', 'htmega-addons' ),
+                    'selector' => '{{WRAPPER}} .htmega-process-area .htmega-single-process .icon',
+                ]
+            );
+
+        $this->end_controls_section();
+
     }
 
     protected function render( $instance = [] ) {

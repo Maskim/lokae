@@ -59,7 +59,7 @@ class HTMega_Elementor_Widget_PostGrid extends Widget_Base {
                 [
                     'label' => esc_html__( 'Content Sourse', 'htmega-addons' ),
                     'type' => Controls_Manager::SELECT2,
-                    'label_block' => false,
+                    'label_block' => true,
                     'options' => htmega_get_post_types(),
                 ]
             );

@@ -83,6 +83,7 @@ if( !function_exists('htmega_get_taxonomies') ){
             'taxonomy' => $htmega_texonomy,
             'hide_empty' => true,
         ));
+        $options = array();
         if ( ! empty( $terms ) && ! is_wp_error( $terms ) ){
             foreach ( $terms as $term ) {
                 $options[ $term->slug ] = $term->name;

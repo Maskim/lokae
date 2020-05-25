@@ -387,11 +387,7 @@ if ( !class_exists( 'HTMega_Elementor_Addons_Assests' ) ) {
             wp_enqueue_style( 'htmega-widgets' );
             wp_enqueue_style( 'font-awesome' );
             wp_enqueue_style( 'htmega-animation' );
-            wp_enqueue_style( 'slick' );
-            wp_enqueue_style( 'compare-image' );
-            wp_enqueue_style( 'justify-gallery' );
             wp_enqueue_style( 'htmega-keyframes' );
-            wp_enqueue_style( 'animated-heading' );
             wp_enqueue_style( 'htmega-widgets' );
 
             // JS

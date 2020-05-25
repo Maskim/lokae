@@ -21,6 +21,12 @@ class HTMega_Elementor_Widget_Post_Carousel extends Widget_Base {
         return [ 'htmega-addons' ];
     }
 
+    public function get_style_depends() {
+        return [
+            'slick',
+        ];
+    }
+
     public function get_script_depends() {
         return [
             'slick',
@@ -80,7 +86,7 @@ class HTMega_Elementor_Widget_Post_Carousel extends Widget_Base {
                 [
                     'label' => esc_html__( 'Content Sourse', 'htmega-addons' ),
                     'type' => Controls_Manager::SELECT2,
-                    'label_block' => false,
+                    'label_block' => true,
                     'options' => htmega_get_post_types(),
                 ]
             );
