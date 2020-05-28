@@ -1,0 +1,26 @@
+/*
+ Theme Name:   Lokae
+ Theme URI:    http://example.com/twenty-fifteen-child/
+ Description:  Twenty Fifteen Child Theme
+ Author:       Maxime Hersand
+ Author URI:   https://maxime-hersand.tech
+ Template:     dt-the7
+ Version:      1.0.0
+ License:      GNU General Public License v2 or later
+ License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+*/
+.payable-categories h5 {
+  margin: 0 !important;
+  padding-bottom: 7px;
+  padding-top: 0;
+  font-weight: 400;
+  color: #777;
+  font-size: 14px;
+}
+
+.payable-categories input[type="number"] {
+  padding: 5px 15px 5px 0;
+  -webkit-appearance: number-input;
+  -moz-appearance: number-input;
+  appearance: number-input;
+}
