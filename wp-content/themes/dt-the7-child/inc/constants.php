@@ -16,5 +16,9 @@ if ( ! defined( 'LOKAE_CORE_DIR' ) ) {
 }
 
 if ( ! defined( 'LOKAE_TEMPLATE_DIR' ) ) {
-	define( 'LOKAE_TEMPLATE_DIR', trailingslashit( LOKAE_THEME_DIR ) . '/templates' );
+	define( 'LOKAE_TEMPLATE_DIR', trailingslashit( LOKAE_THEME_DIR ) . 'templates' );
+}
+
+if ( ! defined( 'LOKAE_ASSETS_DIR' ) ) {
+	define( 'LOKAE_ASSETS_DIR', '/wp-content/themes/dt-the7-child/assets' );
 }
