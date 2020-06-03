@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RnB - v2.1.5\n"
 "POT-Creation-Date: 2020-04-20 03:29+0600\n"
-"PO-Revision-Date: 2020-06-03 10:03+0200\n"
+"PO-Revision-Date: 2020-06-03 16:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: RedQTeam <redq.team@gmail.com>\n"
 "Language: fr_FR\n"
@@ -3489,7 +3489,7 @@ msgstr "Interactive"
 #: includes/rnb-data-provider.php:181 includes/rnb-data-provider.php:185
 #: includes/rnb-data-provider.php:624
 msgid "Resource Cost"
-msgstr "Coût de la ressource"
+msgstr "Coût des options de locations"
 
 #: includes/rnb-data-provider.php:184
 msgid "R.Cost"
@@ -3645,7 +3645,7 @@ msgstr "Coût du discount "
 
 #: includes/rnb-data-provider.php:632
 msgid "Category Cost"
-msgstr "Coût de la catégorie"
+msgstr "Coût des options supplémentaires"
 
 #: includes/rnb-data-provider.php:640
 msgid "Adult Cost"
