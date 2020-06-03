@@ -83,3 +83,8 @@
 .custom-block {
   width: calc(100% - 25px);
 }
+
+.custom-block input[type="checkbox"]:checked + span::before {
+  left: 4px;
+  line-height: 18px;
+}
