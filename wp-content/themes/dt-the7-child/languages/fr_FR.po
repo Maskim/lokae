@@ -1,0 +1,71 @@
+# Copyright (C) 2020 Maxime Hersand
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Lokae 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/lokae\n"
+"POT-Creation-Date: 2020-06-03T13:14:07+00:00\n"
+"PO-Revision-Date: 2020-06-03 15:15+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3.1\n"
+"X-Domain: lokae\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. Theme Name of the theme
+#: inc/class-lokae-admin-page.php:23 inc/class-lokae-admin-page.php:24
+msgid "Lokae"
+msgstr ""
+
+#. Author of the theme
+msgid "Maxime Hersand"
+msgstr ""
+
+#. Author URI of the theme
+msgid "https://maxime-hersand.tech"
+msgstr ""
+
+#: inc/class-lokae-admin-page.php:35
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Vous n’êtes pas autorisé à accéder à cette page."
+
+#: templates/admin/template-settings.php:2
+msgid "Lokae settings"
+msgstr "Paramètres Lokae"
+
+#: woocommerce/rnb/booking-content/pickup-locations.php:16
+msgid "Alternative,"
+msgstr ""
+"Possibilité de convoyer des VTT sur un lieu de votre choix dans un maximum "
+"de 15km. Pour cela,"
+
+#: woocommerce/rnb/booking-content/pickup-locations.php:17
+msgid "contact us."
+msgstr "contactez nous."
+
+#: woocommerce/rnb/booking-content/pickup-locations.php:18
+msgid "(finance)"
+msgstr "(prévoir un supplément)"
+
+#: woocommerce/rnb/global/price-flip-box.php:36
+msgid "Day based pricing : "
+msgstr "Tarifs journaliers "
+
+#: woocommerce/rnb/global/price-flip-box.php:55
+msgid "day"
+msgid_plural "days"
+msgstr[0] "jour"
+msgstr[1] "jours"
+
+#: woocommerce/rnb/global/price-flip-box.php:109
+#: woocommerce/rnb/global/price-flip-box.php:134
+msgid "Hourly based pricing"
+msgstr "Tarifs horaires"
+
+#: woocommerce/rnb/global/price-flip-box.php:118
+msgid "hours"
+msgstr "heures"

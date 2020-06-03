@@ -1,10 +1,9 @@
 /*
  Theme Name:   Lokae
- Theme URI:    http://example.com/twenty-fifteen-child/
- Description:  Twenty Fifteen Child Theme
  Author:       Maxime Hersand
  Author URI:   https://maxime-hersand.tech
  Template:     dt-the7
+ Text Domain:  lokae
  Version:      1.0.0
  License:      GNU General Public License v2 or later
  License URI:  http://www.gnu.org/licenses/gpl-2.0.html
@@ -23,4 +22,64 @@
   -webkit-appearance: number-input;
   -moz-appearance: number-input;
   appearance: number-input;
+}
+
+.woocommerce div.product div.summary > .price {
+  margin-bottom: 20px;
+}
+
+.rnb-pricing-plan-button .rnb-pricing-plan {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.rnb-pricing-plan-button .rnb-pricing-plan-link {
+  color: #8b8d94;
+}
+
+.rnb-pricing-plan-button .rnb-pricing-plan-link i {
+  transition: transform 0.3s;
+}
+
+.rnb-pricing-plan-button .rnb-pricing-plan-link.active i {
+  transform: rotate(180deg);
+}
+
+.price-showing {
+  background: #f1f1f1;
+  padding: 20px 20px 10px;
+  margin-left: -20px;
+  margin-right: -20px;
+}
+
+.price-showing h5 {
+  padding-bottom: 0;
+}
+
+.price-showing .item-pricing h5 {
+  margin: 10px 0 5px !important;
+}
+
+.price-showing .item-pricing h5:first-child {
+  margin: 0 0 5px !important;
+}
+
+.price-showing .rnb-pricing-wrap {
+  line-height: 1.2;
+}
+
+.price-showing .day-ranges-pricing-plan {
+  color: #666;
+}
+
+.date-alternative {
+  font-size: 12px;
+  line-height: 1.2;
+  color: #777;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.custom-block {
+  width: calc(100% - 25px);
 }

@@ -14,7 +14,7 @@ $labels = $labels['labels'];
     <div class="rnb-pricing-plan-button">
         <span class="rnb-pricing-plan">
             <a href="#" class="rnb-pricing-plan-link">
-                <i class="fa fa-hand-pointer-o"></i> &nbsp;
+                <i class="fa fa-arrow-down"></i> &nbsp;
                 <?php echo esc_attr($labels['flipbox_info']); ?>
             </a>
         </span>
@@ -33,7 +33,7 @@ foreach ($redq_product_inventory as $inventory) :
         <div class="price-showing">
             <div class="<?php echo esc_attr($flip_box[1]); ?>">
                 <div class="item-pricing">
-                    <h5> <?php echo esc_html__('Day based pricing : ', 'redq-rental'); ?><?php echo get_the_title($inventory); ?></h5>
+                    <h5> <?php echo esc_html__('Day based pricing : ', 'lokae'); ?></h5>
                     <?php if ($pricing_data['pricing_type'] === 'general_pricing') : ?>
                         <?php $general_price = $pricing_data['general_pricing']; ?>
                         <div class="rnb-pricing-wrap">
@@ -48,10 +48,20 @@ foreach ($redq_product_inventory as $inventory) :
                         <div class="rnb-pricing-wrap">
                             <?php if (is_array($pricing_plans) && !empty($pricing_plans)) { ?>
                                 <?php foreach ($pricing_plans as $key => $value) { ?>
-                                    <?php $rate = $value['cost_applicable'] === 'fixed' ? esc_html__('Fixed', 'redq-rental') : esc_html__('/ Day', 'redq-rental'); ?>
                                     <div class="day-ranges-pricing-plan">
-                                        <span class="range-days"><?php echo esc_attr($value['min_days']); ?> - <?php echo esc_attr($value['max_days']); ?> <?php _e('days :', 'redq-rental'); ?> </span>
-                                        <span class="range-price"><strong><?php echo wc_price($value['range_cost']); ?></strong> <?php echo esc_attr($rate); ?></span>
+                                        <span class="range-days">
+                                            <?php if ($value['min_days'] == $value['max_days']) { ?>
+                                                <?php echo esc_attr($value['min_days']); ?>
+                                                <?php echo esc_html(_n('day', 'days', intval($value['min_days']), 'lokae'), intval($value['min_days'])); ?>
+                                            <?php } else { ?>
+                                                <?php echo esc_attr($value['min_days']); ?>
+                                                -
+                                                <?php echo esc_attr($value['max_days']); _e('days :', 'redq-rental'); ?>
+                                            <?php } ?>
+                                        - </span>
+                                        <span class="range-price"><strong><?php echo wc_price($value['range_cost']); ?></strong>
+                                        <?php if ($value['cost_applicable'] !== 'fixed') { echo esc_attr(esc_html__('/ Day', 'redq-rental')); } ?>
+                                    </span>
                                     </div>
                             <?php }
                             } ?>
@@ -96,13 +106,20 @@ foreach ($redq_product_inventory as $inventory) :
                     if ($pricing_data['hourly_pricing_type'] === 'hourly_range') :
                         $pricing_plans = $pricing_data['hourly_range'];
                         if (is_array($pricing_plans) && !empty($pricing_plans)) : ?>
-                            <h5><?php echo esc_html__('Hourly based pricing', 'redq-rental'); ?></h5>
+                            <h5><?php echo esc_html__('Hourly based pricing', 'lokae'); ?></h5>
                             <div class="rnb-pricing-wrap">
                                 <?php foreach ($pricing_plans as $key => $value) : ?>
-                                    <?php $rate = $value['cost_applicable'] === 'fixed' ? esc_html__('Fixed', 'redq-rental') : esc_html__('/ Hour', 'redq-rental'); ?>
                                     <div class="day-ranges-pricing-plan">
-                                        <span class="range-days"><?php echo esc_attr($value['min_hours']); ?> - <?php echo esc_attr($value['max_hours']); ?> <?php _e('Hours :', 'redq-rental'); ?> </span>
-                                        <span class="range-price"><strong><?php echo wc_price($value['range_cost']); ?></strong> <?php echo esc_attr($rate); ?></span>
+                                        <span class="range-days">
+                                            <?php echo esc_attr($value['min_hours']); ?> 
+                                            <?php if($value['min_hours'] != $value['max_hours']) { ?>
+                                                - <?php echo esc_attr($value['max_hours']); ?> 
+                                            <?php } ?>
+                                            <?php _e('hours', 'lokae'); ?>
+                                        </span>
+                                        <span class="range-price"><strong><?php echo wc_price($value['range_cost']); ?></strong>
+                                        <?php if ($value['cost_applicable'] !== 'fixed') { echo esc_attr(esc_html__('/ Hour', 'redq-rental')); } ?>
+                                    </span>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
@@ -114,7 +131,7 @@ foreach ($redq_product_inventory as $inventory) :
                     <?php if ($pricing_data['hourly_pricing_type'] === 'hourly_general') : ?>
                         <?php $general_hourly_price = $pricing_data['hourly_general']; ?>
                         <?php if (!empty($general_hourly_price)) : ?>
-                            <h5><?php echo esc_html__('Hourly based pricing', 'redq-rental'); ?></h5>
+                            <h5><?php echo esc_html__('Hourly based pricing', 'lokae'); ?></h5>
                             <p class="hourly-general"><?php echo wc_price($general_hourly_price); ?>
                                 / <?php echo esc_html__('per hour', 'redq-rental'); ?>
                             </p>

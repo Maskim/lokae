@@ -13,5 +13,10 @@
         yesterday.parent().css("pointer-events", "all");
       }
     });
+
+    $(".rnb-pricing-plan-link").click(function (e) {
+      e.preventDefault();
+      $(".rnb-pricing-plan-link").toggleClass("active");
+    });
   });
 })(jQuery);
