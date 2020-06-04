@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Lokae 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/lokae\n"
-"POT-Creation-Date: 2020-06-03T13:14:07+00:00\n"
-"PO-Revision-Date: 2020-06-03 15:15+0200\n"
+"POT-Creation-Date: 2020-06-04T13:56:55+00:00\n"
+"PO-Revision-Date: 2020-06-04 15:57+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -46,10 +46,6 @@ msgstr ""
 #: woocommerce/rnb/booking-content/pickup-locations.php:17
 msgid "contact us."
 msgstr "contactez nous."
-
-#: woocommerce/rnb/booking-content/pickup-locations.php:18
-msgid "(finance)"
-msgstr "(prévoir un supplément)"
 
 #: woocommerce/rnb/global/price-flip-box.php:36
 msgid "Day based pricing : "

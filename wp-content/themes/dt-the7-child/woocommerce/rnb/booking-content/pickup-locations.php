@@ -15,5 +15,4 @@
 <p class="date-alternative">
     <?php echo _e('Alternative,', 'lokae') ?>
     <a href="/contact"><?php echo _e('contact us.', 'lokae') ?></a>
-    <?php echo _e('(finance)', 'lokae') ?>
 </p>
