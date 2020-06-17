@@ -1826,6 +1826,7 @@ class WC_Redq_Rental_Cart
                 }
 
                 $day_cost = $day_between_cost + $first_day_cost + $last_day_cost;
+                // var_dump("$day_between_cost + $first_day_cost + $last_day_cost = $day_cost"); die();
             } else {
                 $rental_days = $days;
                 foreach ($day_ranges_pricing_plan as $key => $value) {
@@ -1866,7 +1867,18 @@ class WC_Redq_Rental_Cart
             }
             $price_breakdown['duration_total'] = apply_filters('before_payable_security_deposites', $price_breakdown['duration_total'], $product_id, $inventory_id, $data, $conditional_data);
         } else {
-            $duration_total = apply_filters('before_payable_security_deposites', $this->calculate_hourly_price($hours, $pricing_data), $product_id, $inventory_id, $data, $conditional_data);
+            $hour_cost = $this->calculate_hourly_price($hours, $pricing_data);
+
+            if ($hour_cost === 0 && $conditional_data['is_missing_time_slot_as_a_day'] === 'yes') {
+                foreach ($pricing_data['days_range'] as $key => $value) {
+                    if ((int) $value['min_days'] <= (int) 1 && (int) $value['max_days'] >= (int) 1) {
+                        $hour_cost = $value['range_cost'];
+                        break;
+                    }
+                }
+            }
+
+            $duration_total = apply_filters('before_payable_security_deposites', $hour_cost, $product_id, $inventory_id, $data, $conditional_data);
             $price_breakdown['duration_total'] = $duration_total;
 
             $extras_hour_breakdown = $this->calculate_hourly_extras_cost($duration_total, $hours, $payable_cat, $payable_resource, $payable_person, $payable_security_deposites, $pickup_cost, $dropoff_cost, $location_cost, true, $product_id, $inventory_id, $data, $conditional_data);
