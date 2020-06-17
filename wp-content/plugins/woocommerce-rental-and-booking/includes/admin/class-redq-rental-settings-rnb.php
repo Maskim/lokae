@@ -49,6 +49,7 @@ if (!class_exists('WC_Settings_Rnb', false)) :
                 'conditions'  => __('Conditions', 'redq-rental'),
                 'validations'  => __('Validations', 'redq-rental'),
                 'layout_two'  => __('Layout 2 (Extra Settings)', 'redq-rental'),
+                'lokae'         => __('Lokae settings', 'lokae'),
             );
 
             return apply_filters('woocommerce_get_sections_' . $this->id, $sections);
@@ -1502,6 +1503,51 @@ if (!class_exists('WC_Settings_Rnb', false)) :
                     ),
 
                 ));
+            } else if ('lokae' == $current_section) {
+                $settings = apply_filters('woocommerce_display_settings', array(
+
+                    array(
+                        'title' => __('Heure d\'ouverture & de fermeture', 'lokae'),
+                        'type'  => 'title',
+                        'desc'  => '',
+                        'id'    => 'rnb_opening_closing',
+                    ),
+
+                    array(
+                        'title'           => __('Activer les heures d\'ouverture et de fermeture', 'lokae'),
+                        'desc'            => __('Changer le système pour fonctionner autour des heures d\'ouverture et de fermeture', 'lokae'),
+                        'id'              => 'rnb_enable_opening_closing',
+                        'default'         => 'no',
+                        'type'            => 'checkbox',
+                    ),
+
+                    array(
+                        'title' => __('Heure d\'ouverture', 'lokae'),
+                        'id' => 'rnb_opening',
+                        'type' => 'text',
+                    ),
+
+                    array(
+                        'title' => __('Heure de fermeture', 'lokae'),
+                        'id' => 'rnb_closing',
+                        'type' => 'text',
+                    ),
+
+                    array(
+                        'title'           => __('Si la plage horaire n\'existe pas, définir comme un jour ?', 'lokae'),
+                        'desc'            => __('Exemple : 1 à 4h => 20,00€ au dela non défini alors 5h équivaudront à 1 jour', 'lokae'),
+                        'id'              => 'rnb_enable_missing_time_slot_as_a_day',
+                        'default'         => 'no',
+                        'type'            => 'checkbox',
+                    ),
+
+                    array(
+                        'type'  => 'sectionend',
+                        'id'    => 'rnb_opening_closing',
+                    ),
+
+                ));
+
             } else {
                 $settings = apply_filters('woocommerce_products_general_settings', array(
 

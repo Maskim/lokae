@@ -1221,7 +1221,6 @@ class WC_Redq_Rental_Cart
         $price_discount = isset($pricing_data['price_discount']) && $pricing_data['price_discount'] ? $pricing_data['price_discount'] : array();
 
         $days = $this->calculate_rental_days($data, $conditional_data);
-
         $pricing_type = $pricing_data['pricing_type'];
 
         $calculate_cost_and_day['pricing_type'] = $pricing_type;
@@ -1329,6 +1328,30 @@ class WC_Redq_Rental_Cart
 
             $days = $conditional_data['pay_extra_hours'] !== 'yes' && $extra_hours > $max_hours_late ? $days + 1 : $days;
             $extra_hours = $extra_hours > $max_hours_late ? $extra_hours - $max_hours_late : 0;
+        }
+
+        if ($conditional_data['is_not_a_full_rental_day'] === 'yes' && $pickup_date !== $dropoff_date) {
+            $opening_time = date("H:i", strtotime($conditional_data['opening_time']));
+            $closing_time = date("H:i", strtotime($conditional_data['closing_time']));
+            $pickup_date_exploded = explode('-', $pickup_date);
+            $dropoff_date_exploded = explode('-', $dropoff_date);
+
+            // Is same month ?
+            $end_of_first_day = strtotime("$pickup_date 23:59");
+            $start_of_last_day = strtotime("$dropoff_date 00:00");
+            $days_between = floor(abs($end_of_first_day - $start_of_last_day) / (60 * 60 * 24));
+
+            //First day
+            $first_day_closing_date_time = strtotime("$pickup_date $closing_time");
+            $first_day_hours = abs($pickup_date_time - $first_day_closing_date_time) / (60 * 60);
+
+            //Last day
+            $last_day_opening_date_time = strtotime("$dropoff_date $opening_time");
+            $last_day_hours = abs($dropoff_date_time - $last_day_opening_date_time) / (60 * 60);
+            
+            $durations['days_between'] = $days_between;
+            $durations['first_day_hours'] = $first_day_hours;
+            $durations['last_day_hours'] = $last_day_hours;
         }
 
         $booked_dates = array();
@@ -1757,17 +1780,65 @@ class WC_Redq_Rental_Cart
         $price_discount = isset($pricing_data['price_discount']) ? $pricing_data['price_discount'] : [];
 
         if ($days > 0) {
-            $rental_days = $days;
-            foreach ($day_ranges_pricing_plan as $key => $value) {
-                if ($flag === 0) {
-                    if ($value['cost_applicable'] === 'per_day') {
-                        if ((int) $value['min_days'] <= (int) $rental_days && (int) $value['max_days'] >= (int) $rental_days) {
-                            $day_cost = (float) $value['range_cost'] * (int) $rental_days;
+            if ($conditional_data['is_not_a_full_rental_day'] === 'yes') {
+                $days_between = $durations['days_between'];
+                $first_day_hours = $durations['first_day_hours'];
+                $last_day_hours = $durations['last_day_hours'];
+                $day_between_cost = 0;
+                $first_day_cost = 0;
+                $last_day_cost = 0;
+    
+                if ($first_day_hours > 0) {
+                    $first_day_cost = $this->calculate_hourly_price($first_day_hours, $pricing_data);
+                     
+                    if ($first_day_cost === 0 && $conditional_data['is_missing_time_slot_as_a_day'] === 'yes') {
+                        foreach ($pricing_data['days_range'] as $key => $value) {
+                            if ((int) $value['min_days'] <= (int) 1 && (int) $value['max_days'] >= (int) 1) {
+                                $days_between += 1;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if ($last_day_hours > 0) {
+                    $last_day_cost = $this->calculate_hourly_price($last_day_hours, $pricing_data);
+
+                    if ($last_day_cost === 0 && $conditional_data['is_missing_time_slot_as_a_day'] === 'yes') {
+                        foreach ($pricing_data['days_range'] as $key => $value) {
+                            if ((int) $value['min_days'] <= (int) 1 && (int) $value['max_days'] >= (int) 1) {
+                                $days_between += 1;
+                                break;
+                            }
+                        }
+                    }
+                }
+        
+                if ($days_between > 0) {
+                    foreach ($day_ranges_pricing_plan as $key => $value) {
+                        if ($flag === 0) {
+                            if ((int) $value['min_days'] <= (int) $days_between && (int) $value['max_days'] >= (int) $days_between) {
+                                $day_between_cost = (float) $value['range_cost'];
+                                $flag = 1;
+                            }
+                        }
+                    }
+                }
+
+                $day_cost = $day_between_cost + $first_day_cost + $last_day_cost;
+            } else {
+                $rental_days = $days;
+                foreach ($day_ranges_pricing_plan as $key => $value) {
+                    if ($flag === 0) {
+                        if ($value['cost_applicable'] === 'per_day') {
+                            if ((int) $value['min_days'] <= (int) $rental_days && (int) $value['max_days'] >= (int) $rental_days) {
+                                $day_cost = (float) $value['range_cost'] * (int) $rental_days;
+                                $flag = 1;
+                            }
+                        } else if ((int) $value['min_days'] <= (int) $rental_days && (int) $value['max_days'] >= (int) $rental_days) {
+                            $day_cost = (float) $value['range_cost'];
                             $flag = 1;
                         }
-                    } else if ((int) $value['min_days'] <= (int) $rental_days && (int) $value['max_days'] >= (int) $rental_days) {
-                        $day_cost = (float) $value['range_cost'];
-                        $flag = 1;
                     }
                 }
             }

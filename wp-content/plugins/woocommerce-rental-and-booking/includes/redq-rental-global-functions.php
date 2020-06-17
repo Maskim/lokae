@@ -1156,6 +1156,15 @@ if (!function_exists('redq_rental_get_settings')) :
                     $settings_data['conditions']['weekends'] = $weekends;
                     $allowed_times = get_option('rnb_allowed_times');
                     $settings_data['conditions']['allowed_times'] = !empty($allowed_times) ? rnb_format_allow_times($allowed_times) : [];
+                    $is_not_a_full_rental_day = get_option('rnb_enable_opening_closing', 'no');
+                    $settings_data['conditions']['is_not_a_full_rental_day'] = $is_not_a_full_rental_day;
+
+                    if ($is_not_a_full_rental_day === 'yes') {
+                        $settings_data['conditions']['opening_time'] = get_option('rnb_opening');
+                        $settings_data['conditions']['closing_time'] = get_option('rnb_closing');
+                    }
+
+                    $settings_data['conditions']['is_missing_time_slot_as_a_day'] = get_option('rnb_enable_missing_time_slot_as_a_day', 'no');
                 }
                 break;
 
