@@ -168,3 +168,7 @@ foreach ($redq_product_inventory as $inventory) :
         </div>
 <?php endif;
 endforeach;
+?>
+
+<p class="rental-hour-information rental-hour-information--half-day"><?php echo __('<strong>Pour louer à la demi journée : </strong><br />Dans les horaires choisir 8h30 à 12h30 ou 14h30 à 18h30.', 'lokae'); ?></p>
+<p class="rental-hour-information rental-hour-information--full-day"><?php echo __('<strong>Pour louer à la journée : </strong><br />Dans les horaires choisir 8h30 à 18h30.', 'lokae'); ?></p>
