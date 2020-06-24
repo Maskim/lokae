@@ -88,3 +88,22 @@
   left: 4px;
   line-height: 18px;
 }
+
+.rental-hour-information {
+  font-size: 12px;
+  line-height: 1.2;
+  font-style: italic;
+  color: #777;
+}
+
+.rental-hour-information strong {
+  font-style: normal;
+}
+
+.rental-hour-information--half-day {
+  margin-bottom: 10px;
+}
+
+.rental-hour-information--full-day {
+  margin-bottom: 30px;
+}
