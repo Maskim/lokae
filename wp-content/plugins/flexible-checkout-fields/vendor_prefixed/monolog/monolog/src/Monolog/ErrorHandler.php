@@ -13,7 +13,6 @@ namespace FcfVendor\Monolog;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use FcfVendor\Monolog\Handler\AbstractHandler;
-use FcfVendor\Monolog\Registry;
 /**
  * Monolog error handler
  *

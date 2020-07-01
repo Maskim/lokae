@@ -60,7 +60,11 @@ class Flexible_Checkout_Fields_User_Meta {
 					if ( ! $fcf_field->is_field_excluded_for_user() ) {
 						$value = '';
 						if ( isset( $data[ $field_name ] ) ) {
-							$value = sanitize_text_field( wp_unslash( $data[ $field_name ] ) );
+							if ( $fcf_field->get_type() === Flexible_Checkout_Fields_Field_Type_Settings::FIELD_TYPE_TEXTAREA ) {
+								$value = sanitize_textarea_field( wp_unslash( $data[ $field_name ] ) );
+							} else {
+								$value = sanitize_text_field( wp_unslash( $data[ $field_name ] ) );
+							}
 						}
 						update_user_meta( $customer_id, $field_name, $value );
 					}

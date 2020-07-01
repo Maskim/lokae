@@ -61,7 +61,7 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
                                     name="woocommerce_checkout_fields_field_type">
 								<?php foreach ( $checkout_field_type as $key => $value ): ?>
                                     <?php if ( $key == 'checkbox' ) continue; ?>
-                                    <option value="<?php echo esc_attr($key); ?>"><?php echo esc_attr($value['name']); ?></option>
+                                    <option value="<?php echo esc_attr($key); ?>"><?php echo esc_html($value['name']); ?></option>
 								<?php endforeach; ?>
                             </select>
                         </div>
@@ -98,11 +98,8 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
                             <select id="woocommerce_checkout_fields_field_section"
                                     name="woocommerce_checkout_fields_field_section">
 								<?php foreach ( $this->plugin->sections as $custom_section => $custom_section_data ) : ?>
-									<?php $selected = ""; ?>
-									<?php if ( $custom_section_data['tab'] == $current_tab ) {
-										$selected = " selected";
-									} ?>
-                                    <option value="<?php echo $custom_section_data['section']; ?>" <?php echo $selected; ?>><?php echo $custom_section_data['tab_title']; ?></option>
+									<?php $selected = selected( $custom_section_data['tab'], $current_tab, false ); ?>
+                                    <option value="<?php echo esc_attr( $custom_section_data['section'] ); ?>" <?php echo $selected; ?>><?php echo esc_html( $custom_section_data['tab_title'] ); ?></option>
 								<?php endforeach; ?>
                             </select>
                         </div>
@@ -155,6 +152,7 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
                                 <ul class="fields menu sortable" id="<?php echo esc_attr($key); ?>">
 									<?php foreach ( $fields as $name => $field ) : ?>
 										<?php
+                                            $field_name_prefix = 'inspire_checkout_fields[settings][' . sanitize_title( $key ) . '][' . sanitize_title( $name ) . ']';
                                             if ( empty( $settings[ $key ][ $name ]['short_name'] ) ) {
 	                                            $field['short_name'] = $name;
 	                                            $settings[ $key ][ $name ]['short_name'] = $name;
@@ -193,14 +191,14 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
 													<?php if ( ! empty( $settings[ $key ][ $name ]['custom_field'] ) && $settings[ $key ][ $name ]['custom_field'] == '1' ): ?>
                                                         <input class="field_custom_field"
                                                                type="hidden"
-                                                               name="inspire_checkout_fields[settings][<?php echo esc_attr($key); ?>][<?php echo esc_attr($name)  ?>][custom_field]"
+                                                               name="<?php echo esc_attr( $field_name_prefix ); ?>[custom_field]"
                                                                value="1"
                                                                data-qa-id="field-custom-field"
                                                         />
                                                     <?php else : ?>
                                                         <input class="field_custom_field"
                                                                type="hidden"
-                                                               name="inspire_checkout_fields[settings][<?php echo esc_attr($key); ?>][<?php echo esc_attr($name)  ?>][custom_field]"
+                                                               name="<?php echo esc_attr( $field_name_prefix ); ?>[custom_field]"
                                                                value="0"
                                                                data-qa-id="field-custom-field"
                                                         />
@@ -209,15 +207,15 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
                                                     <input
                                                         class="field_name"
                                                         type="hidden"
-                                                        name="inspire_checkout_fields[settings][<?php echo esc_attr($key); ?>][<?php echo esc_attr($name); ?>][name]"
-                                                        value="<?php echo esc_html($name); ?>"
+                                                        name="<?php echo esc_attr( $field_name_prefix ); ?>[name]"
+                                                        value="<?php echo esc_attr($name); ?>"
                                                         data-qa-id="field-name"
                                                     />
 
                                                     <span class="item-title">
                                                         <span class="item-type">
                                                             <?php if ( isset( $checkout_field_type[$field_type] ) ) : ?>
-	                                                            <?php echo esc_attr($checkout_field_type[$field_type]['name']); ?>
+	                                                            <?php echo esc_html($checkout_field_type[$field_type]['name']); ?>
                                                             <?php else : ?>
 	                                                            <?php echo __( ucfirst( $field_type ), 'woocommerce' ); ?>
                                                             <?php endif; ?>
@@ -250,7 +248,7 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
 													foreach ( $additional_tabs as $additional_tab ) {
 														?>
                                                         <a class="nav-tab"
-                                                           href="#<?php echo esc_attr($additional_tab['hash']); ?>"><?php echo esc_attr($additional_tab['title']); ?></a>
+                                                           href="#<?php echo esc_attr($additional_tab['hash']); ?>"><?php echo esc_html($additional_tab['title']); ?></a>
 														<?php
 													}
 													?>
@@ -267,14 +265,14 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
 
                                                     <div>
                                                         <input type="hidden"
-                                                               name="inspire_checkout_fields[settings][<?php echo esc_attr($key)  ?>][<?php echo esc_attr($name)  ?>][visible]"
+                                                               name="<?php echo esc_attr( $field_name_prefix ); ?>[visible]"
                                                                value="1"
                                                         />
 
                                                         <label>
                                                             <input class="field_visible"
                                                                    type="checkbox"
-                                                                   name="inspire_checkout_fields[settings][<?php echo esc_attr($key)  ?>][<?php echo esc_attr($name)  ?>][visible]"
+                                                                   name="<?php echo esc_attr( $field_name_prefix ); ?>[visible]"
                                                                    value="0" <?php if ( $field_visible ): ?> checked<?php endif; ?>
                                                                    data-qa-id="field-visible"
                                                             />
@@ -311,13 +309,13 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
 													?>
                                                     <div style="<?php echo esc_attr($style); ?>">
                                                         <input type="hidden"
-                                                               name="inspire_checkout_fields[settings][<?php echo esc_attr($key) ?>][<?php echo esc_attr($name) ?>][required]"
+                                                               name="<?php echo esc_attr( $field_name_prefix ); ?>[required]"
                                                                value="0"
                                                         />
                                                         <label>
                                                             <input class="field_required"
                                                                    type="checkbox"
-                                                                   name="inspire_checkout_fields[settings][<?php echo esc_attr($key) ?>][<?php echo esc_attr($name) ?>][required]"
+                                                                   name="<?php echo esc_attr( $field_name_prefix ); ?>[required]"
                                                                    value="1" <?php echo $checked; ?> <?php echo $disabled; ?>
                                                                    data-qa-id="field-required"
                                                             />
@@ -334,9 +332,9 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
                                                         <label for="label_<?php echo esc_attr($name) ?>"><?php _e( 'Label', 'flexible-checkout-fields' ) ?></label>
 
                                                         <textarea data-field="<?php echo esc_attr($name); ?>" class="fcf_label field-name field_label" id="label_<?php echo esc_attr($name) ?>" class="field-name"
-                                                                  name="inspire_checkout_fields[settings][<?php echo esc_attr($key) ?>][<?php echo esc_attr($name) ?>][label]"
+                                                                  name="<?php echo esc_attr( $field_name_prefix ); ?>[label]"
                                                                   data-qa-id="field-name"
-                                                        ><?php if ( isset( $settings[ $key ][ $name ]['label'] ) ): echo esc_html( $settings[ $key ][ $name ]['label'] );
+                                                        ><?php if ( isset( $settings[ $key ][ $name ]['label'] ) ): echo esc_textarea( $settings[ $key ][ $name ]['label'] );
 															elseif ( isset( $field['label'] ) ): echo esc_html( $field['label'] ); endif; ?></textarea>
 
                                                         <p class="description"><?php _e( 'You can use HTML.', 'flexible-checkout-fields' ); ?></p>
@@ -357,7 +355,8 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
                                                                 required <?php echo $short_name_disabled; ?>
                                                                 class="short_name field_short_name"
                                                                 type="text"
-                                                                name="inspire_checkout_fields[settings][<?php echo esc_attr($key) ?>][<?php echo esc_attr($name) ?>][short_name]" value="<?php echo esc_attr($short_name_value); ?>"
+                                                                name="<?php echo esc_attr( $field_name_prefix ); ?>[short_name]"
+                                                                value="<?php echo esc_attr($short_name_value); ?>"
                                                                 data-qa-id="field-short-nem"
                                                         />
 
@@ -372,10 +371,14 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
 		                                                <?php $validation_value = ''; ?>
 		                                                <?php if ( isset( $settings[ $key ][ $name ]['validation'] ) ): $validation_value = esc_attr( $settings[ $key ][ $name ]['validation'] ); elseif ( isset( $field['validation'] ) ): $short_name_value = $field['validation']; endif; ?>
 
-                                                        <select class="validation field_validation" type="text" name="inspire_checkout_fields[settings][<?php echo esc_attr($key) ?>][<?php echo esc_attr($name) ?>][validation]" data-qa-id="field-validation">
+                                                        <select
+                                                                class="validation field_validation" type="text"
+                                                                name="<?php echo esc_attr( $field_name_prefix ); ?>[validation]"
+                                                                data-qa-id="field-validation"
+                                                        >
                                                             <?php foreach ( $validation_options as $option_value => $option ) : ?>
                                                                 <?php if ( $is_custom_field && $option_value == '' ) continue; ?>
-                                                                <option value="<?php echo esc_attr($option_value); ?>" <?php echo selected( $validation_value, $option_value ); ?>><?php echo esc_attr($option); ?></option>
+                                                                <option value="<?php echo esc_attr($option_value); ?>" <?php echo selected( $validation_value, $option_value ); ?>><?php echo esc_html($option); ?></option>
                                                             <?php endforeach; ?>
                                                         </select>
                                                         <p class="description"><?php echo __( 'For Post Code validation works only with country.', 'flexible-checkout-fields' ); ?></p>
@@ -395,7 +398,9 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
                                                                       data-field="<?php echo esc_attr($name); ?>" class="fcf_options"
                                                                       id="option_<?php echo esc_attr($name); ?>"
                                                                       data-qa-id="field-option"
-                                                                      name="inspire_checkout_fields[settings][<?php echo esc_attr($key)  ?>][<?php echo esc_attr($name)  ?>][option]" <?php echo $required; ?>><?php echo isset( $settings[ $key ][ $name ]['option'] ) ? esc_textarea( stripslashes( $settings[ $key ][ $name ]['option'] ) ) : ''; ?></textarea>
+                                                                      name="<?php echo esc_attr( $field_name_prefix ); ?>[option]"
+                                                                      <?php echo $required; ?>
+                                                            ><?php echo isset( $settings[ $key ][ $name ]['option'] ) ? esc_textarea( stripslashes( $settings[ $key ][ $name ]['option'] ) ) : ''; ?></textarea>
                                                             <p><?php _e( 'Format: <code>Value : Name</code>. Value will be in the code, name will be visible to the user. One option per line. Example:<br /><code>woman : I am a woman</code><br /><code>man : I am a man</code>', 'flexible-checkout-fields' ) ?></p>
                                                         </div>
 													<?php endif; ?>
@@ -407,7 +412,7 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
 
                                                                 <input class="default" id="default_<?php echo esc_attr($name); ?>"
                                                                        type="text"
-                                                                       name="inspire_checkout_fields[settings][<?php echo esc_attr($key)  ?>][<?php echo esc_attr($name)  ?>][default]"
+                                                                       name="<?php echo esc_attr( $field_name_prefix ); ?>[default]"
                                                                        value="<?php echo esc_attr( $fcf_field->get_default() ); ?>"
                                                                        data-qa-id="default"
                                                                 />
@@ -416,7 +421,7 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
 		                                                <?php else : ?>
                                                             <input class="default" id="default_<?php echo esc_attr($name); ?>"
                                                                    type="hidden"
-                                                                   name="inspire_checkout_fields[settings][<?php echo esc_attr($key)  ?>][<?php echo esc_attr($name)  ?>][default]"
+                                                                   name="<?php echo esc_attr( $field_name_prefix ); ?>[default]"
                                                                    value="<?php echo esc_attr( $fcf_field->get_default() ); ?>"
                                                                    data-qa-id="default"
                                                             />
@@ -429,7 +434,7 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
                                                             <label for="type_<?php echo esc_attr($name); ?>"><?php _e( 'Field Type', 'flexible-checkout-fields' ) ?></label>
 
                                                             <select class="field_type" id="field_type_<?php echo esc_attr($name); ?>"
-                                                                    name="inspire_checkout_fields[settings][<?php echo esc_attr($key)  ?>][<?php echo esc_attr($name)  ?>][type]"
+                                                                    name="<?php echo esc_attr( $field_name_prefix ); ?>[type]"
                                                                     disabled
                                                                     data-qa-id="field-type"
                                                             >
@@ -445,7 +450,7 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
                                                             <input
                                                                 type="hidden"
                                                                 id="field_type_<?php echo esc_attr($name); ?>"
-                                                                name="inspire_checkout_fields[settings][<?php echo esc_attr($key)  ?>][<?php echo esc_attr($name)  ?>][type]"
+                                                                name="<?php echo esc_attr( $field_name_prefix ); ?>[type]"
                                                                 value="<?php echo esc_attr($field['type']); ?>"
                                                                 data-qa-id="field-type"
                                                             />
@@ -480,7 +485,7 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
 
                                                             <input class="field_placeholder"
                                                                    <?php echo $disabled; ?> type="text" id="placeholder_<?php echo esc_attr($name); ?>"
-                                                                   name="inspire_checkout_fields[settings][<?php echo esc_attr($key)  ?>][<?php echo esc_attr($name)  ?>][placeholder]"
+                                                                   name="<?php echo esc_attr( $field_name_prefix ); ?>[placeholder]"
                                                                    value="<?php if ( ! empty( $settings[ $key ][ $name ]['placeholder'] ) ): echo esc_attr( $settings[ $key ][ $name ]['placeholder'] );
 															       else: echo isset( $field['placeholder'] ) ? esc_attr( $field['placeholder'] ) : ''; endif; ?>" <?php echo $required; ?>
                                                                    data-qa-id="field-placeholder"
@@ -490,7 +495,7 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
                                                     <div class="field-class">
                                                         <label for="class_<?php echo esc_attr($name); ?>"><?php _e( 'CSS Class', 'flexible-checkout-fields' ) ?></label>
                                                         <input class="field_class" type="text" id="class_<?php echo esc_attr($name); ?>"
-                                                               name="inspire_checkout_fields[settings][<?php echo esc_attr($key)  ?>][<?php echo esc_attr($name)  ?>][class]"
+                                                               name="<?php echo esc_attr( $field_name_prefix ); ?>[class]"
                                                                value="<?php if ( ! empty( $settings[ $key ][ $name ]['class'] ) ): echo esc_attr($settings[ $key ][ $name ]['class']);
 														       else: if ( ! empty( $field['class'] ) ) {
 															       echo esc_attr( implode( ' ', $field['class'] ) );
@@ -520,13 +525,13 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
                                                                 }
                                                             ?>
                                                             <input type="hidden"
-                                                                   name="inspire_checkout_fields[settings][<?php echo esc_attr($key)  ?>][<?php echo esc_attr($name)  ?>][display_on_<?php echo $display_on_field_key; ?>]"
+                                                                   name="<?php echo esc_attr( $field_name_prefix ); ?>[display_on_<?php echo $display_on_field_key; ?>]"
                                                                    value="0"/>
 
                                                             <label>
                                                                 <input class="field_required"
                                                                        type="checkbox"
-                                                                       name="inspire_checkout_fields[settings][<?php echo esc_attr($key)  ?>][<?php echo esc_attr($name)  ?>][display_on_<?php echo $display_on_field_key; ?>]"
+                                                                       name="<?php echo esc_attr( $field_name_prefix ); ?>[display_on_<?php echo $display_on_field_key; ?>]"
                                                                        value="1" <?php echo $checked; ?>
                                                                        data-qa-id="field-display-on-address"
                                                                 />
@@ -568,13 +573,13 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
                                                                 $checked = $fcf_field->get_field_setting( $field_name, $default_setting_value ) === '1' ? 'checked' : '';
                                                                 ?>
                                                                 <input type="hidden"
-                                                                       name="inspire_checkout_fields[settings][<?php echo esc_attr($key)  ?>][<?php echo esc_attr($name)  ?>][<?php echo $field_name; ?>]"
+                                                                       name="<?php echo esc_attr( $field_name_prefix ); ?>[<?php echo $field_name; ?>]"
                                                                        value="0"/>
 
                                                                 <label>
                                                                     <input class="field_required"
                                                                            type="checkbox"
-                                                                           name="inspire_checkout_fields[settings][<?php echo esc_attr($key)  ?>][<?php echo esc_attr($name)  ?>][<?php echo $field_name; ?>]"
+                                                                           name="<?php echo esc_attr( $field_name_prefix ); ?>[<?php echo $field_name; ?>]"
                                                                            value="1" <?php echo $checked; ?>
                                                                            data-qa-id="field-display-on-address"
                                                                     />
@@ -632,12 +637,23 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
 
     jQuery(document).ready(function () {
 
+		String.prototype.escape = function() {
+			var tagsToReplace = {
+				'&': '&amp;',
+				'<': '&lt;',
+				'>': '&gt;'
+			};
+			return this.replace(/[&<>]/g, function(tag) {
+				return tagsToReplace[tag] || tag;
+			});
+		};
+
         function validate_field_name( field ) {
             var return_false = false;
             jQuery('.short_name').each(function() {
-                var field_name = jQuery(this).attr('name');
+                var field_name = jQuery(this).attr('name').escape();
                 var field_settings = jQuery(this).closest('.field-item');
-                if ( field_name != jQuery(field).attr('name') ) {
+                if ( field_name != jQuery(field).attr('name').escape() ) {
                     if ( jQuery(field).val().toLowerCase() == jQuery(this).val().toLowerCase() ) {
                         var message = '<?php echo sprintf(__( 'Invalid field name: %s. The name already exists.', 'flexible-checkout-fields' ), '[field]' ); ?>';
                         message = message.replace( '[field]',  jQuery(field).val() );
@@ -714,8 +730,7 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
             var field_type = jQuery(this).closest('form').find('#woocommerce_checkout_fields_field_type').val();
             var field_option = jQuery(this).closest('form').find('#woocommerce_checkout_fields_field_option').val();
 
-            //var field_short_name = generate_short_name( stringToSlug(field_label).substr(0, 20) );
-            var field_short_name = jQuery(this).closest('form').find('#woocommerce_checkout_fields_field_short_name').val();
+            var field_short_name = jQuery(this).closest('form').find('#woocommerce_checkout_fields_field_short_name').val().escape();
             var field_slug = field_section + '_' + field_short_name;
 
             // Proceed if Name (label) is filled
@@ -943,20 +958,20 @@ $validation_options = $this->plugin->field_validation->get_validation_options( $
 
         var current_field_name_value = '';
         jQuery(document).on( 'keydown', '#woocommerce_checkout_fields_field_short_name', function (e) {
-            current_field_name_value = jQuery(this).val();
+            current_field_name_value = jQuery(this).val().escape();
         });
 
         jQuery(document).on( 'keyup', '#woocommerce_checkout_fields_field_short_name', function (e) {
-            if ( current_field_name_value != jQuery(this).val() ) {
+            if ( current_field_name_value != jQuery(this).val().escape() ) {
                 jQuery(this).attr('data-changed', 1);
                 jQuery(this).change();
-                current_field_name_value = jQuery(this).val();
+                current_field_name_value = jQuery(this).val().escape();
             }
         });
 
         jQuery(document).on( 'change', '#woocommerce_checkout_fields_field_short_name', function (e) {
             var field_section = jQuery(this).closest('form').find('#woocommerce_checkout_fields_field_section').val();
-            jQuery('#woocommerce_checkout_fields_field_short_name_meta').html( '_' + field_section + '_' + jQuery(this).val());
+            jQuery('#woocommerce_checkout_fields_field_short_name_meta').html( '_' + field_section + '_' + jQuery(this).val().escape());
         })
 
         jQuery(document).on( 'keyup', '#woocommerce_checkout_fields_field_name', function (e) {

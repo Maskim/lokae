@@ -195,7 +195,7 @@ abstract class AbstractPlugin extends \FcfVendor\WPDesk\PluginBuilder\Plugin\Sli
             $links = \array_merge($plugin_links, $links);
         }
         if ($this->settings_url) {
-            $plugin_links = ['<a target="_blank" href="' . $this->settings_url . '">' . \__('Settings', $this->get_text_domain()) . '</a>'];
+            $plugin_links = ['<a href="' . $this->settings_url . '">' . \__('Settings', $this->get_text_domain()) . '</a>'];
             $links = \array_merge($plugin_links, $links);
         }
         return $links;

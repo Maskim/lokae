@@ -175,9 +175,9 @@ class Flexible_Checkout_Fields_User_Profile {
 									case 'textarea':
 										$fields[] = '
 		                                        <tr>
-		                                            <th><label for="' . $field['name'] . '">' . $field['label'] . '</label></th>
+		                                            <th><label for="' . esc_attr( $field['name'] ) . '">' . $field['label'] . '</label></th>
 		                                            <td>
-		                                                <textarea name="' . $field['name'] . '" id="' . $field['name'] . '" class="regular-text" rows="5" cols="30">' . esc_attr( get_the_author_meta( $field['name'], $user->ID ) ) . '</textarea><br /><span class="description"></span>
+		                                                <textarea name="' . esc_attr( $field['name'] ) . '" id="' . esc_html( $field['name'] ) . '" class="regular-text" rows="5" cols="30">' . esc_textarea( get_the_author_meta( $field['name'], $user->ID ) ) . '</textarea><br /><span class="description"></span>
 		                                            </td>
 		                                        </tr>
 		                                    ';
@@ -186,9 +186,9 @@ class Flexible_Checkout_Fields_User_Profile {
 									default:
 										$fields[] = '
 		                                        <tr>
-		                                            <th><label for="' . $field['name'] . '">' . $field['label'] . '</label></th>
+		                                            <th><label for="' . esc_attr( $field['name'] ) . '">' . $field['label'] . '</label></th>
 		                                            <td>
-		                                                <input type="text" name="' . $field['name'] . '" id="' . $field['name'] . '" value="' . esc_attr( get_the_author_meta( $field['name'], $user->ID ) ) . '" class="regular-text" /><br /><span class="description"></span>
+		                                                <input type="text" name="' . esc_attr( $field['name'] ) . '" id="' . $field['name'] . '" value="' . esc_attr( get_the_author_meta( $field['name'], $user->ID ) ) . '" class="regular-text" /><br /><span class="description"></span>
 		                                            </td>
 		                                        </tr>
 		                                    ';

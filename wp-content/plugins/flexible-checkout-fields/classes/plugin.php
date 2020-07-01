@@ -549,13 +549,11 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 									$new[ $key ][ $field['name'] ]['label'] = stripcslashes( wpdesk__( $field['label'], 'flexible-checkout-fields' ) );
 								}
 								if ( isset( $field['placeholder'] ) ) {
-									$new[ $key ][ $field['name'] ]['placeholder'] = wpdesk__( esc_attr( $field['placeholder'] ), 'flexible-checkout-fields' );
+									$new[ $key ][ $field['name'] ]['placeholder'] = wpdesk__( $field['placeholder'], 'flexible-checkout-fields' );
 								} else {
 									$new[ $key ][ $field['name'] ]['placeholder'] = '';
 								}
-								if ( is_array( $field['class'] ) ) {
-									$new[ $key ][ $field['name'] ]['class'] = esc_attr($field['class']);
-								} else {
+								if ( ! is_array( $field['class'] ) ) {
 									$new[ $key ][ $field['name'] ]['class'] = explode( ' ', $field['class'] );
 								}
 								if ( ( $field['name'] == 'billing_country' || $field['name'] == 'shipping_country' ) && $field['visible'] == 1 ) {
@@ -701,7 +699,7 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 					}
 
 					if ( isset( $field['placeholder'] ) ) {
-						$new[ $key ]['placeholder'] = wpdesk__( esc_attr($field['placeholder']), 'flexible-checkout-fields' );
+						$new[ $key ]['placeholder'] = wpdesk__( $field['placeholder'], 'flexible-checkout-fields' );
 					} else {
 						$new[ $key ]['placeholder'] = '';
 					}
@@ -777,9 +775,9 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 							if ( $value = wpdesk_get_order_meta( $order, '_' . $field['name'], true ) ) {
 								if ( isset( $field['type'] ) ) {
 									$value    = apply_filters( 'flexible_checkout_fields_print_value', $value, $field );
-									$return[] = '<b>' . stripslashes( wpdesk__( $field['label'], 'flexible-checkout-fields' ) ) . '</b>: ' . $value;
+									$return[] = '<b>' . esc_html( wpdesk__( $field['label'], 'flexible-checkout-fields' ) ) . '</b>: ' . esc_html( $value );
 								} else {
-									$return[] = '<b>' . stripslashes( wpdesk__( $field['label'], 'flexible-checkout-fields' ) ) . '</b>: ' . $value;
+									$return[] = '<b>' . esc_html( wpdesk__( $field['label'], 'flexible-checkout-fields' ) ) . '</b>: ' . esc_html( $value );
 								}
 							}
 						}
@@ -810,8 +808,7 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 								$new[ $field_name ] = $labels[ $field_name ];
 
 								if ( ! empty( $field['label'] ) ) {
-									$new[ $field_name ]['label'] = stripslashes( $field['label'] );
-
+									$new[ $field_name ]['label'] = $field['label'];
 								}
 
 								if ( empty( $new[ $field_name ]['label'] ) ) {
@@ -987,18 +984,15 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 			wp_enqueue_style( 'jquery-ui-style', trailingslashit( $this->get_plugin_assets_url() ) . 'css/jquery-ui' . $suffix . '.css', array(), $this->scripts_version );
 			wp_enqueue_script( 'jquery-tiptip' );
 		}
+
 		wp_enqueue_style( 'inspire_checkout_fields_admin_style', trailingslashit( $this->get_plugin_assets_url() ) . 'css/admin' . $suffix . '.css', array(), $this->scripts_version );
-
-		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'jquery-ui' );
-		wp_enqueue_script( 'jquery-ui-sortable' );
-		wp_enqueue_script( 'jquery-ui-tooltip' );
-		wp_enqueue_script( 'inspire_checkout_fields_admin_js', trailingslashit( $this->get_plugin_assets_url() ) . 'js/admin' . $suffix . '.js', array(), $this->scripts_version );
-		wp_enqueue_script( 'jquery-ui-datepicker' );
-
-		$labels_and_packing_list_params = array(
-			'plugin_url' => $this->get_plugin_assets_url()
+		$deps = array(
+			'jquery',
+			'jquery-ui-sortable',
+			'jquery-ui-tooltip',
+			'jquery-ui-datepicker',
 		);
+		wp_enqueue_script( 'inspire_checkout_fields_admin_js', trailingslashit( $this->get_plugin_assets_url() ) . 'js/admin' . $suffix . '.js', $deps, $this->scripts_version );
 	}
 
 	/**
@@ -1014,17 +1008,19 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 			wp_enqueue_style( 'inspire_checkout_fields_public_style', trailingslashit( $this->get_plugin_assets_url() ) . 'css/front' . $suffix . '.css', array(), $this->scripts_version );
 		}
 		if ( is_checkout() || is_account_page() ) {
-			wp_enqueue_script( 'jquery' );
-			wp_enqueue_script( 'jquery-ui' );
-			wp_enqueue_script( 'jquery-ui-datepicker' );
 			add_action( 'wp_enqueue_scripts', array( $this, 'wp_localize_jquery_ui_datepicker' ), 1000 );
 
-			wp_register_script( 'inspire_checkout_fields_checkout_js', trailingslashit( $this->get_plugin_assets_url() ) . 'js/checkout' . $suffix . '.js', array(), $this->scripts_version );
+			$deps = array(
+				'jquery',
+				'jquery-ui-datepicker',
+			);
+			wp_register_script( 'inspire_checkout_fields_checkout_js', trailingslashit( $this->get_plugin_assets_url() ) . 'js/checkout' . $suffix . '.js', $deps, $this->scripts_version );
 			$translation_array = array(
 				'uploading' => __( 'Uploading file...', 'flexible-checkout-fields' ),
 			);
 			wp_localize_script( 'inspire_checkout_fields_checkout_js', 'words', $translation_array );
 			wp_enqueue_script( 'inspire_checkout_fields_checkout_js' );
+			wp_enqueue_script( 'jquery-ui-datepicker' );
 		}
 	}
 

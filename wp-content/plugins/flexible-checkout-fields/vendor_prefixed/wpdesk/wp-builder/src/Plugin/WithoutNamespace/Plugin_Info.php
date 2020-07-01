@@ -9,7 +9,7 @@ if (!\class_exists('FcfVendor\\WPDesk_Buildable')) {
     require_once __DIR__ . '/Buildable.php';
 }
 if (!\class_exists('FcfVendor\\WPDesk_Has_Plugin_Info')) {
-    require_once 'Has_Plugin_Info.php';
+    require_once __DIR__ . '/Has_Plugin_Info.php';
 }
 /**
  * Structure with core info about plugin

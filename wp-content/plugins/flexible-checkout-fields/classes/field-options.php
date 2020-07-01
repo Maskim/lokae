@@ -38,9 +38,9 @@ class Flexible_Checkout_Fields_Field_Options {
 			$option_value = trim( $option_array[0] );
 			$option_label = $option_value;
 			if ( isset( $option_array[1] ) ) {
-				$option_label = wp_unslash( strip_tags( trim( $option_array[1] ), self::ALLOWED_HTML_TAGS_IN_OPTION ) );
+				$option_label = trim( $option_array[1] );
 			}
-			$options[ $option_value ] = wpdesk__( $option_label, 'flexible-checkout-fields' );
+			$options[ $option_value ] = strip_tags( wp_unslash( wpdesk__( $option_label, 'flexible-checkout-fields' ) ) , self::ALLOWED_HTML_TAGS_IN_OPTION );
 			unset( $option_array );
 		}
 		unset( $tmp_options_array );

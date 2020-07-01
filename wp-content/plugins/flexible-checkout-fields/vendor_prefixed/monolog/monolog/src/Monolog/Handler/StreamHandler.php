@@ -11,6 +11,7 @@
 namespace FcfVendor\Monolog\Handler;
 
 use FcfVendor\Monolog\Logger;
+use FcfVendor\Monolog\Utils;
 /**
  * Stores to any stream resource
  *
@@ -42,7 +43,7 @@ class StreamHandler extends \FcfVendor\Monolog\Handler\AbstractProcessingHandler
         if (\is_resource($stream)) {
             $this->stream = $stream;
         } elseif (\is_string($stream)) {
-            $this->url = $stream;
+            $this->url = \FcfVendor\Monolog\Utils::canonicalizePath($stream);
         } else {
             throw new \InvalidArgumentException('A stream must either be a resource or a string.');
         }

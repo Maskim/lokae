@@ -235,7 +235,7 @@ return array(
     'Flexible_Checkout_Fields_Field_Type_Settings' => $baseDir . '/classes/field-type-settings.php',
     'Flexible_Checkout_Fields_Field_Validation' => $baseDir . '/classes/filed-validation.php',
     'Flexible_Checkout_Fields_Myaccount_Edit_Address' => $baseDir . '/classes/myaccount-edit-address.php',
-    'Flexible_Checkout_Fields_Myaccount_Field_Processor' => $baseDir . '/classes/myaccount-filed-processor.php',
+    'Flexible_Checkout_Fields_Myaccount_Field_Processor' => $baseDir . '/classes/myaccount-field-processor.php',
     'Flexible_Checkout_Fields_Plugin' => $baseDir . '/classes/plugin.php',
     'Flexible_Checkout_Fields_Settings' => $baseDir . '/classes/settings.php',
     'Flexible_Checkout_Fields_User_Meta' => $baseDir . '/classes/user-meta.php',

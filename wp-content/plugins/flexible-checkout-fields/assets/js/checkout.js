@@ -34,7 +34,7 @@ jQuery(document).on("change",".inspire-file-file",function() {
 
     jQuery.ajax({
         type: 'POST',
-        url: ajaxurl,
+        url: fcf_ajaxurl,
         data: fd,
         contentType: false,
         processData: false,

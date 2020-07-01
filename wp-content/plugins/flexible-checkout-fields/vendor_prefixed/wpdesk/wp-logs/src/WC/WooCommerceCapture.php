@@ -70,7 +70,7 @@ class WooCommerceCapture
      */
     public static function isSupportedWCVersion()
     {
-        return \version_compare(\WooCommerce::instance()->version, self::SUPPORTED_WC_VERSION, '>=');
+        return \class_exists(\WooCommerce::class) && \version_compare(\WooCommerce::instance()->version, self::SUPPORTED_WC_VERSION, '>=');
     }
     /**
      * Capture WooCommerce logger and inject our decorated Logger

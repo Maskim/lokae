@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-05-18T08:49:29+00:00\n"
-"PO-Revision-Date: 2020-05-18T08:49:29+00:00\n"
+"POT-Creation-Date: 2020-06-23T10:17:49+00:00\n"
+"PO-Revision-Date: 2020-06-23T10:17:49+00:00\n"
 "Language: \n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
@@ -47,40 +47,40 @@ msgid "Display field's label"
 msgstr ""
 
 #: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:83
-#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:364
+#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:363
 msgid "Meta name: %s."
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:327
+#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:325
 msgid "Requirement of this field is controlled by WooCommerce and cannot be changed."
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:381
-#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:806
+#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:384
+#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:821
 msgid "For Post Code validation works only with country."
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:474
+#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:479
 msgid "This field is address locale dependent and cannot be modified."
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:544
+#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:549
 msgid "Display state abbreviations"
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:549
+#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:554
 msgid "Display a comma before, if the field is not in the new line"
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:642
+#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:658
 msgid "Invalid field name: %s. The name already exists."
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:794
+#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:809
 msgid "Meta name: "
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:992
+#: /builds/wpdesk/flexible-checkout-fields/classes/views/settings-fields.php:1007
 msgid "Do you really want to delete this field: %s? Deleting a field remove it from all orders."
 msgstr ""
 
@@ -182,48 +182,48 @@ msgstr ""
 msgid "File Upload"
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:946
+#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:943
 msgid "Advanced"
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1024
+#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1019
 msgid "Uploading file..."
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1070
+#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1066
 msgid "Close"
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1071
+#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1067
 msgid "Today"
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1074
+#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1070
 msgid "Next"
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1075
+#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1071
 msgid "Previous"
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1103
+#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1099
 #: /builds/wpdesk/flexible-checkout-fields/classes/settings.php:165
 #: /builds/wpdesk/flexible-checkout-fields/vendor_prefixed/wpdesk/wp-builder/src/Plugin/AbstractPlugin.php:198
 #: /builds/wpdesk/flexible-checkout-fields/vendor_prefixed/wpdesk/wp-wpdesk-helper/src/Page/SettingsPage.php:46
 msgid "Settings"
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1105
+#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1101
 #: /builds/wpdesk/flexible-checkout-fields/vendor_prefixed/wpdesk/wp-builder/src/Plugin/AbstractPlugin.php:194
 msgid "Docs"
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1106
+#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1102
 #: /builds/wpdesk/flexible-checkout-fields/vendor_prefixed/wpdesk/wp-builder/src/Plugin/AbstractPlugin.php:191
 msgid "Support"
 msgstr ""
 
-#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1112
+#: /builds/wpdesk/flexible-checkout-fields/classes/plugin.php:1108
 msgid "Upgrade"
 msgstr ""
 

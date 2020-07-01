@@ -91,7 +91,7 @@ class Flexible_Checkout_Fields_Disaplay_Options {
 								}
 								$value = apply_filters( 'flexible_checkout_fields_print_value', $value, $field );
 								if ( '' !== $value ) {
-									$return[] = stripslashes( strip_tags( wpdesk__( $field['label'], 'flexible-checkout-fields' ) ) ) . ': ' . $value;
+									$return[] = esc_html( wpdesk__( $field['label'], 'flexible-checkout-fields' ) ) . ': ' . esc_html( $value );
 								}
 							}
 						}

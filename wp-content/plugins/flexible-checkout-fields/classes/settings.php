@@ -314,7 +314,7 @@
 									                        $field_name = $new_field_name;
 								                        }
 								                        else {
-								                        	$this->add_admin_notice( sprintf( __( 'You cannot use this field name: %s, for field: %s.', 'flexible-checkout-fields' ), $field['short_name'], $field['label'] ), 'error' );
+								                        	$this->add_admin_notice( sprintf( __( 'You cannot use this field name: %s, for field: %s.', 'flexible-checkout-fields' ), esc_html( $field['short_name'] ), esc_html( $field['label'] ) ), 'error' );
 								                        }
 							                        }
 							                        else {
