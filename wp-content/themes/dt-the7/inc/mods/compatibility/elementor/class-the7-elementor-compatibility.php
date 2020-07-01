@@ -6,6 +6,7 @@
  */
 
 
+use Elementor\Core\Settings\Manager as Settings_Manager;
 use Elementor\Plugin as Elementor;
 use ElementorPro\Modules\ThemeBuilder\Documents\Theme_Document;
 use ElementorPro\Modules\ThemeBuilder\Module as ThemeBuilderModule;
@@ -70,6 +71,9 @@ class The7_Elementor_Compatibility {
 		require_once __DIR__ . '/class-the7-elementor-kit-manager-control.php';
 		require_once __DIR__ . '/class-the7-elementor-schemes-manager-control.php';
 		require_once __DIR__ . '/class-the7-elementor-template-manager.php';
+		require_once __DIR__ . '/upgrade/class-the7-elementor-updater.php';
+		require_once __DIR__ . '/upgrade/class-the7-elementor-widget-migrations.php';
+		require_once __DIR__ . '/upgrade/widgets/class-the7-elementor-masonry-migrations.php';
 
 		$this->page_settings = new The7_Elementor_Page_Settings();
 		$this->page_settings->bootstrap();
@@ -100,6 +104,29 @@ class The7_Elementor_Compatibility {
 		}
 
 		add_action( 'wp_enqueue_scripts',   [ $this, 'enqueue_elementor_global_style_css'], 30  );
+		add_filter( 'presscore_localized_script', [ $this, 'extract_elementor_settings_to_js' ] );
+	}
+
+	/**
+	 * @param array $dt_local
+	 *
+	 * @return array
+	 */
+	public function extract_elementor_settings_to_js( $dt_local ) {
+		$dt_local['elementor'] = [
+			'settings' => [
+				'container_width' => (int) self::get_elementor_settings( 'elementor_container_width' ),
+			],
+		];
+
+		return $dt_local;
+	}
+
+	/**
+	 * @return array|mixed|null
+	 */
+	public static function get_elementor_settings( $key = null ) {
+		return Settings_Manager::get_settings_managers( 'general' )->get_model()->get_settings( $key );
 	}
 
 	protected function bootstrap_pro() {

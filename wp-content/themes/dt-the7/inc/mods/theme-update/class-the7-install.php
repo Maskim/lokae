@@ -182,6 +182,10 @@ class The7_Install {
 			'the7_update_purge_elementor_cache',
 			'the7_update_870_db_version',
 		),
+		'8.9.0' => array(
+			'the7_update_890_elementor_the7_elements',
+			'the7_update_890_db_version',
+		),
 	);
 
     public static function init() {

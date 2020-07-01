@@ -167,7 +167,7 @@ if ( ! function_exists( 'dt_get_next_page_button' ) ) :
 	 *
 	 * @return string
 	 */
-	function dt_get_next_page_button( $max, $class = '', $cur_page = null ) {
+	function dt_get_next_page_button( $max, $class = '', $cur_page = null, $button_class = '', $caption = null, $icon = null, $icon_position = 'before' ) {
 		if ( ! dt_get_next_posts_url( $max, $cur_page ) ) {
 			return '';
 		}
@@ -176,18 +176,29 @@ if ( ! function_exists( 'dt_get_next_page_button' ) ) :
 			$cur_page = the7_get_paged_var();
 		}
 
-		$button_html_class = 'button-load-more';
-		$caption           = __( 'Load more', 'the7mk2' );
+		$button_html_class = 'button-load-more ' . $button_class;
+		$caption = $caption !== null ? $caption : __( 'Load more', 'the7mk2' );
 		if ( presscore_is_lazy_loading() ) {
 			$button_html_class .= ' button-lazy-loading';
-			$caption           = __( 'Loading...', 'the7mk2' );
+			$caption = __( 'Loading...', 'the7mk2' );
 		}
 		$caption = apply_filters( 'dt_get_next_page_button-caption', $caption );
-		$class   = apply_filters( 'dt_get_next_page_button-wrap_class', $class );
-		$icon    = '<span class="stick"></span><span class="stick"></span><span class="stick"></span>';
+		$class = apply_filters( 'dt_get_next_page_button-wrap_class', $class );
+
+		if ( $icon === null ) {
+			$icon = '<span class="stick"></span><span class="stick"></span><span class="stick"></span>';
+		}
+
+		$button_caption_tag = '<span class="button-caption">' . esc_html( $caption ) . '</span>';
+
+		if ( $icon_position === 'after' ) {
+			$button_caption_tag .= $icon;
+		} else {
+			$button_caption_tag = $icon . $button_caption_tag;
+		}
 
 		return '<div class="' . esc_attr( $class ) . '">
-				<a class="' . esc_attr( $button_html_class ) . '" href="javascript:void(0);" data-dt-page="' . esc_attr( $cur_page ) . '" >' . $icon . '<span class="button-caption">' . esc_html( $caption ) . '</span></a>
+				<a class="' . esc_attr( $button_html_class ) . '" href="javascript:void(0);" data-dt-page="' . esc_attr( $cur_page ) . '" >' . $button_caption_tag . '</a>
 			</div>';
 	}
 

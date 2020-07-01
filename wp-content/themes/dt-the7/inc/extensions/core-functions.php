@@ -1255,3 +1255,7 @@ function the7_add_submenu_page_after( $parent_slug, $page_title, $menu_title, $c
 
 	return $hook;
 }
+
+function the7_elementor_is_active() {
+	return class_exists( 'Elementor\Plugin' );
+}

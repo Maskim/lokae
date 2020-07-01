@@ -8,7 +8,7 @@
         elementorFrontend.hooks.addAction("frontend/element_ready/the7-elements-woo-carousel.default", function ($scope, $) {
             refreshElementorCarousels($scope, $)
         });
-        
+
         function refreshElementorCarousels($scope, $) {
             if ($.fn.the7OwlCarousel === undefined) {
                 return;

@@ -12,7 +12,6 @@ class Products_Query extends Query_Interface {
 	public function parse_query_args() {
 		$query_args = [
 			'post_type'           => 'product',
-			'post_status'         => 'publish',
 			'ignore_sticky_posts' => true,
 			'orderby'             => $this->get_att( $this->query_prefix . 'orderby' ),
 			'order'               => strtoupper( $this->get_att( $this->query_prefix . 'order' ) ),

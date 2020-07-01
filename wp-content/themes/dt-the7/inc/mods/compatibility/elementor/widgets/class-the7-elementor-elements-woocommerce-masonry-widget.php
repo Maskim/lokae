@@ -37,7 +37,7 @@ class The7_Elementor_Elements_Woocommerce_Masonry_Widget extends The7_Elementor_
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'The7 Product Masonry & Grid', 'the7mk2' );
+		return __( 'Product Masonry & Grid', 'the7mk2' );
 	}
 
 	/**
@@ -45,7 +45,7 @@ class The7_Elementor_Elements_Woocommerce_Masonry_Widget extends The7_Elementor_
 	 * @return string
 	 */
 	public function get_icon() {
-		return 'eicon-products';
+		return 'eicon-products the7-widget';
 	}
 
 	public function get_script_depends() {

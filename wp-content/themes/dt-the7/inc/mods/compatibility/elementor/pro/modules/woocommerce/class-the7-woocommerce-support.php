@@ -5,6 +5,7 @@ namespace The7\Adapters\Elementor\Pro\WoocommerceSupport;
 
 use Elementor\Plugin;
 use Elementor\Widget_Base;
+use ElementorPro\Modules\Woocommerce\Documents\Product;
 use ElementorPro\Modules\Woocommerce\Widgets\Products_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,14 +14,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Woocommerce_Support {
 
+    /*defines the list of the widgets where The7 theme templates would not be applied*/
 	protected static $excluded_widgets = [
-		//'wc-add-to-cart',
 		'woocommerce-archive-description',
 		'woocommerce-breadcrumb',
 		'wc-categories',
 		'woocommerce-category-image',
 		'woocommerce-menu-cart',
-		//'woocommerce-product-add-to-cart',
 		'woocommerce-product-additional-information',
 		'woocommerce-product-content',
 		'woocommerce-product-data-tabs',
@@ -33,17 +33,19 @@ class Woocommerce_Support {
 		'woocommerce-product-title',
 		'wc-products',
 		'wc-single-elements',
+		'woocommerce-product-add-to-cart',
+		'wc-add-to-cart'
 	];
 	protected $current_widget;
 
 	public function __construct() {
-		add_filter( 'woocommerce_locate_template', array( $this, 'filter_woocommerce_templates' ), 50, 3 );
-		add_filter( 'wc_get_template_part', array( $this, 'filter_woocommerce_template_part' ), 50, 3 );
+		add_filter( 'wc_get_template', [ $this, 'filter_woocommerce_templates' ], 50, 5 );
+		add_filter( 'wc_get_template_part', [ $this, 'filter_woocommerce_template_part' ], 50, 3 );
 
-		add_action( 'elementor/widget/before_render_content', array( $this, 'before_render_content' ) );
-		add_filter( 'elementor/widget/render_content', array( $this, 'after_render_content' ), 10, 2 );
+		add_action( 'elementor/widget/before_render_content', [ $this, 'before_render_content' ] );
+		add_filter( 'elementor/widget/render_content', [ $this, 'after_render_content' ], 10, 2 );
 
-		add_filter( 'elementor/widget/render_content', array( $this, 'fix_pages_widget_preview' ), 10, 2 );
+		add_filter( 'elementor/widget/render_content', [ $this, 'fix_pages_widget_preview' ], 10, 2 );
 
 		//modify product controls
 		add_action( 'elementor/element/before_section_end', [ $this, 'update_controls' ] );
@@ -83,6 +85,7 @@ class Woocommerce_Support {
 	}
 
 	protected function is_ignore_theme_templates() {
+
 		if ( ( $this->current_widget instanceof Products_Base ) || ( $this->current_widget && in_array( $this->current_widget->get_name(), self::$excluded_widgets, true ) ) ) {
 			return true;
 		}
@@ -125,7 +128,7 @@ class Woocommerce_Support {
 		return $widget_content;
 	}
 
-	public function filter_woocommerce_templates( $template, $template_name, $template_path ) {
+	public function filter_woocommerce_templates( $template, $template_name, $args, $template_path, $default_path ) {
 		if ( ( $this->is_ignore_theme_templates() && strpos( $template, PRESSCORE_THEME_DIR ) !== false ) || WC_TEMPLATE_DEBUG_MODE ) {
 			// Get default template/.
 			$default_path = WC()->plugin_path() . '/templates/';
@@ -144,7 +147,7 @@ class Woocommerce_Support {
 		return $template;
 	}
 
-    public function update_controls( $widget ) {
+	public function update_controls( $widget ) {
 		if ( ! $widget instanceof Products_Base ) {
 			return;
 		}
@@ -153,38 +156,38 @@ class Woocommerce_Support {
 				'{{WRAPPER}}.elementor-wc-products ul.products li.product .button' => 'background: {{VALUE}};',
 			],
 		];
-		$this->update_control_fields( $widget , 'button_background_color', $control_data );
+		$this->update_control_fields( $widget, 'button_background_color', $control_data );
 
-	    $control_data = [
-		    'options' => [
-			    '' => __( 'Default', 'the7mk2' ),
-			    'none' => __( 'None', 'the7mk2' ),
-			    'solid' => _x( 'Solid', 'Border Control', 'the7mk2' ),
-			    'double' => _x( 'Double', 'Border Control', 'the7mk2' ),
-			    'dotted' => _x( 'Dotted', 'Border Control', 'the7mk2' ),
-			    'dashed' => _x( 'Dashed', 'Border Control', 'the7mk2' ),
-			    'groove' => _x( 'Groove', 'Border Control', 'the7mk2' ),
-		    ],
-	    ];
-	    $this->update_control_fields( $widget , 'button_border_border', $control_data );
+		$control_data = [
+			'options' => [
+				''       => __( 'Default', 'the7mk2' ),
+				'none'   => __( 'None', 'the7mk2' ),
+				'solid'  => _x( 'Solid', 'Border Control', 'the7mk2' ),
+				'double' => _x( 'Double', 'Border Control', 'the7mk2' ),
+				'dotted' => _x( 'Dotted', 'Border Control', 'the7mk2' ),
+				'dashed' => _x( 'Dashed', 'Border Control', 'the7mk2' ),
+				'groove' => _x( 'Groove', 'Border Control', 'the7mk2' ),
+			],
+		];
+		$this->update_control_fields( $widget, 'button_border_border', $control_data );
 
-	    $control_data = [
-		    'condition' => [
-			    'border!' => ['', 'none'],
-		    ],
-	    ];
+		$control_data = [
+			'condition' => [
+				'border!' => [ '', 'none' ],
+			],
+		];
 
-	    $this->update_control_fields( $widget , 'button_border_width', $control_data );
+		$this->update_control_fields( $widget, 'button_border_width', $control_data );
 
 		$control_data = [
 			'selectors' => [
 				'{{WRAPPER}}.elementor-wc-products ul.products li.product span.onsale' => 'background: {{VALUE}}',
 			],
 		];
-		$this->update_control_fields( $widget , 'onsale_text_background_color', $control_data );
+		$this->update_control_fields( $widget, 'onsale_text_background_color', $control_data );
 	}
 
-	public function update_control_fields( $widget, $control_id, array $args ){
+	public function update_control_fields( $widget, $control_id, array $args ) {
 		$control_data = Plugin::instance()->controls_manager->get_control_from_stack( $widget->get_unique_name(), $control_id );
 		if ( ! is_wp_error( $control_data ) ) {
 			$widget->update_control( $control_id, $args );
@@ -192,21 +195,34 @@ class Woocommerce_Support {
 	}
 
 	public function fix_pages_widget_preview( $widget_content, Widget_Base $widget ) {
-	    $widgets = ['wc-elements', 'woocommerce-product-images'];
-		if ( in_array( $widget->get_name(), $widgets )){
-			if ( Plugin::$instance->editor->is_edit_mode() ) {
+		if ( Plugin::$instance->editor->is_edit_mode() ) {
+			$widgets = [ 'wc-elements', 'woocommerce-product-images' ];
+			$widget_name = $widget->get_name();
+		    if ( in_array( $widget_name, $widgets ) ) {
 				ob_start();
 				?>
-				<script>
-                    elementorFrontend.hooks.addAction( 'frontend/element_ready/<?php echo $widget->get_name(); ?>.default', function ($scope, jQuery) {
+                <script>
+                    elementorFrontend.hooks.addAction('frontend/element_ready/<?php echo $widget_name; ?>.default', function ($scope, jQuery) {
                         $scope.find(".woocommerce-product-gallery").wc_product_gallery();
                     });
-				</script>
+                </script>
 				<?php
-				$widget_content = $widget_content . ob_get_clean();
+				return $widget_content . ob_get_clean();
+			}
+			$widgets = [ 'woocommerce-product-data-tabs', 'the7-woocommerce-product-data-tabs' ];
+			if ( in_array( $widget_name, $widgets ) ) {
+				ob_start();
+				?>
+                <script>
+                    elementorFrontend.hooks.addAction('frontend/element_ready/<?php echo $widget_name; ?>.default', function ($scope, jQuery) {
+                        $scope.find(".wc-tabs-wrapper, .woocommerce-tabs, #rating").trigger('init');
+                    });
+                </script>
+				<?php
+				return $widget_content . ob_get_clean();
 			}
 		}
-
 		return $widget_content;
 	}
+
 }

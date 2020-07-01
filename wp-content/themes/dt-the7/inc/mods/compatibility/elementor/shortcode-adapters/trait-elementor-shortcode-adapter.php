@@ -29,7 +29,10 @@ trait Trait_Elementor_Shortcode_Adapter {
 		$this->backup_post_object();
 		$this->backup_theme_config();
 		if ( wp_doing_ajax() ) {
-			presscore_config_base_init( The7_Elementor_Compatibility::get_frontend_document()->get_id() );
+			$document = The7_Elementor_Compatibility::get_frontend_document();
+			if ( $document ) {
+				presscore_config_base_init( $document->get_id() );
+			}
 		}
 
 		ob_start();

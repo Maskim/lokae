@@ -103,6 +103,12 @@ If the problem persists, please don\'t hesitate to contact our <a href="%s" targ
 		);
 
 		ob_start();
+
+		// Fix elementor data import alongside with installed wordpress-importer plugin.
+		if ( class_exists( 'Elementor\Compatibility' ) ) {
+			remove_filter( 'wp_import_post_meta', [ 'Elementor\Compatibility', 'on_wp_import_post_meta' ] );
+		}
+
 		$this->rename_existing_menus();
 		$this->import_file( $this->content_dir . 'full-content.xml', $import_options );
 		ob_end_clean();

@@ -176,8 +176,10 @@ if ( ! class_exists( 'Presscore_Modules_ArchiveExtModule', false ) ) :
 					}
 					break;
 				case 'dt_portfolio_jgrid':
-				case 'dt_albums':
 				case 'dt_albums_jgrid':
+					$posts_per_page = -1;
+					break;
+				case 'dt_albums':
 					if ( ! empty( $atts['posts_per_page'] ) ) {
 						$posts_per_page = $atts['posts_per_page'];
 					}

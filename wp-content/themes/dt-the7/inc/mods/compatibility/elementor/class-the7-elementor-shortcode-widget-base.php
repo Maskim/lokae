@@ -22,14 +22,6 @@ abstract class The7_Elementor_Shortcode_Adaptor_Widget_Base extends The7_Element
 		$this->shortcode_adapter = $shortcode_adapter;
 	}
 
-	/**
-	 * Get widget category.
-	 * @return array
-	 */
-	public function get_categories() {
-		return [ 'the7-elements' ];
-	}
-
 	public function generate_inline_css() {
 		$this->shortcode_adapter->set_unique_class( $this->get_unique_class() );
 		$this->shortcode_adapter->adapter_init_shortcode( $this->get_adapted_settings() );

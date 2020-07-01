@@ -36,7 +36,7 @@ class The7_Elementor_Elements_Woocommerce_Carousel_Widget extends The7_Elementor
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'The7 Product Carousel', 'the7mk2' );
+		return __( 'Product Carousel', 'the7mk2' );
 	}
 
 	/**
@@ -44,7 +44,7 @@ class The7_Elementor_Elements_Woocommerce_Carousel_Widget extends The7_Elementor
 	 * @return string
 	 */
 	public function get_icon() {
-		return 'eicon-posts-carousel';
+		return 'eicon-posts-carousel the7-widget';
 	}
 
 	public function get_script_depends() {
@@ -692,7 +692,7 @@ class The7_Elementor_Elements_Woocommerce_Carousel_Widget extends The7_Elementor
 		] );
 
 		$this->add_control( 'reposition_arrows_mobile_switch_width', [
-			'label'     => __( 'Reposition arrows if browser width is less then', 'the7mk2' ),
+			'label'     => __( 'Reposition arrows after browser width', 'the7mk2' ),
 			'type'      => Controls_Manager::NUMBER,
 			'default'   => 778,
 			'condition' => [

@@ -192,7 +192,7 @@ if ( ! class_exists( 'DT_Shortcode_ProductsMasonry', false ) ):
 				);
 
 				echo '<div ' . presscore_tpl_masonry_item_wrap_class( $visibility ) . presscore_tpl_masonry_item_wrap_data_attr() . '>';
-				echo '<article ' . $this->post_class( $post_class_array ) . ' >';
+				echo '<article '; wc_product_class( $post_class_array ); echo ' >';
 
 				// Quick fix to prevent errors on page save when YoastSEO is active.
 				if ( ! empty( $GLOBALS['product'] ) ) {
@@ -579,7 +579,6 @@ if ( ! class_exists( 'DT_Shortcode_ProductsMasonry', false ) ):
 			$terms_slugs = '';
 			$query_args =  array(
 				'post_type' => 'product',
-        		'post_status'		  => 'publish',
 				'ignore_sticky_posts'  => 1,
 				'posts_per_page' 	   => $posts_total,
 				'orderby' 			  => $orderby,
@@ -683,7 +682,6 @@ if ( ! class_exists( 'DT_Shortcode_ProductsMasonry', false ) ):
 			if ( 'featured_products' === $show_products ) {
 				$posts_query = new WP_Query( array(
 					'post_type'           => 'product',
-					'post_status'         => 'publish',
 					'ignore_sticky_posts' => 1,
 					'fields'              => 'ids',
 					'tax_query'           => WC()->query->get_tax_query( array( array(
@@ -702,7 +700,6 @@ if ( ! class_exists( 'DT_Shortcode_ProductsMasonry', false ) ):
 			if ( 'top_products' === $show_products ) {
 				$posts_query = new WP_Query( array(
 					'post_type'           => 'product',
-					'post_status'         => 'publish',
 					'ignore_sticky_posts' => 1,
 					'fields'              => 'ids',
 					'tax_query'           => WC()->query->get_tax_query(),
@@ -717,7 +714,6 @@ if ( ! class_exists( 'DT_Shortcode_ProductsMasonry', false ) ):
 			if ( 'best_selling_products' === $show_products ) {
 				$posts_query = new WP_Query( array(
 					'post_type'           => 'product',
-					'post_status'         => 'publish',
 					'ignore_sticky_posts' => 1,
 					'fields'              => 'ids',
 					'meta_key'            => 'total_sales',

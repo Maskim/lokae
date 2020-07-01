@@ -470,7 +470,6 @@ if ( ! class_exists( 'DT_Shortcode_Products_Carousel', false ) ) :
 			}
 			$query_args =  array(
 				'post_type' => 'product',
-        		'post_status'		  => 'publish',
 				'ignore_sticky_posts'  => 1,
 				'posts_per_page' 	   => $post_count,
 				'orderby' 			  => $orderby,

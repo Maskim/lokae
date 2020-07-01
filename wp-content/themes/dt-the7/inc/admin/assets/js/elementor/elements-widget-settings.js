@@ -83,7 +83,7 @@
                 return;
             }
 
-            if (changedModel.attributes.panel.activeSection !== "content_section") {
+            if (["content_section", "query_section"].indexOf(changedModel.attributes.panel.activeSection) === -1) {
                 return;
             }
 

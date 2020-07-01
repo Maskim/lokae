@@ -24,7 +24,13 @@ if ( $upsells ) : ?>
 
     <section class="up-sells upsells products">
 
-        <h2><?php esc_html_e( 'You may also like&hellip;', 'the7mk2' ) ?></h2>
+	    <?php
+	    $heading = apply_filters( 'woocommerce_product_upsells_products_heading', __( 'You may also like&hellip;', 'the7mk2' ) );
+
+	    if ( $heading ) :
+		    ?>
+            <h2><?php echo esc_html( $heading ); ?></h2>
+	    <?php endif; ?>
 
 		<ul class="related-product cart-btn-below-img">
 
