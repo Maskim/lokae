@@ -2,12 +2,12 @@
 # This file is distributed under the same license as the Themes - Twenty Twenty package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2019-12-13 06:28:05+0000\n"
+"PO-Revision-Date: 2020-05-04 10:25:06+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: GlotPress/2.4.0-alpha\n"
+"X-Generator: GlotPress/3.0.0-alpha\n"
 "Language: fr\n"
 "Project-Id-Version: Themes - Twenty Twenty\n"
 
@@ -130,6 +130,10 @@ msgstr "Avec ses sept étages d’architecture remarquable, le E-Mucem présente
 msgid "Read More"
 msgstr "Lire la suite"
 
+#: inc/starter-content.php:129
+msgid "&#8220;Cyborgs, as the philosopher Donna Haraway established, are not reverent. They do not remember the cosmos.&#8221;"
+msgstr "« Les cyborgs, comme l’a fait remarquer la philosophe Donna Haraway, ne sont pas respectueux. Ils ne se souviennent pas du cosmos. »"
+
 #: classes/class-twentytwenty-customize.php:395
 msgid "Overlay Opacity"
 msgstr "Opacité de la superposition"
@@ -208,7 +212,7 @@ msgstr "Commentaires"
 msgid "Comments are closed."
 msgstr "Les commentaires sont fermés."
 
-#: inc/starter-content.php:176 inc/starter-content.php:186 functions.php:494
+#: inc/starter-content.php:176 inc/starter-content.php:186 functions.php:492
 msgid "Primary"
 msgstr "Principal"
 
@@ -237,7 +241,7 @@ msgstr "Pied de page"
 msgid "Page"
 msgstr "Page"
 
-#: functions.php:499
+#: functions.php:497
 msgid "Secondary"
 msgstr "Secondaire"
 
@@ -325,51 +329,51 @@ msgstr "Rechercher"
 msgid "Continue reading"
 msgstr "Lire la suite"
 
-#: functions.php:551
+#: functions.php:549
 msgctxt "Short name of the larger font size in the block editor."
 msgid "XL"
 msgstr "XL"
 
-#: functions.php:550
+#: functions.php:548
 msgctxt "Name of the larger font size in the block editor"
 msgid "Larger"
 msgstr "Très grand"
 
-#: functions.php:545
+#: functions.php:543
 msgctxt "Short name of the large font size in the block editor."
 msgid "L"
 msgstr "L"
 
-#: functions.php:544
+#: functions.php:542
 msgctxt "Name of the large font size in the block editor"
 msgid "Large"
 msgstr "Grand"
 
-#: functions.php:539
+#: functions.php:537
 msgctxt "Short name of the regular font size in the block editor."
 msgid "M"
 msgstr "L"
 
-#: functions.php:538
+#: functions.php:536
 msgctxt "Name of the regular font size in the block editor"
 msgid "Regular"
 msgstr "Normal"
 
-#: functions.php:533
+#: functions.php:531
 msgctxt "Short name of the small font size in the block editor."
 msgid "S"
 msgstr "S"
 
-#: functions.php:532
+#: functions.php:530
 msgctxt "Name of the small font size in the block editor"
 msgid "Small"
 msgstr "Petit"
 
-#: functions.php:517
+#: functions.php:515
 msgid "Background Color"
 msgstr "Couleur de l’arrière-plan"
 
-#: functions.php:489
+#: functions.php:487
 msgid "Accent Color"
 msgstr "Couleur de contraste"
 
@@ -494,7 +498,7 @@ msgstr "<span class=\"nav-short\">Articles</span> plus récents"
 msgid "Expanded Social links"
 msgstr "Liens de réseaux sociaux étendus"
 
-#: functions.php:504
+#: functions.php:502
 msgid "Subtle Background"
 msgstr "Arrière-plan subtil"
 
