@@ -701,6 +701,7 @@ If the problem persists, please don\'t hesitate to contact our <a href="%s" targ
 			'elementor_disable_typography_schemes',
 			'elementor_viewport_lg',
 			'elementor_viewport_md',
+			'elementor_use_the7_schemes',
 		);
 
 		if ( class_exists( 'Elementor\Core\Settings\General\Model' ) ) {

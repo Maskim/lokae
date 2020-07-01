@@ -2161,7 +2161,7 @@ class The7_Elementor_Elements_Widget extends The7_Elementor_Widget_Base {
 		if ( 'standard' === $loading_mode ) {
 			$this->display_pagination( $query->max_num_pages );
 		} elseif ( in_array( $loading_mode, [ 'js_more', 'js_lazy_loading' ], true ) ) {
-			echo dt_get_next_page_button( 2, 'paginator paginator-more-button' );
+			echo dt_get_next_page_button( 2, 'paginator paginator-more-button', $cur_page = 1 );
 		} elseif ( 'js_pagination' === $loading_mode ) {
 			echo '<div class="paginator" role="navigation"></div>';
 		}

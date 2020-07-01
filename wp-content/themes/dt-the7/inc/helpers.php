@@ -999,8 +999,8 @@ if ( ! function_exists( 'the7_theme_accent_color' ) ) :
 	 */
 	function the7_theme_accent_color() {
 		if ( 'gradient' === of_get_option( 'general-accent_color_mode' ) ) {
-			$color = of_get_option( 'general-accent_bg_color_gradient' );
-			$color = isset( $color[0] ) ? $color[0] : '#ffffff';
+			$gradient_obj = the7_less_create_gradient_obj( of_get_option( 'general-accent_bg_color_gradient' ) );
+			$color = $gradient_obj->get_color_stop( 1 )->get_color();
 		} else {
 			$color = of_get_option( 'general-accent_bg_color' );
 		}

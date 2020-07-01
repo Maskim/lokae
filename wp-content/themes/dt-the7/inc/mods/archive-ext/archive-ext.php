@@ -108,6 +108,10 @@ if ( ! class_exists( 'Presscore_Modules_ArchiveExtModule', false ) ) :
 		 */
 		public static function config_page_id_filter( $page_id = null ) {
 			if ( $page_id ) {
+				// Do not configure achive if page is used as a template.
+				// Fix. Elementor archive style conflicts.
+				remove_action( 'presscore_config_base_init', array( __CLASS__, 'archive_config_action' ) );
+
 				return $page_id;
 			}
 

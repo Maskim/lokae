@@ -23,7 +23,7 @@
                 setTimeout(function () {
                     $this.removeClass("animation-triggered").addClass("shown");
                 }, timeout);
-           });
+            });
         }
 
         var calculateColumns = function($dataContainer, $isoContainer) {
@@ -558,6 +558,8 @@
         }
 
         var $dataAttrContainer = $scope.find(".portfolio-shortcode");
+        if (!$dataAttrContainer.length)
+             $dataAttrContainer = $scope.find(".products-shortcode");
         var paginationMode = $dataAttrContainer.attr("data-pagination-mode");
         var postsLimit = $dataAttrContainer.attr('data-post-limit');
         var showAll = $dataAttrContainer.hasClass('show-all-pages');
@@ -587,6 +589,11 @@
                 });
             });
 
+            $isoContainer.on("IsoLayout.The7Elements", function() {
+                var $dataAttrContainer = $(this);
+                calculateColumns($dataAttrContainer, $dataAttrContainer.find(".iso-container"));
+            });
+
             calculateColumns($dataAttrContainer, $isoContainer);
         } else {
             paginate(paginationMode, $dataAttrContainer.find(".dt-css-grid"), isIsotope, postsLimit, showAll, $dataAttrContainer.find('.paginator'));
@@ -604,11 +611,34 @@
 
             return false;
         });
+
+      /*  window.the7AddHovers($dataAttrContainer);
+        window.the7AddDesktopHovers($dataAttrContainer);
+        window.the7InitPostsFilter();*/
     };
+
+    function onEditSettings(controlView, widgetView) {
+        setTimeout(function() {
+            widgetView.$el.find(".iso-container").trigger("IsoLayout.The7Elements");
+        }, 2000);
+    }
 
     // Make sure you run this code under Elementor.
     $( window ).on( 'elementor/frontend/init', function() {
         elementorFrontend.hooks.addAction( 'frontend/element_ready/the7_elements.default', the7ElementsWidgetHandler );
+        elementorFrontend.hooks.addAction( 'frontend/element_ready/the7-elements-woo-masonry.default', the7ElementsWidgetHandler );
     } );
+
+    $(function() {
+        elementor.hooks.addAction("panel/open_editor/widget", function (panel, model, view) {
+            var widgetType = model.attributes.widgetType;
+
+            if(['the7_elements'].indexOf(widgetType) < 0 && ['the7-elements-woo-masonry'].indexOf(widgetType) < 0) {
+                return;
+            }
+
+            elementor.channels.editor.off("change:" + widgetType, onEditSettings).on("change:" + widgetType, onEditSettings);
+        });
+    });
 
 })(jQuery);

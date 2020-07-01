@@ -328,4 +328,7 @@ abstract class DT_Shortcode_With_Inline_Css extends DT_Shortcode {
 		return true;
 	}
 
+	protected function display_shortcode_content( WP_Query $query ) {
+		return true;
+	}
 }

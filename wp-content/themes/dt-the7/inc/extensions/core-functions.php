@@ -966,26 +966,27 @@ function dt_print_filters_for( $hook = '' ) {
 /**
  * Get next post url.
  *
- * @param int $max_page Optional. Max page.
+ * @param int      $max_page Optional. Max page.
+ * @param int|null $cur_page Current page. Use 'paged' query var if null.
  *
  * @return string
  */
-function dt_get_next_posts_url( $max_page = 0 ) {
-	global $paged, $wp_query;
+function dt_get_next_posts_url( $max_page = 0, $cur_page = null ) {
+	global $wp_query;
 
-	if ( ! $paged = (int) get_query_var( 'page' ) ) {
-		$paged = (int) get_query_var( 'paged' );
+	if ( $cur_page === null && ! $cur_page = (int) get_query_var( 'page' ) ) {
+		$cur_page = (int) get_query_var( 'paged' );
+	}
+
+	if ( ! $cur_page ) {
+		$cur_page = 1;
 	}
 
 	if ( ! $max_page ) {
 		$max_page = $wp_query->max_num_pages;
 	}
 
-	if ( ! $paged ) {
-		$paged = 1;
-	}
-
-	$nextpage = (int) $paged + 1;
+	$nextpage = (int) $cur_page + 1;
 
 	if ( ! $max_page || $max_page >= $nextpage ) {
 		return get_pagenum_link( $max_page );

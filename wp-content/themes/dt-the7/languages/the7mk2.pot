@@ -2,9 +2,9 @@
 # This file is distributed under the This WordPress theme is comprised of two parts: (1) The PHP code and integrated HTML are licensed under the GPL license as is WordPress itself.  You will find a copy of the license text in the same directory as this text file. Or you can read it here: http://wordpress.org/about/gpl/ (2) All other parts of the theme including, but not limited to the CSS code, images, and design are licensed according to the license purchased. Read about licensing details here: http://themeforest.net/licenses/regular_extended.=!>
 msgid ""
 msgstr ""
-"Project-Id-Version: The7 8.7.1\n"
+"Project-Id-Version: The7 8.8.1\n"
 "Report-Msgid-Bugs-To: https://support.dream-theme.com/\n"
-"POT-Creation-Date: 2020-04-30 07:25:45+00:00\n"
+"POT-Creation-Date: 2020-06-17 11:05:06+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -193,6 +193,7 @@ msgstr ""
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:385
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1574
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:410
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:266
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:233
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1036
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:311
@@ -212,6 +213,7 @@ msgstr ""
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:397
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1597
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:422
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:286
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:233
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1049
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:311
@@ -829,71 +831,71 @@ msgstr ""
 msgid "Related Posts"
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:450
+#: inc/class-the7-icon-manager.php:451
 msgid "Wasn't able to create temp folder"
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:454
+#: inc/class-the7-icon-manager.php:455
 msgid "Wasn't able to work with Zip Archive"
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:460
+#: inc/class-the7-icon-manager.php:461
 msgid "Incompatible Archive."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:465
+#: inc/class-the7-icon-manager.php:466
 msgid "Could not retrieve file from archive."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:492
+#: inc/class-the7-icon-manager.php:493
 msgid "Could not extract file from archive."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:496
+#: inc/class-the7-icon-manager.php:497
 msgid "Could not copy file."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:515
+#: inc/class-the7-icon-manager.php:516
 msgid ""
 "selection.json or SVG file not found. Was not able to create the necessary "
 "config files"
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:532
+#: inc/class-the7-icon-manager.php:533
 msgid ""
 "It seems that the font with the same name is already exists! Please upload "
 "the font with different name."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:549
+#: inc/class-the7-icon-manager.php:550
 msgid ""
 "Uploaded font is not from IcoMoon. Please upload fonts created with the "
 "IcoMoon App Only."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:555
+#: inc/class-the7-icon-manager.php:556
 msgid "There are no icons."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:593 inc/class-the7-icon-manager.php:602
+#: inc/class-the7-icon-manager.php:594 inc/class-the7-icon-manager.php:603
 msgid "Was not able to write a config file"
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:618
+#: inc/class-the7-icon-manager.php:619
 msgid "Unable to write css. Upload icons downloaded only from icomoon"
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:670
+#: inc/class-the7-icon-manager.php:671
 msgid "Unable to add this font. Please try again."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:684
+#: inc/class-the7-icon-manager.php:685
 msgid ""
 "Using this feature is reserved for Super Admins. You unfortunately don't "
 "have the necessary permissions."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:838 inc/class-the7-less-compiler.php:39
+#: inc/class-the7-icon-manager.php:839 inc/class-the7-less-compiler.php:39
 #: inc/mods/dev-tools/main-module.class.php:364
 msgid "Cannot access file system."
 msgstr ""
@@ -1228,7 +1230,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: inc/helpers/html-helpers.php:515
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:739
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:751
 msgid "Details"
 msgstr ""
 
@@ -1257,6 +1259,8 @@ msgid "By %s"
 msgstr ""
 
 #: inc/helpers/html-helpers.php:1239
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:287
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:960
 msgid "All"
 msgstr ""
 
@@ -1492,40 +1496,40 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: inc/helpers/post-navigation.php:171 inc/static.php:129
-msgid "Loading..."
-msgstr ""
-
-#: inc/helpers/post-navigation.php:173 inc/static.php:130
+#: inc/helpers/post-navigation.php:180 inc/static.php:130
 msgid "Load more"
 msgstr ""
 
-#: inc/helpers/post-navigation.php:206
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:209
+#: inc/helpers/post-navigation.php:183 inc/static.php:129
+msgid "Loading..."
+msgstr ""
+
+#: inc/helpers/post-navigation.php:212
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:221
 msgid "Home"
 msgstr ""
 
-#: inc/helpers/post-navigation.php:207
+#: inc/helpers/post-navigation.php:213
 msgid "Category \"%s\""
 msgstr ""
 
-#: inc/helpers/post-navigation.php:208
+#: inc/helpers/post-navigation.php:214
 msgid "Results for \"%s\""
 msgstr ""
 
-#: inc/helpers/post-navigation.php:209
+#: inc/helpers/post-navigation.php:215
 msgid "Entries tagged with \"%s\""
 msgstr ""
 
-#: inc/helpers/post-navigation.php:210
+#: inc/helpers/post-navigation.php:216
 msgid "Article author %s"
 msgstr ""
 
-#: inc/helpers/post-navigation.php:211
+#: inc/helpers/post-navigation.php:217
 msgid "Error 404"
 msgstr ""
 
-#: inc/helpers/post-navigation.php:458 woocommerce/global/breadcrumb.php:26
+#: inc/helpers/post-navigation.php:464 woocommerce/global/breadcrumb.php:26
 msgid "You are here:"
 msgstr ""
 
@@ -1617,21 +1621,21 @@ msgstr ""
 msgid "The7 Icons"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:361
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:359
 msgid "side"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:364
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:361
 msgid "side line"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:381
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:378
 msgid ""
 "A %s header is being used. “Transparent” and “below the slideshow” options "
 "will not affect it"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:422
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:411
 msgid ""
 "A <a href=\"%s\" target=\"_blank\">page template</a> is being applied to "
 "this page. To edit individual page settings, please exclude this page from "
@@ -1639,39 +1643,39 @@ msgid ""
 "\"Default\"."
 msgstr ""
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:443
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:432
 msgid ""
 "A <a href=\"%s\" target=\"_blank\">page template</a> is being applied to "
 "this page. However, it will not take effect unless you change the Page "
 "Layout to \"Default\"."
 msgstr ""
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:470
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:469
 msgid ""
 "A <a href=\"%1$s\" target=\"_blank\">%2$s template</a>  is being applied to "
 "this page. To edit individual %2$s settings, please exclude this page from "
 "template display conditions."
 msgstr ""
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:478
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:477
 msgid "header"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:497
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:496
 msgid "footer"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-schemes-manager-control.php:117
+#: inc/mods/compatibility/elementor/class-the7-elementor-schemes-manager-control.php:120
 msgid "Use The7 presets"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-schemes-manager-control.php:121
+#: inc/mods/compatibility/elementor/class-the7-elementor-schemes-manager-control.php:124
 msgid ""
 "Checking this box will replace Elementor's Default Colors and Default Fonts "
 "and force Elementor to use presets from The7 theme options."
 msgstr ""
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-widgets.php:103
+#: inc/mods/compatibility/elementor/class-the7-elementor-widgets.php:132
 msgid "The7 elements"
 msgstr ""
 
@@ -1695,6 +1699,7 @@ msgid "Footer"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/page-settings/footer.php:65
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:249
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:15
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:15
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:15
@@ -1703,6 +1708,7 @@ msgid "Show"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/page-settings/footer.php:66
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:250
 msgid "Hide"
 msgstr ""
 
@@ -1931,6 +1937,237 @@ msgstr ""
 msgid "Button border hover"
 msgstr ""
 
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:44
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:105
+#: inc/mods/tgmpa/class-tgm-plugin-activation.php:2633
+#: inc/mods/tgmpa/class-the7-tgm-plugin-activation.php:2788
+msgid "Source"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:47
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:171
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:71
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:788
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:211
+msgid "Manual Selection"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:48
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:764
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:187
+msgid "Current Query"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:62
+msgid "Include"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:73
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:187
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:80
+msgid "Search & Select"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:90
+msgid "Include By"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:94
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:109
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:172
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:208
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:789
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:794
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:212
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:217
+msgid "Term"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:95
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:132
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:173
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:231
+msgid "Author"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:110
+msgid ""
+"Terms are items in a taxonomy. The available taxonomies are: Categories, "
+"Tags, Formats and custom taxonomies."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:155
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:66
+msgid "Exclude"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:166
+msgid "Exclude By"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:170
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:70
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:787
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:210
+msgid "Current Post"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:253
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:97
+msgid "Avoid Duplicates"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:256
+msgid ""
+"Set to Yes to avoid duplicate posts from showing up. This only effects the "
+"frontend."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:268
+msgid "Offset"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:277
+msgid "Use this setting to skip over posts (e.g. '2' to skip over 2 posts)."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:283
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:345
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:776
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:199
+msgid "Date"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:288
+msgid "Past Day"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:289
+msgid "Past Week"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:290
+msgid "Past Month"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:291
+msgid "Past Quarter"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:292
+msgid "Past Year"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:293
+msgid "Custom"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:307
+msgid "Before"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:312
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:329
+msgid "Choose"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:320
+msgid ""
+"Setting a ‘Before’ date will show all the posts published until the chosen "
+"date (inclusive)."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:324
+msgid "After"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:337
+msgid ""
+"Setting an ‘After’ date will show all the posts published since the chosen "
+"date (inclusive)."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:341
+msgid "Order By"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:346
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:777
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:200
+#: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:69
+#: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:105
+#: inc/shortcodes/vc-extensions.php:1065 inc/shortcodes/vc-extensions.php:1148
+#: inc/shortcodes/vc-extensions.php:1183
+#: inc/widgets/contact-info/contact-info.php:163
+#: inc/widgets/progress-bars/progress-bars.php:152
+msgid "Title"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:347
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:782
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:205
+msgid "Menu Order"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:348
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:781
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:204
+msgid "Random"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:356
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:147
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:158
+#: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:75
+#: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1135
+#: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:1114
+#: inc/shortcodes/vc-bridges/the7-products-carousel-bridge.php:57
+#: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:57
+msgid "Order"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:360
+msgid "ASC"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:361
+msgid "DESC"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:369
+msgid "Posts Per Page"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:378
+msgid "Ignore Sticky Posts"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:384
+msgid "Sticky-posts ordering is visible on frontend only"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:388
+msgid "Query ID"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:391
+msgid "Give your Query a custom unique id to allow server side filtering"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:100
+msgid ""
+"Set to Yes to avoid duplicate posts from showing up on the page. This only "
+"affects the frontend."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:160
+msgid "Default"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:161
+msgid "None"
+msgstr ""
+
 #: inc/mods/compatibility/elementor/schemes/class-the7-elementor-color-scheme.php:48
 msgid "The7 palette"
 msgstr ""
@@ -2014,6 +2251,7 @@ msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:90
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:97
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:112
 #: inc/shortcodes/vc-bridges/the7-banner-bridge.php:56
 #: inc/shortcodes/vc-bridges/the7-call-to-action-bridge.php:17
 #: inc/shortcodes/vc-bridges/the7-fancy-quote-bridge.php:17
@@ -2057,16 +2295,6 @@ msgstr ""
 msgid "Ordering"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:147
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:158
-#: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:75
-#: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1135
-#: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:1114
-#: inc/shortcodes/vc-bridges/the7-products-carousel-bridge.php:57
-#: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:57
-msgid "Order"
-msgstr ""
-
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:160
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:174
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:86
@@ -2085,6 +2313,10 @@ msgstr ""
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1595
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1624
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1653
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:308
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:332
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:355
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:378
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:101
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:937
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:965
@@ -2102,6 +2334,8 @@ msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:179
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1578
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:118
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:321
 msgid ""
 "Leave empty to use value from the WP Reading settings. Set \"-1\" to show "
 "all posts."
@@ -2137,6 +2371,8 @@ msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:214
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:237
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:88
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:73
 #: inc/shortcodes/vc-bridges/the7-blog-mini-bridge.php:67
 #: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:14
 msgid "Layout"
@@ -2341,6 +2577,7 @@ msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:608
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:633
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:126
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:296
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:281
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:18
@@ -2380,6 +2617,8 @@ msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:671
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:740
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:142
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:153
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:333
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:91
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:161
@@ -2387,10 +2626,12 @@ msgid "Gap between columns"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:691
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:159
 msgid "Stage padding"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:711
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:176
 msgid "Adaptive height"
 msgstr ""
 
@@ -2796,6 +3037,12 @@ msgstr ""
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1374
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1447
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1479
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:356
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:377
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:399
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:420
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:441
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:463
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:873
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:923
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:955
@@ -2920,6 +3167,7 @@ msgid "Enable icon hover"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1477
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:190
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:967
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:978
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:989
@@ -3085,6 +3333,7 @@ msgid "Arrows"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1485
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:195
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:968
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:153
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:458
@@ -3093,6 +3342,7 @@ msgid "Show arrows"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1495
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:202
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:979
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:164
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:469
@@ -3101,14 +3351,17 @@ msgid "Arrow Icon"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1507
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:211
 msgid "Choose next arrow icon"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1523
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:224
 msgid "Choose previous arrow icon"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1539
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:237
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1012
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:197
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:502
@@ -3117,6 +3370,7 @@ msgid "Arrow icon size"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1562
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:257
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1025
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:210
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:515
@@ -3125,6 +3379,7 @@ msgid "Arrow Background"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1620
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:306
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1062
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:247
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:552
@@ -3133,6 +3388,7 @@ msgid "Arrow border radius"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1643
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:326
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1074
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:259
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:564
@@ -3141,6 +3397,7 @@ msgid "Arrow border width"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1666
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:346
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1086
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:271
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:576
@@ -3149,6 +3406,7 @@ msgid "Color Setting"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1678
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:355
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1097
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:282
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:587
@@ -3157,6 +3415,7 @@ msgid "Arrow icon color"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1692
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:366
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1109
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:294
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:599
@@ -3165,6 +3424,7 @@ msgid "Show arrow border color"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1705
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:376
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1124
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:309
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:614
@@ -3173,6 +3433,7 @@ msgid "Arrow border color"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1720
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:388
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1136
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:321
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:626
@@ -3181,6 +3442,7 @@ msgid "Show arrow background"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1733
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:398
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1151
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:336
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:641
@@ -3189,6 +3451,7 @@ msgid "Arrow background color"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1748
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:410
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1163
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:348
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:653
@@ -3197,6 +3460,7 @@ msgid "Hover Color Setting"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1760
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:419
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1174
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:359
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:664
@@ -3205,6 +3469,7 @@ msgid "Arrow icon color hover"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1774
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:430
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1186
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:371
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:677
@@ -3213,10 +3478,12 @@ msgid "Show arrow border color hover"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1787
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:440
 msgid "Arrow border color hover"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1802
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:452
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1213
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:398
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:704
@@ -3225,6 +3492,7 @@ msgid "Show arrow background hover"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1815
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:462
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1228
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:413
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:719
@@ -3233,6 +3501,7 @@ msgid "Arrow background hover color"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1830
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:474
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1241
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:426
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:732
@@ -3242,6 +3511,8 @@ msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1842
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1954
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:483
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:577
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1252
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1332
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:437
@@ -3256,6 +3527,8 @@ msgstr ""
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1862
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1974
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2361
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:500
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:594
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1264
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1344
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1566
@@ -3274,6 +3547,8 @@ msgstr ""
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1879
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1991
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2378
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:514
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:608
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1280
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1360
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1582
@@ -3292,6 +3567,8 @@ msgstr ""
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1896
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2008
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2395
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:528
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:622
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1296
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1376
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1598
@@ -3310,6 +3587,8 @@ msgstr ""
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1919
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2031
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2418
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:548
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:642
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1308
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1388
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1610
@@ -3326,6 +3605,7 @@ msgid "Horizontal offset"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1942
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:568
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1321
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:506
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:812
@@ -3334,6 +3614,7 @@ msgid "Left Arrow Position"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2054
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:662
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1401
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:586
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:892
@@ -3342,19 +3623,23 @@ msgid "Arrows responsiveness"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2066
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:671
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:903
 msgid "Responsive behaviour"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2083
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:685
 msgid "Hide arrows if browser width is less then"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2096
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:695
 msgid "Reposition arrows if browser width is less then"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2109
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:705
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1446
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:631
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:937
@@ -3363,6 +3648,7 @@ msgid "Left arrow horizontal offset"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2133
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:726
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1455
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:640
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:946
@@ -3545,13 +3831,8 @@ msgstr ""
 msgid "The7 Masonry & Grid"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:105
-#: inc/mods/tgmpa/class-tgm-plugin-activation.php:2633
-#: inc/mods/tgmpa/class-the7-tgm-plugin-activation.php:2788
-msgid "Source"
-msgstr ""
-
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:204
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:78
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:82
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:35
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:87
@@ -3566,6 +3847,7 @@ msgid "Loading effect"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:642
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:99
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:287
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:46
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:115
@@ -3573,6 +3855,7 @@ msgid "Responsiveness mode"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:703
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:121
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:309
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:68
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:137
@@ -3580,6 +3863,7 @@ msgid "Column minimum width"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:726
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:142
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:322
 #: inc/shortcodes/vc-bridges/the7-blog-posts-old-bridge.php:256
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:80
@@ -3588,6 +3872,7 @@ msgid "Desired columns number"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:741
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:154
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:338
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:96
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:166
@@ -3607,6 +3892,7 @@ msgid "Post wide/normal width can be chosen in single post options."
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1534
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:286
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:914
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:892
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:441
@@ -3626,6 +3912,7 @@ msgid "Pagination"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1542
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:291
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:921
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:899
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:448
@@ -3637,6 +3924,10 @@ msgstr ""
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1596
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1625
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1654
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:309
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:333
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:356
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:379
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:106
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:946
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:974
@@ -3658,6 +3949,10 @@ msgstr ""
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1609
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1638
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1667
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:320
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:343
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:366
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:389
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:951
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:978
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1005
@@ -3676,6 +3971,9 @@ msgstr ""
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1610
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1639
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1668
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:344
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:367
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:390
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:960
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:987
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1014
@@ -3695,6 +3993,7 @@ msgid "Leave empty to use value from the WP Reading settings."
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1699
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:400
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1057
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1086
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:1036
@@ -3722,6 +4021,7 @@ msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1725
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1833
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:259
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1081
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1110
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1124
@@ -3811,19 +4111,109 @@ msgstr ""
 msgid "Leave empty to use accent color."
 msgstr ""
 
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:618
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:39
+msgid "The7 Product Carousel"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:96
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:88
+#: inc/shortcodes/vc-bridges/the7-products-carousel-bridge.php:96
+#: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:97
+msgid "Text & button position:"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:117
+msgid "Total number of products"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:134
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:111
+msgid "Columns"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:752
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:175
+msgid "Query"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:765
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:188
+msgid "Latest Products"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:766
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:189
+msgid "Sale"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:767
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:190
+msgid "Top rated products"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:768
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:191
+msgid "Best selling"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:769
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:192
+msgid "Featured"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:778
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:201
+#: woocommerce/cart/cart.php:32 woocommerce/cart/cart.php:98
+msgid "Price"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:779
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:202
+msgid "Popularity"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:780
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:203
+msgid "Rating"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:40
+msgid "The7 Product Masonry & Grid"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:239
+msgid "Filter bar"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:247
+msgid "Categories filter"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:258
+msgid "Gap"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:424
+msgid "Spacing"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:425
+msgid "Leave empty to use default spacing"
+msgstr ""
+
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:630
 msgid "Product details"
 msgstr ""
 
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:751
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:763
 msgid "View cart"
 msgstr ""
 
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:1050
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:1062
 msgid "Grid view"
 msgstr ""
 
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:1053
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:1065
 msgid "List view"
 msgstr ""
 
@@ -6614,11 +7004,6 @@ msgstr ""
 msgid "Total number of products "
 msgstr ""
 
-#: inc/shortcodes/vc-bridges/the7-products-carousel-bridge.php:96
-#: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:97
-msgid "Text & button position:"
-msgstr ""
-
 #: inc/shortcodes/vc-bridges/the7-products-carousel-bridge.php:247
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:410
 msgid "Product titles & price"
@@ -6763,15 +7148,6 @@ msgstr ""
 
 #: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:65
 msgid "Apply link to:"
-msgstr ""
-
-#: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:69
-#: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:105
-#: inc/shortcodes/vc-extensions.php:1065 inc/shortcodes/vc-extensions.php:1148
-#: inc/shortcodes/vc-extensions.php:1183
-#: inc/widgets/contact-info/contact-info.php:163
-#: inc/widgets/progress-bars/progress-bars.php:152
-msgid "Title"
 msgstr ""
 
 #: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:71
@@ -7186,10 +7562,6 @@ msgstr ""
 #: template-parts/header/searchform.php:57
 #: template-parts/header/searchform.php:64
 msgid "Search form"
-msgstr ""
-
-#: woocommerce/cart/cart.php:32 woocommerce/cart/cart.php:98
-msgid "Price"
 msgstr ""
 
 #: woocommerce/cart/cart.php:33 woocommerce/cart/cart.php:104
@@ -7823,40 +8195,40 @@ msgctxt "admin"
 msgid "Install UA default icons"
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:217
+#: inc/class-the7-icon-manager.php:218
 msgctxt "admin"
 msgid "Default Icons"
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:223
+#: inc/class-the7-icon-manager.php:224
 msgctxt "admin"
 msgid "Delete Icon Set"
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:255 inc/class-the7-icon-manager.php:306
-#: inc/class-the7-icon-manager.php:357 inc/class-the7-icon-manager.php:383
+#: inc/class-the7-icon-manager.php:256 inc/class-the7-icon-manager.php:307
+#: inc/class-the7-icon-manager.php:358 inc/class-the7-icon-manager.php:384
 msgctxt "admin"
 msgid ""
 "Using this feature is reserved for Super Admins. You unfortunately don't "
 "have the necessary permissions."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:266
+#: inc/class-the7-icon-manager.php:267
 msgctxt "admin"
 msgid "Unable to get attachment id."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:282
+#: inc/class-the7-icon-manager.php:283
 msgctxt "admin"
 msgid "Unable to unzip icons archive."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:331
+#: inc/class-the7-icon-manager.php:332
 msgctxt "admin"
 msgid "Was not able to remove Font."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:396
+#: inc/class-the7-icon-manager.php:397
 msgctxt "admin"
 msgid ""
 "Seems that Ultimate VC Addons plugin is inactive. Please, activate it and "
@@ -8280,7 +8652,7 @@ msgctxt "backend"
 msgid "Advanced"
 msgstr ""
 
-#: inc/extensions/core-functions.php:1057
+#: inc/extensions/core-functions.php:1058
 msgctxt "backend"
 msgid "Edit post type"
 msgstr ""
@@ -8841,7 +9213,7 @@ msgstr ""
 #: inc/admin/theme-options/options-header/submenu-tab.php:271
 #: inc/admin/theme-options/options-page-titles.php:61
 #: inc/admin/theme-options/options-page-titles.php:504
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:525
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:547
 msgctxt "theme-options"
 msgid "Padding"
 msgstr ""
@@ -8952,7 +9324,7 @@ msgstr ""
 #: inc/admin/theme-options/options.php:92 inc/admin/theme-options-parts.php:520
 #: inc/deprecated-functions.php:430
 #: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:405
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:433
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:455
 #: inc/mods/compatibility/woocommerce/admin/wc-cart-micro-widget-options.php:38
 #: inc/mods/options-wizard/options.php:597
 msgctxt "theme-options"
@@ -9046,7 +9418,7 @@ msgstr ""
 #: inc/admin/theme-options-parts.php:808 inc/admin/theme-options-parts.php:885
 #: inc/admin/theme-options-parts.php:908 inc/deprecated-functions.php:431
 #: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:406
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:434
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:456
 #: inc/mods/compatibility/woocommerce/admin/wc-cart-micro-widget-options.php:37
 #: inc/mods/options-wizard/options.php:601
 msgctxt "theme-options"
@@ -9166,12 +9538,12 @@ msgctxt "theme-options"
 msgid "Custom CSS"
 msgstr ""
 
-#: inc/admin/theme-options/options-advanced.php:110
+#: inc/admin/theme-options/options-advanced.php:111
 msgctxt "theme-options"
 msgid "Custom JavaScript"
 msgstr ""
 
-#: inc/admin/theme-options/options-advanced.php:116
+#: inc/admin/theme-options/options-advanced.php:117
 msgctxt "theme-options"
 msgid "Tracking code (e.g. Google analytics) or arbitrary JavaScript"
 msgstr ""
@@ -9877,7 +10249,7 @@ msgstr ""
 #: inc/admin/theme-options/options-sidebar.php:134
 #: inc/admin/theme-options/options-stripes.php:94
 #: inc/mods/compatibility/edd/options-inject-in-header.php:54
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:477
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:499
 #: inc/mods/compatibility/woocommerce/admin/wc-cart-micro-widget-options.php:97
 #: inc/mods/options-wizard/options.php:40
 #: inc/mods/options-wizard/options.php:512
@@ -10371,7 +10743,7 @@ msgstr ""
 #: inc/admin/theme-options/options.php:150
 #: inc/admin/theme-options-parts.php:232
 #: inc/extensions/options-framework/fields/class-the7-option-field-spacing.php:21
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:531
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:553
 msgctxt "theme-options"
 msgid "Top"
 msgstr ""
@@ -10388,7 +10760,7 @@ msgstr ""
 #: inc/admin/theme-options/options.php:151
 #: inc/admin/theme-options-parts.php:240
 #: inc/extensions/options-framework/fields/class-the7-option-field-spacing.php:23
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:532
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:554
 msgctxt "theme-options"
 msgid "Bottom"
 msgstr ""
@@ -10535,7 +10907,7 @@ msgstr ""
 #: inc/admin/theme-options/options-page-titles.php:429
 #: inc/admin/theme-options/options-page-titles.php:490
 #: inc/admin/theme-options-parts.php:36 inc/admin/theme-options-parts.php:557
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:509
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:531
 #: inc/mods/options-wizard/options.php:569
 #: inc/mods/options-wizard/options.php:804
 msgctxt "theme-options"
@@ -12903,7 +13275,7 @@ msgid "Content boxes background"
 msgstr ""
 
 #: inc/admin/theme-options/options-stripes.php:101
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:493
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:515
 msgctxt "theme-options"
 msgid "Background opacity"
 msgstr ""
@@ -13563,6 +13935,7 @@ msgid "Show products counter"
 msgstr ""
 
 #: inc/mods/compatibility/edd/options-inject-in-header.php:88
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:422
 #: inc/mods/compatibility/woocommerce/admin/wc-cart-micro-widget-options.php:137
 msgctxt "theme-options"
 msgid "Never"
@@ -13812,43 +14185,58 @@ msgctxt "theme-options"
 msgid "'Add to cart' button in related products"
 msgstr ""
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:411
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:412
+msgctxt "theme-options"
+msgid "Show product title"
+msgstr ""
+
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:418
+msgctxt "theme-options"
+msgid "Always"
+msgstr ""
+
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:426
+msgctxt "theme-options"
+msgid "If default page title is hidden"
+msgstr ""
+
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:433
 msgctxt "theme-options"
 msgid "Product image width"
 msgstr ""
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:419
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:459
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:441
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:481
 msgctxt "theme-options"
 msgid "Switch to one column layout after"
 msgstr ""
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:428
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:450
 msgctxt "theme-options"
 msgid "Image zoom on hover"
 msgstr ""
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:439
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:461
 msgctxt "theme-options"
 msgid "Cart & Checkout"
 msgstr ""
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:445
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:467
 msgctxt "theme-options"
 msgid "Cart settings"
 msgstr ""
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:450
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:472
 msgctxt "theme-options"
 msgid "Side column width"
 msgstr ""
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:451
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:473
 msgctxt "theme-options"
 msgid "Use 100% to place side column below checkout content"
 msgstr ""
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:469
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:491
 msgctxt "theme-options"
 msgid "Checkout steps"
 msgstr ""
@@ -16062,6 +16450,37 @@ msgctxt "options import"
 msgid "Yes, do it!"
 msgstr ""
 
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:162
+msgctxt "Border Control"
+msgid "Solid"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:163
+msgctxt "Border Control"
+msgid "Double"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:164
+msgctxt "Border Control"
+msgid "Dotted"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:165
+msgctxt "Border Control"
+msgid "Dashed"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:166
+msgctxt "Border Control"
+msgid "Groove"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:770
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:193
+msgctxt "Posts Query Control"
+msgid "Manual Selection"
+msgstr ""
+
 #: inc/mods/tgmpa/class-tgm-plugin-activation.php:1206
 #: inc/mods/tgmpa/class-tgm-plugin-activation.php:3033
 #: inc/mods/tgmpa/class-the7-plugins-list-table.php:445
@@ -16140,12 +16559,12 @@ msgctxt "vc inline dummy"
 msgid "Media gallery masonry & grid"
 msgstr ""
 
-#: inc/shortcodes/includes/products-carousel/products-carousel.php:430
+#: inc/shortcodes/includes/products-carousel/products-carousel.php:436
 msgctxt "vc inline dummy"
 msgid "Products Carousel"
 msgstr ""
 
-#: inc/shortcodes/includes/products-masonry/products-masonry.php:510
+#: inc/shortcodes/includes/products-masonry/products-masonry.php:521
 msgctxt "vc inline dummy"
 msgid "Products Masonry & Grid"
 msgstr ""

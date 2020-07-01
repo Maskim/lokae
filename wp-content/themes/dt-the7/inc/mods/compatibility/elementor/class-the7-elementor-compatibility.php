@@ -6,15 +6,14 @@
  */
 
 
-use The7\Adapters\Elementor\The7_Elementor_Page_Settings;
-use The7\Adapters\Elementor\The7_Elementor_Widgets;
-use The7\Adapters\Elementor\The7_Kit_Manager_Control;
-use The7\Adapters\Elementor\The7_Schemes_Manager_Control;
-use The7\Adapters\Elementor\The7_Elementor_Template_Manager;
-
 use Elementor\Plugin as Elementor;
 use ElementorPro\Modules\ThemeBuilder\Documents\Theme_Document;
 use ElementorPro\Modules\ThemeBuilder\Module as ThemeBuilderModule;
+use The7\Adapters\Elementor\The7_Elementor_Page_Settings;
+use The7\Adapters\Elementor\The7_Elementor_Template_Manager;
+use The7\Adapters\Elementor\The7_Elementor_Widgets;
+use The7\Adapters\Elementor\The7_Kit_Manager_Control;
+use The7\Adapters\Elementor\The7_Schemes_Manager_Control;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -40,6 +39,23 @@ class The7_Elementor_Compatibility {
 	public $theme_builder_adapter;
 	public $kit_manager_control;
 	public $scheme_manager_control;
+
+	/**
+	 * Instance.
+	 * Ensures only one instance of the plugin class is loaded or can be loaded.
+	 * @since  1.0.0
+	 * @access public
+	 * @static
+	 * @return Plugin An instance of the class.
+	 */
+	public static function instance() {
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
+			self::$instance->bootstrap();
+		}
+
+		return self::$instance;
+	}
 
 	/**
 	 * Bootstrap module.
@@ -82,6 +98,8 @@ class The7_Elementor_Compatibility {
 		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
 			$this->bootstrap_pro();
 		}
+
+		add_action( 'wp_enqueue_scripts',   [ $this, 'enqueue_elementor_global_style_css'], 30  );
 	}
 
 	protected function bootstrap_pro() {
@@ -89,25 +107,35 @@ class The7_Elementor_Compatibility {
 
 		$this->theme_builder_adapter = new \The7\Adapters\Elementor\Pro\The7_Elementor_Theme_Builder_Adapter();
 		$this->theme_builder_adapter->bootstrap();
-	}
-
-	/**
-	 * Instance.
-	 * Ensures only one instance of the plugin class is loaded or can be loaded.
-	 * @since  1.0.0
-	 * @access public
-	 * @static
-	 * @return Plugin An instance of the class.
-	 */
-	public static function instance() {
-		if ( is_null( self::$instance ) ) {
-			self::$instance = new self();
-			self::$instance->bootstrap();
+		if ( dt_is_woocommerce_enabled() ) {
+			require_once __DIR__ . '/pro/modules/woocommerce/class-the7-woocommerce-support.php';
+			new \The7\Adapters\Elementor\Pro\WoocommerceSupport\Woocommerce_Support();
 		}
 
-		return self::$instance;
 	}
 
+	public static function get_applied_archive_page_id( $page_id = null ) {
+		$document = false;
+		$location = '';
+		if ( is_singular() ) {
+			$document = self::get_frontend_document();
+		}
+		if ( $document && $document instanceof Theme_Document ) {
+			// For editor preview iframe.
+			$location = $document->get_location();
+		} elseif ( function_exists( 'is_shop' ) && is_shop() ) {
+			$location = 'archive';
+		} elseif ( is_archive() || is_tax() || is_home() || is_search() ) {
+			$location = 'archive';
+		} elseif ( is_singular() || is_404() ) {
+			$location = 'single';
+		}
+		if ( ! empty( $location ) ) {
+			return self::get_document_id_for_location( $location, $page_id );
+		}
+
+		return $page_id;
+	}
 
 	public static function get_frontend_document() {
 		return Elementor::$instance->documents->get_doc_for_frontend( get_the_ID() );
@@ -137,7 +165,7 @@ class The7_Elementor_Compatibility {
 			$documents = ThemeBuilderModule::instance()->get_conditions_manager()->get_documents_for_location( $location );
 			foreach ( $documents as $document ) {
 				if ( is_preview() || Elementor::$instance->preview->is_preview_mode() ) {
-					$document = Elementor::$instance->documents->get_doc_or_auto_save( $document->get_id() , get_current_user_id() );
+					$document = Elementor::$instance->documents->get_doc_or_auto_save( $document->get_id(), get_current_user_id() );
 				} else {
 					$document = Elementor::$instance->documents->get( $document->get_id() );
 				}
@@ -148,27 +176,12 @@ class The7_Elementor_Compatibility {
 		return $document;
 	}
 
+	public static function enqueue_elementor_global_style_css() {
+		the7_register_style(
+			'the7-elementor-global',
+			PRESSCORE_THEME_URI . '/css/compatibility/elementor/elementor-global'
+		);
 
-	public static function get_applied_archive_page_id( $page_id = null ) {
-		$document = false;
-		$location = '';
-		if ( is_singular() ) {
-			$document = self::get_frontend_document();
-		}
-		if ( $document && $document instanceof Theme_Document ) {
-			// For editor preview iframe.
-			$location = $document->get_location();
-		} elseif ( function_exists( 'is_shop' ) && is_shop() ) {
-			$location = 'archive';
-		} elseif ( is_archive() || is_tax() || is_home() || is_search() ) {
-			$location = 'archive';
-		} elseif ( is_singular() || is_404() ) {
-			$location = 'single';
-		}
-		if ( ! empty( $location ) ) {
-			return self::get_document_id_for_location( $location, $page_id );
-		}
-
-		return $page_id;
+		wp_enqueue_style( 'the7-elementor-global' );
 	}
 }

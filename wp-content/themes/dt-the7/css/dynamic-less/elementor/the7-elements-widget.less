@@ -12,8 +12,6 @@
 @post-meta-font-family: "";
 @post-meta-text-decoration: "";
 @post-meta-letter-spacing: "";
-@mobile-switch-point: 767px;
-@tablet-switch-point: 991px;
 
 @import "inline-mixin.less";
 @import "icons.less";
@@ -213,63 +211,6 @@ article {
 .post-details.details-type-link * {
   .@{unique-shortcode-class-name} & {
     .custom-mixin-color (@post-title-color);
-  }
-}
-
-@media screen and (max-width: @tablet-switch-point) {
-  .entry-title {
-    .@{unique-shortcode-class-name} & {
-      .custom-mixin-letter-spacing (@post-title-letter-spacing-tablet);
-      .custom-mixin-font-size (@post-title-font-size-tablet);
-      .custom-mixin-line-height (@post-title-line-height-tablet);
-    }
-  }
-
-  .entry-excerpt {
-    .@{unique-shortcode-class-name} & {
-      .custom-mixin-font-size (@post-content-font-size-tablet);
-      .custom-mixin-line-height (@post-content-line-height-tablet);
-      .custom-mixin-letter-spacing (@post-content-letter-spacing-tablet);
-    }
-  }
-
-  .entry-meta * {
-    .@{unique-shortcode-class-name} & {
-      .custom-mixin-font-size (@post-meta-font-size-tablet);
-      .custom-mixin-line-height (@post-meta-line-height-tablet);
-      .custom-mixin-letter-spacing (@post-meta-letter-spacing-tablet);
-    }
-  }
-}
-
-@media screen and (max-width: @mobile-switch-point) {
-  .entry-title {
-    #page .@{unique-shortcode-class-name} & {
-      a {
-        .custom-mixin-letter-spacing (@post-title-letter-spacing-mobile);
-      }
-
-      .custom-mixin-font-size (@post-title-font-size-mobile);
-      .custom-mixin-line-height (@post-title-line-height-mobile);
-    }
-  }
-
-  .entry-meta {
-    #page .@{unique-shortcode-class-name} & {
-      & * {
-        .custom-mixin-font-size (@post-meta-font-size-mobile);
-        .custom-mixin-line-height (@post-meta-line-height-mobile);
-        .custom-mixin-letter-spacing (@post-meta-letter-spacing-mobile);
-      }
-    }
-  }
-
-  .entry-excerpt {
-    #page .@{unique-shortcode-class-name} & {
-      .custom-mixin-font-size (@post-content-font-size-mobile);
-      .custom-mixin-line-height (@post-content-line-height-mobile);
-      .custom-mixin-letter-spacing (@post-content-letter-spacing-mobile);
-    }
   }
 }
 

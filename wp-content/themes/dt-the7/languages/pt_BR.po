@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: The7.2 v1.0.3\n"
 "Report-Msgid-Bugs-To: https://support.dream-theme.com/\n"
-"POT-Creation-Date: 2020-04-07 12:16:09+00:00\n"
+"POT-Creation-Date: 2020-05-21 13:01:02+00:00\n"
 "PO-Revision-Date: 2016-10-27 16:24+0000\n"
 "Last-Translator: Binno Cunha <binno.cunha@pontozerodigital.com.br>\n"
 "Language-Team: Portuguese (Brazil)\n"
@@ -138,6 +138,34 @@ msgstr "Páginas:"
 msgid "Go to Top"
 msgstr ""
 
+#: footer.php:57
+msgid "Close (Esc)"
+msgstr ""
+
+#: footer.php:58
+#, fuzzy
+msgid "Share"
+msgstr "Compartilhar isto"
+
+#: footer.php:59
+#, fuzzy
+msgid "Toggle fullscreen"
+msgstr "tela-cheia"
+
+#: footer.php:60
+msgid "Zoom in/out"
+msgstr ""
+
+#: footer.php:72
+#, fuzzy
+msgid "Previous (arrow left)"
+msgstr "Post anterior:"
+
+#: footer.php:74
+#, fuzzy
+msgid "Next (arrow right)"
+msgstr "Próximo ao logo (direita)"
+
 #: header-single.php:41
 msgid "Skip to content"
 msgstr "Pular para o conteúdo"
@@ -176,6 +204,7 @@ msgstr "Informação Meta"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:385
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1574
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:410
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:266
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:233
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1036
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:311
@@ -195,6 +224,7 @@ msgstr "Largura"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:397
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1597
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:422
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:286
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:233
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1049
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:311
@@ -804,7 +834,7 @@ msgstr ""
 #: inc/admin/screens/the7-status.php:316
 msgid ""
 "<span class=\"error\">No</span><br> Seems that your server is blocking "
-"connections to your own site. It may brake theme db update process and lead "
+"connections to your own site. It may break theme db update process and lead "
 "to style corruption. Please, make sure that remote requests to %s are not "
 "blocked."
 msgstr ""
@@ -854,75 +884,75 @@ msgstr ""
 msgid "Related Posts"
 msgstr "Postagens Relacionadas"
 
-#: inc/class-the7-icon-manager.php:450
+#: inc/class-the7-icon-manager.php:451
 #, fuzzy
 msgid "Wasn't able to create temp folder"
 msgstr "Incapaz de localizar a pasta necessária (%s)."
 
-#: inc/class-the7-icon-manager.php:454
+#: inc/class-the7-icon-manager.php:455
 msgid "Wasn't able to work with Zip Archive"
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:460
+#: inc/class-the7-icon-manager.php:461
 msgid "Incompatible Archive."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:465
+#: inc/class-the7-icon-manager.php:466
 msgid "Could not retrieve file from archive."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:492
+#: inc/class-the7-icon-manager.php:493
 msgid "Could not extract file from archive."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:496
+#: inc/class-the7-icon-manager.php:497
 #, fuzzy
 msgid "Could not copy file."
 msgstr "Não foi possível acessar os arquivos do sistema."
 
-#: inc/class-the7-icon-manager.php:515
+#: inc/class-the7-icon-manager.php:516
 msgid ""
 "selection.json or SVG file not found. Was not able to create the necessary "
 "config files"
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:532
+#: inc/class-the7-icon-manager.php:533
 msgid ""
 "It seems that the font with the same name is already exists! Please upload "
 "the font with different name."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:549
+#: inc/class-the7-icon-manager.php:550
 msgid ""
 "Uploaded font is not from IcoMoon. Please upload fonts created with the "
 "IcoMoon App Only."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:555
+#: inc/class-the7-icon-manager.php:556
 #, fuzzy
 msgid "There are no icons."
 msgstr "Não existem categorias"
 
-#: inc/class-the7-icon-manager.php:593 inc/class-the7-icon-manager.php:602
+#: inc/class-the7-icon-manager.php:594 inc/class-the7-icon-manager.php:603
 msgid "Was not able to write a config file"
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:618
+#: inc/class-the7-icon-manager.php:619
 msgid "Unable to write css. Upload icons downloaded only from icomoon"
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:670
+#: inc/class-the7-icon-manager.php:671
 #, fuzzy
 msgid "Unable to add this font. Please try again."
 msgstr "A mensagem não pôde ser enviada"
 
-#: inc/class-the7-icon-manager.php:684
+#: inc/class-the7-icon-manager.php:685
 msgid ""
 "Using this feature is reserved for Super Admins. You unfortunately don't "
 "have the necessary permissions."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:838 inc/class-the7-less-compiler.php:39
+#: inc/class-the7-icon-manager.php:839 inc/class-the7-less-compiler.php:39
 #: inc/mods/dev-tools/main-module.class.php:364
 #, fuzzy
 msgid "Cannot access file system."
@@ -1269,7 +1299,7 @@ msgstr[0] "Categoria:"
 msgstr[1] "Categoria:"
 
 #: inc/helpers/html-helpers.php:515
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:739
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:751
 msgid "Details"
 msgstr "Veja mais"
 
@@ -1298,6 +1328,8 @@ msgid "By %s"
 msgstr "Por %s"
 
 #: inc/helpers/html-helpers.php:1239
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:287
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:960
 msgid "All"
 msgstr "Todas"
 
@@ -1536,40 +1568,40 @@ msgstr "Anterior"
 msgid "Next"
 msgstr "Próximo"
 
-#: inc/helpers/post-navigation.php:171 inc/static.php:129
-msgid "Loading..."
-msgstr "Carregando..."
-
-#: inc/helpers/post-navigation.php:173 inc/static.php:130
+#: inc/helpers/post-navigation.php:180 inc/static.php:130
 msgid "Load more"
 msgstr "Veja mais"
 
-#: inc/helpers/post-navigation.php:206
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:209
+#: inc/helpers/post-navigation.php:183 inc/static.php:129
+msgid "Loading..."
+msgstr "Carregando..."
+
+#: inc/helpers/post-navigation.php:212
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:221
 msgid "Home"
 msgstr "Início"
 
-#: inc/helpers/post-navigation.php:207
+#: inc/helpers/post-navigation.php:213
 msgid "Category \"%s\""
 msgstr "Categoria \"%s\""
 
-#: inc/helpers/post-navigation.php:208
+#: inc/helpers/post-navigation.php:214
 msgid "Results for \"%s\""
 msgstr "Resultados para \"%s\""
 
-#: inc/helpers/post-navigation.php:209
+#: inc/helpers/post-navigation.php:215
 msgid "Entries tagged with \"%s\""
 msgstr "Entradas com marcações \"%s\""
 
-#: inc/helpers/post-navigation.php:210
+#: inc/helpers/post-navigation.php:216
 msgid "Article author %s"
 msgstr "Autor do Artigo %s"
 
-#: inc/helpers/post-navigation.php:211
+#: inc/helpers/post-navigation.php:217
 msgid "Error 404"
 msgstr "Erro 404"
 
-#: inc/helpers/post-navigation.php:458 woocommerce/global/breadcrumb.php:26
+#: inc/helpers/post-navigation.php:464 woocommerce/global/breadcrumb.php:26
 msgid "You are here:"
 msgstr "Você está aqui:"
 
@@ -1606,10 +1638,10 @@ msgid "Other"
 msgstr "Outro"
 
 #: inc/helpers.php:450
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2516
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2556
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2050
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2104
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2522
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2562
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2056
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2110
 #, fuzzy
 msgid "Post image"
 msgstr "redimensionar imagens"
@@ -1663,7 +1695,22 @@ msgstr "Sub-total"
 msgid "The7 Icons"
 msgstr "Exibir próximo ao logo"
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:362
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:359
+msgid "side"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:361
+#, fuzzy
+msgid "side line"
+msgstr "Linha lateral"
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:378
+msgid ""
+"A %s header is being used. “Transparent” and “below the slideshow” options "
+"will not affect it"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:411
 msgid ""
 "A <a href=\"%s\" target=\"_blank\">page template</a> is being applied to "
 "this page. To edit individual page settings, please exclude this page from "
@@ -1671,25 +1718,42 @@ msgid ""
 "\"."
 msgstr ""
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:383
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:432
 msgid ""
 "A <a href=\"%s\" target=\"_blank\">page template</a> is being applied to "
 "this page. However, it will not take effect unless you change the Page "
 "Layout to \"Default\"."
 msgstr ""
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-schemes-manager-control.php:117
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:469
+msgid ""
+"A <a href=\"%1$s\" target=\"_blank\">%2$s template</a>  is being applied to "
+"this page. To edit individual %2$s settings, please exclude this page from "
+"template display conditions."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:477
+#, fuzzy
+msgid "header"
+msgstr "Cabeçalho"
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:496
+#, fuzzy
+msgid "footer"
+msgstr "Rodapé"
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-schemes-manager-control.php:120
 #, fuzzy
 msgid "Use The7 presets"
 msgstr "Elementos inativos"
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-schemes-manager-control.php:121
+#: inc/mods/compatibility/elementor/class-the7-elementor-schemes-manager-control.php:124
 msgid ""
 "Checking this box will replace Elementor's Default Colors and Default Fonts "
 "and force Elementor to use presets from The7 theme options."
 msgstr ""
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-widgets.php:81
+#: inc/mods/compatibility/elementor/class-the7-elementor-widgets.php:132
 #, fuzzy
 msgid "The7 elements"
 msgstr "Elementos inativos"
@@ -1698,20 +1762,25 @@ msgstr "Elementos inativos"
 msgid "Archive (current query)"
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:19
-#: inc/mods/compatibility/elementor/page-settings/footer.php:18
+#: inc/mods/compatibility/elementor/elementor-functions.php:34
+msgid ""
+"The corresponding post type is disabled. Please make sure to 1) install The7 "
+"Elements plugin under The7 > Plugins and 2) enable desired post types under "
+"The7 > My The7, in the Settings section."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/page-settings/footer.php:19
 #, fuzzy
 msgid "Footer settings"
 msgstr "Configurações de layout"
 
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:61
-#: inc/mods/compatibility/elementor/page-settings/footer.php:28
+#: inc/mods/compatibility/elementor/page-settings/footer.php:61
 #, fuzzy
 msgid "Footer"
 msgstr "Rodapé"
 
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:65
-#: inc/mods/compatibility/elementor/page-settings/footer.php:32
+#: inc/mods/compatibility/elementor/page-settings/footer.php:65
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:249
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:15
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:15
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:15
@@ -1719,24 +1788,13 @@ msgstr "Rodapé"
 msgid "Show"
 msgstr "Exibir"
 
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:66
-#: inc/mods/compatibility/elementor/page-settings/footer.php:33
+#: inc/mods/compatibility/elementor/page-settings/footer.php:66
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:250
 #, fuzzy
 msgid "Hide"
 msgstr "Ocultar"
 
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:75
-#, fuzzy
-msgid "Footer source"
-msgstr "Estilo do rodapé"
-
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:80
-#, fuzzy
-msgid "Elementor"
-msgstr "Elementos Fantasia"
-
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:92
-#: inc/mods/compatibility/elementor/page-settings/footer.php:42
+#: inc/mods/compatibility/elementor/page-settings/footer.php:75
 #, fuzzy
 msgid "Footer widget area"
 msgstr "Área de widgets do rodapé:"
@@ -1770,32 +1828,32 @@ msgstr "Padding inferior"
 msgid "Left padding"
 msgstr "Padding esquerdo"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:19
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:17
 #, fuzzy
-msgid "Page header settings"
-msgstr "Opções de Cabeçalho da Página"
+msgid "none"
+msgstr "nenhum"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:61
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:29
 #, fuzzy
-msgid "Page title"
-msgstr "Título da página"
+msgid "Slider Revolution"
+msgstr "Slider Revolution"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:65
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:41
+#, fuzzy
+msgid "LayerSlider"
+msgstr "LayerSlider"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:46
 #, fuzzy
 msgid "Show page title"
 msgstr "Exibir título da página"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:66
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:47
 #, fuzzy
 msgid "Hide page title"
 msgstr "Ocultar título da página"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:67
-#, fuzzy
-msgid "Fancy title"
-msgstr "Título fantasia"
-
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:68
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:50
 #: inc/shortcodes/vc-bridges/the7-blog-scroller-old-bridge.php:180
 #: inc/shortcodes/vc-bridges/the7-blog-scroller-old-bridge.php:193
 #: inc/shortcodes/vc-bridges/the7-blog-scroller-old-bridge.php:212
@@ -1803,14 +1861,51 @@ msgstr "Título fantasia"
 msgid "Slideshow"
 msgstr "Slideshow"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:78
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:163
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:55
+#, fuzzy
+msgid "Page header settings"
+msgstr "Opções de Cabeçalho da Página"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:97
+#, fuzzy
+msgid "Page title"
+msgstr "Título da página"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:107
+#, fuzzy
+msgid "Slideshow options"
+msgstr "Opções do Slideshow"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:118
+#, fuzzy
+msgid "Slideshow type"
+msgstr "Modo Slide-out"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:131
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:144
+#, fuzzy
+msgid "Choose slider"
+msgstr "Escolha o slider:"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:157
+#, fuzzy
+msgid "Enable slideshow background and paddings"
+msgstr "Habilitar fundo e paddings do slideshow:"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:171
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:266
+#, fuzzy
+msgid "Header options"
+msgstr "Posição do cabeçalho"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:183
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:292
 #, fuzzy
 msgid "Header style"
 msgstr "Estilo do cabeçalho"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:82
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:167
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:187
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:296
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1277
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1331
 #: inc/shortcodes/vc-bridges/the7-default-button-bridge.php:160
@@ -1824,43 +1919,43 @@ msgstr "Estilo do cabeçalho"
 msgid "Normal"
 msgstr "Normal"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:83
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:168
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:188
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:297
 #, fuzzy
 msgid "Transparent"
 msgstr "Transparente"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:94
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:191
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:198
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:307
 #, fuzzy
 msgid "Color scheme"
 msgstr "Esquema de cores"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:98
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:195
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:202
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:311
 #, fuzzy
 msgid "From options"
 msgstr "Vindo das opções de tema"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:99
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:196
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:203
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:312
 #, fuzzy
 msgid "Light"
 msgstr "Claro"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:123
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:220
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:227
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:336
 #, fuzzy
 msgid "Top bar color"
 msgstr "Cor da fonte da Barra Superior"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:148
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:245
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:252
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:361
 #, fuzzy
 msgid "Transparent background color"
 msgstr "Cor do fundo transparente"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:179
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:278
 #, fuzzy
 msgid "Show header below slideshow"
 msgstr "Cabeçalho abaixo do slideshow:"
@@ -1876,11 +1971,13 @@ msgid "Sidebar position"
 msgstr "Posição da Barra Lateral:"
 
 #: inc/mods/compatibility/elementor/page-settings/sidebar.php:64
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:107
 #, fuzzy
 msgid "Left"
 msgstr "Esquerda"
 
 #: inc/mods/compatibility/elementor/page-settings/sidebar.php:65
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:115
 #, fuzzy
 msgid "Right"
 msgstr "Direita"
@@ -1933,6 +2030,285 @@ msgstr "Cor secundária de texto"
 msgid "Accent"
 msgstr "Realce"
 
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:61
+#, fuzzy
+msgid "Button background normal"
+msgstr "Cor de fundo personalizada"
+
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:62
+#, fuzzy
+msgid "Button background hover"
+msgstr "Cor de fundo personalizada"
+
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:63
+#, fuzzy
+msgid "Button text normal"
+msgstr "Texto do botão"
+
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:64
+#, fuzzy
+msgid "Button text hover"
+msgstr "Texto do botão"
+
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:65
+#, fuzzy
+msgid "Button border normal"
+msgstr "Barra de cores personalizada"
+
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:66
+#, fuzzy
+msgid "Button border hover"
+msgstr "Cor do texto sobreposto personalizado"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:44
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:105
+#: inc/mods/tgmpa/class-tgm-plugin-activation.php:2633
+#: inc/mods/tgmpa/class-the7-tgm-plugin-activation.php:2788
+msgid "Source"
+msgstr "Origem"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:47
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:171
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:71
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:788
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:211
+#, fuzzy
+msgid "Manual Selection"
+msgstr "Buscar"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:48
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:764
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:187
+#, fuzzy
+msgid "Current Query"
+msgstr "Versão"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:62
+msgid "Include"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:73
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:187
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:80
+#, fuzzy
+msgid "Search & Select"
+msgstr "Estilo da barra lateral"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:90
+msgid "Include By"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:94
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:109
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:172
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:208
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:789
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:794
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:212
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:217
+msgid "Term"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:95
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:132
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:173
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:231
+#, fuzzy
+msgid "Author"
+msgstr "Autor"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:110
+msgid ""
+"Terms are items in a taxonomy. The available taxonomies are: Categories, "
+"Tags, Formats and custom taxonomies."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:155
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:66
+msgid "Exclude"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:166
+msgid "Exclude By"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:170
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:70
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:787
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:210
+#, fuzzy
+msgid "Current Post"
+msgstr "Pular para o conteúdo"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:253
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:97
+msgid "Avoid Duplicates"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:256
+msgid ""
+"Set to Yes to avoid duplicate posts from showing up. This only effects the "
+"frontend."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:268
+msgid "Offset"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:277
+msgid "Use this setting to skip over posts (e.g. '2' to skip over 2 posts)."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:283
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:345
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:776
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:199
+#, fuzzy
+msgid "Date"
+msgstr "Data"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:288
+msgid "Past Day"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:289
+msgid "Past Week"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:290
+#, fuzzy
+msgid "Past Month"
+msgstr "Meta da Postagem"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:291
+msgid "Past Quarter"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:292
+msgid "Past Year"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:293
+#, fuzzy
+msgid "Custom"
+msgstr "Personalizado"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:307
+#, fuzzy
+msgid "Before"
+msgstr "Antes dos itens"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:312
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:329
+#, fuzzy
+msgid "Choose"
+msgstr "Escolher layout"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:320
+msgid ""
+"Setting a ‘Before’ date will show all the posts published until the chosen "
+"date (inclusive)."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:324
+#, fuzzy
+msgid "After"
+msgstr "Depois dos itens"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:337
+msgid ""
+"Setting an ‘After’ date will show all the posts published since the chosen "
+"date (inclusive)."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:341
+#, fuzzy
+msgid "Order By"
+msgstr "Ordenar por"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:346
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:777
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:200
+#: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:69
+#: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:105
+#: inc/shortcodes/vc-extensions.php:1065 inc/shortcodes/vc-extensions.php:1148
+#: inc/shortcodes/vc-extensions.php:1183
+#: inc/widgets/contact-info/contact-info.php:163
+#: inc/widgets/progress-bars/progress-bars.php:152
+msgid "Title"
+msgstr "Título"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:347
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:782
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:205
+#, fuzzy
+msgid "Menu Order"
+msgstr "menu_order"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:348
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:781
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:204
+#, fuzzy
+msgid "Random"
+msgstr "Escolha aleatória"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:356
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:147
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:158
+#: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:75
+#: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1135
+#: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:1114
+#: inc/shortcodes/vc-bridges/the7-products-carousel-bridge.php:57
+#: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:57
+msgid "Order"
+msgstr "Ordem"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:360
+msgid "ASC"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:361
+msgid "DESC"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:369
+#, fuzzy
+msgid "Posts Per Page"
+msgstr "Postagens por página"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:378
+msgid "Ignore Sticky Posts"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:384
+msgid "Sticky-posts ordering is visible on frontend only"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:388
+#, fuzzy
+msgid "Query ID"
+msgstr "Order por ID"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:391
+msgid "Give your Query a custom unique id to allow server side filtering"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:100
+msgid ""
+"Set to Yes to avoid duplicate posts from showing up on the page. This only "
+"affects the frontend."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:160
+#, fuzzy
+msgid "Default"
+msgstr "Padrão"
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:161
+#, fuzzy
+msgid "None"
+msgstr "Nenhum"
+
 #: inc/mods/compatibility/elementor/schemes/class-the7-elementor-color-scheme.php:48
 #, fuzzy
 msgid "The7 palette"
@@ -1958,6 +2334,66 @@ msgstr "Vindo das opções de tema"
 msgid "Elementor uses The7 fonts"
 msgstr ""
 
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:24
+#, fuzzy
+msgid "The7 Breadcrumbs"
+msgstr "Rastros de navegação"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:44
+#: inc/shortcodes/js_composer_bridge.php:145
+#: inc/shortcodes/js_composer_bridge.php:189
+#: inc/shortcodes/js_composer_bridge.php:205
+#: inc/shortcodes/js_composer_bridge.php:377
+#: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:125
+#: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:82
+#: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:109
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:69
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:81
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:84
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:96
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:116
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:128
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:149
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:161
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:174
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:186
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:199
+#: inc/shortcodes/vc-bridges/the7-call-to-action-bridge.php:38
+#: inc/shortcodes/vc-bridges/the7-teaser-bridge.php:249
+msgid "Style"
+msgstr "Estilo"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:51
+msgid "Separator Between"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:62
+#, fuzzy
+msgid "Separator Color"
+msgstr "Cor do texto"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:73
+#, fuzzy
+msgid "Text Color"
+msgstr "Cor do texto"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:84
+#, fuzzy
+msgid "Link Color"
+msgstr "Cor da linha"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:103
+#: inc/shortcodes/vc-bridges/the7-breadcrumbs-bridge.php:105
+#: inc/shortcodes/vc-bridges/the7-social-icons-bridge.php:20
+#, fuzzy
+msgid "Alignment"
+msgstr "Alinhamento"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:111
+#, fuzzy
+msgid "Center"
+msgstr "Centro"
+
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:40
 #, fuzzy
 msgid "The7 Carousel"
@@ -1965,6 +2401,7 @@ msgstr "Elementos Fantasia"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:90
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:97
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:112
 #: inc/shortcodes/vc-bridges/the7-banner-bridge.php:56
 #: inc/shortcodes/vc-bridges/the7-call-to-action-bridge.php:17
 #: inc/shortcodes/vc-bridges/the7-fancy-quote-bridge.php:17
@@ -2012,16 +2449,6 @@ msgstr "Selecionar Arquivos"
 msgid "Ordering"
 msgstr "Ordem"
 
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:147
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:158
-#: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:75
-#: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1135
-#: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:1114
-#: inc/shortcodes/vc-bridges/the7-products-carousel-bridge.php:57
-#: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:57
-msgid "Order"
-msgstr "Ordem"
-
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:160
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:174
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:86
@@ -2040,6 +2467,10 @@ msgstr "Ordenar por"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1595
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1624
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1653
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:308
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:332
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:355
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:378
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:101
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:937
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:965
@@ -2057,6 +2488,8 @@ msgstr "Número total de postagens"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:179
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1578
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:118
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:321
 #, fuzzy
 msgid ""
 "Leave empty to use value from the WP Reading settings. Set \"-1\" to show "
@@ -2095,6 +2528,8 @@ msgstr "Configurações de layout"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:214
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:237
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:88
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:73
 #: inc/shortcodes/vc-bridges/the7-blog-mini-bridge.php:67
 #: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:14
 msgid "Layout"
@@ -2310,6 +2745,7 @@ msgstr "Cor de fundo dos hovers"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:608
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:633
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:126
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:296
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:281
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:18
@@ -2356,6 +2792,8 @@ msgstr "Colunas no Smartphone"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:671
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:740
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:142
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:153
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:333
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:91
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:161
@@ -2364,11 +2802,13 @@ msgid "Gap between columns"
 msgstr "Intervalo entre as postagens (px)"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:691
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:159
 #, fuzzy
 msgid "Stage padding"
 msgstr "Paddings da imagem"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:711
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:176
 #, fuzzy
 msgid "Adaptive height"
 msgstr "Altura da distância"
@@ -2794,6 +3234,12 @@ msgstr "Cor do ícone"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1374
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1447
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1479
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:356
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:377
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:399
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:420
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:441
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:463
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:873
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:923
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:955
@@ -2924,6 +3370,7 @@ msgid "Enable icon hover"
 msgstr "No hover da imagem"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1477
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:190
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:967
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:978
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:989
@@ -3089,6 +3536,7 @@ msgid "Arrows"
 msgstr "Setas"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1485
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:195
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:968
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:153
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:458
@@ -3098,6 +3546,7 @@ msgid "Show arrows"
 msgstr "Exibir próximo ao logo"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1495
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:202
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:979
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:164
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:469
@@ -3107,16 +3556,19 @@ msgid "Arrow Icon"
 msgstr "Setas"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1507
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:211
 #, fuzzy
 msgid "Choose next arrow icon"
 msgstr "Escolher imagem"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1523
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:224
 #, fuzzy
 msgid "Choose previous arrow icon"
 msgstr "Escolher imagem"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1539
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:237
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1012
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:197
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:502
@@ -3126,6 +3578,7 @@ msgid "Arrow icon size"
 msgstr "Tamanho do ícone do menu"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1562
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:257
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1025
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:210
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:515
@@ -3135,6 +3588,7 @@ msgid "Arrow Background"
 msgstr "Exibir fundo"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1620
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:306
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1062
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:247
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:552
@@ -3144,6 +3598,7 @@ msgid "Arrow border radius"
 msgstr "Curvatura da borda"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1643
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:326
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1074
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:259
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:564
@@ -3153,6 +3608,7 @@ msgid "Arrow border width"
 msgstr "Largura da borda"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1666
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:346
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1086
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:271
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:576
@@ -3162,6 +3618,7 @@ msgid "Color Setting"
 msgstr "Configurações de layout"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1678
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:355
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1097
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:282
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:587
@@ -3171,6 +3628,7 @@ msgid "Arrow icon color"
 msgstr "Cor do ícone"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1692
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:366
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1109
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:294
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:599
@@ -3180,6 +3638,7 @@ msgid "Show arrow border color"
 msgstr "Cor da borda"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1705
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:376
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1124
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:309
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:614
@@ -3189,6 +3648,7 @@ msgid "Arrow border color"
 msgstr "Cor da borda"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1720
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:388
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1136
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:321
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:626
@@ -3198,6 +3658,7 @@ msgid "Show arrow background"
 msgstr "Exibir fundo"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1733
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:398
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1151
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:336
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:641
@@ -3207,6 +3668,7 @@ msgid "Arrow background color"
 msgstr "Cor de fundo dos ícones"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1748
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:410
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1163
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:348
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:653
@@ -3216,6 +3678,7 @@ msgid "Hover Color Setting"
 msgstr "Cor da sobreposição"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1760
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:419
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1174
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:359
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:664
@@ -3225,6 +3688,7 @@ msgid "Arrow icon color hover"
 msgstr "Mostrar na sobreposição"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1774
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:430
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1186
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:371
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:677
@@ -3234,11 +3698,13 @@ msgid "Show arrow border color hover"
 msgstr "Cor da borda do fundo"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1787
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:440
 #, fuzzy
 msgid "Arrow border color hover"
 msgstr "Cor da borda do fundo"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1802
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:452
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1213
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:398
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:704
@@ -3248,6 +3714,7 @@ msgid "Show arrow background hover"
 msgstr "Exibir fundo"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1815
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:462
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1228
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:413
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:719
@@ -3257,6 +3724,7 @@ msgid "Arrow background hover color"
 msgstr "Cor da borda do fundo sobreposta personalizada"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1830
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:474
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1241
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:426
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:732
@@ -3267,6 +3735,8 @@ msgstr "Posição da logo"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1842
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1954
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:483
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:577
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1252
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1332
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:437
@@ -3282,6 +3752,8 @@ msgstr "Padding interno"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1862
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1974
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2361
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:500
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:594
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1264
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1344
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1566
@@ -3301,6 +3773,8 @@ msgstr "Posição dos marcadores"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1879
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1991
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2378
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:514
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:608
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1280
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1360
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1582
@@ -3320,6 +3794,8 @@ msgstr "Posição da logo"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1896
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2008
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2395
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:528
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:622
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1296
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1376
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1598
@@ -3339,6 +3815,8 @@ msgstr "Divisor vertical"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1919
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2031
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2418
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:548
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:642
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1308
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1388
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1610
@@ -3355,6 +3833,7 @@ msgid "Horizontal offset"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1942
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:568
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1321
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:506
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:812
@@ -3364,6 +3843,7 @@ msgid "Left Arrow Position"
 msgstr "Posição da logo"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2054
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:662
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1401
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:586
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:892
@@ -3373,22 +3853,26 @@ msgid "Arrows responsiveness"
 msgstr "Responsividade"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2066
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:671
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:903
 #, fuzzy
 msgid "Responsive behaviour"
 msgstr "Layout responsivo"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2083
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:685
 #, fuzzy
 msgid "Hide arrows if browser width is less then"
 msgstr "Alternar para layout mobile se a largura do navegador for menor que"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2096
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:695
 #, fuzzy
 msgid "Reposition arrows if browser width is less then"
 msgstr "Alternar para layout mobile se a largura do navegador for menor que"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2109
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:705
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1446
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:631
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:937
@@ -3397,6 +3881,7 @@ msgid "Left arrow horizontal offset"
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2133
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:726
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1455
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:640
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:946
@@ -3581,8 +4066,8 @@ msgstr "Cor de sobreposição dos botões"
 msgid "Bullets Position"
 msgstr "Posição dos marcadores"
 
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2480
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2007
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2486
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2013
 #, fuzzy
 msgid "Details link"
 msgstr "Veja mais"
@@ -3592,13 +4077,8 @@ msgstr "Veja mais"
 msgid "The7 Masonry & Grid"
 msgstr "Blog Masonry e Grid"
 
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:105
-#: inc/mods/tgmpa/class-tgm-plugin-activation.php:2633
-#: inc/mods/tgmpa/class-the7-tgm-plugin-activation.php:2788
-msgid "Source"
-msgstr "Origem"
-
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:204
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:78
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:82
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:35
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:87
@@ -3613,6 +4093,7 @@ msgid "Loading effect"
 msgstr "Efeito de carregamento"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:642
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:99
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:287
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:46
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:115
@@ -3621,6 +4102,7 @@ msgid "Responsiveness mode"
 msgstr "Responsividade"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:703
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:121
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:309
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:68
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:137
@@ -3629,6 +4111,7 @@ msgid "Column minimum width"
 msgstr "Largura mínima da coluna (px)"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:726
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:142
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:322
 #: inc/shortcodes/vc-bridges/the7-blog-posts-old-bridge.php:256
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:80
@@ -3637,6 +4120,7 @@ msgid "Desired columns number"
 msgstr "Número de colunas desejadas"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:741
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:154
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:338
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:96
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:166
@@ -3657,6 +4141,7 @@ msgid "Post wide/normal width can be chosen in single post options."
 msgstr ""
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1534
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:286
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:914
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:892
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:441
@@ -3676,6 +4161,7 @@ msgid "Pagination"
 msgstr "Paginação"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1542
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:291
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:921
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:899
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:448
@@ -3687,6 +4173,10 @@ msgstr "Modo de paginação"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1596
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1625
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1654
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:309
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:333
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:356
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:379
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:106
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:946
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:974
@@ -3709,6 +4199,10 @@ msgstr "Deixe vazio para mostrar todas as postagens."
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1609
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1638
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1667
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:320
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:343
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:366
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:389
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:951
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:978
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1005
@@ -3727,6 +4221,9 @@ msgstr "Número de postagens para mostrar em uma página"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1610
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1639
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1668
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:344
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:367
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:390
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:960
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:987
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1014
@@ -3748,6 +4245,7 @@ msgstr ""
 "Deixe vazio para usar o número de postagens das configurações do Wordpress"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1699
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:400
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1057
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1086
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:1036
@@ -3775,6 +4273,7 @@ msgstr "Intervalo antes da paginação"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1725
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1833
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:259
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1081
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1110
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1124
@@ -3870,21 +4369,123 @@ msgstr "Cor acentuada"
 msgid "Leave empty to use accent color."
 msgstr "Deixe vazio para usar a cor acentuada."
 
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:618
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:39
+#, fuzzy
+msgid "The7 Product Carousel"
+msgstr "Preço do Produto"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:96
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:88
+#: inc/shortcodes/vc-bridges/the7-products-carousel-bridge.php:96
+#: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:97
+#, fuzzy
+msgid "Text & button position:"
+msgstr "Posição do botão \"Adicionar ao carrinho\""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:117
+#, fuzzy
+msgid "Total number of products"
+msgstr "Número total de postagens"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:134
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:111
+msgid "Columns"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:752
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:175
+msgid "Query"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:765
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:188
+#, fuzzy
+msgid "Latest Products"
+msgstr "Produtos relacionados"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:766
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:189
+msgid "Sale"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:767
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:190
+#, fuzzy
+msgid "Top rated products"
+msgstr "Produtos relacionados"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:768
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:191
+#, fuzzy
+msgid "Best selling"
+msgstr "Instalar"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:769
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:192
+#, fuzzy
+msgid "Featured"
+msgstr "Imagem em destaque"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:778
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:201
+#: woocommerce/cart/cart.php:32 woocommerce/cart/cart.php:98
+msgid "Price"
+msgstr "Preço"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:779
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:202
+msgid "Popularity"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:780
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:203
+msgid "Rating"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:40
+#, fuzzy
+msgid "The7 Product Masonry & Grid"
+msgstr "Blog Masonry e Grid"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:239
+#, fuzzy
+msgid "Filter bar"
+msgstr "Opções de Rodapé"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:247
+#, fuzzy
+msgid "Categories filter"
+msgstr "Mostrar filtro de categorias"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:258
+#, fuzzy
+msgid "Gap"
+msgstr "Intervalo"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:424
+msgid "Spacing"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:425
+#, fuzzy
+msgid "Leave empty to use default spacing"
+msgstr "Deixe vazio para usar o intervalo padrão"
+
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:630
 msgid "Product details"
 msgstr "Detalhes do produto"
 
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:751
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:763
 #, fuzzy
 msgid "View cart"
 msgstr "Ver Carrinho"
 
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:1050
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:1062
 #, fuzzy
 msgid "Grid view"
 msgstr "Grade"
 
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:1053
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:1065
 #, fuzzy
 msgid "List view"
 msgstr "Estilo da lista"
@@ -5091,29 +5692,6 @@ msgstr "por Dream-Theme"
 msgid "Title size"
 msgstr "Tamanho do título"
 
-#: inc/shortcodes/js_composer_bridge.php:145
-#: inc/shortcodes/js_composer_bridge.php:189
-#: inc/shortcodes/js_composer_bridge.php:205
-#: inc/shortcodes/js_composer_bridge.php:377
-#: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:125
-#: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:82
-#: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:109
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:69
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:81
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:84
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:96
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:116
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:128
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:149
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:161
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:174
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:186
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:199
-#: inc/shortcodes/vc-bridges/the7-call-to-action-bridge.php:38
-#: inc/shortcodes/vc-bridges/the7-teaser-bridge.php:249
-msgid "Style"
-msgstr "Estilo"
-
 #: inc/shortcodes/js_composer_bridge.php:161
 msgid "Tour"
 msgstr ""
@@ -6280,12 +6858,6 @@ msgstr "Ordem"
 msgid "Position"
 msgstr "Posição:"
 
-#: inc/shortcodes/vc-bridges/the7-breadcrumbs-bridge.php:105
-#: inc/shortcodes/vc-bridges/the7-social-icons-bridge.php:20
-#, fuzzy
-msgid "Alignment"
-msgstr "Alinhamento"
-
 #: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:7
 #, fuzzy
 msgid "Button (old)"
@@ -6916,12 +7488,6 @@ msgstr ""
 msgid "Total number of products "
 msgstr "Número total de postagens"
 
-#: inc/shortcodes/vc-bridges/the7-products-carousel-bridge.php:96
-#: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:97
-#, fuzzy
-msgid "Text & button position:"
-msgstr "Posição do botão \"Adicionar ao carrinho\""
-
 #: inc/shortcodes/vc-bridges/the7-products-carousel-bridge.php:247
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:410
 #, fuzzy
@@ -7086,15 +7652,6 @@ msgstr "Link"
 #, fuzzy
 msgid "Apply link to:"
 msgstr "Compartilhar esta página"
-
-#: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:69
-#: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:105
-#: inc/shortcodes/vc-extensions.php:1065 inc/shortcodes/vc-extensions.php:1148
-#: inc/shortcodes/vc-extensions.php:1183
-#: inc/widgets/contact-info/contact-info.php:163
-#: inc/widgets/progress-bars/progress-bars.php:152
-msgid "Title"
-msgstr "Título"
 
 #: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:71
 #, fuzzy
@@ -7555,10 +8112,6 @@ msgstr ""
 #, fuzzy
 msgid "Search form"
 msgstr "limpar formulário"
-
-#: woocommerce/cart/cart.php:32 woocommerce/cart/cart.php:98
-msgid "Price"
-msgstr "Preço"
 
 #: woocommerce/cart/cart.php:33 woocommerce/cart/cart.php:104
 #: woocommerce/global/quantity-input.php:28
@@ -8250,42 +8803,42 @@ msgctxt "admin"
 msgid "Install UA default icons"
 msgstr "Instalar Plugins"
 
-#: inc/class-the7-icon-manager.php:217
+#: inc/class-the7-icon-manager.php:218
 #, fuzzy
 msgctxt "admin"
 msgid "Default Icons"
 msgstr "Rodapé Padrão"
 
-#: inc/class-the7-icon-manager.php:223
+#: inc/class-the7-icon-manager.php:224
 msgctxt "admin"
 msgid "Delete Icon Set"
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:255 inc/class-the7-icon-manager.php:306
-#: inc/class-the7-icon-manager.php:357 inc/class-the7-icon-manager.php:383
+#: inc/class-the7-icon-manager.php:256 inc/class-the7-icon-manager.php:307
+#: inc/class-the7-icon-manager.php:358 inc/class-the7-icon-manager.php:384
 msgctxt "admin"
 msgid ""
 "Using this feature is reserved for Super Admins. You unfortunately don't "
 "have the necessary permissions."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:266
+#: inc/class-the7-icon-manager.php:267
 msgctxt "admin"
 msgid "Unable to get attachment id."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:282
+#: inc/class-the7-icon-manager.php:283
 msgctxt "admin"
 msgid "Unable to unzip icons archive."
 msgstr ""
 
-#: inc/class-the7-icon-manager.php:331
+#: inc/class-the7-icon-manager.php:332
 #, fuzzy
 msgctxt "admin"
 msgid "Was not able to remove Font."
 msgstr "Incapaz de localizar a pasta necessária (%s)."
 
-#: inc/class-the7-icon-manager.php:396
+#: inc/class-the7-icon-manager.php:397
 msgctxt "admin"
 msgid ""
 "Seems that Ultimate VC Addons plugin is inactive. Please, activate it and "
@@ -8728,7 +9281,7 @@ msgctxt "backend"
 msgid "Advanced"
 msgstr "Avançado"
 
-#: inc/extensions/core-functions.php:1057
+#: inc/extensions/core-functions.php:1058
 msgctxt "backend"
 msgid "Edit post type"
 msgstr "Editar tipo de postagem"
@@ -9306,7 +9859,7 @@ msgstr "Curvatura da borda"
 #: inc/admin/theme-options/options-header/submenu-tab.php:271
 #: inc/admin/theme-options/options-page-titles.php:61
 #: inc/admin/theme-options/options-page-titles.php:504
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:525
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:547
 #, fuzzy
 msgctxt "theme-options"
 msgid "Padding"
@@ -9420,7 +9973,7 @@ msgstr "Cabeçalho abaixo do slideshow:"
 #: inc/admin/theme-options/options.php:92 inc/admin/theme-options-parts.php:520
 #: inc/deprecated-functions.php:430
 #: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:405
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:433
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:455
 #: inc/mods/compatibility/woocommerce/admin/wc-cart-micro-widget-options.php:38
 #: inc/mods/options-wizard/options.php:597
 msgctxt "theme-options"
@@ -9514,7 +10067,7 @@ msgstr "Habilitado"
 #: inc/admin/theme-options-parts.php:808 inc/admin/theme-options-parts.php:885
 #: inc/admin/theme-options-parts.php:908 inc/deprecated-functions.php:431
 #: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:406
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:434
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:456
 #: inc/mods/compatibility/woocommerce/admin/wc-cart-micro-widget-options.php:37
 #: inc/mods/options-wizard/options.php:601
 msgctxt "theme-options"
@@ -9643,12 +10196,12 @@ msgctxt "theme-options"
 msgid "Custom CSS"
 msgstr "CSS Personalizado"
 
-#: inc/admin/theme-options/options-advanced.php:110
+#: inc/admin/theme-options/options-advanced.php:111
 msgctxt "theme-options"
 msgid "Custom JavaScript"
 msgstr "JavaScript Personalizado"
 
-#: inc/admin/theme-options/options-advanced.php:116
+#: inc/admin/theme-options/options-advanced.php:117
 msgctxt "theme-options"
 msgid "Tracking code (e.g. Google analytics) or arbitrary JavaScript"
 msgstr "Código de rastreamento (ex. Google Analytics) ou JavaScript arbitrário"
@@ -10384,7 +10937,7 @@ msgstr "Cor da fonte do ativo"
 #: inc/admin/theme-options/options-sidebar.php:134
 #: inc/admin/theme-options/options-stripes.php:94
 #: inc/mods/compatibility/edd/options-inject-in-header.php:54
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:477
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:499
 #: inc/mods/compatibility/woocommerce/admin/wc-cart-micro-widget-options.php:97
 #: inc/mods/options-wizard/options.php:40
 #: inc/mods/options-wizard/options.php:512
@@ -10905,7 +11458,7 @@ msgstr "Padding"
 #: inc/admin/theme-options/options.php:150
 #: inc/admin/theme-options-parts.php:232
 #: inc/extensions/options-framework/fields/class-the7-option-field-spacing.php:21
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:531
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:553
 msgctxt "theme-options"
 msgid "Top"
 msgstr "Superior"
@@ -10922,7 +11475,7 @@ msgstr "Superior"
 #: inc/admin/theme-options/options.php:151
 #: inc/admin/theme-options-parts.php:240
 #: inc/extensions/options-framework/fields/class-the7-option-field-spacing.php:23
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:532
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:554
 msgctxt "theme-options"
 msgid "Bottom"
 msgstr "Inferior"
@@ -11077,7 +11630,7 @@ msgstr "Cor da fonte da barra inferior"
 #: inc/admin/theme-options/options-page-titles.php:429
 #: inc/admin/theme-options/options-page-titles.php:490
 #: inc/admin/theme-options-parts.php:36 inc/admin/theme-options-parts.php:557
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:509
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:531
 #: inc/mods/options-wizard/options.php:569
 #: inc/mods/options-wizard/options.php:804
 msgctxt "theme-options"
@@ -13656,7 +14209,7 @@ msgid "Content boxes background"
 msgstr "Fundo das caixas de conteúdo"
 
 #: inc/admin/theme-options/options-stripes.php:101
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:493
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:515
 msgctxt "theme-options"
 msgid "Background opacity"
 msgstr "Opacidade do fundo"
@@ -14348,6 +14901,7 @@ msgid "Show products counter"
 msgstr "Mostrar contador de produtos"
 
 #: inc/mods/compatibility/edd/options-inject-in-header.php:88
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:422
 #: inc/mods/compatibility/woocommerce/admin/wc-cart-micro-widget-options.php:137
 msgctxt "theme-options"
 msgid "Never"
@@ -14625,49 +15179,66 @@ msgctxt "theme-options"
 msgid "'Add to cart' button in related products"
 msgstr "Posição do botão \"Adicionar ao carrinho\""
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:411
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:412
+#, fuzzy
+msgctxt "theme-options"
+msgid "Show product title"
+msgstr "Mostrar contador de produtos"
+
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:418
+#, fuzzy
+msgctxt "theme-options"
+msgid "Always"
+msgstr "Sempre"
+
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:426
+msgctxt "theme-options"
+msgid "If default page title is hidden"
+msgstr ""
+
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:433
 #, fuzzy
 msgctxt "theme-options"
 msgid "Product image width"
 msgstr "Preço do Produto"
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:419
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:459
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:441
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:481
 #, fuzzy
 msgctxt "theme-options"
 msgid "Switch to one column layout after"
 msgstr "Reduzir para uma coluna após (px)"
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:428
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:450
 #, fuzzy
 msgctxt "theme-options"
 msgid "Image zoom on hover"
 msgstr "Sobreposição da imagem"
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:439
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:461
 #, fuzzy
 msgctxt "theme-options"
 msgid "Cart & Checkout"
 msgstr "Checkout"
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:445
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:467
 #, fuzzy
 msgctxt "theme-options"
 msgid "Cart settings"
 msgstr "Configurações de Layout"
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:450
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:472
 #, fuzzy
 msgctxt "theme-options"
 msgid "Side column width"
 msgstr "Largura da borda"
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:451
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:473
 msgctxt "theme-options"
 msgid "Use 100% to place side column below checkout content"
 msgstr ""
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:469
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:491
 #, fuzzy
 msgctxt "theme-options"
 msgid "Checkout steps"
@@ -17033,6 +17604,40 @@ msgctxt "options import"
 msgid "Yes, do it!"
 msgstr "Sim, faça!"
 
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:162
+#, fuzzy
+msgctxt "Border Control"
+msgid "Solid"
+msgstr "Cor Sólida"
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:163
+#, fuzzy
+msgctxt "Border Control"
+msgid "Double"
+msgstr "Duplo"
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:164
+msgctxt "Border Control"
+msgid "Dotted"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:165
+msgctxt "Border Control"
+msgid "Dashed"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:166
+msgctxt "Border Control"
+msgid "Groove"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:770
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:193
+#, fuzzy
+msgctxt "Posts Query Control"
+msgid "Manual Selection"
+msgstr "Buscar"
+
 #: inc/mods/tgmpa/class-tgm-plugin-activation.php:1206
 #: inc/mods/tgmpa/class-tgm-plugin-activation.php:3033
 #: inc/mods/tgmpa/class-the7-plugins-list-table.php:445
@@ -17119,13 +17724,13 @@ msgctxt "vc inline dummy"
 msgid "Media gallery masonry & grid"
 msgstr "Blog Masonry e Grid"
 
-#: inc/shortcodes/includes/products-carousel/products-carousel.php:430
+#: inc/shortcodes/includes/products-carousel/products-carousel.php:436
 #, fuzzy
 msgctxt "vc inline dummy"
 msgid "Products Carousel"
 msgstr "Preço do Produto"
 
-#: inc/shortcodes/includes/products-masonry/products-masonry.php:510
+#: inc/shortcodes/includes/products-masonry/products-masonry.php:521
 #, fuzzy
 msgctxt "vc inline dummy"
 msgid "Products Masonry & Grid"
@@ -17238,6 +17843,18 @@ msgstr "Veja mais"
 msgctxt "Product quantity input tooltip"
 msgid "Qty"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Footer source"
+#~ msgstr "Estilo do rodapé"
+
+#, fuzzy
+#~ msgid "Elementor"
+#~ msgstr "Elementos Fantasia"
+
+#, fuzzy
+#~ msgid "Fancy title"
+#~ msgstr "Título fantasia"
 
 #, fuzzy
 #~ msgctxt "theme-options"
@@ -17428,14 +18045,6 @@ msgstr ""
 #~ msgstr "Editar tipo de postagem"
 
 #, fuzzy
-#~ msgid "Solid"
-#~ msgstr "Cor Sólida"
-
-#, fuzzy
-#~ msgid "Double"
-#~ msgstr "Duplo"
-
-#, fuzzy
 #~ msgid "Enable image hovers"
 #~ msgstr "No hover da imagem"
 
@@ -17466,14 +18075,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Show custom background hover color"
 #~ msgstr "Cor da borda do fundo sobreposta personalizada"
-
-#, fuzzy
-#~ msgid "Custom border color"
-#~ msgstr "Barra de cores personalizada"
-
-#, fuzzy
-#~ msgid "Custom border hover color"
-#~ msgstr "Cor do texto sobreposto personalizado"
 
 #~ msgid "Google+"
 #~ msgstr "Google+"
@@ -17954,10 +18555,6 @@ msgstr ""
 #~ msgstr "Opacidade do fundo transparente:"
 
 #~ msgctxt "backend metabox"
-#~ msgid "full-screen"
-#~ msgstr "tela-cheia"
-
-#~ msgctxt "backend metabox"
 #~ msgid "full-screen with content"
 #~ msgstr "tela-cheia com conteúdo"
 
@@ -18097,10 +18694,6 @@ msgstr ""
 #~ msgctxt "theme-options"
 #~ msgid "Near logo (left)"
 #~ msgstr "Próximo ao logo (esquerda)"
-
-#~ msgctxt "theme-options"
-#~ msgid "Near logo (right)"
-#~ msgstr "Próximo ao logo (direita)"
 
 #~ msgctxt "theme-options"
 #~ msgid "Area near menu"
@@ -18386,10 +18979,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Social icons"
 #~ msgstr "Ícones sociais"
-
-#, fuzzy
-#~ msgid "Date"
-#~ msgstr "Data"
 
 #~ msgctxt "theme-options"
 #~ msgid "Contact form"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: The7 3.3.1\n"
 "Report-Msgid-Bugs-To: https://support.dream-theme.com/\n"
-"POT-Creation-Date: 2020-04-07 12:16:09+00:00\n"
-"PO-Revision-Date: 2020-03-06 11:05+0200\n"
+"POT-Creation-Date: 2020-05-21 13:01:02+00:00\n"
+"PO-Revision-Date: 2020-04-12 13:14+0300\n"
 "Last-Translator: вавап вапвап <aoisgnsrt@rjdgndrilthnlty.cc>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -139,6 +139,34 @@ msgstr "Страницы:"
 msgid "Go to Top"
 msgstr "Вверх"
 
+#: footer.php:57
+msgid "Close (Esc)"
+msgstr ""
+
+#: footer.php:58
+#, fuzzy
+msgid "Share"
+msgstr "Поделиться"
+
+#: footer.php:59
+#, fuzzy
+msgid "Toggle fullscreen"
+msgstr "на полный экран"
+
+#: footer.php:60
+msgid "Zoom in/out"
+msgstr ""
+
+#: footer.php:72
+#, fuzzy
+msgid "Previous (arrow left)"
+msgstr "Предыдущая запись:"
+
+#: footer.php:74
+#, fuzzy
+msgid "Next (arrow right)"
+msgstr "Возле логотипа (справа)"
+
 #: header-single.php:41
 msgid "Skip to content"
 msgstr "Перейти к содержанию"
@@ -177,6 +205,7 @@ msgstr "Служебная информация"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:385
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1574
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:410
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:266
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:233
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1036
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:311
@@ -196,6 +225,7 @@ msgstr "Ширина"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:397
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1597
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:422
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:286
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:233
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1049
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:311
@@ -832,9 +862,10 @@ msgid "Ajax calls with wp_remote_post:"
 msgstr "Вызов Ajax через wp_remote_post:"
 
 #: inc/admin/screens/the7-status.php:316
+#, fuzzy
 msgid ""
 "<span class=\"error\">No</span><br> Seems that your server is blocking "
-"connections to your own site. It may brake theme db update process and lead "
+"connections to your own site. It may break theme db update process and lead "
 "to style corruption. Please, make sure that remote requests to %s are not "
 "blocked."
 msgstr ""
@@ -893,31 +924,31 @@ msgstr ""
 msgid "Related Posts"
 msgstr "Похожие записи"
 
-#: inc/class-the7-icon-manager.php:450
+#: inc/class-the7-icon-manager.php:451
 msgid "Wasn't able to create temp folder"
 msgstr "Не удается найти нужную папку"
 
-#: inc/class-the7-icon-manager.php:454
+#: inc/class-the7-icon-manager.php:455
 msgid "Wasn't able to work with Zip Archive"
 msgstr "Нет возможности работать с zip-архивом"
 
-#: inc/class-the7-icon-manager.php:460
+#: inc/class-the7-icon-manager.php:461
 msgid "Incompatible Archive."
 msgstr "Несовместимый архив."
 
-#: inc/class-the7-icon-manager.php:465
+#: inc/class-the7-icon-manager.php:466
 msgid "Could not retrieve file from archive."
 msgstr "Не удалось получить файл из архива."
 
-#: inc/class-the7-icon-manager.php:492
+#: inc/class-the7-icon-manager.php:493
 msgid "Could not extract file from archive."
 msgstr "Не удалось извлечь файл из архива."
 
-#: inc/class-the7-icon-manager.php:496
+#: inc/class-the7-icon-manager.php:497
 msgid "Could not copy file."
 msgstr "Не удалось скопировать файл."
 
-#: inc/class-the7-icon-manager.php:515
+#: inc/class-the7-icon-manager.php:516
 msgid ""
 "selection.json or SVG file not found. Was not able to create the necessary "
 "config files"
@@ -925,7 +956,7 @@ msgstr ""
 "selection.json или SVG-файл не найдены. Не удалось создать необходимые файлы "
 "конфигурации"
 
-#: inc/class-the7-icon-manager.php:532
+#: inc/class-the7-icon-manager.php:533
 msgid ""
 "It seems that the font with the same name is already exists! Please upload "
 "the font with different name."
@@ -933,7 +964,7 @@ msgstr ""
 "Возможно, что шрифт с таким именем уже существует! Пожалуйста, загрузите "
 "шрифт с другим именем."
 
-#: inc/class-the7-icon-manager.php:549
+#: inc/class-the7-icon-manager.php:550
 msgid ""
 "Uploaded font is not from IcoMoon. Please upload fonts created with the "
 "IcoMoon App Only."
@@ -941,23 +972,23 @@ msgstr ""
 "Загруженный шрифт не из IcoMoon. Пожалуйста, загрузите шрифты, созданные "
 "только в приложении IcoMoon."
 
-#: inc/class-the7-icon-manager.php:555
+#: inc/class-the7-icon-manager.php:556
 msgid "There are no icons."
 msgstr "Нет иконок."
 
-#: inc/class-the7-icon-manager.php:593 inc/class-the7-icon-manager.php:602
+#: inc/class-the7-icon-manager.php:594 inc/class-the7-icon-manager.php:603
 msgid "Was not able to write a config file"
 msgstr "Не удается выполнить запись в конфигурационный файл"
 
-#: inc/class-the7-icon-manager.php:618
+#: inc/class-the7-icon-manager.php:619
 msgid "Unable to write css. Upload icons downloaded only from icomoon"
 msgstr "Не удается записать css. Загружайте иконки скачанные только с icomoon"
 
-#: inc/class-the7-icon-manager.php:670
+#: inc/class-the7-icon-manager.php:671
 msgid "Unable to add this font. Please try again."
 msgstr "Невозможно добавить этот шрифт. Попробуйте еще раз."
 
-#: inc/class-the7-icon-manager.php:684
+#: inc/class-the7-icon-manager.php:685
 msgid ""
 "Using this feature is reserved for Super Admins. You unfortunately don't "
 "have the necessary permissions."
@@ -965,7 +996,7 @@ msgstr ""
 "Использовать эти возможности может только Супер Администратор. К сожалению, "
 "у вас нет необходимых прав."
 
-#: inc/class-the7-icon-manager.php:838 inc/class-the7-less-compiler.php:39
+#: inc/class-the7-icon-manager.php:839 inc/class-the7-less-compiler.php:39
 #: inc/mods/dev-tools/main-module.class.php:364
 msgid "Cannot access file system."
 msgstr "Нет доступа к файловой системе."
@@ -1277,7 +1308,7 @@ msgstr "Авторизуйтесь, чтобы ответить"
 #: inc/shortcodes/includes/social-icons/social-icons.php:95
 #: inc/widgets/contact-info/contact-info.php:105
 msgid "%s page opens in new window"
-msgstr ""
+msgstr "Страница %s открывается в новом окне"
 
 #: inc/helpers/html-helpers.php:278
 msgid "Tags:"
@@ -1303,7 +1334,7 @@ msgstr[1] "Рубрики:"
 msgstr[2] "Рубрик:"
 
 #: inc/helpers/html-helpers.php:515
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:739
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:751
 msgid "Details"
 msgstr "Подробнее"
 
@@ -1334,6 +1365,8 @@ msgid "By %s"
 msgstr "Автор: %s"
 
 #: inc/helpers/html-helpers.php:1239
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:287
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:960
 msgid "All"
 msgstr "Все"
 
@@ -1569,40 +1602,40 @@ msgstr "Предыдущая"
 msgid "Next"
 msgstr "Следующая"
 
-#: inc/helpers/post-navigation.php:171 inc/static.php:129
-msgid "Loading..."
-msgstr "Загрузка ..."
-
-#: inc/helpers/post-navigation.php:173 inc/static.php:130
+#: inc/helpers/post-navigation.php:180 inc/static.php:130
 msgid "Load more"
 msgstr "Загрузить ещё"
 
-#: inc/helpers/post-navigation.php:206
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:209
+#: inc/helpers/post-navigation.php:183 inc/static.php:129
+msgid "Loading..."
+msgstr "Загрузка ..."
+
+#: inc/helpers/post-navigation.php:212
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:221
 msgid "Home"
 msgstr "Главная"
 
-#: inc/helpers/post-navigation.php:207
+#: inc/helpers/post-navigation.php:213
 msgid "Category \"%s\""
 msgstr "Рубрика \"%s\""
 
-#: inc/helpers/post-navigation.php:208
+#: inc/helpers/post-navigation.php:214
 msgid "Results for \"%s\""
 msgstr "Результаты по \"%s\""
 
-#: inc/helpers/post-navigation.php:209
+#: inc/helpers/post-navigation.php:215
 msgid "Entries tagged with \"%s\""
 msgstr "Записи с тегом \"%s\""
 
-#: inc/helpers/post-navigation.php:210
+#: inc/helpers/post-navigation.php:216
 msgid "Article author %s"
 msgstr "Автор статьи %s"
 
-#: inc/helpers/post-navigation.php:211
+#: inc/helpers/post-navigation.php:217
 msgid "Error 404"
 msgstr "Ошибка 404"
 
-#: inc/helpers/post-navigation.php:458 woocommerce/global/breadcrumb.php:26
+#: inc/helpers/post-navigation.php:464 woocommerce/global/breadcrumb.php:26
 msgid "You are here:"
 msgstr "Вы здесь:"
 
@@ -1639,10 +1672,10 @@ msgid "Other"
 msgstr "Другое"
 
 #: inc/helpers.php:450
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2516
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2556
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2050
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2104
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2522
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2562
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2056
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2110
 msgid "Post image"
 msgstr "Изображение записи"
 
@@ -1697,53 +1730,103 @@ msgstr "Итого"
 msgid "The7 Icons"
 msgstr "Иконки The7"
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:362
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:359
+#, fuzzy
+msgid "side"
+msgstr "Снаружи"
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:361
+#, fuzzy
+msgid "side line"
+msgstr "Боковая линия"
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:378
+msgid ""
+"A %s header is being used. “Transparent” and “below the slideshow” options "
+"will not affect it"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:411
 msgid ""
 "A <a href=\"%s\" target=\"_blank\">page template</a> is being applied to "
 "this page. To edit individual page settings, please exclude this page from "
 "template display conditions, or choose the Page Layout other than \"Default"
 "\"."
 msgstr ""
+"Шаблон <a href=\"%s\" target=\"_blank\">страницы</a> применяется к этой "
+"странице. Для изменения отдельных настроек страницы, пожалуйста, исключите "
+"эту страницу из условий отображения шаблона или выберите макет «Страница», "
+"вместо макета «По умолчанию»."
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:383
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:432
 msgid ""
 "A <a href=\"%s\" target=\"_blank\">page template</a> is being applied to "
 "this page. However, it will not take effect unless you change the Page "
 "Layout to \"Default\"."
 msgstr ""
+"Шаблон <a href=\"%s\" target=\"_blank\">страницы</a> применяется к этой "
+"странице. Однако он не вступит в силу, если вы не измените макет страницы на "
+"«Макет по-умолчанию»."
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-schemes-manager-control.php:117
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:469
 #, fuzzy
-msgid "Use The7 presets"
-msgstr "The7 elements"
+msgid ""
+"A <a href=\"%1$s\" target=\"_blank\">%2$s template</a>  is being applied to "
+"this page. To edit individual %2$s settings, please exclude this page from "
+"template display conditions."
+msgstr ""
+"Шаблон <a href=\"%s\" target=\"_blank\">страницы</a> применяется к этой "
+"странице. Для изменения отдельных настроек страницы, пожалуйста, исключите "
+"эту страницу из условий отображения шаблона или выберите макет «Страница», "
+"вместо макета «По умолчанию»."
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-schemes-manager-control.php:121
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:477
+#, fuzzy
+msgid "header"
+msgstr "Шапка"
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-page-settings.php:496
+#, fuzzy
+msgid "footer"
+msgstr "Подвал"
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-schemes-manager-control.php:120
+msgid "Use The7 presets"
+msgstr "Предустановки The7"
+
+#: inc/mods/compatibility/elementor/class-the7-elementor-schemes-manager-control.php:124
 msgid ""
 "Checking this box will replace Elementor's Default Colors and Default Fonts "
 "and force Elementor to use presets from The7 theme options."
 msgstr ""
+"Проверка этого блока заменит цвета и шрифты Elementor, установленные по "
+"умолчанию и заставит Elementor использовать предустановки из опций The7."
 
-#: inc/mods/compatibility/elementor/class-the7-elementor-widgets.php:81
+#: inc/mods/compatibility/elementor/class-the7-elementor-widgets.php:132
 msgid "The7 elements"
 msgstr "The7 elements"
 
 #: inc/mods/compatibility/elementor/elementor-functions.php:25
 msgid "Archive (current query)"
+msgstr "Архив (текущий запрос)"
+
+#: inc/mods/compatibility/elementor/elementor-functions.php:34
+msgid ""
+"The corresponding post type is disabled. Please make sure to 1) install The7 "
+"Elements plugin under The7 > Plugins and 2) enable desired post types under "
+"The7 > My The7, in the Settings section."
 msgstr ""
 
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:19
-#: inc/mods/compatibility/elementor/page-settings/footer.php:18
+#: inc/mods/compatibility/elementor/page-settings/footer.php:19
 msgid "Footer settings"
 msgstr "Настройки \"подвала\""
 
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:61
-#: inc/mods/compatibility/elementor/page-settings/footer.php:28
-#, fuzzy
+#: inc/mods/compatibility/elementor/page-settings/footer.php:61
 msgid "Footer"
 msgstr "Подвал"
 
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:65
-#: inc/mods/compatibility/elementor/page-settings/footer.php:32
+#: inc/mods/compatibility/elementor/page-settings/footer.php:65
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:249
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:15
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:15
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:15
@@ -1751,24 +1834,12 @@ msgstr "Подвал"
 msgid "Show"
 msgstr "Показать"
 
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:66
-#: inc/mods/compatibility/elementor/page-settings/footer.php:33
-#, fuzzy
+#: inc/mods/compatibility/elementor/page-settings/footer.php:66
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:250
 msgid "Hide"
 msgstr "Скрыть"
 
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:75
-#, fuzzy
-msgid "Footer source"
-msgstr "Стиль подвала"
-
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:80
-#, fuzzy
-msgid "Elementor"
-msgstr "ID элемента"
-
-#: inc/mods/compatibility/elementor/page-settings/footer-pro.php:92
-#: inc/mods/compatibility/elementor/page-settings/footer.php:42
+#: inc/mods/compatibility/elementor/page-settings/footer.php:75
 msgid "Footer widget area"
 msgstr "Область виджета подвала"
 
@@ -1800,30 +1871,30 @@ msgstr "Нижний отступ"
 msgid "Left padding"
 msgstr "Отступ слева"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:19
-msgid "Page header settings"
-msgstr "Настройки заголовка страницы"
-
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:61
-msgid "Page title"
-msgstr "Заголовок страницы"
-
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:65
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:17
 #, fuzzy
+msgid "none"
+msgstr "нет"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:29
+#, fuzzy
+msgid "Slider Revolution"
+msgstr "Slider Revolution"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:41
+#, fuzzy
+msgid "LayerSlider"
+msgstr "LayerSlider"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:46
 msgid "Show page title"
 msgstr "Показать заголовок страницы"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:66
-#, fuzzy
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:47
 msgid "Hide page title"
 msgstr "Скрыть заголовок страницы"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:67
-#, fuzzy
-msgid "Fancy title"
-msgstr "Красивый заголовок"
-
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:68
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:50
 #: inc/shortcodes/vc-bridges/the7-blog-scroller-old-bridge.php:180
 #: inc/shortcodes/vc-bridges/the7-blog-scroller-old-bridge.php:193
 #: inc/shortcodes/vc-bridges/the7-blog-scroller-old-bridge.php:212
@@ -1831,13 +1902,48 @@ msgstr "Красивый заголовок"
 msgid "Slideshow"
 msgstr "Слайдшоу"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:78
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:163
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:55
+msgid "Page header settings"
+msgstr "Настройки заголовка страницы"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:97
+msgid "Page title"
+msgstr "Заголовок страницы"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:107
+#, fuzzy
+msgid "Slideshow options"
+msgstr "Настройки слайдшоу"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:118
+#, fuzzy
+msgid "Slideshow type"
+msgstr "Режим слайд-шоу"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:131
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:144
+#, fuzzy
+msgid "Choose slider"
+msgstr "Выберите слайдер"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:157
+#, fuzzy
+msgid "Enable slideshow background and paddings"
+msgstr "Включите фон слайдшоу и отступы"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:171
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:266
+#, fuzzy
+msgid "Header options"
+msgstr "Положение шапки"
+
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:183
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:292
 msgid "Header style"
 msgstr "Стиль заголовка"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:82
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:167
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:187
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:296
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1277
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1331
 #: inc/shortcodes/vc-bridges/the7-default-button-bridge.php:160
@@ -1850,40 +1956,37 @@ msgstr "Стиль заголовка"
 msgid "Normal"
 msgstr "Нормальный"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:83
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:168
-#, fuzzy
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:188
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:297
 msgid "Transparent"
 msgstr "Прозрачная"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:94
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:191
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:198
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:307
 msgid "Color scheme"
 msgstr "Цветовая схема"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:98
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:195
-#, fuzzy
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:202
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:311
 msgid "From options"
-msgstr "Использовать из настроек темы"
+msgstr "Из опций"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:99
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:196
-#, fuzzy
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:203
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:312
 msgid "Light"
 msgstr "Светлый"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:123
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:220
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:227
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:336
 msgid "Top bar color"
 msgstr "Цвет верхней панели"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:148
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:245
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:252
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:361
 msgid "Transparent background color"
 msgstr "Прозрачный цвет фона"
 
-#: inc/mods/compatibility/elementor/page-settings/page-title.php:179
+#: inc/mods/compatibility/elementor/page-settings/page-title.php:278
 msgid "Show header below slideshow"
 msgstr "Показать шапку под слайдшоу"
 
@@ -1896,17 +1999,16 @@ msgid "Sidebar position"
 msgstr "Положение боковой панели"
 
 #: inc/mods/compatibility/elementor/page-settings/sidebar.php:64
-#, fuzzy
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:107
 msgid "Left"
 msgstr "Слева"
 
 #: inc/mods/compatibility/elementor/page-settings/sidebar.php:65
-#, fuzzy
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:115
 msgid "Right"
 msgstr "Справа"
 
 #: inc/mods/compatibility/elementor/page-settings/sidebar.php:66
-#, fuzzy
 msgid "Disabled"
 msgstr "Отключено"
 
@@ -1915,9 +2017,8 @@ msgid "Sidebar"
 msgstr "Боковая панель"
 
 #: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:24
-#, fuzzy
 msgid "The7 color"
-msgstr "Цвет текста"
+msgstr "Цвет The7"
 
 #: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:33
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:197
@@ -1927,38 +2028,311 @@ msgid "Color"
 msgstr "Цвет"
 
 #: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:56
-#, fuzzy
 msgid "Select..."
-msgstr "- Выбрать -"
+msgstr "Выбрать..."
 
 #: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:57
-#, fuzzy
 msgid "Headings"
 msgstr "Заголовки"
 
 #: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:58
-#, fuzzy
 msgid "Primary text"
-msgstr "Цвет основного текста"
+msgstr "Основной текст"
 
 #: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:59
-#, fuzzy
 msgid "Secondary text"
-msgstr "Цвет дополнительного текста"
+msgstr "Вторичный текст"
 
 #: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:60
 #: inc/theme-setup.php:99
 msgid "Accent"
 msgstr "Акцент"
 
-#: inc/mods/compatibility/elementor/schemes/class-the7-elementor-color-scheme.php:48
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:61
 #, fuzzy
+msgid "Button background normal"
+msgstr "Цвет фона кнопки"
+
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:62
+#, fuzzy
+msgid "Button background hover"
+msgstr "Цвет фона кнопки"
+
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:63
+#, fuzzy
+msgid "Button text normal"
+msgstr "Текст кнопки"
+
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:64
+#, fuzzy
+msgid "Button text hover"
+msgstr "Текст кнопки"
+
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:65
+#, fuzzy
+msgid "Button border normal"
+msgstr "Пользовательский цвет рамки"
+
+#: inc/mods/compatibility/elementor/pro/modules/dynamic-tags/the7/tags/the7-color.php:66
+#, fuzzy
+msgid "Button border hover"
+msgstr "Пользовательский цвет границы при наведении"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:44
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:105
+#: inc/mods/tgmpa/class-tgm-plugin-activation.php:2633
+#: inc/mods/tgmpa/class-the7-tgm-plugin-activation.php:2788
+msgid "Source"
+msgstr "Источник"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:47
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:171
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:71
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:788
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:211
+#, fuzzy
+msgid "Manual Selection"
+msgstr "Выбрать значок"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:48
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:764
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:187
+#, fuzzy
+msgid "Current Query"
+msgstr "Текущая версия базы данных:"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:62
+msgid "Include"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:73
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:187
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:80
+#, fuzzy
+msgid "Search & Select"
+msgstr "Стиль поиска"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:90
+msgid "Include By"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:94
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:109
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:172
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:208
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:789
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:794
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:212
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:217
+msgid "Term"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:95
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:132
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:173
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:231
+#, fuzzy
+msgid "Author"
+msgstr "Автор"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:110
+msgid ""
+"Terms are items in a taxonomy. The available taxonomies are: Categories, "
+"Tags, Formats and custom taxonomies."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:155
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:66
+msgid "Exclude"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:166
+msgid "Exclude By"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:170
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:70
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:787
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:210
+#, fuzzy
+msgid "Current Post"
+msgstr "Импортировать запись"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:253
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:97
+msgid "Avoid Duplicates"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:256
+msgid ""
+"Set to Yes to avoid duplicate posts from showing up. This only effects the "
+"frontend."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:268
+msgid "Offset"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:277
+msgid "Use this setting to skip over posts (e.g. '2' to skip over 2 posts)."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:283
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:345
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:776
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:199
+msgid "Date"
+msgstr "Дата"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:288
+msgid "Past Day"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:289
+msgid "Past Week"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:290
+#, fuzzy
+msgid "Past Month"
+msgstr "Мета-данные записи"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:291
+msgid "Past Quarter"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:292
+msgid "Past Year"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:293
+#, fuzzy
+msgid "Custom"
+msgstr "Произвольный"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:307
+#, fuzzy
+msgid "Before"
+msgstr "Перед"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:312
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:329
+#, fuzzy
+msgid "Choose"
+msgstr "Выбрать запись"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:320
+msgid ""
+"Setting a ‘Before’ date will show all the posts published until the chosen "
+"date (inclusive)."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:324
+#, fuzzy
+msgid "After"
+msgstr "После"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:337
+msgid ""
+"Setting an ‘After’ date will show all the posts published since the chosen "
+"date (inclusive)."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:341
+#, fuzzy
+msgid "Order By"
+msgstr "Сортировать по"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:346
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:777
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:200
+#: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:69
+#: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:105
+#: inc/shortcodes/vc-extensions.php:1065 inc/shortcodes/vc-extensions.php:1148
+#: inc/shortcodes/vc-extensions.php:1183
+#: inc/widgets/contact-info/contact-info.php:163
+#: inc/widgets/progress-bars/progress-bars.php:152
+msgid "Title"
+msgstr "Заголовок"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:347
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:782
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:205
+#, fuzzy
+msgid "Menu Order"
+msgstr "порядок меню"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:348
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:781
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:204
+#, fuzzy
+msgid "Random"
+msgstr "Случайный выбор"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:356
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:147
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:158
+#: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:75
+#: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1135
+#: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:1114
+#: inc/shortcodes/vc-bridges/the7-products-carousel-bridge.php:57
+#: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:57
+msgid "Order"
+msgstr "Сортировка"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:360
+msgid "ASC"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:361
+msgid "DESC"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:369
+#, fuzzy
+msgid "Posts Per Page"
+msgstr "Записей на странице"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:378
+msgid "Ignore Sticky Posts"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:384
+msgid "Sticky-posts ordering is visible on frontend only"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:388
+#, fuzzy
+msgid "Query ID"
+msgstr "Сортировать по ID"
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-group-contol-query.php:391
+msgid "Give your Query a custom unique id to allow server side filtering"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/query-contol/class-the7-query-control-module.php:100
+msgid ""
+"Set to Yes to avoid duplicate posts from showing up on the page. This only "
+"affects the frontend."
+msgstr ""
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:160
+#, fuzzy
+msgid "Default"
+msgstr "По умолчанию"
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:161
+#, fuzzy
+msgid "None"
+msgstr "Нет"
+
+#: inc/mods/compatibility/elementor/schemes/class-the7-elementor-color-scheme.php:48
 msgid "The7 palette"
-msgstr "Заголовок архива The7"
+msgstr "Палитра The7"
 
 #: inc/mods/compatibility/elementor/schemes/class-the7-elementor-color-scheme.php:68
 msgid "Elementor uses The7 colors"
-msgstr ""
+msgstr "Elementor использует цвета The7"
 
 #: inc/mods/compatibility/elementor/schemes/class-the7-elementor-color-scheme.php:69
 #: inc/mods/compatibility/elementor/schemes/class-the7-elementor-typography-scheme.php:66
@@ -1966,15 +2340,75 @@ msgid ""
 "You can disable it from the <a href=\"%s\" target=\"_blank\">Elementor "
 "settings page</a>."
 msgstr ""
+"Вы можете отключить это на <a href=\"%s\" target=\"_blank\">странице "
+"настроек Elementor.</a>"
 
 #: inc/mods/compatibility/elementor/schemes/class-the7-elementor-color-scheme.php:84
-#, fuzzy
 msgid "The7 theme options"
-msgstr "Использовать из настроек темы"
+msgstr "Настройки темы The7"
 
 #: inc/mods/compatibility/elementor/schemes/class-the7-elementor-typography-scheme.php:65
 msgid "Elementor uses The7 fonts"
+msgstr "Elementor использует шрифты The7"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:24
+#, fuzzy
+msgid "The7 Breadcrumbs"
+msgstr "Хлебные крошки"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:44
+#: inc/shortcodes/js_composer_bridge.php:145
+#: inc/shortcodes/js_composer_bridge.php:189
+#: inc/shortcodes/js_composer_bridge.php:205
+#: inc/shortcodes/js_composer_bridge.php:377
+#: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:125
+#: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:82
+#: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:109
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:69
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:81
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:84
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:96
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:116
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:128
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:149
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:161
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:174
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:186
+#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:199
+#: inc/shortcodes/vc-bridges/the7-call-to-action-bridge.php:38
+#: inc/shortcodes/vc-bridges/the7-teaser-bridge.php:249
+msgid "Style"
+msgstr "Стиль"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:51
+msgid "Separator Between"
 msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:62
+#, fuzzy
+msgid "Separator Color"
+msgstr "Цвет текста"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:73
+#, fuzzy
+msgid "Text Color"
+msgstr "Цвет текста"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:84
+#, fuzzy
+msgid "Link Color"
+msgstr "Цвет ссылок"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:103
+#: inc/shortcodes/vc-bridges/the7-breadcrumbs-bridge.php:105
+#: inc/shortcodes/vc-bridges/the7-social-icons-bridge.php:20
+msgid "Alignment"
+msgstr "Выравнивание"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-breadcrumbs-widget.php:111
+#, fuzzy
+msgid "Center"
+msgstr "По центру"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:40
 msgid "The7 Carousel"
@@ -1982,6 +2416,7 @@ msgstr "Карусель The7"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:90
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:97
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:112
 #: inc/shortcodes/vc-bridges/the7-banner-bridge.php:56
 #: inc/shortcodes/vc-bridges/the7-call-to-action-bridge.php:17
 #: inc/shortcodes/vc-bridges/the7-fancy-quote-bridge.php:17
@@ -2025,16 +2460,6 @@ msgstr "Выбрать Условия"
 msgid "Ordering"
 msgstr "Сортировка"
 
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:147
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:158
-#: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:75
-#: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1135
-#: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:1114
-#: inc/shortcodes/vc-bridges/the7-products-carousel-bridge.php:57
-#: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:57
-msgid "Order"
-msgstr "Сортировка"
-
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:160
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:174
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:86
@@ -2053,6 +2478,10 @@ msgstr "Сортировать по"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1595
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1624
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1653
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:308
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:332
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:355
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:378
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:101
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:937
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:965
@@ -2070,11 +2499,14 @@ msgstr "Общее количество записей"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:179
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1578
-#, fuzzy
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:118
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:321
 msgid ""
 "Leave empty to use value from the WP Reading settings. Set \"-1\" to show "
 "all posts."
-msgstr "Оставить пустым для использования значения из настроек темы."
+msgstr ""
+"Оставьте пустым, чтобы использовать значение из настроек WP Reading. "
+"Установите «-1», чтобы показать все сообщения."
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:191
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1682
@@ -2108,6 +2540,8 @@ msgstr "Настройка макета"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:214
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:237
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:88
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:73
 #: inc/shortcodes/vc-bridges/the7-blog-mini-bridge.php:67
 #: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:14
 msgid "Layout"
@@ -2312,6 +2746,7 @@ msgstr "Цвет фона при при наведении"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:608
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:633
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:126
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:296
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:281
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:18
@@ -2351,6 +2786,8 @@ msgstr "Колонок на мобильном телефоне"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:671
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:740
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:142
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:153
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:333
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:91
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:161
@@ -2358,10 +2795,12 @@ msgid "Gap between columns"
 msgstr "Промежуток между колонками"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:691
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:159
 msgid "Stage padding"
 msgstr "Отступы между элементами каскада"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:711
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:176
 msgid "Adaptive height"
 msgstr "Адаптивная высота"
 
@@ -2767,6 +3206,12 @@ msgstr "Цвет иконки"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1374
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1447
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1479
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:356
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:377
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:399
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:420
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:441
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:463
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:873
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:923
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:955
@@ -2891,6 +3336,7 @@ msgid "Enable icon hover"
 msgstr "Включить наведение иконки"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1477
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:190
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:967
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:978
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:989
@@ -3056,6 +3502,7 @@ msgid "Arrows"
 msgstr "Стрелки"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1485
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:195
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:968
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:153
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:458
@@ -3064,6 +3511,7 @@ msgid "Show arrows"
 msgstr "Показать стрелки"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1495
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:202
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:979
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:164
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:469
@@ -3072,14 +3520,17 @@ msgid "Arrow Icon"
 msgstr "Иконка стрелок"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1507
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:211
 msgid "Choose next arrow icon"
 msgstr "Выбрать иконку для стрелки «Следующий»"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1523
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:224
 msgid "Choose previous arrow icon"
 msgstr "Выбрать иконку для стрелки «Предыдущий»"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1539
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:237
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1012
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:197
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:502
@@ -3088,6 +3539,7 @@ msgid "Arrow icon size"
 msgstr "Размер иконки стрелки"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1562
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:257
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1025
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:210
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:515
@@ -3096,6 +3548,7 @@ msgid "Arrow Background"
 msgstr "Фон стрелки"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1620
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:306
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1062
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:247
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:552
@@ -3104,6 +3557,7 @@ msgid "Arrow border radius"
 msgstr "Радиус скругления границы стрелки"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1643
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:326
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1074
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:259
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:564
@@ -3112,6 +3566,7 @@ msgid "Arrow border width"
 msgstr "Ширина границы стрелки"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1666
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:346
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1086
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:271
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:576
@@ -3120,6 +3575,7 @@ msgid "Color Setting"
 msgstr "Настройка цвета"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1678
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:355
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1097
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:282
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:587
@@ -3128,6 +3584,7 @@ msgid "Arrow icon color"
 msgstr "Цвет иконки стрелки"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1692
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:366
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1109
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:294
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:599
@@ -3136,6 +3593,7 @@ msgid "Show arrow border color"
 msgstr "Показать цвет границы стрелки"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1705
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:376
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1124
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:309
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:614
@@ -3144,6 +3602,7 @@ msgid "Arrow border color"
 msgstr "Цвет границы стрелки"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1720
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:388
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1136
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:321
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:626
@@ -3152,6 +3611,7 @@ msgid "Show arrow background"
 msgstr "Показать фон стрелки"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1733
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:398
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1151
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:336
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:641
@@ -3160,6 +3620,7 @@ msgid "Arrow background color"
 msgstr "Цвет фона стрелки"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1748
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:410
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1163
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:348
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:653
@@ -3168,6 +3629,7 @@ msgid "Hover Color Setting"
 msgstr "Настройка цвета при наведения"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1760
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:419
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1174
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:359
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:664
@@ -3176,6 +3638,7 @@ msgid "Arrow icon color hover"
 msgstr "Цвет иконки стрелки при наведении"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1774
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:430
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1186
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:371
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:677
@@ -3184,10 +3647,12 @@ msgid "Show arrow border color hover"
 msgstr "Показать цвет границы стрелки при наведении"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1787
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:440
 msgid "Arrow border color hover"
 msgstr "Цвет границы стрелки при наведении"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1802
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:452
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1213
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:398
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:704
@@ -3196,6 +3661,7 @@ msgid "Show arrow background hover"
 msgstr "Показать фон стрелки при наведении"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1815
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:462
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1228
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:413
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:719
@@ -3204,6 +3670,7 @@ msgid "Arrow background hover color"
 msgstr "Цвет фона стрелки при наведении"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1830
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:474
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1241
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:426
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:732
@@ -3213,6 +3680,8 @@ msgstr "Положение правой стрелки"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1842
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1954
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:483
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:577
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1252
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1332
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:437
@@ -3227,6 +3696,8 @@ msgstr "Отступы иконки"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1862
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1974
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2361
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:500
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:594
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1264
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1344
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1566
@@ -3245,6 +3716,8 @@ msgstr "Вертикальная позиция"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1879
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1991
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2378
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:514
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:608
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1280
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1360
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1582
@@ -3263,6 +3736,8 @@ msgstr "Горизонтальная позиция"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1896
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2008
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2395
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:528
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:622
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1296
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1376
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1598
@@ -3281,6 +3756,8 @@ msgstr "Вертикальный отступ"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1919
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2031
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2418
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:548
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:642
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1308
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1388
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1610
@@ -3297,6 +3774,7 @@ msgid "Horizontal offset"
 msgstr "Горизонтальный отступ"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:1942
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:568
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1321
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:506
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:812
@@ -3305,6 +3783,7 @@ msgid "Left Arrow Position"
 msgstr "Положение левой стрелки"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2054
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:662
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1401
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:586
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:892
@@ -3313,19 +3792,23 @@ msgid "Arrows responsiveness"
 msgstr "Адаптивность стрелок"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2066
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:671
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:903
 msgid "Responsive behaviour"
 msgstr "Поведение адаптивности"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2083
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:685
 msgid "Hide arrows if browser width is less then"
 msgstr "Скрыть стрелки, если ширина браузера меньше чем"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2096
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:695
 msgid "Reposition arrows if browser width is less then"
 msgstr "Переместить стрелки, если ширина браузера меньше чем"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2109
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:705
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1446
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:631
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:937
@@ -3334,6 +3817,7 @@ msgid "Left arrow horizontal offset"
 msgstr "Горизонтальное смещение левой стрелки"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2133
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:726
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:1455
 #: inc/shortcodes/vc-bridges/the7-carousel-bridge.php:640
 #: inc/shortcodes/vc-bridges/the7-media-gallery-carousel-bridge.php:946
@@ -3507,8 +3991,8 @@ msgstr "Цвет маркеров при наведении"
 msgid "Bullets Position"
 msgstr "Положение маркеров"
 
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2480
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2007
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-carousel-widget.php:2486
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:2013
 msgid "Details link"
 msgstr "Ссылка подробнее"
 
@@ -3516,13 +4000,8 @@ msgstr "Ссылка подробнее"
 msgid "The7 Masonry & Grid"
 msgstr "Кирпичная кладка и сетка The7"
 
-#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:105
-#: inc/mods/tgmpa/class-tgm-plugin-activation.php:2633
-#: inc/mods/tgmpa/class-the7-tgm-plugin-activation.php:2788
-msgid "Source"
-msgstr "Источник"
-
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:204
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:78
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:82
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:35
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:87
@@ -3537,6 +4016,7 @@ msgid "Loading effect"
 msgstr "Эффект загрузки"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:642
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:99
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:287
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:46
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:115
@@ -3544,6 +4024,7 @@ msgid "Responsiveness mode"
 msgstr "Адаптивность"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:703
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:121
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:309
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:68
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:137
@@ -3551,6 +4032,7 @@ msgid "Column minimum width"
 msgstr "Минимальная ширина колонки"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:726
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:142
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:322
 #: inc/shortcodes/vc-bridges/the7-blog-posts-old-bridge.php:256
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:80
@@ -3559,6 +4041,7 @@ msgid "Desired columns number"
 msgstr "Желаемое количество колонок"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:741
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:154
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:338
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:96
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:166
@@ -3581,6 +4064,7 @@ msgstr ""
 "Широкую/нормальную ширину записи можно выбрать в настройках одиночной записи."
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1534
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:286
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:914
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:892
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:441
@@ -3600,6 +4084,7 @@ msgid "Pagination"
 msgstr "Постраничная навигация"
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1542
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:291
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:921
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:899
 #: inc/shortcodes/vc-bridges/the7-media-gallery-masonry-bridge.php:448
@@ -3611,6 +4096,10 @@ msgstr "Режим постраничной навигации"
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1596
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1625
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1654
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:309
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:333
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:356
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:379
 #: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:106
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:946
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:974
@@ -3632,6 +4121,10 @@ msgstr "Оставить пустым для показа всех записе�
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1609
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1638
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1667
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:320
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:343
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:366
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:389
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:951
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:978
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1005
@@ -3650,6 +4143,9 @@ msgstr "Количество публикаций для отображения 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1610
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1639
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1668
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:344
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:367
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:390
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:960
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:987
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1014
@@ -3665,11 +4161,11 @@ msgstr "Количество публикаций для отображения 
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:266
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:317
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:354
-#, fuzzy
 msgid "Leave empty to use value from the WP Reading settings."
-msgstr "Оставить пустым для использования значения из настроек темы."
+msgstr "Оставьте пустым, чтобы использовать значение из настроек WP Reading."
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1699
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:400
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1057
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1086
 #: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:1036
@@ -3697,6 +4193,7 @@ msgstr "Промежуток перед постраничной навигац�
 
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1725
 #: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-widget.php:1833
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:259
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1081
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1110
 #: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:1124
@@ -3786,20 +4283,121 @@ msgstr "Цвет акцента"
 msgid "Leave empty to use accent color."
 msgstr "Оставить пустым для использования цвета акцента."
 
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:618
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:39
+#, fuzzy
+msgid "The7 Product Carousel"
+msgstr "Карусель товаров"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:96
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:88
+#: inc/shortcodes/vc-bridges/the7-products-carousel-bridge.php:96
+#: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:97
+msgid "Text & button position:"
+msgstr "Положение текста и кнопки:"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:117
+#, fuzzy
+msgid "Total number of products"
+msgstr "Общее количество товаров "
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:134
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:111
+msgid "Columns"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:752
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:175
+msgid "Query"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:765
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:188
+#, fuzzy
+msgid "Latest Products"
+msgstr "Похожие товары"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:766
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:189
+msgid "Sale"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:767
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:190
+#, fuzzy
+msgid "Top rated products"
+msgstr "Похожие товары"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:768
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:191
+#, fuzzy
+msgid "Best selling"
+msgstr "Установка"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:769
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:192
+#, fuzzy
+msgid "Featured"
+msgstr "Избранное изображение"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:778
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:201
+#: woocommerce/cart/cart.php:32 woocommerce/cart/cart.php:98
+msgid "Price"
+msgstr "Цена"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:779
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:202
+msgid "Popularity"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:780
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:203
+msgid "Rating"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:40
+#, fuzzy
+msgid "The7 Product Masonry & Grid"
+msgstr "Кирпичная кладка и сетка товаров"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:239
+#, fuzzy
+msgid "Filter bar"
+msgstr "Фильтр иконок"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:247
+#, fuzzy
+msgid "Categories filter"
+msgstr "Показать фильтр категорий"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:258
+#, fuzzy
+msgid "Gap"
+msgstr "Отступ"
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:424
+msgid "Spacing"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:425
+#, fuzzy
+msgid "Leave empty to use default spacing"
+msgstr "Оставить пустым для использования промежутка по умолчанию"
+
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:630
 msgid "Product details"
 msgstr "Подробнее о товаре"
 
 # @ the7mk2
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:751
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:763
 msgid "View cart"
 msgstr "В корзину"
 
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:1050
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:1062
 msgid "Grid view"
 msgstr "Сетка"
 
-#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:1053
+#: inc/mods/compatibility/woocommerce/front/mod-wc-template-functions.php:1065
 msgid "List view"
 msgstr "Список"
 
@@ -5019,29 +5617,6 @@ msgstr "от Dream-Theme"
 msgid "Title size"
 msgstr "Размер заголовка"
 
-#: inc/shortcodes/js_composer_bridge.php:145
-#: inc/shortcodes/js_composer_bridge.php:189
-#: inc/shortcodes/js_composer_bridge.php:205
-#: inc/shortcodes/js_composer_bridge.php:377
-#: inc/shortcodes/vc-bridges/the7-blog-carousel-bridge.php:125
-#: inc/shortcodes/vc-bridges/the7-blog-list-bridge.php:82
-#: inc/shortcodes/vc-bridges/the7-blog-masonry-bridge.php:109
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:69
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:81
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:84
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:96
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:116
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:128
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:149
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:161
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:174
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:186
-#: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:199
-#: inc/shortcodes/vc-bridges/the7-call-to-action-bridge.php:38
-#: inc/shortcodes/vc-bridges/the7-teaser-bridge.php:249
-msgid "Style"
-msgstr "Стиль"
-
 #: inc/shortcodes/js_composer_bridge.php:161
 msgid "Tour"
 msgstr "Тур"
@@ -6163,11 +6738,6 @@ msgstr "Граница"
 msgid "Position"
 msgstr "Положение"
 
-#: inc/shortcodes/vc-bridges/the7-breadcrumbs-bridge.php:105
-#: inc/shortcodes/vc-bridges/the7-social-icons-bridge.php:20
-msgid "Alignment"
-msgstr "Выравнивание"
-
 #: inc/shortcodes/vc-bridges/the7-button-old-bridge.php:7
 msgid "Button (old)"
 msgstr "Кнопка (старая)"
@@ -6767,11 +7337,6 @@ msgstr ""
 msgid "Total number of products "
 msgstr "Общее количество товаров "
 
-#: inc/shortcodes/vc-bridges/the7-products-carousel-bridge.php:96
-#: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:97
-msgid "Text & button position:"
-msgstr "Положение текста и кнопки:"
-
 #: inc/shortcodes/vc-bridges/the7-products-carousel-bridge.php:247
 #: inc/shortcodes/vc-bridges/the7-products-masonry-bridge.php:410
 msgid "Product titles & price"
@@ -6921,15 +7486,6 @@ msgstr "Ссылка "
 #: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:65
 msgid "Apply link to:"
 msgstr "Применить ссылку к:"
-
-#: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:69
-#: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:105
-#: inc/shortcodes/vc-extensions.php:1065 inc/shortcodes/vc-extensions.php:1148
-#: inc/shortcodes/vc-extensions.php:1183
-#: inc/widgets/contact-info/contact-info.php:163
-#: inc/widgets/progress-bars/progress-bars.php:152
-msgid "Title"
-msgstr "Заголовок"
 
 #: inc/shortcodes/vc-bridges/the7-text-with-icon-bridge.php:71
 msgid "Title + button"
@@ -7366,13 +7922,8 @@ msgstr "Вперед!"
 #: template-parts/header/searchform.php:50
 #: template-parts/header/searchform.php:57
 #: template-parts/header/searchform.php:64
-#, fuzzy
 msgid "Search form"
-msgstr "Иконка поиска"
-
-#: woocommerce/cart/cart.php:32 woocommerce/cart/cart.php:98
-msgid "Price"
-msgstr "Цена"
+msgstr "Форма поиска"
 
 #: woocommerce/cart/cart.php:33 woocommerce/cart/cart.php:104
 #: woocommerce/global/quantity-input.php:28
@@ -8037,18 +8588,18 @@ msgctxt "admin"
 msgid "Install UA default icons"
 msgstr "Установить стандартные иконки UA"
 
-#: inc/class-the7-icon-manager.php:217
+#: inc/class-the7-icon-manager.php:218
 msgctxt "admin"
 msgid "Default Icons"
 msgstr "Иконки по умолчанию"
 
-#: inc/class-the7-icon-manager.php:223
+#: inc/class-the7-icon-manager.php:224
 msgctxt "admin"
 msgid "Delete Icon Set"
 msgstr "Удалить набор иконок"
 
-#: inc/class-the7-icon-manager.php:255 inc/class-the7-icon-manager.php:306
-#: inc/class-the7-icon-manager.php:357 inc/class-the7-icon-manager.php:383
+#: inc/class-the7-icon-manager.php:256 inc/class-the7-icon-manager.php:307
+#: inc/class-the7-icon-manager.php:358 inc/class-the7-icon-manager.php:384
 msgctxt "admin"
 msgid ""
 "Using this feature is reserved for Super Admins. You unfortunately don't "
@@ -8057,22 +8608,22 @@ msgstr ""
 "Использовать эти возможности может только Супер Администратор. К сожалению, "
 "у вас нет необходимых прав."
 
-#: inc/class-the7-icon-manager.php:266
+#: inc/class-the7-icon-manager.php:267
 msgctxt "admin"
 msgid "Unable to get attachment id."
 msgstr "Невозможно получить идентификатор вложения."
 
-#: inc/class-the7-icon-manager.php:282
+#: inc/class-the7-icon-manager.php:283
 msgctxt "admin"
 msgid "Unable to unzip icons archive."
 msgstr "Невозможно распаковать архив иконок."
 
-#: inc/class-the7-icon-manager.php:331
+#: inc/class-the7-icon-manager.php:332
 msgctxt "admin"
 msgid "Was not able to remove Font."
 msgstr "Не удалось удалить шрифт."
 
-#: inc/class-the7-icon-manager.php:396
+#: inc/class-the7-icon-manager.php:397
 msgctxt "admin"
 msgid ""
 "Seems that Ultimate VC Addons plugin is inactive. Please, activate it and "
@@ -8510,7 +9061,7 @@ msgctxt "backend"
 msgid "Advanced"
 msgstr "Расширенные"
 
-#: inc/extensions/core-functions.php:1057
+#: inc/extensions/core-functions.php:1058
 msgctxt "backend"
 msgid "Edit post type"
 msgstr "Редактировать тип записи"
@@ -9073,7 +9624,7 @@ msgstr "Радиус скругления границы"
 #: inc/admin/theme-options/options-header/submenu-tab.php:271
 #: inc/admin/theme-options/options-page-titles.php:61
 #: inc/admin/theme-options/options-page-titles.php:504
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:525
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:547
 msgctxt "theme-options"
 msgid "Padding"
 msgstr "Отступ"
@@ -9184,7 +9735,7 @@ msgstr "Шапка под слайдшоу"
 #: inc/admin/theme-options/options.php:92 inc/admin/theme-options-parts.php:520
 #: inc/deprecated-functions.php:430
 #: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:405
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:433
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:455
 #: inc/mods/compatibility/woocommerce/admin/wc-cart-micro-widget-options.php:38
 #: inc/mods/options-wizard/options.php:597
 msgctxt "theme-options"
@@ -9278,7 +9829,7 @@ msgstr "Включено"
 #: inc/admin/theme-options-parts.php:808 inc/admin/theme-options-parts.php:885
 #: inc/admin/theme-options-parts.php:908 inc/deprecated-functions.php:431
 #: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:406
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:434
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:456
 #: inc/mods/compatibility/woocommerce/admin/wc-cart-micro-widget-options.php:37
 #: inc/mods/options-wizard/options.php:601
 msgctxt "theme-options"
@@ -9398,12 +9949,12 @@ msgctxt "theme-options"
 msgid "Custom CSS"
 msgstr "Пользовательский CSS"
 
-#: inc/admin/theme-options/options-advanced.php:110
+#: inc/admin/theme-options/options-advanced.php:111
 msgctxt "theme-options"
 msgid "Custom JavaScript"
 msgstr "Пользовательский JavaScript"
 
-#: inc/admin/theme-options/options-advanced.php:116
+#: inc/admin/theme-options/options-advanced.php:117
 msgctxt "theme-options"
 msgid "Tracking code (e.g. Google analytics) or arbitrary JavaScript"
 msgstr ""
@@ -9758,7 +10309,7 @@ msgstr "Прозрачная мобильная шапка"
 #: inc/admin/theme-options/options-branding.php:291
 msgctxt "theme-options"
 msgid "Transparent header logo"
-msgstr "Прозрачный логотип шапки"
+msgstr "Логотип прозрачной шапки"
 
 #: inc/admin/theme-options/options-branding.php:322
 #: inc/admin/theme-options/options-footer.php:268
@@ -10110,7 +10661,7 @@ msgstr "Цвет поля для ввода"
 #: inc/admin/theme-options/options-sidebar.php:134
 #: inc/admin/theme-options/options-stripes.php:94
 #: inc/mods/compatibility/edd/options-inject-in-header.php:54
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:477
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:499
 #: inc/mods/compatibility/woocommerce/admin/wc-cart-micro-widget-options.php:97
 #: inc/mods/options-wizard/options.php:40
 #: inc/mods/options-wizard/options.php:512
@@ -10617,7 +11168,7 @@ msgstr "Отступы"
 #: inc/admin/theme-options/options.php:150
 #: inc/admin/theme-options-parts.php:232
 #: inc/extensions/options-framework/fields/class-the7-option-field-spacing.php:21
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:531
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:553
 msgctxt "theme-options"
 msgid "Top"
 msgstr "Сверху"
@@ -10634,7 +11185,7 @@ msgstr "Сверху"
 #: inc/admin/theme-options/options.php:151
 #: inc/admin/theme-options-parts.php:240
 #: inc/extensions/options-framework/fields/class-the7-option-field-spacing.php:23
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:532
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:554
 msgctxt "theme-options"
 msgid "Bottom"
 msgstr "Снизу"
@@ -10781,7 +11332,7 @@ msgstr "Цвет шрифта нижней панели"
 #: inc/admin/theme-options/options-page-titles.php:429
 #: inc/admin/theme-options/options-page-titles.php:490
 #: inc/admin/theme-options-parts.php:36 inc/admin/theme-options-parts.php:557
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:509
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:531
 #: inc/mods/options-wizard/options.php:569
 #: inc/mods/options-wizard/options.php:804
 msgctxt "theme-options"
@@ -11179,10 +11730,9 @@ msgstr "Внешний вид меню гамбургера"
 #: inc/admin/theme-options/options-header/header-tab.php:690
 #: inc/admin/theme-options/options-header/mobile-header-tab.php:206
 #: inc/admin/theme-options/options-header/mobile-menu-tab.php:236
-#, fuzzy
 msgctxt "theme-options"
 msgid "Choose icon"
-msgstr "Выберите иконку"
+msgstr "Выбрать иконку"
 
 #: inc/admin/theme-options/options-header/header-tab.php:437
 #: inc/admin/theme-options/options-header/header-tab.php:448
@@ -11202,19 +11752,17 @@ msgstr "Подпись"
 #: inc/admin/theme-options/options-header/header-tab.php:742
 #: inc/admin/theme-options/options-header/mobile-header-tab.php:282
 #: inc/admin/theme-options/options-header/mobile-menu-tab.php:291
-#, fuzzy
 msgctxt "theme-options"
 msgid "Before"
-msgstr "Перед элементами"
+msgstr "Перед"
 
 #: inc/admin/theme-options/options-header/header-tab.php:443
 #: inc/admin/theme-options/options-header/header-tab.php:743
 #: inc/admin/theme-options/options-header/mobile-header-tab.php:283
 #: inc/admin/theme-options/options-header/mobile-menu-tab.php:292
-#, fuzzy
 msgctxt "theme-options"
 msgid "After"
-msgstr "После элементов"
+msgstr "После"
 
 #: inc/admin/theme-options/options-header/header-tab.php:450
 #: inc/admin/theme-options/options-header/menu-tab.php:9
@@ -11229,19 +11777,17 @@ msgstr "Меню"
 #: inc/admin/theme-options/options-header/header-tab.php:776
 #: inc/admin/theme-options/options-header/mobile-header-tab.php:316
 #: inc/admin/theme-options/options-header/mobile-menu-tab.php:325
-#, fuzzy
 msgctxt "theme-options"
 msgid "Caption gap"
-msgstr "Подпись"
+msgstr "Зазор подписи"
 
 #: inc/admin/theme-options/options-header/header-tab.php:509
 #: inc/admin/theme-options/options-header/header-tab.php:812
 #: inc/admin/theme-options/options-header/mobile-header-tab.php:352
 #: inc/admin/theme-options/options-header/mobile-menu-tab.php:361
-#, fuzzy
 msgctxt "theme-options"
 msgid "Margins"
-msgstr "Поле"
+msgstr "Поля"
 
 #: inc/admin/theme-options/options-header/header-tab.php:520
 #: inc/admin/theme-options/options-header/header-tab.php:595
@@ -11344,10 +11890,9 @@ msgstr "Кнопка «Закрыть меню»"
 
 #: inc/admin/theme-options/options-header/header-tab.php:677
 #: inc/admin/theme-options/options-header/mobile-menu-tab.php:223
-#, fuzzy
 msgctxt "theme-options"
 msgid "Choose position"
-msgstr "Выбрать запись"
+msgstr "Выбрать положение"
 
 #: inc/admin/theme-options/options-header/header-tab.php:682
 #: inc/admin/theme-options/options-header/layout-tab.php:134
@@ -11367,7 +11912,7 @@ msgstr "По центру"
 #: inc/admin/theme-options/options-header/mobile-menu-tab.php:230
 msgctxt "theme-options"
 msgid "Outside"
-msgstr ""
+msgstr "Снаружи"
 
 #: inc/admin/theme-options/options-header/header-tab.php:751
 #: inc/admin/theme-options/options-header/layout-tab.php:639
@@ -11746,10 +12291,9 @@ msgid "Full height & full width links"
 msgstr "Полная высота и ширина ссылок"
 
 #: inc/admin/theme-options/options-header/menu-tab.php:290
-#, fuzzy
 msgctxt "theme-options"
 msgid "Divider length"
-msgstr "Высота разделителя (ширина)"
+msgstr "Длина разделителя"
 
 #: inc/admin/theme-options/options-header/menu-tab.php:296
 msgctxt "theme-options"
@@ -11764,13 +12308,13 @@ msgstr "Пользовательская (в px)"
 #: inc/admin/theme-options/options-header/menu-tab.php:308
 msgctxt "theme-options"
 msgid "Length"
-msgstr ""
+msgstr "Длина"
 
 #: inc/admin/theme-options/options-header/menu-tab.php:320
 #: inc/admin/theme-options/options-header/mobile-menu-tab.php:127
 msgctxt "theme-options"
 msgid "Thickness"
-msgstr ""
+msgstr "Толщина"
 
 #: inc/admin/theme-options/options-header/menu-tab.php:328
 msgctxt "theme-options"
@@ -12526,7 +13070,6 @@ msgid "\"Open menu\" button"
 msgstr "Кнопка «Открыть меню»"
 
 #: inc/admin/theme-options/options-header/mobile-menu-tab.php:9
-#, fuzzy
 msgctxt "theme-options"
 msgid "Mobile menu"
 msgstr "Мобильное меню"
@@ -12552,10 +13095,9 @@ msgid "Active & hover font color"
 msgstr "Цвет активного шрифта и при наведении"
 
 #: inc/admin/theme-options/options-header/mobile-menu-tab.php:105
-#, fuzzy
 msgctxt "theme-options"
 msgid "Menu dividers"
-msgstr "Показать разделители"
+msgstr "Разделители меню"
 
 #: inc/admin/theme-options/options-header/mobile-menu-tab.php:150
 msgctxt "theme-options"
@@ -12568,6 +13110,8 @@ msgid ""
 "There is an extra gap for the menu scrolling - you may want to set right "
 "padding smaller than the left one."
 msgstr ""
+"Существует дополнительный промежуток для меню прокрутки - вы можете "
+"установить правый отступ меньше, чем левый."
 
 #: inc/admin/theme-options/options-header/mobile-menu-tab.php:176
 msgctxt "theme-options"
@@ -12588,6 +13132,8 @@ msgstr "Наложение сайта при открытии мобильног
 msgctxt "theme-options"
 msgid "Please note there is an extra gap on the right for the menu scrolling."
 msgstr ""
+"Пожалуйста, обратите внимание, что есть дополнительный промежуток справа для "
+"прокрутки меню."
 
 #: inc/admin/theme-options/options-header/submenu-tab/mega-menu.php:11
 msgctxt "theme-options"
@@ -12848,7 +13394,7 @@ msgstr ""
 "Поле ниже содержит текущие настройки шаблона в зашифрованном виде.\n"
 "Вы можете скопировать и сохранить их в текстовом файле.\n"
 "Для восстановления скопируйте их с файла backup .txt, вставьте в поле ниже и "
-"нажмите кнопку \"Сохранить\"."
+"нажмите кнопку \"Сохранить настройки\"."
 
 #: inc/admin/theme-options/options-importexport.php:19
 #: inc/admin/theme-options/options-importexport.php:24
@@ -13185,7 +13731,7 @@ msgid "Content boxes background"
 msgstr "Фон блока содержимого"
 
 #: inc/admin/theme-options/options-stripes.php:101
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:493
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:515
 msgctxt "theme-options"
 msgid "Background opacity"
 msgstr "Прозрачность фона"
@@ -13861,6 +14407,7 @@ msgid "Show products counter"
 msgstr "Показать счетчик товаров"
 
 #: inc/mods/compatibility/edd/options-inject-in-header.php:88
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:422
 #: inc/mods/compatibility/woocommerce/admin/wc-cart-micro-widget-options.php:137
 msgctxt "theme-options"
 msgid "Never"
@@ -14112,44 +14659,61 @@ msgctxt "theme-options"
 msgid "'Add to cart' button in related products"
 msgstr "Кнопка «В корзину» в сопутствующих товарах"
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:411
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:412
+#, fuzzy
+msgctxt "theme-options"
+msgid "Show product title"
+msgstr "Показать счетчик товаров"
+
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:418
+#, fuzzy
+msgctxt "theme-options"
+msgid "Always"
+msgstr "Всегда"
+
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:426
+msgctxt "theme-options"
+msgid "If default page title is hidden"
+msgstr ""
+
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:433
 msgctxt "theme-options"
 msgid "Product image width"
 msgstr "Ширина изображения товара"
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:419
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:459
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:441
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:481
 msgctxt "theme-options"
 msgid "Switch to one column layout after"
 msgstr "Переключиться на макет в один столбец после"
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:428
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:450
 msgctxt "theme-options"
 msgid "Image zoom on hover"
 msgstr "Увеличение изображения при наведении"
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:439
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:461
 msgctxt "theme-options"
 msgid "Cart & Checkout"
 msgstr "Корзина и оформление заказа"
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:445
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:467
 msgctxt "theme-options"
 msgid "Cart settings"
 msgstr "Параметры корзины"
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:450
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:472
 msgctxt "theme-options"
 msgid "Side column width"
 msgstr "Ширина боковой колонки"
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:451
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:473
 msgctxt "theme-options"
 msgid "Use 100% to place side column below checkout content"
 msgstr ""
 "Использовать 100% для размещения боковой колонки под содержимым оформления"
 
-#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:469
+#: inc/mods/compatibility/woocommerce/admin/mod-wc-options.php:491
 msgctxt "theme-options"
 msgid "Checkout steps"
 msgstr "Шаги оформления покупки"
@@ -16385,6 +16949,42 @@ msgctxt "options import"
 msgid "Yes, do it!"
 msgstr "Да, сделайте это!"
 
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:162
+#, fuzzy
+msgctxt "Border Control"
+msgid "Solid"
+msgstr "Сплошной"
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:163
+#, fuzzy
+msgctxt "Border Control"
+msgid "Double"
+msgstr "Двойной"
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:164
+#, fuzzy
+msgctxt "Border Control"
+msgid "Dotted"
+msgstr "Точечный"
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:165
+#, fuzzy
+msgctxt "Border Control"
+msgid "Dashed"
+msgstr "Пунктирный"
+
+#: inc/mods/compatibility/elementor/pro/modules/woocommerce/class-the7-woocommerce-support.php:166
+msgctxt "Border Control"
+msgid "Groove"
+msgstr ""
+
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-carousel-widget.php:770
+#: inc/mods/compatibility/elementor/widgets/class-the7-elementor-elements-woocommerce-masonry-widget.php:193
+#, fuzzy
+msgctxt "Posts Query Control"
+msgid "Manual Selection"
+msgstr "Выбрать значок"
+
 #: inc/mods/tgmpa/class-tgm-plugin-activation.php:1206
 #: inc/mods/tgmpa/class-tgm-plugin-activation.php:3033
 #: inc/mods/tgmpa/class-the7-plugins-list-table.php:445
@@ -16464,12 +17064,12 @@ msgctxt "vc inline dummy"
 msgid "Media gallery masonry & grid"
 msgstr "Кирпичная кладка и сетка медиа-галереи"
 
-#: inc/shortcodes/includes/products-carousel/products-carousel.php:430
+#: inc/shortcodes/includes/products-carousel/products-carousel.php:436
 msgctxt "vc inline dummy"
 msgid "Products Carousel"
 msgstr "Карусель Товаров"
 
-#: inc/shortcodes/includes/products-masonry/products-masonry.php:510
+#: inc/shortcodes/includes/products-masonry/products-masonry.php:521
 msgctxt "vc inline dummy"
 msgid "Products Masonry & Grid"
 msgstr "Кирпичная кладка и сетка товаров"
@@ -16579,6 +17179,27 @@ msgctxt "Product quantity input tooltip"
 msgid "Qty"
 msgstr "Кол-во"
 
+#~ msgid "Footer source"
+#~ msgstr "Источник подвала"
+
+#~ msgid "Elementor"
+#~ msgstr "Elementor"
+
+#~ msgid "Fancy title"
+#~ msgstr "Красивый заголовок"
+
+#~ msgid "The7 bottom bar"
+#~ msgstr "Нижняя панель The7"
+
+#~ msgid "Display The7 bottom bar"
+#~ msgstr "Отображать нижнюю панель The7"
+
+#~ msgid "Hide Widgetized footer"
+#~ msgstr "Отображать виджеты в подвале"
+
+#~ msgid "Leave empty to use number from wp settings."
+#~ msgstr "Оставить пустым для использования количества из настроек WP."
+
 #~ msgctxt "theme-options"
 #~ msgid "Line position"
 #~ msgstr "Положение линии"
@@ -16627,14 +17248,1124 @@ msgstr "Кол-во"
 #~ msgid "Mobile menu position"
 #~ msgstr "Расположение мобильного меню"
 
-#~ msgid "The7 bottom bar"
-#~ msgstr "Нижняя панель The7"
+#~ msgid "Function is deprecated, use %s instead."
+#~ msgstr "Функция устарела, используйте вместо нее %s."
 
-#~ msgid "Display The7 bottom bar"
-#~ msgstr "Отображать нижнюю панель The7"
+#~ msgid "Function is deprecated, do not use."
+#~ msgstr "Функция устарела, не используйте её."
 
-#~ msgid "Hide Widgetized footer"
-#~ msgstr "Отображать виджеты в подвале"
+#~ msgid "Page"
+#~ msgstr "Страница"
 
-#~ msgid "Leave empty to use number from wp settings."
-#~ msgstr "Оставить пустым для использования количества из настроек WP."
+#~ msgctxt "theme-options"
+#~ msgid "Top bar background"
+#~ msgstr "Фон верхней панели"
+
+#~ msgid "The7 Elements Carousel"
+#~ msgstr "Карусель The7 Elements"
+
+#~ msgid "The7 Elements"
+#~ msgstr "The7 Elements"
+
+#~ msgid "Page Margins"
+#~ msgstr "Поля страницы"
+
+#~ msgid "Right margin"
+#~ msgstr "Правое поле"
+
+#~ msgid "Left margin"
+#~ msgstr "Левое поле"
+
+#~ msgctxt "theme-options"
+#~ msgid "Won't have any effect if responsiveness is disabled."
+#~ msgstr "Не будет иметь никакого эффекта, если адаптивность отключена."
+
+#~ msgctxt "theme-options"
+#~ msgid "Enable bottom bar responsive layout after"
+#~ msgstr "Включить адаптивный макет нижней панели после"
+
+#~ msgctxt "theme-options"
+#~ msgid "Enable custom menu responsive layout after"
+#~ msgstr "Включить произвольное меню адаптивного макета после"
+
+#~ msgctxt "theme-options"
+#~ msgid "Margin for pages, posts & templates"
+#~ msgstr "Поля для страниц, записей и шаблонов"
+
+#~ msgctxt "theme-options"
+#~ msgid "First header switch point (tablet)"
+#~ msgstr "Первая точка переключения шапки (планшет)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Second header switch point (phone)"
+#~ msgstr "Вторая точка переключения шапки (на смартфоне)"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Page Margins"
+#~ msgstr "Поля страницы"
+
+#~ msgid ""
+#~ "Please register this copy of theme to get access to premium plugins, pre-"
+#~ "made websites, 1-click updates and more."
+#~ msgstr ""
+#~ "Пожалуйста зарегистрируйте данную копию темы, чтобы получить доступ к "
+#~ "премиум-плагинам, готовым сайтам, обновлениям в 1 клик и другому."
+
+#~ msgid "If you don’t have a license yet, you can purchase it %1$shere%2$s."
+#~ msgstr "Если у вас еще нет лицензии купите ее %1$sздесь%2$s."
+
+#~ msgid "Theme was remotely de-registered."
+#~ msgstr "Регистрация темы была удалённо отменена."
+
+#~ msgid "<strong>Thank you for choosing The7!</strong>"
+#~ msgstr "<strong>Спасибо за выбор The7!</strong>"
+
+#~ msgid ""
+#~ "<strong>Please %1$sregister%2$s</strong> this copy of theme to get access "
+#~ "to premium plugins, pre-built websites, 1-click updates and more."
+#~ msgstr ""
+#~ "<strong>Пожалуйста %1$sзарегистрируйте%2$s</strong> эту копию темы для "
+#~ "получения премиум возможностей, предустановленных сайтов, обновлений в 1 "
+#~ "клик и др."
+
+#~ msgid ""
+#~ "Also be advised that according to %1$sThemeForest Standard Licenses%2$s "
+#~ "each site/project built with The7 requires a separate license, which can "
+#~ "be purchased %3$shere%4$s."
+#~ msgstr ""
+#~ "Учтите, что в соответствии со %1$sСтандартной Лицензией ThemeForest%2$s "
+#~ "каждый сайт, созданный на The7 требует отдельную лицензию, которую можно "
+#~ "купить %3$sздесь%4$s."
+
+#~ msgctxt "theme-options"
+#~ msgid "When screen width is less then.."
+#~ msgstr "Когда ширина экрана меньше чем.."
+
+#~ msgctxt "theme-options"
+#~ msgid "..make padding"
+#~ msgstr "..сделать отступ"
+
+#~ msgctxt "registration terms"
+#~ msgid "License"
+#~ msgstr "Лицензия"
+
+#~ msgctxt "registration terms"
+#~ msgid ""
+#~ "I give my consent to record my site address and purchase code in order to "
+#~ "ensure %s and copyright compliance. I understand that this information "
+#~ "will be stored as long as the purchase code remains valid."
+#~ msgstr ""
+#~ "Я даю свое согласие на запись адреса сайта и кода покупки для того, чтобы "
+#~ "обеспечить соблюдение %s и авторских прав. Я понимаю, что эта информация "
+#~ "будет храниться до тех пор, пока код покупки остается действительным."
+
+#~ msgid "Icons"
+#~ msgstr "Иконки"
+
+#~ msgid "Link to post page"
+#~ msgstr "Ссылка на страницу записи"
+
+#~ msgid "Enable image hovers"
+#~ msgstr "Включить изображение при наведении"
+
+#~ msgid "FontAwesome 4 compatibility"
+#~ msgstr "Совместимость с FontAwesome 4"
+
+#~ msgid "Google+"
+#~ msgstr "Google+"
+
+#~ msgid "Default Button"
+#~ msgstr "Кнопка по умолчанию"
+
+#~ msgid "Show custom background color"
+#~ msgstr "Показать пользовательский цвет фона"
+
+#~ msgid "Show custom background hover color"
+#~ msgstr "Показать пользовательский цвет фона при наведении"
+
+#~ msgid ""
+#~ "f.e. <code>&lt;i class=\"fa fa-arrow-circle-right\"&gt;&lt;/i&gt;</code> "
+#~ "<a href=\"%s\" target=\"_blank\">http://fontawesome.io/icons/</a>."
+#~ msgstr ""
+#~ "f.e. <code>&lt;i class=«fa fa-arrow-circle-right»&gt;&lt;/i&gt;</code> <a "
+#~ "href=«%s» target=«_blank»>http://fontawesome.io/icons/</a>."
+
+#~ msgid "Share on Google Plus"
+#~ msgstr "Поделиться в Google Plus"
+
+#~ msgid "Thank you! Your order has been received."
+#~ msgstr "Спасибо! Ваш заказ был получен."
+
+#~ msgctxt "admin"
+#~ msgid "No font icons uploaded. Upload some font icons to display here."
+#~ msgstr ""
+#~ "Нет загруженного шрифта иконок. Добавить набор шрифтов иконок для "
+#~ "отображения здесь. "
+
+#~ msgctxt "widget"
+#~ msgid "Enable rounded corners"
+#~ msgstr "Включить скругленные углы"
+
+#~ msgctxt "theme-options"
+#~ msgid "Headers color"
+#~ msgstr "Цвета заголовков"
+
+#, fuzzy
+#~ msgctxt "theme-options"
+#~ msgid "Headers"
+#~ msgstr "Шапка"
+
+#~ msgid "Enable scale animation on hover"
+#~ msgstr "Включить анимацию масштабирования при наведении"
+
+#~ msgid "Enable hover background color"
+#~ msgstr "Включить фоновый цвет изображения при наведении"
+
+#~ msgid "Testimonials"
+#~ msgstr "Отзывы"
+
+#~ msgid "Team"
+#~ msgstr "Команда"
+
+#~ msgid "Upgrade your version of WordPress for full media support."
+#~ msgstr "Обновите вашу версию WordPress для полной поддержки медиа элементов"
+
+#~ msgid "%s (Invalid)"
+#~ msgstr "%s (Не верно)"
+
+#~ msgid "%s (Pending)"
+#~ msgstr "%s (Ожидается)"
+
+#~ msgid "sub item"
+#~ msgstr "подпункт"
+
+#~ msgid "Move up"
+#~ msgstr "Переместить вверх"
+
+#~ msgid "Move down"
+#~ msgstr "Переместить вниз"
+
+#~ msgid "URL"
+#~ msgstr "URL"
+
+#~ msgid "Navigation Label"
+#~ msgstr "Навигация"
+
+#~ msgid "Title Attribute"
+#~ msgstr "Атрибут"
+
+#~ msgid "Open link in a new tab"
+#~ msgstr "Открывать в новом окне/вкладке"
+
+#~ msgid "CSS Classes (optional)"
+#~ msgstr "CSS классы (по желанию)"
+
+#~ msgid "Link Relationship (XFN)"
+#~ msgstr "Социальные взаимоотношения (XFN)"
+
+#~ msgid "Description"
+#~ msgstr "Описание"
+
+#~ msgid ""
+#~ "The description will be displayed in the menu if the current theme "
+#~ "supports it."
+#~ msgstr ""
+#~ "Описание будет отображаться в меню, если текущая тема его поддерживает."
+
+#~ msgid "Move"
+#~ msgstr "Пеереместить"
+
+#~ msgid "Up one"
+#~ msgstr "На уровень вверх"
+
+#~ msgid "Down one"
+#~ msgstr "На уровень вниз"
+
+#~ msgid "To the top"
+#~ msgstr "Наверх"
+
+#~ msgid "Original: %s"
+#~ msgstr "Оригинал: %s"
+
+#~ msgid "Cancel"
+#~ msgstr "Отмена"
+
+#~ msgctxt "comments title"
+#~ msgid "1 Comment"
+#~ msgid_plural "%1$s Comments"
+#~ msgstr[0] "(%1$s) комментарий"
+#~ msgstr[1] "(%1$s) комментария"
+#~ msgstr[2] "(%1$s) комментариев"
+
+#~ msgctxt "theme-options"
+#~ msgid "Font-size"
+#~ msgstr "Размер шрифта"
+
+#~ msgctxt "theme-options"
+#~ msgid "Line-height"
+#~ msgstr "Высота линии"
+
+#, fuzzy
+#~ msgctxt "theme-options"
+#~ msgid "Popup background"
+#~ msgstr "Показать фон"
+
+#, fuzzy
+#~ msgctxt "theme-options"
+#~ msgid "Text transformation "
+#~ msgstr "The7 Информация"
+
+#, fuzzy
+#~ msgctxt "theme-options"
+#~ msgid "Menu subtitles"
+#~ msgstr "Стиль меню"
+
+#~ msgctxt "theme-options"
+#~ msgid "no title"
+#~ msgstr "нет заголовка"
+
+#~ msgctxt "edit menu walker"
+#~ msgid "Icon :"
+#~ msgstr "Иконка :"
+
+#~ msgctxt "edit menu walker"
+#~ msgid "no"
+#~ msgstr "нет"
+
+#~ msgctxt "edit menu walker"
+#~ msgid "iconfont"
+#~ msgstr "шрифт иконки"
+
+#~ msgctxt "edit menu walker"
+#~ msgid "Iconfont code"
+#~ msgstr "Код шрифта иконки"
+
+#~ msgctxt "edit menu walker"
+#~ msgid "Number of columns: "
+#~ msgstr "Количество колонок: "
+
+#~ msgid "Download image"
+#~ msgstr "Загрузить картинку"
+
+#~ msgctxt "theme-options"
+#~ msgid "Choose page"
+#~ msgstr "Выбор страницы"
+
+#~ msgctxt "backend"
+#~ msgid "Capitalize"
+#~ msgstr "Заработать"
+
+#, fuzzy
+#~ msgctxt "backend metabox"
+#~ msgid "Capitalize"
+#~ msgstr "Заработать"
+
+#~ msgctxt "theme-options"
+#~ msgid "Capitalize"
+#~ msgstr "Прописные"
+
+#~ msgctxt "theme-options"
+#~ msgid "Address"
+#~ msgstr "Адрес"
+
+#~ msgctxt "theme-options"
+#~ msgid "Email"
+#~ msgstr "E-mail"
+
+#~ msgctxt "theme-options"
+#~ msgid "Phone"
+#~ msgstr "Телефон"
+
+#~ msgctxt "theme-options"
+#~ msgid "Skype"
+#~ msgstr "Skype"
+
+#~ msgctxt "theme-options"
+#~ msgid "Working hours"
+#~ msgstr "Режим работы"
+
+#~ msgctxt "theme-options"
+#~ msgid "Capitalize "
+#~ msgstr "Прописные "
+
+#~ msgctxt "theme-options"
+#~ msgid "Mail"
+#~ msgstr "Почта"
+
+#~ msgctxt "theme-options"
+#~ msgid "Blur"
+#~ msgstr "Размытие"
+
+#~ msgctxt "theme-options"
+#~ msgid "Scale"
+#~ msgstr "Масштабируемый"
+
+#~ msgctxt "theme-options"
+#~ msgid "No icon"
+#~ msgstr "Нет иконки"
+
+#~ msgctxt "theme-options"
+#~ msgid "Small icon in the corner"
+#~ msgstr "Маленькая иконка в углу"
+
+#~ msgctxt "theme-options"
+#~ msgid "Large centered icon"
+#~ msgstr "Большая иконка по центру"
+
+#~ msgctxt "theme-options"
+#~ msgid "Icons on hover in portfolio"
+#~ msgstr "Иконки при наведении в портфолио"
+
+#~ msgctxt "theme-options"
+#~ msgid "Semitransparent"
+#~ msgstr "Полупрозрачный"
+
+#~ msgctxt "theme-options"
+#~ msgid "Image minuatures on hover in photo albums"
+#~ msgstr "Миниатюры изображений при наведении в фотоальбомах"
+
+#~ msgctxt "theme-options"
+#~ msgid "Overlapping miniatures of a different size"
+#~ msgstr "Перекрытие миниатюр разного размера"
+
+#~ msgctxt "theme-options"
+#~ msgid "Three miniatures in a row"
+#~ msgstr "Три миниатюры в ряд"
+
+#~ msgctxt "theme-options"
+#~ msgid "Icons"
+#~ msgstr "Иконки"
+
+#~ msgctxt "theme-options"
+#~ msgid "Material design"
+#~ msgstr "Материальный дизайн"
+
+#, fuzzy
+#~ msgctxt "theme-options"
+#~ msgid "Line appearance"
+#~ msgstr "Общий вид"
+
+#~ msgid "List"
+#~ msgstr "Список"
+
+#~ msgid "Search for demo:"
+#~ msgstr "Поиск демо:"
+
+#, fuzzy
+#~ msgctxt "admin"
+#~ msgid "Url to page"
+#~ msgstr "Свежая версия"
+
+#, fuzzy
+#~ msgid "Leave empty to use default hover color."
+#~ msgstr "Оставить пустым для использования цвета разделителя по умолчанию."
+
+#, fuzzy
+#~ msgid "Gradient color 1"
+#~ msgstr "Градиент"
+
+#, fuzzy
+#~ msgid "Gradient color 2"
+#~ msgstr "Градиент"
+
+#, fuzzy
+#~ msgid "Gradient angle"
+#~ msgstr "Градиент"
+
+#~ msgid "Arrows Responsiveness"
+#~ msgstr "Адаптивность Стрелок"
+
+#~ msgctxt "widget"
+#~ msgid "Category:"
+#~ msgstr "Рубрика:"
+
+#~ msgctxt "post"
+#~ msgid "Category:"
+#~ msgstr "Рубрика:"
+
+#~ msgctxt "theme-options"
+#~ msgid "Animation"
+#~ msgstr "Анимация"
+
+#~ msgctxt "theme-options"
+#~ msgid "Animation on click"
+#~ msgstr "Анимация по клику"
+
+#~ msgctxt "theme-options"
+#~ msgid "Animation color"
+#~ msgstr "Цвет анимации"
+
+#~ msgctxt "theme-options"
+#~ msgid "Animation opacity"
+#~ msgstr "Прозрачность анимации"
+
+#~ msgctxt "theme-options"
+#~ msgid "Plain background"
+#~ msgstr "Обычный фон"
+
+#~ msgctxt "theme-options"
+#~ msgid "Fonts"
+#~ msgstr "Шрифты"
+
+#~ msgctxt "theme-options"
+#~ msgid "Hover background"
+#~ msgstr "Фон при наведении"
+
+#~ msgid "Anti-spam"
+#~ msgstr "Анти-спам"
+
+#~ msgctxt "theme-options"
+#~ msgid ""
+#~ "Settings bellow allows you to select pages to be used as templates for "
+#~ "your Archives and Search results (header, sidebar and footer).\n"
+#~ "Note that Archives content and Search results will always be rendered "
+#~ "using masonry layout."
+#~ msgstr ""
+#~ "Настройки ниже позволяют вам выбрать страницы, которые будут "
+#~ "использоваться в качестве шаблонов для ваших архивов и результатов поиска "
+#~ "(шапки, сайдбара и повала).\n"
+#~ "Обратите внимание, что содержимое архивов и результатов поиска всегда "
+#~ "будет отображаться с использованием макета в стиле кирпичной кладки."
+
+#, fuzzy
+#~ msgctxt "theme-options"
+#~ msgid "Side padding (px)"
+#~ msgstr "Боковые отступы (рх)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Smooth scroll"
+#~ msgstr "Плавная прокрутка"
+
+#~ msgctxt "theme-options"
+#~ msgid "Images speed resize"
+#~ msgstr "Скорость кадрирования картинок"
+
+#~ msgctxt "theme-options"
+#~ msgid "Border radius (px)"
+#~ msgstr "Радиус рамки (рх)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Gap (px)"
+#~ msgstr "Промежуток в (px)"
+
+#, fuzzy
+#~ msgctxt "theme-options"
+#~ msgid "Border width  (px)"
+#~ msgstr "Ширина рамки"
+
+#~ msgctxt "theme-options"
+#~ msgid "Content width (in \"px\" or \"%\")"
+#~ msgstr "Ширина содержимого (в \"px\" или \"%\")"
+
+#~ msgctxt "theme-options"
+#~ msgid "Box width (in \"px\" or \"%\")"
+#~ msgstr "Ширина блока (в рх или %)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Header width (px or %)"
+#~ msgstr "Ширина шапки (рх или %)"
+
+#~ msgctxt "theme-options"
+#~ msgid " Icons background size (in \"px\")"
+#~ msgstr "Размер фона иконок (в \"px\")"
+
+#~ msgctxt "theme-options"
+#~ msgid " Icons size (in \"px\")"
+#~ msgstr "Размер иконок (в \"px\")"
+
+#, fuzzy
+#~ msgctxt "theme-options"
+#~ msgid "Top bar height (px)"
+#~ msgstr "Высота области заголовка (рх)"
+
+#, fuzzy
+#~ msgctxt "theme-options"
+#~ msgid "Line height (px)"
+#~ msgstr "Высота строки"
+
+#, fuzzy
+#~ msgctxt "theme-options"
+#~ msgid "Background size (px)"
+#~ msgstr "Фоновое изображение"
+
+#~ msgctxt "theme-options"
+#~ msgid "Height (px)"
+#~ msgstr "Высота (px)"
+
+#, fuzzy
+#~ msgctxt "theme-options"
+#~ msgid "Border width (px)"
+#~ msgstr "Ширина рамки"
+
+#~ msgctxt "theme-options"
+#~ msgid "Sidebar width (in 'px' or '%')"
+#~ msgstr "Ширина сайдбара (рх или %)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Switch after (px)"
+#~ msgstr "Переключить после (рх)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Gap between columns (px)"
+#~ msgstr "Промежуток между колонками (px)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Image width (in 'px' or '%')"
+#~ msgstr "Ширина картинки (рх или %)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Product image width (in 'px' or '%')"
+#~ msgstr "Ширина картинки товара (в \"px\" или \"%\")"
+
+#~ msgctxt "theme-options"
+#~ msgid "Side column width (in 'px' or '%')"
+#~ msgstr "Ширина боковой конки (в рх или %)"
+
+#~ msgctxt "backend"
+#~ msgid "Contact forms"
+#~ msgstr "Формы контактов"
+
+#~ msgctxt "backend metabox"
+#~ msgid "MENU ICON, TOP LINE, SIDE LINE LOGO"
+#~ msgstr "ИКОНКА МЕНЮ, ЛОГОТИПЫ ВЕРХНЕЙ И БОКОВОЙ ЛИНИИ"
+
+#~ msgctxt "backend metabox"
+#~ msgid "MOBILE LOGO"
+#~ msgstr "ЛОГОТИП ДЛЯ МОБИЛЬНЫХ"
+
+#~ msgctxt "backend metabox"
+#~ msgid "BOTTOM LINE LOGO"
+#~ msgstr "ЛОГОТИП НИЖНЕЙ ЛИНИИ"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Favicon"
+#~ msgstr "Фавикон"
+
+#~ msgctxt "backend metabox"
+#~ msgid "3D slideshow"
+#~ msgstr "3D слайд-шоу"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Transparent background color:"
+#~ msgstr "Цвет прозрачного фона:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Transparent background opacity:"
+#~ msgstr "Прозрачность фона:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "full-screen with content"
+#~ msgstr "на весь экран с содержимым"
+
+#~ msgctxt "backend metabox"
+#~ msgid "proportional, full-width"
+#~ msgstr "пропорционально, во всю ширину"
+
+#~ msgctxt "backend metabox"
+#~ msgid "proportional, content-width"
+#~ msgstr "пропорционально, по ширине содержимого"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Top padding:"
+#~ msgstr "Верхний отступ:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Bottom padding:"
+#~ msgstr "Нижний отступ:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Side paddings:"
+#~ msgstr "Боковые отступы:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Thumbnails width:"
+#~ msgstr "Ширина миниатюр:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Thumbnails height:"
+#~ msgstr "Высота миниатюр:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Autoplay speed:"
+#~ msgstr "Скорость  автовоспроизведения:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Breadcrumbs:"
+#~ msgstr "Хлебные крошки:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Breadcrumbs background color:"
+#~ msgstr "Цвет фона хлебных крошек:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Title:"
+#~ msgstr "Заголовок:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Custom title:"
+#~ msgstr "Пользовательский заголовок:"
+
+#, fuzzy
+#~ msgctxt "backend metabox"
+#~ msgid "Font color:"
+#~ msgstr "Цвет шрифта"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Subtitle:"
+#~ msgstr "Подзаголовок:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Background image:"
+#~ msgstr "Фоновое изображение:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Fullscreen:"
+#~ msgstr "В полный экран:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Header opacity"
+#~ msgstr "Прозрачность шапки"
+
+#~ msgctxt "theme-options"
+#~ msgid "Color scheme:"
+#~ msgstr "Цветовая схема:"
+
+#~ msgctxt "theme-options"
+#~ msgid "Top (px)"
+#~ msgstr "Верх (px)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Bottom (px)"
+#~ msgstr "Низ (рх)"
+
+#~ msgctxt "theme-options"
+#~ msgid "BETA feature. Can reduce page load time. Not recommended."
+#~ msgstr ""
+#~ "ТЕСТОВАЯ возможность. Может значительно уменьшить время загрузки "
+#~ "страницы. Не рекомендуется."
+
+#~ msgctxt "theme-options"
+#~ msgid "Menu icon, top line, side line"
+#~ msgstr "Иконка меню, верхняя линия, боковая линия"
+
+#~ msgctxt "theme-options"
+#~ msgid "Border opacity"
+#~ msgstr "Прозрачность границы"
+
+#, fuzzy
+#~ msgctxt "theme-options"
+#~ msgid "Message background opacity"
+#~ msgstr "Прозрачность при наведении на фон"
+
+#~ msgctxt "theme-options"
+#~ msgid "Dividers opacity"
+#~ msgstr "Прозрачность разделителей"
+
+#~ msgctxt "theme-options"
+#~ msgid "Slideshow bullets"
+#~ msgstr "Точки слайдшоу"
+
+#~ msgctxt "theme-options"
+#~ msgid "Spinner opacity"
+#~ msgstr "Прозрачность загрузчика (spinner)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Inline header"
+#~ msgstr "Встроенная шапка"
+
+#~ msgctxt "theme-options"
+#~ msgid "Split header"
+#~ msgstr "Разделенная шапка"
+
+#~ msgctxt "theme-options"
+#~ msgid "Side header"
+#~ msgstr "Боковая шапка"
+
+#~ msgctxt "theme-options"
+#~ msgid "Near menu"
+#~ msgstr "Возле меню"
+
+#~ msgctxt "theme-options"
+#~ msgid "Near logo (left)"
+#~ msgstr "Возле логотипа (слева)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Area near menu"
+#~ msgstr "Область возле меню"
+
+#~ msgctxt "theme-options"
+#~ msgid "Area near logo (left)"
+#~ msgstr "Область возле меню (слева)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Area near logo (right)"
+#~ msgstr "Область возле меню (справа)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Near menu (left)"
+#~ msgstr "Возле меню (слева)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Area near menu (left)"
+#~ msgstr "Область возле меню (слева)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Area near menu (right)"
+#~ msgstr "Область возле меню (справа)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Margin above menu (px)"
+#~ msgstr "Отступ над меню (рх)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Full-width header"
+#~ msgstr "Шапка на всю ширину"
+
+#~ msgctxt "theme-options"
+#~ msgid "Header content paddings"
+#~ msgstr "Внутренние отступы содержимого шапки"
+
+#~ msgctxt "theme-options"
+#~ msgid "Move"
+#~ msgstr "Пеереместить"
+
+#~ msgctxt "theme-options"
+#~ msgid "Width of content in overlay navigation (px or %)"
+#~ msgstr "Ширина содержимого в наложенной навигации (рх или %)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Position of content in overlay navigation"
+#~ msgstr "Положение содержимого в наложенной навигации"
+
+#~ msgctxt "theme-options"
+#~ msgid "Top bar font size"
+#~ msgstr "Размер шрифта верхней панели"
+
+#~ msgctxt "theme-options"
+#~ msgid "Background (line) color"
+#~ msgstr "Цвет фона (линии)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Background (line) opacity"
+#~ msgstr "Прозрачность фона (линии)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Header / overlay navigation background"
+#~ msgstr "Шапка / фон наложенной навигации"
+
+#~ msgctxt "theme-options"
+#~ msgid "Header decoration"
+#~ msgstr "Оформление шапки"
+
+#~ msgctxt "theme-options"
+#~ msgid "Line opacity"
+#~ msgstr "Прозрачность линии"
+
+#~ msgctxt "theme-options"
+#~ msgid "\"Open menu\" icon color"
+#~ msgstr "Цвет иконки \"Открыть меню\""
+
+#~ msgctxt "theme-options"
+#~ msgid "\"Close menu\" icon color"
+#~ msgstr "Цвет иконки \"Закрыть меню\""
+
+#~ msgctxt "theme-options"
+#~ msgid "\"Close menu\" background opacity"
+#~ msgstr "Прозрачность фона \"Закрыть меню\""
+
+#~ msgctxt "theme-options"
+#~ msgid ""
+#~ "Line and mobile header background for \"Navigation on click\" headers"
+#~ msgstr ""
+#~ "Линия и фон шапки для мобильных устройств для шапок \"Навигации по клику\""
+
+#~ msgctxt "theme-options"
+#~ msgid ""
+#~ "Background overlay for \"Navigation on click\" headers and \"Mobile menu\""
+#~ msgstr ""
+#~ "Фоновое наложение для шапки \"Навигации по клику\" и \"Мобильного меню\""
+
+#~ msgctxt "theme-options"
+#~ msgid "Background overlay opacity"
+#~ msgstr "Прозрачность фонового наложения"
+
+#~ msgctxt "theme-options"
+#~ msgid "Blur effect"
+#~ msgstr "Эффект размытия"
+
+#~ msgctxt "theme-options"
+#~ msgid "Also works for overlay navigation and mobile menu."
+#~ msgstr "Также работает для наложенной навигации и мобильного меню."
+
+#~ msgctxt "theme-options"
+#~ msgid "\"X\" cursor icon"
+#~ msgstr "Иконка курсора \"Х\""
+
+#~ msgctxt "theme-options"
+#~ msgid "Icon opacity"
+#~ msgstr "Прозрачность иконки"
+
+#~ msgctxt "theme-options"
+#~ msgid "Menu items font"
+#~ msgstr "Шрифт элементов меню"
+
+#~ msgctxt "theme-options"
+#~ msgid "Subtitles font"
+#~ msgstr "Шрифт подзаголовков"
+
+#~ msgctxt "theme-options"
+#~ msgid "Subtitles font size"
+#~ msgstr "Размер шрифта подзаголовков"
+
+#~ msgctxt "theme-options"
+#~ msgid "Hover font color"
+#~ msgstr "Цвет шрифта при наведении"
+
+#~ msgctxt "theme-options"
+#~ msgid "Active item font color"
+#~ msgstr "Цвет шрифта активного элемента"
+
+#~ msgctxt "theme-options"
+#~ msgid "Active font color"
+#~ msgstr "Цвет активного шрифта"
+
+#~ msgctxt "theme-options"
+#~ msgid "Margin top (px or %)"
+#~ msgstr "Верхнее поле отупа (рх или %)"
+
+#, fuzzy
+#~ msgctxt "theme-options"
+#~ msgid "Margin bottom (px or %)"
+#~ msgstr "Нижний отступ"
+
+#~ msgctxt "theme-options"
+#~ msgid "Floating mobile navigation"
+#~ msgstr "Плавающая мобильная навигация"
+
+#~ msgctxt "theme-options"
+#~ msgid "Menu font size"
+#~ msgstr "Размер шрифта меню"
+
+#~ msgctxt "theme-options"
+#~ msgid "Capitalize menu"
+#~ msgstr "Меню \"Прописные\""
+
+#~ msgctxt "theme-options"
+#~ msgid "Capitalize submenu"
+#~ msgstr "Подменю \"Прописные\""
+
+#~ msgctxt "theme-options"
+#~ msgid "Mobile menu background"
+#~ msgstr "Место мобильного меню"
+
+#~ msgctxt "theme-options"
+#~ msgid "Top padding (px or %)"
+#~ msgstr "Верхний отступ (px or %)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Bottom padding (px or %)"
+#~ msgstr "Нижний отступ (px or %)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Overlay opacity"
+#~ msgstr "Прозрачность оверлея"
+
+#~ msgctxt "theme-options"
+#~ msgid "Padding top (px or %)"
+#~ msgstr "Верхний отступ (рх или %)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Padding right (px or %)"
+#~ msgstr "Правый отступ (рх или %)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Padding bottom (px or %)"
+#~ msgstr "Нижний отступ (рх или %)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Padding left (px or %)"
+#~ msgstr "Левый отступ (рх или %)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Menu icon only"
+#~ msgstr "Только значок меню"
+
+#~ msgctxt "theme-options"
+#~ msgid "Width (px)"
+#~ msgstr "Ширина (px)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Show header"
+#~ msgstr "Показать шапку"
+
+#~ msgctxt "theme-options"
+#~ msgid "Leave as is"
+#~ msgstr "Оставить как есть"
+
+#~ msgctxt "theme-options"
+#~ msgid "Show in the menu"
+#~ msgstr "Показать в меню"
+
+#~ msgctxt "theme-options"
+#~ msgid "Show near logo"
+#~ msgstr "Показать рядом с логотипом"
+
+#~ msgctxt "theme-options"
+#~ msgid "Top padding"
+#~ msgstr "Верхний отступ"
+
+#~ msgctxt "theme-options"
+#~ msgid "Bottom padding"
+#~ msgstr "Нижний отступ"
+
+#~ msgctxt "theme-options"
+#~ msgid "Top / Side line background"
+#~ msgstr "Фон верхней / боковой линии"
+
+#~ msgctxt "theme-options"
+#~ msgid "Main menu"
+#~ msgstr "Главное меню"
+
+#~ msgctxt "theme options"
+#~ msgid "Background overlay color"
+#~ msgstr "Цвет фонового наложения"
+
+#~ msgctxt "feedback msg"
+#~ msgid "Nonce do not match"
+#~ msgstr "Не совпадает"
+
+#~ msgid "Pagination colors"
+#~ msgstr "Цвета навигации"
+
+#~ msgid ""
+#~ "We are installing The7 Post Types plugin automatically, so you can "
+#~ "continue using The7 custom post types."
+#~ msgstr ""
+#~ "Мы устанавливаем плагин The7 Post Types автоматически, так что вы можете "
+#~ "продолжать использовать The7 пользовательские типы записей."
+
+#~ msgid "<a href=\"%s\">Install/update recommended plugins</a>"
+#~ msgstr "<a href=\"%s\">Установить/обновить рекомендуемые плагины</a>"
+
+#~ msgid "Blog list"
+#~ msgstr "Список блога"
+
+#~ msgid "Social icons"
+#~ msgstr "Соц. иконки"
+
+#~ msgctxt "backend"
+#~ msgid "Stylesheet saved."
+#~ msgstr "Таблица стилей сохранена."
+
+#~ msgctxt "backend metabox"
+#~ msgid "Generic title"
+#~ msgstr "Общий заголовок"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Title font size:"
+#~ msgstr "Размер шрифта заголовка:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Title font color:"
+#~ msgstr "Цвет шрифта заголовка:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Subtitle font size:"
+#~ msgstr "Размер шрифта подзаголовка:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Fixed background:"
+#~ msgstr "Фиксированный фон:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "Parallax speed:"
+#~ msgstr "Скорость параллакса:"
+
+#~ msgctxt "backend metabox"
+#~ msgid "if field is empty, parallax disabled"
+#~ msgstr "если поле пустое, параллакс отключен"
+
+#~ msgctxt "theme-options"
+#~ msgid "Contact form"
+#~ msgstr "Контактная форма"
+
+#~ msgctxt "theme-options"
+#~ msgid "Theme Activation"
+#~ msgstr "Активация темы"
+
+#~ msgctxt "theme-options"
+#~ msgid "User credentials"
+#~ msgstr "Учетные данные пользователя"
+
+#~ msgctxt "feedback msg"
+#~ msgid "Feedback has been sent to the administrator"
+#~ msgstr "Ваше сообщение отправлено!"
+
+#~ msgctxt "vc inline dummy"
+#~ msgid "NEW Blog Masonry & Grid"
+#~ msgstr "НОВАЯ Кирпичная кладка и сетка блога"
+
+#~ msgctxt "vc inline dummy"
+#~ msgid "Mini blog"
+#~ msgstr "Мини блог"
+
+#~ msgctxt "vc inline dummy"
+#~ msgid "Blog posts scroller"
+#~ msgstr "Прокрутка публикаций блога"
+
+#~ msgctxt "vc inline dummy"
+#~ msgid "NEW Products Masonry & Grid"
+#~ msgstr "НОВ. Сетка и кирпичная кладка товаров"
+
+#~ msgctxt "vc inline dummy"
+#~ msgid "Social icons"
+#~ msgstr "Соц. иконки"
+
+#, fuzzy
+#~ msgid "Checkout details"
+#~ msgstr "Подробнее о товаре"
+
+#, fuzzy
+#~ msgid "install"
+#~ msgstr "Установить"
+
+#~ msgid "clear form"
+#~ msgstr "очистить"
+
+#~ msgid "Leave Comment"
+#~ msgstr "Оставить комментарий"
+
+#~ msgid "clear"
+#~ msgstr "очистить"
+
+#~ msgctxt "theme-options"
+#~ msgid "Border Radius (px)"
+#~ msgstr "Скругление краев (рх)"
+
+#~ msgctxt "theme-options"
+#~ msgid "Icons hover background color"
+#~ msgstr "Фоновый цвет иконок при наведении"
+
+#~ msgctxt "theme-options"
+#~ msgid "Page titles"
+#~ msgstr "Заголовок страницы"
+
+#~ msgctxt "theme-options"
+#~ msgid "Title size"
+#~ msgstr "Размер заголовка"
+
+#~ msgctxt "theme-options"
+#~ msgid "Breadcrumbs color"
+#~ msgstr "Цвет хлебных крошек"
+
+#~ msgctxt "theme-options"
+#~ msgid "Title background / line"
+#~ msgstr "Фон заголовка / линии"
+
+#~ msgctxt "theme-options"
+#~ msgid "Fixed "
+#~ msgstr "Фиксированный "
+
+#~ msgctxt "theme-options"
+#~ msgid "Enable parallax & Parallax speed"
+#~ msgstr "Включить параллакс и скорость параллакса"

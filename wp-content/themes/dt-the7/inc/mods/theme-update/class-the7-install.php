@@ -195,6 +195,14 @@ class The7_Install {
 	    }
     }
 
+    public static function get_updater() {
+    	if (! self::$background_updater) {
+    		self::init_background_updater();
+		}
+
+    	return self::$background_updater;
+	}
+
     public static function check_version() {
 	    $current_db_version = self::get_db_version();
 
