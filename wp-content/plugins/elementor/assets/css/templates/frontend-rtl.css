@@ -1076,6 +1076,12 @@ ul.elementor-icon-list-items.elementor-inline-items {
 .elementor-button-align-end .e-form__buttons {
   justify-content: flex-start; }
 
+.elementor-button-align-center .elementor-field-type-submit:not(.e-form__buttons__wrapper) .elementor-button, .elementor-button-align-start .elementor-field-type-submit:not(.e-form__buttons__wrapper) .elementor-button, .elementor-button-align-end .elementor-field-type-submit:not(.e-form__buttons__wrapper) .elementor-button {
+  flex-basis: initial; }
+
+.elementor-button-align-center .e-form__buttons__wrapper, .elementor-button-align-center .e-form__buttons__wrapper__button, .elementor-button-align-start .e-form__buttons__wrapper, .elementor-button-align-start .e-form__buttons__wrapper__button, .elementor-button-align-end .e-form__buttons__wrapper, .elementor-button-align-end .e-form__buttons__wrapper__button {
+  flex-basis: initial; }
+
 @media screen and (max-width: ELEMENTOR_SCREEN_MD_MAX) {
   .elementor-tablet-button-align-stretch .elementor-field-type-submit:not(.e-form__buttons__wrapper) .elementor-button {
     flex-basis: 100%; }
@@ -1089,7 +1095,11 @@ ul.elementor-icon-list-items.elementor-inline-items {
     justify-content: flex-end; }
   .elementor-tablet-button-align-end .elementor-field-type-submit,
   .elementor-tablet-button-align-end .e-form__buttons {
-    justify-content: flex-start; } }
+    justify-content: flex-start; }
+  .elementor-tablet-button-align-center .elementor-field-type-submit:not(.e-form__buttons__wrapper) .elementor-button, .elementor-tablet-button-align-start .elementor-field-type-submit:not(.e-form__buttons__wrapper) .elementor-button, .elementor-tablet-button-align-end .elementor-field-type-submit:not(.e-form__buttons__wrapper) .elementor-button {
+    flex-basis: initial; }
+  .elementor-tablet-button-align-center .e-form__buttons__wrapper, .elementor-tablet-button-align-center .e-form__buttons__wrapper__button, .elementor-tablet-button-align-start .e-form__buttons__wrapper, .elementor-tablet-button-align-start .e-form__buttons__wrapper__button, .elementor-tablet-button-align-end .e-form__buttons__wrapper, .elementor-tablet-button-align-end .e-form__buttons__wrapper__button {
+    flex-basis: initial; } }
 
 @media screen and (max-width: ELEMENTOR_SCREEN_SM_MAX) {
   .elementor-mobile-button-align-stretch .elementor-field-type-submit:not(.e-form__buttons__wrapper) .elementor-button {
@@ -1104,7 +1114,11 @@ ul.elementor-icon-list-items.elementor-inline-items {
     justify-content: flex-end; }
   .elementor-mobile-button-align-end .elementor-field-type-submit,
   .elementor-mobile-button-align-end .e-form__buttons {
-    justify-content: flex-start; } }
+    justify-content: flex-start; }
+  .elementor-mobile-button-align-center .elementor-field-type-submit:not(.e-form__buttons__wrapper) .elementor-button, .elementor-mobile-button-align-start .elementor-field-type-submit:not(.e-form__buttons__wrapper) .elementor-button, .elementor-mobile-button-align-end .elementor-field-type-submit:not(.e-form__buttons__wrapper) .elementor-button {
+    flex-basis: initial; }
+  .elementor-mobile-button-align-center .e-form__buttons__wrapper, .elementor-mobile-button-align-center .e-form__buttons__wrapper__button, .elementor-mobile-button-align-start .e-form__buttons__wrapper, .elementor-mobile-button-align-start .e-form__buttons__wrapper__button, .elementor-mobile-button-align-end .e-form__buttons__wrapper, .elementor-mobile-button-align-end .e-form__buttons__wrapper__button {
+    flex-basis: initial; } }
 
 .elementor-error .elementor-field {
   border-color: #d9534f; }
@@ -1134,7 +1148,8 @@ ul.elementor-icon-list-items.elementor-inline-items {
 
 .elementor-form .elementor-button {
   padding-top: 0;
-  padding-bottom: 0; }
+  padding-bottom: 0;
+  border: none; }
   .elementor-form .elementor-button > span {
     display: flex;
     justify-content: center; }
@@ -1463,9 +1478,10 @@ ul.elementor-icon-list-items.elementor-inline-items {
   padding: 0;
   margin: 0;
   line-height: 1; }
-  .elementor-heading-title > a {
+  .elementor-heading-title[class*="elementor-size-"] > a {
     color: inherit;
-    font-size: inherit; }
+    font-size: inherit;
+    line-height: inherit; }
   .elementor-heading-title.elementor-size-small {
     font-size: 15px; }
   .elementor-heading-title.elementor-size-medium {
