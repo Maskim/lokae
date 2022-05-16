@@ -17,14 +17,6 @@ function the7_add_admin_notices() {
 		the7_admin_notices()->add( 'unable-to-write-css', 'the7_cannot_write_css_notice', 'updated' );
 	}
 
-	if ( ! The7_Admin_Dashboard_Settings::get( 'silence-purchase-notification' ) ) {
-		the7_admin_notices()->add(
-			'silence-purchase-notification',
-			'the7_silence_purchase_notification',
-			'the7-dashboard-notice updated is-dismissible'
-		);
-	}
-
 	if ( ! The7_Admin_Dashboard_Settings::get( 'critical-alerts' ) ) {
 		the7_admin_notices()->add(
 			'turn-on-critical-alerts',
@@ -40,32 +32,44 @@ function the7_add_admin_notices() {
 			'the7-dashboard-notice notice-warning'
 		);
 	}
+
+	if (
+		the7_elementor_is_active()
+		&&
+		(
+			get_option( 'elementor_experiment-e_optimized_css_loading' ) === 'active'
+			||
+			get_option( 'elementor_experiment-additional_custom_breakpoints' ) === 'active'
+		)
+	) {
+		the7_admin_notices()->add(
+			'the7_elementor_unreliable_experiments',
+			function () {
+				echo '<p>';
+				esc_html_e(
+					'Recommendation: deactivate “Additional Custom Breakpoints” and “Improved CSS Loading” Elementor features due to unreliable functioning.',
+					'the7mk2'
+				);
+				echo '&nbsp;';
+				printf(
+					'<a href="%s" target="_blank">%s</a>',
+					esc_url(
+						get_admin_url(
+							null,
+							'admin.php?page=elementor#tab-experiments'
+						)
+					),
+					esc_html( __( 'Elementor settings', 'the7mk2' ) )
+				);
+				echo '</p>';
+			},
+			'the7-dashboard-notice notice-error is-dismissible'
+		);
+	}
 }
 
 add_action( 'admin_notices', 'the7_add_admin_notices' );
 
-/**
- * Print admin notice that suggests to turn off plugins registration notifications.
- *
- * @return void
- */
-function the7_silence_purchase_notification() {
-	echo '<p>';
-	/* translators: %s: admin page url */
-	$msg = _x(
-		'Hey, we\'ve noticed that you do not have "silence bundled plugins purchase notifications" options enabled. 
-            If they are bothering you, <a href="%s">click here to enable it</a>.
-            You can always change this setting under The7 > My The7, in the "Bundled Plugins" box.',
-		'admin',
-		'the7mk2'
-	);
-	$url = wp_nonce_url(
-		admin_url( 'admin.php?page=the7-dashboard&the7_dashboard_settings[silence-purchase-notification]=true' ),
-		The7_Admin_Dashboard::UPDATE_DASHBOARD_SETTINGS_NONCE_ACTION
-	);
-	echo wp_kses_post( sprintf( $msg, $url ) );
-	echo '</p>';
-}
 
 /**
  * Print admin notice about not writable uploads folder.
@@ -117,6 +121,8 @@ We recommend you <a href="%s">install and activate</a> The7 Elements and remove 
 
 	echo '<p>' . wp_kses_post( $message ) . '</p>';
 }
+
+
 
 /**
  * Return object that handle admin notices.

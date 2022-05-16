@@ -56,10 +56,7 @@ class WPH {
 	 */
 	public function replace_links( $content ) {
 		global $wph;
-
-		$content = $wph->ob_start_callback( $content );
-
-		return $content;
+		return $wph->ob_start_callback( $content );
 	}
 
 }

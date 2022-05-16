@@ -167,12 +167,22 @@ class The7_Background_Updater extends WP_Background_Process {
 			define( 'THE7_UPDATING', true );
 		}
 
-		$task = false;
-		if ( is_callable( $callback ) ) {
-			$task = call_user_func( $callback );
+		// Bump db version shortcut.
+		if ( is_string( $callback ) && strpos( $callback, 'bump_db_version_to_' ) === 0 ) {
+			$version = str_replace( 'bump_db_version_to_', '', $callback );
+			The7_Install::update_db_version( $version );
+
+			return false;
 		}
 
-		return ( $task ? $task : false );
+		$task = false;
+		if ( isset( $callback['callback'], $callback['args'] ) && is_callable( $callback['callback'] ) ) {
+			$task = call_user_func_array( $callback['callback'], (array) $callback['args'] );
+		} elseif ( is_callable( $callback ) ) {
+			$task = $callback();
+		}
+
+		return ( $task ?: false );
 	}
 
 	/**

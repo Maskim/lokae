@@ -6,15 +6,15 @@
  * @package The7
  */
 
-namespace The7\Adapters\Elementor;
+namespace The7\Mods\Compatibility\Elementor;
 
 use Elementor\Core\Files\CSS\Global_CSS;
 use Elementor\Plugin as Elementor;
 use Elementor\Settings;
 use Elementor\Core\Schemes as Elementor_Schemes;
 use Elementor\Core\Schemes\Manager as Schemes_Manager;
-use The7\Adapters\Elementor\Schemes\The7_Elementor_Color_Scheme;
-use The7\Adapters\Elementor\Schemes\The7_Elementor_Typography_Scheme;
+use The7\Mods\Compatibility\Elementor\Schemes\The7_Elementor_Color_Scheme;
+use The7\Mods\Compatibility\Elementor\Schemes\The7_Elementor_Typography_Scheme;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -48,12 +48,6 @@ class The7_Schemes_Manager_Control {
 	 */
 	public static function is_the7_scheme_enabled() {
 		return 'yes' === get_option( 'elementor_' . self::SETTING_USE_THE7_SCHEME, 'no' );
-	}
-
-	public static function is_elementor_schemes_disabled() {
-		$custom_colors_disabled = get_option( 'elementor_disable_color_schemes' );
-		$typography_schemes_disabled = get_option( 'elementor_disable_typography_schemes' );
-		return $custom_colors_disabled && $typography_schemes_disabled;
 	}
 
 	public function replace_elementor_schemes() {

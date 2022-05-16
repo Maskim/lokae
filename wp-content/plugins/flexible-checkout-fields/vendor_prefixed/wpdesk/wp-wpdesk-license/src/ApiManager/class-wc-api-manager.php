@@ -96,7 +96,7 @@ if (!\class_exists('FcfVendor\\WPDesk_API_Manager_With_Update_Flag')) {
          *
          * @since 1.2
          */
-        private function __wakeup()
+        public function __wakeup()
         {
         }
         public function __construct($upgrade_url, $version, $name, $product_id, $menu_title, $title, $plugin_file, $plugin_dir, $config_uri, $hook_to_updates = \true)
@@ -207,6 +207,9 @@ if (!\class_exists('FcfVendor\\WPDesk_API_Manager_With_Update_Flag')) {
             \add_action('in_plugin_update_message-' . $this->plugin_name, function (array $plugin_data, \stdClass $response) {
                 if (isset($response, $response->package) && empty($response->package)) {
                     echo \sprintf(\__(" <a target='_blank' href='%s'>Enter a valid subscription key for automatic updates.</a>", 'flexible-checkout-fields'), \admin_url('admin.php?page=wpdesk-licenses'));
+                }
+                if (isset($response->changelog) && !empty($response->changelog)) {
+                    $this->display_changelog($plugin_data['Version'], $response->changelog);
                 }
             }, 10, 2);
         }
@@ -348,6 +351,25 @@ if (!\class_exists('FcfVendor\\WPDesk_API_Manager_With_Update_Flag')) {
                     ?></p>
                     </div>
 					<?php 
+                }
+            }
+        }
+        /**
+         * @param string $plugin_data
+         * @param string $response
+         */
+        private function display_changelog($plugin_version, $changelog)
+        {
+            $parser = new \FcfVendor\WPDesk\License\Changelog\Parser($changelog);
+            $parser->parse();
+            $parsed_changelog = $parser->get_parsed_changelog()->getIterator();
+            $changes = new \FcfVendor\WPDesk\License\Changelog\Filter\ByVersion($parsed_changelog, $plugin_version);
+            if (\iterator_count($changes) > 0) {
+                $changelog = new \FcfVendor\WPDesk\License\Changelog\Formatter($changes);
+                $changelog->set_changelog_types($parser->get_types());
+                $formatted_changelog = $changelog->prepare_formatted_html();
+                if ($formatted_changelog) {
+                    echo '<br /><br />' . $formatted_changelog;
                 }
             }
         }

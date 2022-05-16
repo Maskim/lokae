@@ -5,7 +5,7 @@ class WCML_Dependencies {
 	const MIN_WPML        = '4.3.5';
 	const MIN_WPML_TM     = '2.9.1';
 	const MIN_WPML_ST     = '3.0.5';
-	const MIN_WOOCOMMERCE = '3.3.0';
+	const MIN_WOOCOMMERCE = '3.9.0';
 
 	private $missing     = [];
 	private $err_message = '';
@@ -15,6 +15,9 @@ class WCML_Dependencies {
 	 * @var WCML_Tracking_Link
 	 */
 	private $tracking_link;
+
+	/** @var array $xml_config_errors */
+	public $xml_config_errors = [];
 
 	public function __construct() {
 
@@ -35,7 +38,7 @@ class WCML_Dependencies {
 			add_action( 'admin_notices', [ $this, '_old_wpml_warning' ] );
 			$this->allok = false;
 		} elseif ( ! $sitepress->setup() ) {
-			if ( ! ( isset( $_GET['page'] ) && ICL_PLUGIN_FOLDER . '/menu/languages.php' === $_GET['page'] ) ) {
+			if ( ! ( isset( $_GET['page'] ) && WPML_PLUGIN_FOLDER . '/menu/languages.php' === $_GET['page'] ) ) {
 				add_action( 'admin_notices', [ $this, '_wpml_not_installed_warning' ] );
 			}
 			$this->allok = false;
@@ -292,6 +295,7 @@ class WCML_Dependencies {
 			$config = icl_xml2array( file_get_contents( $file ) );
 
 			if ( isset( $config['wpml-config'] ) ) {
+				$cfs = [];
 
 				// custom-fields
 				if ( isset( $config['wpml-config']['custom-fields'] ) ) {
@@ -321,6 +325,8 @@ class WCML_Dependencies {
 
 				// custom-types
 				if ( isset( $config['wpml-config']['custom-types'] ) ) {
+				    $cts = [];
+
 					if ( isset( $config['wpml-config']['custom-types']['custom-type']['value'] ) ) { // single
 						$cts[] = $config['wpml-config']['custom-types']['custom-type'];
 					} else {
@@ -350,6 +356,8 @@ class WCML_Dependencies {
 
 				// taxonomies
 				if ( isset( $config['wpml-config']['taxonomies'] ) ) {
+				    $txs = [];
+
 					if ( isset( $config['wpml-config']['taxonomies']['taxonomy']['value'] ) ) { // single
 						$txs[] = $config['wpml-config']['taxonomies']['taxonomy'];
 					} else {

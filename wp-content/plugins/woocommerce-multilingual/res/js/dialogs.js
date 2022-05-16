@@ -56,7 +56,7 @@ jQuery( function($){
                 beforeClose: function (event) {
                 },
                 close: function (event) {
-                    $('#jquery-ui-style-css').removeAttr('disabled');
+                    $('#jquery-ui-style-css').prop('disabled', false);
                     $('body').css('overflow-y', self.overflow_y);
                 },
                 create: function (event) {
@@ -66,7 +66,7 @@ jQuery( function($){
                 },
                 open: function (event) {
                     $('body').css('overflow', 'hidden');
-					$('#jquery-ui-style-css').attr('disabled', 'disabled');
+					$('#jquery-ui-style-css').prop('disabled', true);
 
                     if( data.class === 'wcml-cs-dialog' ){
                         WCML_Dialog._attachDialogScrollEvent();
@@ -247,7 +247,7 @@ jQuery( function($){
             var dialog_div = $(this).closest('.wcml-dialog-container');
 
             var elem = $(this);
-            elem.attr('disabled', 'disabled');
+            elem.prop('disabled', true);
 
             var data = $(this).data();
             if(data.action){ // sync ajax
@@ -268,7 +268,7 @@ jQuery( function($){
                     success: function (response) {
                         if( data.stay ){
                             spinner.remove();
-                            elem.removeAttr('disabled');
+                            elem.prop('disabled', false);
                         }
                     }
                 });
@@ -287,7 +287,7 @@ jQuery( function($){
 
     WCML_Dialog.init = function(){
 
-        $(document).ready(function() {
+        $(function() {
             if (typeof $.wp != 'undefined') {
                 WCML_Dialog.using_wpdialog = typeof $.wp.wpdialog != 'undefined';
             } else {

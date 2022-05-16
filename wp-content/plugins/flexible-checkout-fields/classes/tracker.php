@@ -26,117 +26,283 @@ if ( ! class_exists( 'WPDesk_Flexible_Checkout_Fields_Tracker' ) ) {
 		}
 
 		public function wpdesk_tracker_data( $data ) {
-			$plugin_data = array(
-				'fields'            => array(),
-				'custom_sections'   => array(),
-				'validation'        => array(),
-				'display_on_unchecked' => 0,
-				'conditional_logic_for_fields'                  => 0,
-				'conditional_logic_fields_action'               => array(),
-				'conditional_logic_fields_operator'             => array(),
-				'conditional_logic_for_fields_rules'            => 0,
-				'conditional_logic'                             => 0,
-				'conditional_logic_what'                        => array(),
-				'conditional_logic_action'                      => array(),
-				'conditional_logic_operator'                    => array(),
-				'conditional_logic_rules'                       => 0,
+			$sections = array(
+				'billing',
+				'shipping',
+				'order',
+				'before_customer_details',
+				'after_customer_details',
+				'before_checkout_billing_form',
+				'after_checkout_billing_form',
+				'before_checkout_shipping_form',
+				'after_checkout_shipping_form',
+				'before_checkout_registration_form',
+				'after_checkout_registration_form',
+				'before_order_notes',
+				'after_order_notes',
+				'review_order_before_submit',
+				'review_order_after_submit',
 			);
-			
-			if ( is_flexible_checkout_fields_pro_active() ) {
-				$plugin_data['pro'] = 'yes';
-			}
-			else {
-				$plugin_data['pro'] = 'no';
+			$settings_fields = get_option('inspire_checkout_fields_settings', array() );
+			if ( ! is_array( $settings_fields ) ) {
+				$settings_fields = array();
 			}
 
-			$settings = get_option('inspire_checkout_fields_settings', array() );
-			if ( !is_array( $settings )) {
-				$settings = array();
-			}
-			foreach ( $settings as $section => $fields ) {
-				if ( !is_array( $fields ) ) {
-					continue;
-				}
-				foreach ( $fields as $field ) {
-					if ( isset( $field['conditional_logic_fields'] ) ) {
-						$plugin_data['conditional_logic_for_fields']++;
-						if ( empty( $plugin_data['conditional_logic_fields_action'][$field['conditional_logic_fields_action']] ) ) {
-							$plugin_data['conditional_logic_fields_action'][$field['conditional_logic_fields_action']] = 0;
-						}
-						$plugin_data['conditional_logic_fields_action'][$field['conditional_logic_fields_action']]++;
-						if ( empty( $plugin_data['conditional_logic_fields_operator'][$field['conditional_logic_fields_operator']] ) ) {
-							$plugin_data['conditional_logic_fields_operator'][$field['conditional_logic_fields_operator']] = 0;
-						}
-						$plugin_data['conditional_logic_fields_operator'][$field['conditional_logic_fields_operator']]++;
-						if ( isset( $field['conditional_logic_fields_rules'] ) ) {
-							$plugin_data['conditional_logic_for_fields_rules'] = $plugin_data['conditional_logic_for_fields_rules'] + count( $field['conditional_logic_fields_rules'] );
-						}
-					}
-					if ( isset( $field['conditional_logic'] ) ) {
-						$plugin_data['conditional_logic']++;
-						if ( empty( $plugin_data['conditional_logic_action'][$field['conditional_logic_action']] ) ) {
-							$plugin_data['conditional_logic_action'][$field['conditional_logic_action']] = 0;
-						}
-						$plugin_data['conditional_logic_action'][$field['conditional_logic_action']]++;
-						if ( empty( $plugin_data['conditional_logic_operator'][$field['conditional_logic_operator']] ) ) {
-							$plugin_data['conditional_logic_operator'][$field['conditional_logic_operator']] = 0;
-						}
-						$plugin_data['conditional_logic_operator'][$field['conditional_logic_operator']]++;
-						if ( isset( $field['conditional_logic_rules'] ) ) {
-							$plugin_data['conditional_logic_rules'] = $plugin_data['conditional_logic_rules'] + count( $field['conditional_logic_rules'] );
-							foreach ( $field['conditional_logic_rules'] as $rule ) {
-								if ( !isset( $plugin_data['conditional_logic_what'][$rule['what']] ) ) {
-									$plugin_data['conditional_logic_what'][$rule['what']] = 0;
-								}
-								$plugin_data['conditional_logic_what'][$rule['what']]++;
-							}
-						}
-					}
-					if ( isset( $field['custom_field'] ) && $field['custom_field'] == '1' ) {
-						if ( isset( $field['type'] ) ) {
-							if ( empty( $plugin_data['fields'][$field['type']] ) ) {
-								$plugin_data['fields'][$field['type']] = 0;
-							}
-							$plugin_data['fields'][$field['type']]++;
-						}
-					}
-					if ( isset( $field['display_on_thank_you'] ) && $field['display_on_thank_you'] == '0' ) {
-						$plugin_data['display_on_unchecked']++;
-					}
-					if ( isset( $field['display_on_address'] ) && $field['display_on_address'] == '0' ) {
-						$plugin_data['display_on_unchecked']++;
-					}
-					if ( isset( $field['display_on_order'] ) && $field['display_on_order'] == '0' ) {
-						$plugin_data['display_on_unchecked']++;
-					}
-					if ( isset( $field['display_on_emails'] ) && $field['display_on_emails'] == '0' ) {
-						$plugin_data['display_on_unchecked']++;
-					}
-					if ( isset( $field['validation'] ) && $field['validation'] != '' ) {
-						if ( !isset( $plugin_data['validation'][$field['validation']] ) ) {
-							$plugin_data['validation'][$field['validation']] = 0;
-						}
-						$plugin_data['validation'][$field['validation']]++;
-					}
-				}
-			}
-
-			$plugin_data['inspire_checkout_fields_css_disable'] = get_option( 'inspire_checkout_fields_css_disable', '0' );
-
-			$plugin_data['custom_sections']['before_customer_details'] = get_option( 'inspire_checkout_fields_before_customer_details', '0' );
-			$plugin_data['custom_sections']['after_customer_details'] = get_option( 'inspire_checkout_fields_after_customer_details', '0' );
-			$plugin_data['custom_sections']['before_checkout_billing_form'] = get_option( 'inspire_checkout_fields_before_checkout_billing_form', '0' );
-			$plugin_data['custom_sections']['after_checkout_billing_form'] = get_option( 'inspire_checkout_fields_after_checkout_billing_form', '0' );
-			$plugin_data['custom_sections']['before_checkout_shipping_form'] = get_option( 'inspire_checkout_fields_before_checkout_shipping_form', '0' );
-			$plugin_data['custom_sections']['after_checkout_shipping_form'] = get_option( 'inspire_checkout_fields_after_checkout_shipping_form', '0' );
-			$plugin_data['custom_sections']['before_checkout_registration_form'] = get_option( 'inspire_checkout_fields_before_checkout_registration_form', '0' );
-			$plugin_data['custom_sections']['after_checkout_registration_form'] = get_option( 'inspire_checkout_fields_after_checkout_registration_form', '0' );
-			$plugin_data['custom_sections']['before_order_notes'] = get_option( 'inspire_checkout_fields_before_order_notes', '0' );
-			$plugin_data['custom_sections']['after_order_notes'] = get_option( 'inspire_checkout_fields_after_order_notes', '0' );
-			$plugin_data['custom_sections']['review_order_before_submit'] = get_option( 'inspire_checkout_fields_review_order_before_submit', '0' );
-			$plugin_data['custom_sections']['review_order_after_submit'] = get_option( 'inspire_checkout_fields_review_order_after_submit', '0' );
+			$plugin_data = [
+				'sections'     => $this->get_sections_data( $sections, $settings_fields ),
+				'fields_names' => $this->get_fields_names( $settings_fields ),
+				'options'      => array(
+					'css_disable' => get_option( 'inspire_checkout_fields_css_disable', '0' )
+				),
+				'pro_version'  => array(
+					'is_active'    => is_flexible_checkout_fields_pro_active() ? '1' : '0',
+					'is_activated' => ( get_option( 'api_flexible-checkout-fields-pro_activated', '' ) === 'Activated' ) ? '1' : '0',
+				),
+			];
 
 			$data['flexible_checkout_fields'] = $plugin_data;
+
+			return $data;
+		}
+
+		private function get_fields_names( $settings_fields ) {
+			$items = array();
+			foreach ( $settings_fields as $section_key => $fields ) {
+				foreach ( $fields as $field_name => $field ) {
+					$name = str_replace( $section_key . '_', '', $field_name );
+					if ( !isset( $items[ $name ] ) ) {
+						$items[ $name ] = 0;
+					}
+					$items[ $name ]++;
+				}
+			}
+			return $items;
+		}
+
+		private function get_sections_data( $sections, $settings_fields ) {
+			$settings_sections = get_option('inspire_checkout_fields_section_settings', array() );
+			if ( ! is_array( $settings_sections ) ) {
+				$settings_sections = array();
+			}
+			$default_data = array(
+				'enabled'      => 0,
+				'has_title'    => 0,
+				'has_css'      => 0,
+				'fields'       => array(),
+				'fields_count' => 0,
+			);
+
+			$data = array();
+			foreach ( $sections as $section ) {
+				$data[$section] = $default_data;
+				if ( in_array( $section, array( 'billing', 'shipping', 'order' ) )
+					|| get_option( 'inspire_checkout_fields_'  . $section, '0' ) ) {
+					$data[$section]['enabled'] = '1';
+				}
+				if ( isset( $settings_sections[ $section ] ) && ! empty( $settings_sections[ $section ]['section_title'] ) ) {
+					$data[$section]['has_title'] = '1';
+				}
+				if ( isset( $settings_sections[ $section ] ) && ! empty( $settings_sections[ $section ]['section_css'] ) ) {
+					$data[$section]['has_css'] = '1';
+				}
+				$data[$section]['fields'] = $this->get_fields_data( $section, $settings_fields );
+				if ( isset( $settings_fields[ $section ] ) ) {
+					$data[$section]['fields_count'] = count( $settings_fields[ $section ] );
+				}
+			}
+
+			return $data;
+		}
+
+		private function get_fields_data( $section, $settings ) {
+			if ( ! isset( $settings[ $section ] ) ) {
+				return array();
+			}
+			$default_data = array(
+				'count'             => 0,
+				'enabled'           => 0,
+				'required'          => 0,
+				'validation'        => array(),
+				'default_value'     => 0,
+				'placeholder'       => 0,
+				'display_on'        => array(
+					'thank_you'              => 0,
+					'on_address'             => 0,
+					'on_order'               => 0,
+					'on_emails'              => 0,
+					'option_new_line_before' => 0,
+					'option_show_label'      => 0,
+				),
+				'conditional_logic' => array(),
+				'pricing'           => array(
+					'enabled'     => 0,
+					'types'       => array(),
+					'values'      => array(),
+					'tax_classes' => array(),
+				),
+			);
+
+			$data = array();
+			foreach ( $settings[ $section ] as $field ) {
+				$field_type = ( isset( $field['type'] ) ) ? $field['type'] : '_null_';
+
+				if ( ! isset( $data[ $field_type ] ) ) {
+					$data[ $field_type ] = $default_data;
+				}
+				$data[ $field_type ]['count']++;
+				if ( isset( $field['visible'] ) && ! $field['visible'] ) {
+					$data[ $field_type ]['enabled']++;
+				}
+				if ( isset( $field['required'] ) && $field['required'] ) {
+					$data[ $field_type ]['required']++;
+				}
+				if ( isset( $field['validation'] ) && $field['validation'] ) {
+					if ( ! isset( $data[ $field_type ]['validation'][ $field['validation'] ] ) ) {
+						$data[ $field_type ]['validation'][ $field['validation'] ] = 0;
+					}
+					$data[ $field_type ]['validation'][ $field['validation'] ]++;
+				}
+				if ( isset( $field['default'] ) && $field['default'] ) {
+					$data[ $field_type ]['default_value']++;
+				}
+				if ( isset( $field['placeholder'] ) && $field['placeholder'] ) {
+					$data[ $field_type ]['placeholder']++;
+				}
+				if ( isset( $field['display_on_thank_you'] ) && $field['display_on_thank_you'] ) {
+					$data[ $field_type ]['display_on']['thank_you']++;
+				}
+				if ( isset( $field['display_on_address'] ) && $field['display_on_address'] ) {
+					$data[ $field_type ]['display_on']['on_address']++;
+				}
+				if ( isset( $field['display_on_order'] ) && $field['display_on_order'] ) {
+					$data[ $field_type ]['display_on']['on_order']++;
+				}
+				if ( isset( $field['display_on_emails'] ) && $field['display_on_emails'] ) {
+					$data[ $field_type ]['display_on']['on_emails']++;
+				}
+				if ( isset( $field['display_on_option_new_line_before'] ) && $field['display_on_option_new_line_before'] ) {
+					$data[ $field_type ]['display_on']['option_new_line_before']++;
+				}
+				if ( isset( $field['display_on_option_show_label'] ) && $field['display_on_option_show_label'] ) {
+					$data[ $field_type ]['display_on']['option_show_label']++;
+				}
+				if ( isset( $field['pricing_enabled'] ) && $field['pricing_enabled'] ) {
+					$data[ $field_type ]['pricing']['enabled']++;
+				}
+				if ( isset( $field['pricing_values'] ) && $field['pricing_values'] ) {
+					foreach ( $field['pricing_values'] as $pricing_value ) {
+						if ( ! isset( $data[ $field_type ]['pricing']['types'][ $pricing_value['type'] ] ) ) {
+							$data[ $field_type ]['pricing']['types'][ $pricing_value['type'] ] = 0;
+						}
+						$data[ $field_type ]['pricing']['types'][ $pricing_value['type'] ]++;
+					}
+					foreach ( $field['pricing_values'] as $pricing_value ) {
+						if ( ! isset( $data[ $field_type ]['pricing']['values'][ $pricing_value['value'] ] ) ) {
+							$data[ $field_type ]['pricing']['values'][ $pricing_value['value'] ] = 0;
+						}
+						$data[ $field_type ]['pricing']['values'][ $pricing_value['value'] ]++;
+					}
+					foreach ( $field['pricing_values'] as $pricing_value ) {
+						if ( ! isset( $data[ $field_type ]['pricing']['tax_classes'][ $pricing_value['tax_class'] ] ) ) {
+							$data[ $field_type ]['pricing']['tax_classes'][ $pricing_value['tax_class'] ] = 0;
+						}
+						$data[ $field_type ]['pricing']['tax_classes'][ $pricing_value['tax_class'] ]++;
+					}
+				}
+				$data[ $field_type ]['conditional_logic'] = $this->get_conditional_logic_data(
+					$field,
+					$data[ $field_type ]['conditional_logic']
+				);
+			}
+
+			return $data;
+		}
+
+		private function get_conditional_logic_data( $field, $current_data ) {
+			$default_data = array(
+				'enabled'        => 0,
+				'action'         => array(),
+				'operator'       => array(),
+				'rule_options'   => array(),
+				'rule_operators' => array(),
+			);
+
+			$data = ( $current_data )
+				? $current_data
+				: array(
+					'products' => $default_data,
+					'fields'   => $default_data,
+					'shipping' => $default_data,
+				)
+			;
+
+			if ( isset( $field['conditional_logic'] ) && $field['conditional_logic'] ) {
+				$data['products']['enabled']++;
+			}
+			if ( isset( $field['conditional_logic_action'] ) && $field['conditional_logic_action'] ) {
+				if ( ! isset( $data['products']['action'][ $field['conditional_logic_action'] ] ) ) {
+					$data['products']['action'][ $field['conditional_logic_action'] ] = 0;
+				}
+				$data['products']['action'][ $field['conditional_logic_action'] ]++;
+			}
+			if ( isset( $field['conditional_logic_operator'] ) && $field['conditional_logic_operator'] ) {
+				if ( ! isset( $data['products']['operator'][ $field['conditional_logic_operator'] ] ) ) {
+					$data['products']['operator'][ $field['conditional_logic_operator'] ] = 0;
+				}
+				$data['products']['operator'][ $field['conditional_logic_operator'] ]++;
+			}
+			if ( isset( $field['conditional_logic_rules'] ) && $field['conditional_logic_rules'] ) {
+				foreach ( $field['conditional_logic_rules'] as $rule ) {
+					if ( ! isset( $data['products']['rule_options'][ $rule['condition'] ] ) ) {
+						$data['products']['rule_options'][ $rule['condition'] ] = 0;
+					}
+					$data['products']['rule_options'][ $rule['condition'] ]++;
+					if ( ! isset( $data['products']['rule_operators'][ $rule['what'] ] ) ) {
+						$data['products']['rule_operators'][ $rule['what'] ] = 0;
+					}
+					$data['products']['rule_operators'][ $rule['what'] ]++;
+				}
+			}
+
+			if ( isset( $field['conditional_logic_fields'] ) && $field['conditional_logic_fields'] ) {
+				$data['fields']['enabled']++;
+			}
+			if ( isset( $field['conditional_logic_fields_action'] ) && $field['conditional_logic_fields_action'] ) {
+				if ( ! isset( $data['fields']['action'][ $field['conditional_logic_fields_action'] ] ) ) {
+					$data['fields']['action'][ $field['conditional_logic_fields_action'] ] = 0;
+				}
+				$data['fields']['action'][ $field['conditional_logic_fields_action'] ]++;
+			}
+			if ( isset( $field['conditional_logic_fields_operator'] ) && $field['conditional_logic_fields_operator'] ) {
+				if ( ! isset( $data['fields']['operator'][ $field['conditional_logic_fields_operator'] ] ) ) {
+					$data['fields']['operator'][ $field['conditional_logic_fields_operator'] ] = 0;
+				}
+				$data['fields']['operator'][ $field['conditional_logic_fields_operator'] ]++;
+			}
+			if ( isset( $field['conditional_logic_fields_rules'] ) && $field['conditional_logic_fields_rules'] ) {
+				foreach ( $field['conditional_logic_fields_rules'] as $rule ) {
+					if ( ! isset( $data['fields']['rule_operators'][ $rule['condition'] ] ) ) {
+						$data['fields']['rule_operators'][ $rule['condition'] ] = 0;
+					}
+					$data['fields']['rule_operators'][ $rule['condition'] ]++;
+				}
+			}
+
+			if ( isset( $field['conditional_logic_shipping_fields'] ) && $field['conditional_logic_shipping_fields'] ) {
+				$data['shipping']['enabled']++;
+			}
+			if ( isset( $field['conditional_logic_shipping_fields_action'] ) && $field['conditional_logic_shipping_fields_action'] ) {
+				if ( ! isset( $data['shipping']['action'][ $field['conditional_logic_shipping_fields_action'] ] ) ) {
+					$data['shipping']['action'][ $field['conditional_logic_shipping_fields_action'] ] = 0;
+				}
+				$data['shipping']['action'][ $field['conditional_logic_shipping_fields_action'] ]++;
+			}
+			if ( isset( $field['conditional_logic_shipping_fields_operator'] ) && $field['conditional_logic_shipping_fields_operator'] ) {
+				if ( ! isset( $data['shipping']['operator'][ $field['conditional_logic_shipping_fields_operator'] ] ) ) {
+					$data['shipping']['operator'][ $field['conditional_logic_shipping_fields_operator'] ] = 0;
+				}
+				$data['shipping']['operator'][ $field['conditional_logic_shipping_fields_operator'] ]++;
+			}
 
 			return $data;
 		}
@@ -205,30 +371,4 @@ if ( ! class_exists( 'WPDesk_Flexible_Checkout_Fields_Tracker' ) ) {
 
 	}
 
-	new WPDesk_Flexible_Checkout_Fields_Tracker();
-
-}
-
-if ( !function_exists( 'wpdesk_activated_plugin_activation_date' ) ) {
-	function wpdesk_activated_plugin_activation_date( $plugin, $network_wide ) {
-		$option_name = 'plugin_activation_' . $plugin;
-		$activation_date = get_option( $option_name, '' );
-		if ( $activation_date == '' ) {
-			$activation_date = current_time( 'mysql' );
-			update_option( $option_name, $activation_date );
-		}
-	}
-	add_action( 'activated_plugin', 'wpdesk_activated_plugin_activation_date', 10, 2 );
-}
-
-if ( !function_exists( 'wpdesk_tracker_enabled' ) ) {
-	function wpdesk_tracker_enabled() {
-		$tracker_enabled = true;
-		if ( !empty( $_SERVER['SERVER_ADDR'] ) && $_SERVER['SERVER_ADDR'] == '127.0.0.1' ) {
-			$tracker_enabled = false;
-		}
-		return apply_filters( 'wpdesk_tracker_enabled', $tracker_enabled );
-		// add_filter( 'wpdesk_tracker_enabled', '__return_true' );
-		// add_filter( 'wpdesk_tracker_do_not_ask', '__return_true' );
-	}
 }

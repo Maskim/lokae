@@ -57,6 +57,7 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 				$object['objects']['tags'] = $library->get_objects_categories('1');
 				asort($object['objects']['tags']);
 			}
+			$object = apply_filters('revslider_get_full_library_refresh', $object, $include, $tmp_slide_uid, $refresh_from_server, $get_static_slide, $this);
 		}
 		
 		if(in_array('moduletemplates', $include) || in_array('all', $include)){
@@ -78,6 +79,10 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 		if(in_array('svgs', $include) || in_array('all', $include)){
 			if(!isset($object['svgs'])) $object['svgs'] = array();
 			$object['svgs']['items'] = $library->get_svg_sets_full();
+		}
+		if(in_array('svgcustom', $include) || in_array('all', $include)){
+			if(!isset($object['svgcustom'])) $object['svgcustom'] = array();
+			$object['svgcustom']['items'] = $library->get_custom_svgs();
 		}
 		if(in_array('fonticons', $include) || in_array('all', $include)){
 			if(!isset($object['fonticons'])) $object['fonticons'] = array();
@@ -111,6 +116,7 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 			if(!isset($object['wpvideos'])) $object['wpvideos'] = array();
 			$object['wpvideos']['items'] = $library->load_wp_objects('video', $after);
 		}*/
+		$object = apply_filters('revslider_get_full_library', $object, $include, $tmp_slide_uid, $refresh_from_server, $get_static_slide, $this);
 		
 		return $object;
 	}
@@ -119,12 +125,10 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 	/**
 	 * get the short library with categories and how many elements exist
 	 **/
-	public function get_short_library(){
-		
+	public function get_short_library($sliders = false){
 		$template = new RevSliderTemplate();
 		$library = new RevSliderObjectLibrary();
-		$sliders = $this->get_slider_overview();
-		
+		$sliders = ($sliders === false) ? $this->get_slider_overview() : $sliders;
 		
 		$slider_cat = array();
 		if(!empty($sliders)){
@@ -145,6 +149,7 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 		$oc4 = $library->get_objects_categories('4');
 		$t_cat = $template->get_template_categories();
 		$font_cat = $library->get_font_tags();
+		$custom = $library->get_custom_tags();
 		
 		$wpi = array('jpg' => 'jpg', 'png' => 'png');
 		$wpv = array('mpeg' => 'mpeg', 'mp4' => 'mp4', 'ogv' => 'ogv');
@@ -157,7 +162,7 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 		asort($svg_cat);
 		asort($font_cat);
 		
-		return array(
+		$tags = array(
 			'moduletemplates' => array('tags' => $t_cat),
 			'modules'	=> array('tags' => $slider_cat),
 			'svgs'		=> array('tags' => $svg_cat),
@@ -169,6 +174,14 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 			'wpimages'	=> array('tags' => $wpi),
 			'wpvideos'	=> array('tags' => $wpv)*/
 		);
+		
+		if(!empty($custom)){
+			foreach($custom as $tag_name => $tag_value){
+				$tags[$tag_name] = array('tags' => $tag_value);
+			}
+		}
+		
+		return apply_filters('revslider_get_short_library', $tags, $library, $this);
 	}
 	
 	
@@ -176,21 +189,54 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 	 * Get Sliders data for the overview page
 	 **/
 	public function get_slider_overview(){
+		global $rs_do_init_action;
+		$rs_do_init_action = false;
+		
 		$rs_slider	= new RevSliderSlider();
+		$rs_slide	= new RevSliderSlide();
 		$sliders	= $rs_slider->get_sliders(false);
-
 		$rs_folder	= new RevSliderFolder();
 		$folders	= $rs_folder->get_folders();
 		
 		$sliders 	= array_merge($sliders, $folders);
 		$data		= array();
-		
 		if(!empty($sliders)){
+			$slider_list = array();
 			foreach($sliders as $slider){
+				$slider_list[] = $slider->get_id();
+			}
+			
+			$_slides_raw = $rs_slide->get_all_slides_raw($slider_list);
+			$slides_raw = $this->get_val($_slides_raw, 'first_slides', array());
+			$slides_ids = $this->get_val($_slides_raw, 'slide_ids', array());
+			
+			foreach($sliders as $k => $slider){
+				$slide_ids = array();
+				$slides = array();
+				$sid = $slider->get_id();
+				foreach($slides_raw as $s => $r){
+					if($r->get_slider_id() !== $sid) continue;
+					
+					foreach($slides_ids as $_s => $_sv){
+						if($this->get_val($_sv, 'slider_id') === $sid){
+							$slide_ids[] = $this->get_val($_sv, 'id');
+							unset($slides_ids[$_s]);
+						}
+					}
+					$slides[] = $r;
+					unset($slides_raw[$s]);
+				}
+				if(empty($slide_ids)) $slide_ids = false;
+				
+				$slides = (empty($slides)) ? false : $slides;
+				
 				$slider->init_layer = false;
-				$data[] = $slider->get_overview_data();
+				$data[] = $slider->get_overview_data(false, $slides, $slide_ids);
+				unset($sliders[$k]);
 			}
 		}
+		
+		$rs_do_init_action = true;
 		
 		return $data;
 	}
@@ -243,6 +289,7 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 	/**
 	 * delete custom animations
 	 * @before: RevSliderOperations::deleteCustomAnim();
+	 * @param int $animation_id
 	 */
 	public function delete_animation($animation_id){
 		global $wpdb;
@@ -257,6 +304,9 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 	 * @since: 5.3.0
 	 * create a page with revslider shortcodes included
 	 * @before: RevSliderOperations::create_slider_page();
+	 * @param array $added
+	 * @param array $modals
+	 * @param array $additions
 	 **/
 	public static function create_slider_page($added, $modals = array(), $additions = array()){
 		global $wp_version;
@@ -329,19 +379,27 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 	/**
 	 * add notices from ThemePunch
 	 * @since: 4.6.8
+	 * @return array
 	 */
 	public function add_notices(){
 		$_n = array();
 		$notices = (array)get_option('revslider-notices', false);
+		$rs_valid = $this->_truefalse(get_option('revslider-valid', 'false'));
 		
 		if(!empty($notices) && is_array($notices)){
 			$n_discarted = get_option('revslider-notices-dc', array());
-			
 			foreach($notices as $notice){
-				//check if global or just on plugin related pages
-				if($notice->version === true || !in_array($notice->code, $n_discarted) && version_compare($notice->version, RS_REVISION, '>=')){
-					$_n[] = $notice;
+				if(in_array($notice->code, $n_discarted)) continue;
+				if(isset($notice->version) && version_compare($notice->version, RS_REVISION, '<=')) continue;
+				if(isset($notice->registered)){ //if this is set, only show the notice if the plugin state is the same
+					$registered = $this->_truefalse($notice->registered);
+					if($registered !== $rs_valid) continue;
 				}
+				if(isset($notice->show_until) && $notice->show_until !== '0000-00-00 00:00:00'){
+					if(strtotime($notice->show_until) < time()) continue;
+				}
+
+				$_n[] = $notice;
 			}
 		}
 		
@@ -492,8 +550,6 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 		$return		 = array('error' => __('File not found', 'revslider'));
 		
 		switch($error){
-			case UPLOAD_ERR_OK:
-				break;
 			case UPLOAD_ERR_NO_FILE:
 				return array('error' => __('No file sent', 'revslider'));
 			case UPLOAD_ERR_INI_SIZE:
@@ -526,7 +582,7 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 		$upload_dir = wp_upload_dir();
 		
 		$new_path = $path;
-		$file_name = $this->get_val($import_file, 'name');
+		$file_name = basename($this->get_val($import_file, 'name'));
 		$i = 0;
 		while(file_exists($new_path)){
 			$i++;
@@ -572,6 +628,15 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 	 */
 	public function get_javascript_multilanguage(){
 		$lang = array(
+			'up' => __('Up', 'revslider'),
+			'down' => __('Down', 'revslider'),
+			'left' => __('Left', 'revslider'),
+			'right' => __('Right', 'revslider'),
+			'horizontal' => __('Horizontal', 'revslider'),
+			'vertical' => __('Vertical', 'revslider'),
+			'reversed' => __('Reverse', 'revslider'),
+			'previewnotworking' => __('The preview could not be loaded due to some conflict with another WordPress theme or plugin', 'revslider'),
+			'checksystemnotworking' => __('Server connection issues, contact your hosting provider for further assistance', 'revslider'),
 			'editskins' => __('Edit Skin List', 'revslider'),
 			'globalcoloractive' => __('Color Skin Active', 'revslider'),
 			'corejs' => __('Core JavaScript', 'revslider'),
@@ -662,7 +727,7 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 			'folders' => __('Folder', 'revslider'),
 			'rename' => __('Rename', 'revslider'),
 			'root' => __('Root Level', 'revslider'),
-			'simproot' => __('Root', 'revslider'),
+			'addcategory' => __('Add Category', 'revslider'),
 			'show' => __('Show', 'revslider'),
 			'perpage' => __('Per Page', 'revslider'),
 			'convertedlayer' => __('Layer converted Successfully', 'revslider'),
@@ -676,17 +741,27 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 			'dismissmessages' => __('Dismiss Messages', 'revslider'),
 			'someAddonnewVersionAvailable' => __('Some AddOns have new versions available', 'revslider'),
 			'newVersionAvailable' => __('New Version Available. Please Update', 'revslider'),
+			'pluginsmustbeupdated' => __('Plugin Outdated. Please Update', 'revslider'),
 			'addonsmustbeupdated' => __('AddOns Outdated. Please Update', 'revslider'),
 			'notRegistered' => __('Plugin is not Registered', 'revslider'),
 			'notRegNoPremium' => __('Register to unlock Premium Features', 'revslider'),
-			'notRegNoAll' => __('Register to Unlock all Features', 'revslider'),
+			'notRegNoAll' => __('Register Plugin to unlock all features', 'revslider'),
+			'needsd' => __('Needs:', 'revslider'),
+			'fixMissingAddons' => __('Fix not Installed Addons', 'revslider'),
+			'fix' => __('Fix', 'revslider'),
 			'notRegNoAddOns' => __('Register to unlock AddOns', 'revslider'),
 			'notRegNoSupport' => __('Register to unlock Support', 'revslider'),
 			'notRegNoLibrary' => __('Register to unlock Library', 'revslider'),
 			'notRegNoUpdates' => __('Register to unlock Updates', 'revslider'),
 			'notRegNoTemplates' => __('Register to unlock Templates', 'revslider'),
 			'areyousureupdateplugin' => __('Do you want to start the Update process?', 'revslider'),
+			'arereadytoimport' => __('are ready for import!', 'revslider'),
+			'addtocustomornew' => __('Do you want to add them to the "custom" category or create a new category?', 'revslider'),
+			'addtocustom' => __('Add To Custom', 'revslider'),
+			'addto' => __('Add To', 'revslider'),
+			'createnewcategory' => __('Create New Category', 'revslider'),
 			'updatenow' => __('Update Now', 'revslider'),
+			'securityupdate' => __('Install Critical Update', 'revslider'),
 			'toplevels' => __('Higher Level', 'revslider'),
 			'siblings' => __('Current Level', 'revslider'),
 			'otherfolders' => __('Other Folders', 'revslider'),
@@ -715,6 +790,7 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 			'loadingthumbs' => __('Loading Thumbnails...', 'revslider'),
 			'jquerytriggered' => __('jQuery Triggered', 'revslider'),
 			'atriggered' => __('&lt;a&gt; Tag Link', 'revslider'),
+			'randomslide' => __('Random Slide', 'revslider'),
 			'firstslide' => __('First Slide', 'revslider'),
 			'lastslide' => __('Last Slide', 'revslider'),
 			'nextslide' => __('Next Slide', 'revslider'),
@@ -737,32 +813,9 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 			'sticky_slide' => __('Slide Options', 'revslider'),
 			'sticky_layer' => __('Layer Options', 'revslider'),
 			'imageCouldNotBeLoaded' => __('Set a Slide Background Image to use this feature', 'revslider'),
-			'oppps' => __('Ooppps....', 'revslider'),
-			'no_nav_changes_done' => __('None of the Settings changed. There is Nothing to Save', 'revslider'),
-			'no_preset_name' => __('Enter Preset Name to Save or Delete', 'revslider'),
-			'customlayergrid_size_title' => __('Custom Size is currently Disabled', 'revslider'),
-			'customlayergrid_size_content' => __('The Current Size is set to calculate the Layer grid sizes Automatically.<br>Do you want to continue with Custom Sizes or do you want to keep the Automatically generated sizes ?', 'revslider'),
-			'customlayergrid_answer_a' => __('Keep Auto Sizes', 'revslider'),
-			'customlayergrid_answer_b' => __('Use Custom Sizes', 'revslider'),
-			'removinglayer_title' => __('What should happen Next?', 'revslider'),
-			'removinglayer_attention' => __('Need Attention by removing', 'revslider'),
-			'removinglayer_content' => __('Where do you want to move the Inherited Layers?', 'revslider'),
-			'dragAndDropFile' => __('Drag & Drop Import File', 'revslider'),
-			'or' => __('or', 'revslider'),
-			'clickToChoose' => __('Click to Choose', 'revslider'),
-			'embed' => __('Embed', 'revslider'),
-			'export' => __('Export', 'revslider'),
+			'slideTransPresets' => __('Slide Transition Presets', 'revslider'),
 			'exporthtml' => __('HTML', 'revslider'),
-			'delete' => __('Delete', 'revslider'),
-			'duplicate' => __('Duplicate', 'revslider'),
-			'preview' => __('Preview', 'revslider'),
-			'tags' => __('Tags', 'revslider'),
-			'folders' => __('Folder', 'revslider'),
-			'rename' => __('Rename', 'revslider'),
-			'root' => __('Root Level', 'revslider'),
 			'simproot' => __('Root', 'revslider'),
-			'show' => __('Show', 'revslider'),
-			'perpage' => __('Per Page', 'revslider'),
 			'releaseToAddLayer' => __('Release to Add Layer', 'revslider'),
 			'releaseToUpload' => __('Release to Upload file', 'revslider'),
 			'moduleZipFile' => __('Module .zip', 'revslider'),
@@ -789,6 +842,7 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 			'layeraction_group_media' => __('Media Actions', 'revslider'),
 			'layeraction_group_fullscreen' => __('Fullscreen Actions', 'revslider'),
 			'layeraction_group_advanced' => __('Advanced Actions', 'revslider'),
+			'layeraction_menu' => __('Menu Link & Scroll', 'revslider'),
 			'layeraction_link' => __('Simple Link', 'revslider'),
 			'layeraction_callback' => __('Call Back', 'revslider'),
 			'layeraction_modal' => __('Open Slider Modal', 'revslider'),
@@ -825,7 +879,6 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 			'backgroundvideo' => __('Background Video', 'revslider'),
 			'videoactiveslide' => __('Video in Active Slide', 'revslider'),
 			'firstvideo' => __('Video in Active Slide', 'revslider'),
-			'triggeredby' => __('Behavior', 'revslider'),
 			'addaction' => __('Add Action to ', 'revslider'),
 			'ol_images' => __('Images', 'revslider'),
 			'ol_layers' => __('Layer Objects', 'revslider'),
@@ -842,9 +895,7 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 			'requirements' => __('Requirements', 'revslider'),
 			'installedversion' => __('Installed Version', 'revslider'),
 			'cantpulllinebreakoutside' => __('Use LineBreaks only in Columns', 'revslider'),
-			'availableversion' => __('Available Version', 'revslider'),
-			'installpackage' => __('Installing Template Package', 'revslider'),
-			'installtemplate' => __('Install Template', 'revslider'),
+			'availableversion' => __('Available Version', 'revslider'),			
 			'installingtemplate' => __('Installing Template', 'revslider'),
 			'search' => __('Search', 'revslider'),
 			'publish' => __('Publish', 'revslider'),
@@ -865,7 +916,6 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 			'fontBIG' => __('FONT', 'revslider'),
 			'redownloadTemplate' => __('Re-Download Online', 'revslider'),
 			'createBlankPage' => __('Create Blank Page', 'revslider'),
-			'please_wait_a_moment' => __('Please Wait a Moment', 'revslider'),
 			'changingscreensize' => __('Changing Screen Size', 'revslider'),
 			'qs_headlines' => __('Headlines', 'revslider'),
 			'qs_content' => __('Content', 'revslider'),
@@ -876,7 +926,6 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 			'saveslide' => __('Saving Slide', 'revslider'),
 			'loadconfig' => __('Loading Configuration', 'revslider'),
 			'updateselects' => __('Updating Lists', 'revslider'),
-			'lastslide' => __('Last Slide', 'revslider'),
 			'textlayers' => __('Text Layers', 'revslider'),
 			'globalLayers' => __('Global Layers', 'revslider'),
 			'slidersettings' => __('Slider Settings', 'revslider'),
@@ -899,13 +948,23 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 			'shortcode_parsing_successfull' => __('Shortcode parsing successfull. Items can be found in step 3', 'revslider'),
 			'shortcode_could_not_be_correctly_parsed' => __('Shortcode could not be parsed.', 'revslider'),
 			'addonrequired' => __('Addon Required', 'revslider'),
+			'installpackage' => __('Installing Template Package', 'revslider'),			
+			'doinstallpackage' => __('Install Template Package', 'revslider'),
+			'installtemplate' => __('Install Template', 'revslider'),
+			'checkversion' => __('Update To Latest Version', 'revslider'),
+			'installpackageandaddons' => __('Install Template Package & Addon(s)', 'revslider'),
+			'installtemplateandaddons' => __('Install Template & Addon(s)', 'revslider'),
 			'licencerequired' => __('Activate License', 'revslider'),
 			'searcforicon' => __('Search Icons...', 'revslider'),
-			'savecurrenttemplate' => __('Save Current Template', 'revslider'),
+			'savecurrenttemplate' => __('Current Settings (Click to Save as Preset)', 'revslider'),
+			'customtransitionpresets' => __('Custom Presets', 'revslider'),
+			'customtemplates' => __('Custom', 'revslider'),
 			'overwritetemplate' => __('Overwrite Template ?', 'revslider'),
 			'deletetemplate' => __('Delete Template ?', 'revslider'),
 			'credits' => __('Credits', 'revslider'),
-			'notinstalled' => __('Not Installed', 'revslider'),
+			'randomanimation' => __('Random Animation', 'revslider'),
+			'transition' => __('Transition', 'revslider'),
+			'duration' => __('Duration', 'revslider'),
 			'enabled' => __('Enabled', 'revslider'),
 			'global' => __('Global', 'revslider'),
 			'install_and_activate' => __('Install Add-On', 'revslider'),
@@ -951,7 +1010,7 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 			'openInEditor' => __('Open in Editor', 'revslider'),
 			'openFolder' => __('Open Folder', 'revslider'),
 			'moveToFolder' => __('Move to Folder', 'revslider'),
-			'loadingcodemirror' => __('Loading CodeMirror Library...', 'revslider'),
+			'loadingRevMirror' => __('Loading RevMirror Library...', 'revslider'),
 			'lockunlocklayer' => __('Lock / Unlock Selected', 'revslider'),
 			'nrlayersimporting' => __('Layers Importing', 'revslider'),
 			'nothingselected' => __('Nothing Selected', 'revslider'),
@@ -966,6 +1025,8 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 			'exitwihoutchangesornot' => __('Are you sure you want to continue?', 'revslider'),
 			'areyousuretoexport' => __('Are you sure you want to export ', 'revslider'),
 			'areyousuretodelete' => __('Are you sure you want to delete ', 'revslider'),
+			'deletecustomcategory' => __('Delete Custom Category ', 'revslider'),
+			'deletecustomitem' => __('Delete Custom Item ', 'revslider'),
 			'areyousuretodeleteeverything' => __('Delete All Sliders and Folders included in ', 'revslider'),
 			'leavewithoutsave' => __('Leave without Save', 'revslider'), 
 			'updatingtakes' => __('Updating the Plugin may take a few moments.', 'revslider'),
@@ -973,16 +1034,21 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 			'exportslider' => __('Export Slider', 'revslider'),
 			'yesexport' => __('Yes, Export Slider', 'revslider'),
 			'yesdelete' => __('Yes, Delete Slider', 'revslider'),
+			'yesdeleteit' => __('Yes, Delete', 'revslider'),
 			'yesdeleteslide' => __('Yes, Delete Slide', 'revslider'),
 			'yesdeleteall' => __('Yes, Delete All Slider(s)', 'revslider'),
 			'stayineditor' => __('Stay in Edior', 'revslider'),
 			'redirectingtooverview' => __('Redirecting to Overview Page', 'revslider'),
 			'leavingpage' => __('Leaving current Page', 'revslider'),
 			'ashtmlexport' => __('as HTML Document', 'revslider'),
+			'preparingNextSlide' => __('Preparing Slide...', 'revslider'),
+			'updatingfields' => __('Preparing Fields...', 'revslider'),
 			'preparingdatas' => __('Preparing Data...', 'revslider'),
 			'loadingcontent' => __('Loading Content...', 'revslider'),
 			'copy' => __('Copy', 'revslider'),
 			'paste' => __('Paste', 'revslider'),
+			'thiswilldeletecustomitem' => __('This will delete the selected item. Items already embedded in modules will remain there.', 'revslider'),
+			'thiswilldeletecustomcategory' => __('This will delete the Category and move the elements in the default "All" category.', 'revslider'),
 			'framewait' => __('WAIT', 'revslider'),
 			'frstframe' => __('1st Frame', 'revslider'),
 			'lastframe' => __('Last Frame', 'revslider'),
@@ -1001,13 +1067,19 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 			'active_sr_inst_upd' => __('Instant Updates', 'revslider'),
 			'active_sr_one_on_one' => __('1on1 Support', 'revslider'),			
 			'parallaxsettoenabled' => __('Parallax is now generally Enabled', 'revslider'),
+			'CORSERROR' => __('External Media can not be used  for WEBGL Transitions due CORS Policy issues', 'revslider'),
+			'CORSWARNING' => __('Slider Revolution has successfully re-requested image to rectify above CORS error.', 'revslider'),
 			'timelinescrollsettoenabled' => __('Scroll Based Timeline is now generally Enabled', 'revslider'),
 			'feffectscrollsettoenabled' => __('Filter Effect Scroll is now generally Enabled', 'revslider'),
 			'nolayersinslide' => __('Slide has no Layers', 'revslider'),
 			'leaving' => __('Changes that you made may not be saved.', 'revslider'),
 			'sliderasmodal' => __('Add Slider as Modal', 'revslider'),
 			'register_to_unlock' => __('Register to unlock all Premium Features', 'revslider'),
-			'premium_features_unlocked' => __('All Premium Features unlocked', 'revslider'),
+			'premium_features_unlocked' => __('All Premium Features unlocked', 'revslider'),			
+			'premium_template' => __('PREMIUM TEMPLATE', 'revslider'),
+			'rs_premium_content' => __('This is a Premium template from the Slider Revolution <a target="_blank" rel="noopener" href="https://www.sliderrevolution.com/examples/">template library</a>. It can only be used on this website with a <a target="_blank" rel="noopener" href="https://www.sliderrevolution.com/manual/quick-setup-register-your-plugin/?utm_source=admin&utm_medium=button&utm_campaign=srusers&utm_content=registermanual">registered license key</a>.', 'revslider'),
+			'premium' => __('Premium', 'revslider'),
+			'premiumunlock' => __('REGISTER LICENSE TO UNLOCK', 'revslider'),
 			'tryagainlater' => __('Please try again later', 'revslider'),
 			'quickcontenteditor' => __('Quick Content Editor', 'revslider'),
 			'module' => __('Module', 'revslider'),
@@ -1030,11 +1102,68 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 			'active_sr_plg_activ' => __('Register Purchase Code', 'revslider'),
 			'active_sr_plg_activ_key' => __('Register License Key', 'revslider'),
 			'getpurchasecode' => __('Get a Purchase Code', 'revslider'),
-			'getlicensekey' => __('Licensing Options', 'revslider'),
+			'getlicensekey' => __('Get a License Key', 'revslider'),
 			'ihavepurchasecode' => __('I have a Purchase Code', 'revslider'),
 			'ihavelicensekey' => __('I have a License Key', 'revslider'),
 			'enterlicensekey' => __('Enter License Key', 'revslider'),
-			'enterpurchasecode' => __('Enter Purchase Code', 'revslider')
+			'enterpurchasecode' => __('Enter Purchase Code', 'revslider'),
+			'colrskinhas' => __('This Skin use', 'revslider'),
+			'deleteskin' => __('Delete Skin', 'revslider'),
+			'references' => __('References', 'revslider'),
+			'colorwillkept' => __('The References will keep their colors after deleting Skin.', 'revslider'),
+			'areyousuredeleteskin' => __('Are you sure to delete Color Skin?', 'revslider'),			
+			'svgcustomimport' => __('Custom File Import', 'revslider'),
+			'importsvgfiles' => __('Import SVG Files', 'revslider'),
+			'customsvgfile' => __('Custom SVG File', 'revslider'),
+			'savecustomfile' => __('Import File', 'revslider'),
+			'customfile' => __('Custom  File', 'revslider'),
+			'uploadfirstitem' => __('Upload Your 1st Item', 'revslider'),
+			'sltr_full' => __('Full', 'revslider'),
+			'sltr_basic' => __('Base', 'revslider'),
+			'sltr_fade' => __('Fade', 'revslider'),
+			'sltr_fades' => __('Fade', 'revslider'),
+			'sltr_slideinout' => __('Slide In, Slide Out', 'revslider'),
+			'sltr_slideinoutfadein' => __('Slide & Fade In, Slide Out', 'revslider'),
+			'sltr_slideinoutfadeinout' => __('Slide & Fade In, Slide & Fade Out', 'revslider'),
+			'sltr_dddeffects' => __('3D Effects', 'revslider'),
+			'sltr_slide' => __('Slide', 'revslider'),
+			'sltr_slideover' => __('Simple Slide', 'revslider'),
+			'sltr_remove' => __('Masked Slide Out', 'revslider'),
+			'sltr_slidefadeinslideout' => __('Slide & Fade In, Slide Out', 'revslider'),
+			'sltr_slidefadeinout' => __('Slide & Fade In Slide & Fade Out', 'revslider'),
+			'sltr_parallax' => __('Parallax Slide', 'revslider'),
+			'sltr_zoom' => __('Zoom', 'revslider'),			
+			'sltr_zoomslidein' => __('Slide In, Zoom Out', 'revslider'),
+			'sltr_zoomslideout' => __('Zoom In, Slide Out', 'revslider'),
+			'sltr_special' => __('Special', 'revslider'),
+			'sltr_double' => __('Double Effect', 'revslider'),
+			'sltr_filter' => __('Filter', 'revslider'),
+			'sltr_effects' => __('Effects', 'revslider'),
+			'sltr_cuts' => __('Paper Cuts', 'revslider'),
+			'sltr_columns' => __('Columns', 'revslider'),
+			'sltr_curtain' => __('Curtain', 'revslider'),
+			'sltr_rotation' => __('Rotation', 'revslider'),
+			'sltr_rows' => __('Rows', 'revslider'),			
+			'sltr_circle' => __('Circle', 'revslider'),
+			'sltr_boxes' => __('Boxes', 'revslider'),
+			'sltr_random' => __('Random', 'revslider'),
+			'dov_1' => __('Dotted Small', 'revslider'),
+			'dov_2' => __('Dotted Medium', 'revslider'),
+			'dov_3' => __('Dotted Large', 'revslider'),
+			'dov_4' => __('Horizontal Small', 'revslider'),
+			'dov_5' => __('Horizontal Medium', 'revslider'),
+			'dov_6' => __('Horizontal Large', 'revslider'),
+			'dov_7' => __('Vertical Small', 'revslider'),
+			'dov_8' => __('Vertical Medium', 'revslider'),
+			'dov_9' => __('Vertical Large', 'revslider'),
+			'dov_10' => __('Circles Small', 'revslider'),
+			'dov_11' => __('Circles Medium', 'revslider'),
+			'dov_12' => __('Diagonal 1', 'revslider'),
+			'dov_13' => __('Diagonal 2', 'revslider'),
+			'dov_14' => __('Diagonal 3', 'revslider'),
+			'dov_15' => __('Diagonal 4', 'revslider'),
+			'dov_16' => __('Cross', 'revslider')
+
 			
 		);
 
@@ -1125,8 +1254,6 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 								}
 							}
 						}
-					}else{
-						//either external URL or not available anymore in the media library
 					}
 				}
 			}
@@ -1291,5 +1418,22 @@ class RevSliderFunctionsAdmin extends RevSliderFunctions {
 		
 		return $_lang;
 	}
+
+	/**
+	 * function to check if the current page is a post/page in edit mode
+	 */
+	public function is_edit_page(){
+		if(!is_admin()) return false;
+
+		global $pagenow;
+		global $wp_version;
+
+		if(version_compare($wp_version, '5.8', '>=')){
+			return in_array($pagenow, array('post.php', 'post-new.php', 'widgets.php'));
+		}
+		else{
+			return in_array($pagenow, array('post.php', 'post-new.php'));
+		}
+	}
+	
 }
-?>

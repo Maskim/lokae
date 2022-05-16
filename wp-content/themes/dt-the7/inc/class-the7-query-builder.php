@@ -20,7 +20,7 @@ class The7_Query_Builder {
 	/**
 	 * @var string
 	 */
-	protected $requested_taxonomy = '';
+	protected $query_taxonomy = '';
 
 	/**
 	 * The7_Query_Builder constructor.
@@ -44,7 +44,7 @@ class The7_Query_Builder {
 	}
 
 	public function from_terms( $taxonomy, $terms = array(), $field = 'term_id' ) {
-		$this->requested_taxonomy = $taxonomy;
+		$this->query_taxonomy = $taxonomy;
 
 		if ( $terms && $taxonomy ) {
 			$this->tax_query = compact( 'taxonomy', 'terms', 'field' );
@@ -56,19 +56,39 @@ class The7_Query_Builder {
 	public function with_categorizaition( The7_Categorization_Request $request ) {
 		if ( $request->not_empty() ) {
 			$this->query_args['order']   = $request->order;
-			$this->query_args['orderby'] = $request->orderby;
+			$this->query_args['orderby'] = $request->orderby === 'name' ? 'title' : $request->orderby;
+			$request_term                = $request->get_first_term();
 
-			$request_term = $request->get_first_term();
-			if ( $request_term && $this->requested_taxonomy ) {
-				$tax_query = wp_parse_args(
-					$this->tax_query,
-					array(
-						'taxonomy' => $this->requested_taxonomy,
-						'field'    => 'term_id',
-					)
-				);
-				$tax_query['terms'] = array( $request_term );
-				$this->tax_query = $tax_query;
+			if ( $request_term && $request->taxonomy ) {
+
+				// If there is a request filter with the taxonomy specified
+				if ( is_object_in_taxonomy( $this->query_args['post_type'], $request->taxonomy ) ) {
+					// - in case new taxonomy: add it to the tax_query
+
+					$request_tax_query = [
+						'taxonomy' => $request->taxonomy,
+						'field'    => is_numeric( $request_term ) ? 'term_id' : 'slug',
+						'terms'    => [ $request_term ],
+					];
+
+					if ( $this->tax_query ) {
+						$this->tax_query = [
+							'relation' => 'AND',
+							$this->tax_query,
+							$request_tax_query,
+						];
+					} else {
+						$this->tax_query = $request_tax_query;
+					}
+				}
+			} elseif ( $request_term && $this->query_taxonomy ) {
+				// If there is a request without taxonimy:
+				// - filter with taxonomy from the settings
+				$this->tax_query = [
+					'taxonomy' => $this->query_taxonomy,
+					'field'    => is_numeric( $request_term ) ? 'term_id' : 'slug',
+					'terms'    => [ $request_term ],
+				];
 			}
 		}
 
@@ -117,7 +137,7 @@ class The7_Query_Builder {
 	 *
 	 * @since 1.15.0
 	 */
-	public function add_offset( &$query ) {
+	public function add_offset( $query ) {
 		$offset  = (int) $this->query_args['posts_offset'];
 		$ppp     = (int) $query->query_vars['posts_per_page'];
 		$current = (int) $query->query_vars['paged'];

@@ -37,13 +37,6 @@ class Admin {
 	public $admin_notices;
 
 	/**
-	 * Whether we show the quick setup modal.
-	 *
-	 * @var bool
-	 */
-	public $show_quick_setup;
-
-	/**
 	 * List of admin pages.
 	 *
 	 * @since 2.4.0
@@ -58,17 +51,20 @@ class Admin {
 		'hummingbird_page_wphb-minification',
 		'hummingbird_page_wphb-advanced',
 		'hummingbird_page_wphb-uptime',
+		'hummingbird_page_wphb-notifications',
 		'hummingbird-pro_page_wphb-performance',
 		'hummingbird-pro_page_wphb-caching',
 		'hummingbird-pro_page_wphb-gzip',
 		'hummingbird-pro_page_wphb-minification',
 		'hummingbird-pro_page_wphb-advanced',
 		'hummingbird-pro_page_wphb-uptime',
+		'hummingbird-pro_page_wphb-notifications',
 		'hummingbird_page_wphb-performance-network',
 		'hummingbird_page_wphb-minification-network',
 		'hummingbird_page_wphb-caching-network',
 		'hummingbird_page_wphb-gzip-network',
 		'hummingbird_page_wphb-uptime-network',
+		'hummingbird_page_wphb-notifications-network',
 	);
 
 	/**
@@ -79,10 +75,15 @@ class Admin {
 
 		add_action( 'admin_menu', array( $this, 'add_menu_pages' ) );
 		add_action( 'network_admin_menu', array( $this, 'add_network_menu_pages' ) );
+		add_filter( 'submenu_file', array( $this, 'remove_submenu_item' ) );
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			new AJAX();
 			new Ajax\Gzip();
+			new Ajax\Minify();
+			new Ajax\Caching\Browser();
+			new Ajax\Caching\Integrations();
+			new Ajax\Setup();
 		}
 
 		add_action( 'admin_init', array( $this, 'maybe_clear_all_cache' ) );
@@ -92,9 +93,6 @@ class Admin {
 		}
 
 		add_action( 'admin_footer', array( $this, 'maybe_check_files' ) );
-
-		// Check DB to see if quick setup modal is needed and store in public var.
-		$this->show_quick_setup = $this->maybe_show_quick_setup();
 
 		// Make sure plugin name is correct for adding plugin action links.
 		$plugin_name = defined( 'WPHB_WPORG' ) && WPHB_WPORG ? 'hummingbird-performance' : 'wp-hummingbird';
@@ -114,20 +112,20 @@ class Admin {
 	 *
 	 * @param array $actions  Current actions.
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function add_plugin_action_links( $actions ) {
 		// Upgrade link.
 		if ( ! Utils::is_member() ) {
 			if ( defined( 'WPHB_WPORG' ) && WPHB_WPORG ) {
-				$actions['upgrade'] = '<a href="' . Utils::get_link( 'plugin', 'hummingbird_pluginlist_upgrade' ) . '" aria-label="' . esc_attr( __( 'Upgrade to Hummingbird Pro', 'wphb' ) ) . '" target="_blank" style="color: #8D00B1;">' . esc_html__( 'Upgrade', 'wphb' ) . '</a>';
+				$actions['wphb-plugins-upgrade'] = '<a href="' . Utils::get_link( 'plugin', 'hummingbird_pluginlist_upgrade' ) . '" aria-label="' . esc_attr( __( 'Upgrade to Hummingbird Pro', 'wphb' ) ) . '" target="_blank" style="color: #8D00B1;">' . esc_html__( 'Upgrade', 'wphb' ) . '</a>';
 			} else {
-				$actions['upgrade'] = '<a href="' . Utils::get_link( 'plugin', 'hummingbird_pluginlist_renew' ) . '" aria-label="' . esc_attr( __( 'Renew Membership', 'wphb' ) ) . '" target="_blank" style="color: #8D00B1;">' . esc_html__( 'Renew Membership', 'wphb' ) . '</a>';
+				$actions['wphb-plugins-upgrade'] = '<a href="' . Utils::get_link( 'plugin', 'hummingbird_pluginlist_renew' ) . '" aria-label="' . esc_attr( __( 'Renew Membership', 'wphb' ) ) . '" target="_blank" style="color: #8D00B1;">' . esc_html__( 'Renew Membership', 'wphb' ) . '</a>';
 			}
 		}
 
 		// Documentation link.
-		$actions['docs'] = '<a href="' . Utils::get_link( 'docs', 'hummingbird_pluginlist_docs' ) . '" aria-label="' . esc_attr( __( 'View Hummingbird Documentation', 'wphb' ) ) . '" target="_blank">' . esc_html__( 'Docs', 'wphb' ) . '</a>';
+		$actions['wphb-plugins-docs'] = '<a href="' . Utils::get_link( 'docs', 'hummingbird_pluginlist_docs' ) . '" aria-label="' . esc_attr( __( 'View Hummingbird Documentation', 'wphb' ) ) . '" target="_blank">' . esc_html__( 'Docs', 'wphb' ) . '</a>';
 
 		// Settings link.
 		if ( current_user_can( Utils::get_admin_capability() ) ) {
@@ -136,7 +134,7 @@ class Admin {
 			} else {
 				$url = Utils::get_admin_menu_url();
 			}
-			$actions['dashboard'] = '<a href="' . $url . '" aria-label="' . esc_attr( __( 'Go to Hummingbird Dashboard', 'wphb' ) ) . '">' . esc_html__( 'Settings', 'wphb' ) . '</a>';
+			$actions['wphb-plugins-dashboard'] = '<a href="' . $url . '" aria-label="' . esc_attr( __( 'Go to Hummingbird Dashboard', 'wphb' ) ) . '">' . esc_html__( 'Settings', 'wphb' ) . '</a>';
 		}
 
 		return array_reverse( $actions );
@@ -164,15 +162,21 @@ class Admin {
 			if ( isset( $links[2] ) && false !== strpos( $links[2], 'project/wp-hummingbird' ) ) {
 				$links[2] = sprintf(
 					'<a href="%s" target="_blank">%s</a>',
-					'https://premium.wpmudev.org/project/wp-hummingbird/',
+					'https://wpmudev.com/project/wp-hummingbird/',
 					__( 'View details', 'wphb' )
 				);
 			}
 
-			$links[] = '<a href="https://premium.wpmudev.org/get-support/" target="_blank" title="' . esc_attr__( 'Premium Support', 'wphb' ) . '">' . esc_html__( 'Premium Support', 'wphb' ) . '</a>';
+			$links[] = '<a href="https://wpmudev.com/get-support/" target="_blank" title="' . esc_attr__( 'Premium Support', 'wphb' ) . '">' . esc_html__( 'Premium Support', 'wphb' ) . '</a>';
 		}
 
-		$links[] = '<a href="https://premium.wpmudev.org/roadmap/" target="_blank" title="' . esc_attr__( 'Roadmap', 'wphb' ) . '">' . esc_html__( 'Roadmap', 'wphb' ) . '</a>';
+		$links[] = '<a href="https://wpmudev.com/roadmap/" target="_blank" title="' . esc_attr__( 'Roadmap', 'wphb' ) . '">' . esc_html__( 'Roadmap', 'wphb' ) . '</a>';
+
+		$links[] = '<a class="wphb-stars" href="https://wordpress.org/support/plugin/hummingbird-performance/reviews/#new-post" target="_blank" rel="noopener noreferrer" title="' . esc_attr__( 'Rate our plugin', 'wphb' ) . '">
+					<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+					</a>';
+
+		echo '<style>.wphb-stars span,.wphb-stars span:hover{color:#ffb900}.wphb-stars span:hover~span{color:#888}</style>';
 
 		return $links;
 	}
@@ -187,24 +191,22 @@ class Admin {
 	public function add_menu_pages() {
 		$hb_title = defined( 'WPHB_WPORG' ) && WPHB_WPORG ? __( 'Hummingbird', 'wphb' ) : __( 'Hummingbird Pro', 'wphb' );
 
-		$current_page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
+		$current_page = filter_input( INPUT_GET, 'page', FILTER_UNSAFE_RAW );
+		$current_page = sanitize_text_field( $current_page );
 
 		$this->pages['wphb']           = new Pages\Dashboard( 'wphb', $hb_title, $hb_title, false, false );
 		$this->pages['wphb-dashboard'] = new Pages\Dashboard( 'wphb', __( 'Dashboard', 'wphb' ), __( 'Dashboard', 'wphb' ), 'wphb' );
 
-		if ( ! is_multisite() || ( is_super_admin() || true === Settings::get_setting( 'subsite_tests', 'performance' ) ) ) {
+		if ( ! is_multisite() || is_super_admin() || true === Settings::get_setting( 'subsite_tests', 'performance' ) ) {
 			$this->pages['wphb-performance'] = new Pages\Performance( 'wphb-performance', __( 'Performance Test', 'wphb' ), __( 'Performance Test', 'wphb' ), 'wphb' );
-		} elseif ( is_multisite() && isset( $current_page ) && 'wphb-performance' === $current_page ) {
+		} elseif ( isset( $current_page ) && 'wphb-performance' === $current_page ) {
 			// Subsite performance reporting is off, and is a network, let's redirect to network admin.
 			$url = add_query_arg( 'view', 'settings', network_admin_url( 'admin.php?page=wphb-performance' ) );
 			wp_safe_redirect( $url );
 			exit;
 		}
 
-		$caching = Settings::get_setting( 'enabled', 'page_cache' );
-		if ( ! is_multisite() || ( is_super_admin() && $caching ) || 'blog-admins' === $caching ) {
-			$this->pages['wphb-caching'] = new Pages\Caching( 'wphb-caching', __( 'Caching', 'wphb' ), __( 'Caching', 'wphb' ), 'wphb' );
-		}
+		$this->pages['wphb-caching'] = new Pages\Caching( 'wphb-caching', __( 'Caching', 'wphb' ), __( 'Caching', 'wphb' ), 'wphb' );
 
 		if ( ! is_multisite() ) {
 			$this->pages['wphb-gzip'] = new Pages\React\Gzip( 'wphb-gzip', __( 'Gzip Compression', 'wphb' ), __( 'Gzip Compression', 'wphb' ), 'wphb' );
@@ -224,13 +226,24 @@ class Admin {
 		$this->pages['wphb-advanced'] = new Pages\Advanced( 'wphb-advanced', __( 'Advanced Tools', 'wphb' ), __( 'Advanced Tools', 'wphb' ), 'wphb' );
 
 		if ( ! is_multisite() ) {
-			$this->pages['wphb-uptime']   = new Pages\Uptime( 'wphb-uptime', __( 'Uptime', 'wphb' ), __( 'Uptime', 'wphb' ), 'wphb' );
+			$this->pages['wphb-uptime'] = new Pages\Uptime( 'wphb-uptime', __( 'Uptime', 'wphb' ), __( 'Uptime', 'wphb' ), 'wphb' );
+		}
+
+		$this->pages['wphb-notifications'] = new Pages\Notifications( 'wphb-notifications', __( 'Notifications', 'wphb' ), __( 'Notifications', 'wphb' ), 'wphb' );
+
+		if ( ! is_multisite() ) {
 			$this->pages['wphb-settings'] = new Pages\Settings( 'wphb-settings', __( 'Settings', 'wphb' ), __( 'Settings', 'wphb' ), 'wphb' );
+		}
+
+		if ( ! apply_filters( 'wpmudev_branding_hide_doc_link', false ) ) {
+			$this->pages['wphb-tutorials'] = new Pages\React\Tutorials( 'wphb-tutorials', __( 'Tutorials', 'wphb' ), __( 'Tutorials', 'wphb' ), 'wphb' );
 		}
 
 		if ( ! Utils::is_member() && ! is_multisite() ) {
 			$this->pages['wphb-upgrade'] = new Pages\Upgrade( 'wphb-upgrade', __( 'Hummingbird Pro', 'wphb' ), __( 'Hummingbird Pro', 'wphb' ), 'wphb' );
 		}
+
+		$this->pages['wphb-setup'] = new Pages\React\Setup( 'wphb-setup', __( 'Setup Wizard', 'wphb' ), null, 'wphb' );
 	}
 
 	/**
@@ -239,19 +252,26 @@ class Admin {
 	public function add_network_menu_pages() {
 		$hb_title = defined( 'WPHB_WPORG' ) && WPHB_WPORG ? __( 'Hummingbird', 'wphb' ) : __( 'Hummingbird Pro', 'wphb' );
 
-		$this->pages['wphb']              = new Pages\Dashboard( 'wphb', $hb_title, $hb_title, false, false );
-		$this->pages['wphb-dashboard']    = new Pages\Dashboard( 'wphb', __( 'Dashboard', 'wphb' ), __( 'Dashboard', 'wphb' ), 'wphb' );
-		$this->pages['wphb-performance']  = new Pages\Performance( 'wphb-performance', __( 'Performance Test', 'wphb' ), __( 'Performance Test', 'wphb' ), 'wphb' );
-		$this->pages['wphb-caching']      = new Pages\Caching( 'wphb-caching', __( 'Caching', 'wphb' ), __( 'Caching', 'wphb' ), 'wphb' );
-		$this->pages['wphb-gzip']         = new Pages\React\Gzip( 'wphb-gzip', __( 'Gzip Compression', 'wphb' ), __( 'Gzip Compression', 'wphb' ), 'wphb' );
-		$this->pages['wphb-minification'] = new Pages\Minification( 'wphb-minification', __( 'Asset Optimization', 'wphb' ), __( 'Asset Optimization', 'wphb' ), 'wphb' );
-		$this->pages['wphb-advanced']     = new Pages\Advanced( 'wphb-advanced', __( 'Advanced Tools', 'wphb' ), __( 'Advanced Tools', 'wphb' ), 'wphb' );
-		$this->pages['wphb-uptime']       = new Pages\Uptime( 'wphb-uptime', __( 'Uptime', 'wphb' ), __( 'Uptime', 'wphb' ), 'wphb' );
-		$this->pages['wphb-settings']     = new Pages\Settings( 'wphb-settings', __( 'Settings', 'wphb' ), __( 'Settings', 'wphb' ), 'wphb' );
+		$this->pages['wphb']               = new Pages\Dashboard( 'wphb', $hb_title, $hb_title, false, false );
+		$this->pages['wphb-dashboard']     = new Pages\Dashboard( 'wphb', __( 'Dashboard', 'wphb' ), __( 'Dashboard', 'wphb' ), 'wphb' );
+		$this->pages['wphb-performance']   = new Pages\Performance( 'wphb-performance', __( 'Performance Test', 'wphb' ), __( 'Performance Test', 'wphb' ), 'wphb' );
+		$this->pages['wphb-caching']       = new Pages\Caching( 'wphb-caching', __( 'Caching', 'wphb' ), __( 'Caching', 'wphb' ), 'wphb' );
+		$this->pages['wphb-gzip']          = new Pages\React\Gzip( 'wphb-gzip', __( 'Gzip Compression', 'wphb' ), __( 'Gzip Compression', 'wphb' ), 'wphb' );
+		$this->pages['wphb-minification']  = new Pages\Minification( 'wphb-minification', __( 'Asset Optimization', 'wphb' ), __( 'Asset Optimization', 'wphb' ), 'wphb' );
+		$this->pages['wphb-advanced']      = new Pages\Advanced( 'wphb-advanced', __( 'Advanced Tools', 'wphb' ), __( 'Advanced Tools', 'wphb' ), 'wphb' );
+		$this->pages['wphb-uptime']        = new Pages\Uptime( 'wphb-uptime', __( 'Uptime', 'wphb' ), __( 'Uptime', 'wphb' ), 'wphb' );
+		$this->pages['wphb-notifications'] = new Pages\Notifications( 'wphb-notifications', __( 'Notifications', 'wphb' ), __( 'Notifications', 'wphb' ), 'wphb' );
+		$this->pages['wphb-settings']      = new Pages\Settings( 'wphb-settings', __( 'Settings', 'wphb' ), __( 'Settings', 'wphb' ), 'wphb' );
+
+		if ( ! apply_filters( 'wpmudev_branding_hide_doc_link', false ) ) {
+			$this->pages['wphb-tutorials'] = new Pages\React\Tutorials( 'wphb-tutorials', __( 'Tutorials', 'wphb' ), __( 'Tutorials', 'wphb' ), 'wphb' );
+		}
 
 		if ( ! Utils::is_member() ) {
 			$this->pages['wphb-upgrade'] = new Pages\Upgrade( 'wphb-upgrade', __( 'Hummingbird Pro', 'wphb' ), __( 'Hummingbird Pro', 'wphb' ), 'wphb' );
 		}
+
+		$this->pages['wphb-setup'] = new Pages\React\Setup( 'wphb-setup', __( 'Setup Wizard', 'wphb' ), null, 'wphb' );
 	}
 
 	/**
@@ -285,23 +305,23 @@ class Admin {
 			return;
 		}
 
-		if ( ! wp_script_is( 'wphb-admin', 'enqueued' ) ) {
+		if ( ! wp_script_is( 'wphb-admin' ) ) {
 			Utils::enqueue_admin_scripts( WPHB_VERSION );
 		}
 
 		// If we are in minification page, we should redirect when checking files is finished.
-		$screen           = get_current_screen();
-		$minify_screen_id = isset( $this->pages['wphb-minification']->page_id ) ? $this->pages['wphb-minification']->page_id : false;
+		$screen = get_current_screen();
+		$minify = isset( $this->pages['wphb-minification']->page_id ) ? $this->pages['wphb-minification']->page_id : '';
 
 		// The minification screen will do it for us.
-		if ( $screen->id === $minify_screen_id ) {
+		if ( $screen->id === $minify ) {
 			return;
 		}
 
 		?>
 		<script>
 			jQuery( document ).ready( function() {
-				window.WPHB_Admin.getModule( 'minification' ).scanner.scan();
+				window.WPHB_Admin.getModule( 'minification' ).scanner.start();
 				window.WPHB_Admin.getModule( 'minification' ).minificationStarted = true;
 			});
 		</script>
@@ -309,23 +329,7 @@ class Admin {
 	}
 
 	/**
-	 * Show quick setup modal.
-	 *
-	 * @since 1.5.0
-	 */
-	public function maybe_show_quick_setup() {
-		// Only if in admin or user is logged in.
-		if ( ! is_admin() || ! is_user_logged_in() ) {
-			return false;
-		}
-
-		// If setup has already ran - exit.
-		$quick_setup = get_option( 'wphb-quick-setup' );
-		return ! ( isset( $quick_setup['finished'] ) && true === $quick_setup['finished'] );
-	}
-
-	/**
-	 * Add more pages to builtin wpmudev branding.
+	 * Add more pages to builtin WPMU DEV branding.
 	 *
 	 * @since 1.9.3
 	 *
@@ -355,15 +359,25 @@ class Admin {
 		}
 
 		WP_Hummingbird::flush_cache();
+		Utils::get_module( 'page_cache' )->toggle_service( false );
+
+		Utils::get_module( 'cloudflare' )->toggle_apo( false );
 
 		if ( 'all' === $wphb_clear ) {
 			Settings::reset_to_defaults();
-			delete_option( 'wphb-quick-setup' );
-			delete_option( 'wphb-new-user-tour' );
+
+			// Remove configs.
+			delete_site_option( 'wphb-preset_configs' );
+
+			update_option( 'wphb_run_onboarding', true );
+			update_option( 'wphb-minification-show-config_modal', true );
+			update_option( 'wphb-minification-show-advanced_modal', true );
+			delete_option( 'wphb-hide-tutorials' );
 
 			// Clean all cron.
 			wp_clear_scheduled_hook( 'wphb_performance_report' );
 			wp_clear_scheduled_hook( 'wphb_uptime_report' );
+			wp_clear_scheduled_hook( 'wphb_database_report' );
 			wp_clear_scheduled_hook( 'wphb_minify_clear_files' );
 
 			if ( is_multisite() ) {
@@ -371,19 +385,18 @@ class Admin {
 				$offset = 0;
 				$limit  = 100;
 				while ( $blogs = $wpdb->get_results( "SELECT blog_id FROM {$wpdb->blogs} LIMIT {$offset}, {$limit}", ARRAY_A ) ) { // Db call ok; no-cache ok.
-					if ( $blogs ) {
-						foreach ( $blogs as $blog ) {
-							switch_to_blog( $blog['blog_id'] );
+					foreach ( $blogs as $blog ) {
+						switch_to_blog( $blog['blog_id'] );
 
-							Settings::reset_to_defaults();
-							delete_option( 'wphb-quick-setup' );
-							delete_option( 'wphb-new-user-tour' );
+						Settings::reset_to_defaults();
+						update_option( 'wphb_run_onboarding', true );
+						update_option( 'wphb-minification-show-config_modal', true );
+						update_option( 'wphb-minification-show-advanced_modal', true );
 
-							// Clean all cron.
-							wp_clear_scheduled_hook( 'wphb_minify_clear_files' );
-						}
-						restore_current_blog();
+						// Clean all cron.
+						wp_clear_scheduled_hook( 'wphb_minify_clear_files' );
 					}
+					restore_current_blog();
 					$offset += $limit;
 				}
 			}
@@ -391,6 +404,20 @@ class Admin {
 
 		wp_safe_redirect( remove_query_arg( 'wphb-clear' ) );
 		exit;
+	}
+
+	/**
+	 * Remove submenu setup point.
+	 *
+	 * @since 3.3.1
+	 *
+	 * @param string $submenu_file The submenu file.
+	 *
+	 * @return string
+	 */
+	public function remove_submenu_item( $submenu_file ) {
+		remove_submenu_page( 'wphb', 'wphb-setup' );
+		return $submenu_file;
 	}
 
 }

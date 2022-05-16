@@ -72,7 +72,7 @@ return array(
 		),
 		array(
 			'heading'     => __( 'Icon color', 'the7mk2' ),
-			'description' => __( "Live empty to use accent color.", 'the7mk2' ),
+			'description' => __( "Leave empty to use accent color.", 'the7mk2' ),
 			'param_name'  => 'soc_icon_color',
 			'type'        => 'colorpicker',
 			'value'       => 'rgba(255,255,255,1)',
@@ -89,7 +89,7 @@ return array(
 		),
 		array(
 			'heading'     => __( 'Icon border color  ', 'the7mk2' ),
-			'description' => __( "Live empty to use accent color.", 'the7mk2' ),
+			'description' => __( "Leave empty to use accent color.", 'the7mk2' ),
 			'param_name'  => 'soc_icon_border_color',
 			'type'        => 'colorpicker',
 			'value'       => '',
@@ -117,7 +117,7 @@ return array(
 				'element' => 'soc_icon_bg',
 				'value'   => 'y',
 			),
-			'description' => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color.', 'the7mk2' ),
 		),
 		array(
 			"heading"    => __( "Hover", 'the7mk2' ),
@@ -126,7 +126,7 @@ return array(
 		),
 		array(
 			'heading'     => __( 'Icon color', 'the7mk2' ),
-			'description' => __( "Live empty to use accent color.", 'the7mk2' ),
+			'description' => __( "Leave empty to use accent color.", 'the7mk2' ),
 			'param_name'  => 'soc_icon_color_hover',
 			'type'        => 'colorpicker',
 			'value'       => 'rgba(255,255,255,0.75)',
@@ -143,7 +143,7 @@ return array(
 		),
 		array(
 			'heading'     => __( 'Icon border color  ', 'the7mk2' ),
-			'description' => __( "Live empty to use accent color.", 'the7mk2' ),
+			'description' => __( "Leave empty to use accent color.", 'the7mk2' ),
 			'param_name'  => 'soc_icon_border_color_hover',
 			'type'        => 'colorpicker',
 			'value'       => '',
@@ -172,7 +172,7 @@ return array(
 				'element' => 'soc_icon_bg_hover',
 				'value'   => 'y',
 			),
-			'description' => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color.', 'the7mk2' ),
 		),
 		array(
 			'type'             => 'css_editor',

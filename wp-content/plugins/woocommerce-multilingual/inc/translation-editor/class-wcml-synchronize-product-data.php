@@ -66,8 +66,12 @@ class WCML_Synchronize_Product_Data {
 
 	/**
 	 * This function takes care of synchronizing products
+	 *
+	 * @param int     $post_id
+	 * @param WP_Post $post
+	 * @param bool    $force_valid_context
 	 */
-	public function synchronize_products( $post_id, $post ) {
+	public function synchronize_products( $post_id, $post, $force_valid_context = false ) {
 		global $pagenow, $wp;
 
 		$original_language   = $this->woocommerce_wpml->products->get_original_product_language( $post_id );
@@ -87,15 +91,20 @@ class WCML_Synchronize_Product_Data {
 		}
 
 		// exceptions.
-		$ajax_call  = ( ! empty( $_POST['icl_ajx_action'] ) && 'make_duplicates' === $_POST['icl_ajx_action'] );
-		$api_call   = ! empty( $wp->query_vars['wc-api-version'] );
-		$auto_draft = 'auto-draft' === $post->post_status;
-		$trashing   = isset( $_GET['action'] ) && 'trash' === $_GET['action'];
+		$ajax_call        = ( ! empty( $_POST['icl_ajx_action'] ) && 'make_duplicates' === $_POST['icl_ajx_action'] );
+		$api_call         = ! empty( $wp->query_vars['wc-api-version'] );
+		$auto_draft       = 'auto-draft' === $post->post_status;
+		$trashing         = isset( $_GET['action'] ) && 'trash' === $_GET['action'];
+		$is_valid_context = $force_valid_context
+		                    || $ajax_call
+		                    || $api_call
+		                    || in_array( $pagenow, [ 'post.php', 'post-new.php', 'admin.php' ], true );
+
 		if (
 			$post_type !== 'product' ||
 			empty( $original_product_id ) ||
 			isset( $_POST['autosave'] ) ||
-			( $pagenow !== 'post.php' && $pagenow !== 'post-new.php' && $pagenow !== 'admin.php' && ! $ajax_call && ! $api_call ) ||
+			! $is_valid_context ||
 			$trashing ||
 			$auto_draft
 		) {
@@ -452,7 +461,7 @@ class WCML_Synchronize_Product_Data {
 	 */
 	private function wc_taxonomies_recount_after_stock_change( $product_id ) {
 
-		remove_filter( 'get_term', [ $this->sitepress, 'get_term_adjust_id' ], 1, 1 );
+		remove_filter( 'get_term', [ $this->sitepress, 'get_term_adjust_id' ], 1 );
 
 		wp_cache_delete( $product_id, 'product_cat_relationships' );
 		wp_cache_delete( $product_id, 'product_tag_relationships' );
@@ -721,10 +730,12 @@ class WCML_Synchronize_Product_Data {
 						}
 					}
 
-					$this->sync_product_data( $orig_id, $trnsl_id, $lang );
-					$this->sync_date_and_parent( $orig_id, $trnsl_id, $lang );
-					$this->sitepress->copy_custom_fields( $orig_id, $trnsl_id );
-					$this->woocommerce_wpml->translation_editor->create_product_translation_package( $orig_id, $new_trid, $lang, ICL_TM_COMPLETE );
+					if ( isset( $orig_id, $trnsl_id, $lang ) ) {
+						$this->sync_product_data( $orig_id, $trnsl_id, $lang );
+						$this->sync_date_and_parent( $orig_id, $trnsl_id, $lang );
+						$this->sitepress->copy_custom_fields( $orig_id, $trnsl_id );
+						$this->woocommerce_wpml->translation_editor->create_product_translation_package( $orig_id, $new_trid, $lang, ICL_TM_COMPLETE );
+					}
 				}
 
 				add_action( 'wpml_translation_update', [ $this, 'icl_connect_translations_action' ] );
@@ -830,7 +841,7 @@ class WCML_Synchronize_Product_Data {
 			$this->woocommerce_wpml->products->is_original_product( $object_id )
 		) {
 			$translations = $this->post_translations->get_element_translations( $object_id, false, true );
-			remove_action( 'deleted_post_meta', [ $this, 'delete_empty_post_meta_for_translations' ], 10, 3 );
+			remove_action( 'deleted_post_meta', [ $this, 'delete_empty_post_meta_for_translations' ], 10 );
 			foreach ( $translations as $translation ) {
 				delete_post_meta( $translation, $meta_key );
 			}

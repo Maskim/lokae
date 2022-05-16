@@ -26,38 +26,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 </p>
 
 <h4><?php esc_html_e( 'Status', 'wphb' ); ?></h4>
-<?php if ( isset( $audit->errorMessage ) && ! isset( $audit->score ) ) { ?>
-	<div class="sui-notice sui-notice-error">
-		<p>
-			<?php
-			printf(
-				/* translators: %s - error message */
-				esc_html__( 'Error: %s', 'wphb' ),
-				esc_html( $audit->errorMessage )
-			);
-			?>
-		</p>
-	</div>
-	<?php
+<?php if ( isset( $audit->errorMessage ) && ! isset( $audit->score ) ) {
+	$this->admin_notices->show_inline( /* translators: %s - error message */
+		sprintf( esc_html__( 'Error: %s', 'wphb' ), esc_html( $audit->errorMessage ) ),
+		'error'
+	);
 	return;
 }
 ?>
 <?php if ( isset( $audit->score ) && 1 === $audit->score ) : ?>
-	<div class="sui-notice sui-notice-success">
-		<p><?php esc_html_e( 'Nice! No issues found.', 'wphb' ); ?></p>
-	</div>
+	<?php $this->admin_notices->show_inline( esc_html__( 'Nice! No issues found.', 'wphb' ) ); ?>
 <?php else : ?>
-	<div class="sui-notice sui-notice-<?php echo esc_attr( \Hummingbird\Core\Modules\Performance::get_impact_class( $audit->score ) ); ?>">
-		<p>
-			<?php
-			printf(
-				/* translators: %d - number of ms */
-				esc_html__( 'You can potentially save %dms by pre-connecting to the origin of following resources.', 'wphb' ),
-				absint( $audit->details->overallSavingsMs )
-			);
-			?>
-		</p>
-	</div>
+	<?php
+	$this->admin_notices->show_inline(
+		sprintf( /* translators: %d - number of ms */
+			esc_html__( 'You can potentially save %dms by pre-connecting to the origin of following resources.', 'wphb' ),
+			absint( $audit->details->overallSavingsMs )
+		),
+		\Hummingbird\Core\Modules\Performance::get_impact_class( $audit->score )
+	);
+	?>
 
 	<?php if ( $audit->details->items ) : ?>
 		<table class="sui-table">
@@ -93,6 +81,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		?>
 	</p>
 	<?php $code = '<span style="color:#3B78E7 !important">&lt;link</span> <span style="color:#8D00B1 !important">rel=</span>"preconnect" <span style="color:#8D00B1 !important">href=</span>"https://example.com"<span style="color:#3B78E7 !important">&gt;</span>'; ?>
-	<pre class="sui-code-snippet sui-no-copy" style="color:#1ABC9C"><?php echo wp_kses( $code, $allowed_tags ); ?></pre>
+	<pre class="sui-code-snippet sui-no-copy" style="color:#1ABC9C"><?php echo wp_kses_post( $code ); ?></pre>
 	<p><?php esc_html_e( 'The browser won’t begin fetching the resources before it needs them, but at least it can handle the connection aspects ahead of time, saving the user from waiting for several roundtrips when your browser is fetching the resources from this origin.', 'wphb' ); ?></p>
 <?php endif; ?>

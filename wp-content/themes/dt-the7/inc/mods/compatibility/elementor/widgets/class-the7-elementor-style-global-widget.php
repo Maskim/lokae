@@ -5,9 +5,9 @@
  * @package The7
  */
 
-namespace The7\Adapters\Elementor\Widgets;
+namespace The7\Mods\Compatibility\Elementor\Widgets;
 
-use The7\Adapters\Elementor\The7_Elementor_Widget_Base;
+use The7\Mods\Compatibility\Elementor\The7_Elementor_Widget_Base;
 
 
 defined( 'ABSPATH' ) || exit;

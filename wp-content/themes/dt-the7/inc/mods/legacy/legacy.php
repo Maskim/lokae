@@ -24,6 +24,7 @@ if ( ! class_exists( 'Presscore_Modules_Legacy' ) ) :
 				'rows',
 				'admin-icons-bar',
 			    'overlapping-headers',
+			    'deprecated_mega_menu_settings',
 			);
 
 			if ( dt_the7_core_is_enabled() ) {

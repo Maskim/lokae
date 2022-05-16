@@ -20,17 +20,17 @@
 	}
 	.comment-author a,
 	.comment-author .fn {
-		color: @h5-color;
-		font: @h5-font-style @h5-font-variant @h5-font-weight @h5-font-size~"/"@h5-line-height @h5-font-family;
-		text-transform: @h5-text-transform;
+		color: var(--the7-h5-color);
+		font: var(--the7-h5-font);
+		text-transform: var(--the7-h5-text-transform);
 	}
 	.comments-title {
-		color: @h3-color;
-		font: @h3-font-style @h3-font-variant @h3-font-weight @h3-font-size~"/"@h3-line-height @h3-font-family;
-		text-transform: @h3-text-transform;
+		color: var(--the7-h3-color);
+		font: var(--the7-h3-font);
+		text-transform: var(--the7-h3-text-transform);
 	}
 	#reply-title small {
-		font: @base-font-style @base-font-variant @base-font-weight @base-font-size~"/"@base-line-height @base-font-family;
+		font: var(--the7-base-font);
 	}
 	.comments-title,
 	.comments-title a,
@@ -53,7 +53,7 @@
 	.solid-bg-mixin;
 }
 	.entry-author .text-primary {
-		font-size: @base-font-size;
+		font-size: var(--the7-base-font-size);
 	}
 
 	.author-link,
@@ -86,15 +86,15 @@
 
 
 	.entry-meta:before {
-		width: @base-line-height;
-		height: @base-line-height;
+		width: var(--the7-base-line-height);
+		height: var(--the7-base-line-height);
 	}
 	.portfolio-categories > a,
 	.portfolio-categories > span,
 	.entry-meta > a,
 	.entry-meta > span {
 		&:after {
-			background-color: @secondary-text-color;
+			background-color: var(--the7-secondary-text-color);
 			.sidebar-content & {
 				background-color: fade(@widget-sidebar-color, 50%);
 			}
@@ -110,9 +110,10 @@
 	.entry-meta a,
 	.entry-meta span,
 	.entry-meta a *,
+	.comment-reply-link,
 	.single .entry-tags,
 	.single .entry-tags a {
-		color: @secondary-text-color;
+		color: var(--the7-secondary-text-color);
 	}
 	.single .entry-tags a:hover {
 		.header-color;
@@ -124,8 +125,6 @@
 .share-button.entry-share,
 .btn-project-link,
 .btn-project-link:hover,
-.comment-reply-link,
-.comment-reply-link:hover,
 .share-link-description {
 	.header-color;
 }
@@ -159,7 +158,7 @@
 /*Single post description*/
 .rsSlide .slider-post-caption,
 .images-list-caption {
-	line-height: @base-line-height;
+	line-height: var(--the7-base-line-height);
 }
 .post-navigation .nav-links {
 	.transparent-border-mixin;
@@ -177,17 +176,4 @@
 }
 .single-related-posts {
 	.transparent-border-mixin;
-}
-.comments-area,
-.single-related-posts,
-.comment-respond {
-	& > h3 {
-		&:after{
-			//.accent-bg-mixin;
-			background-color: @accent-bg-color;
-			.accent-gradient & {
-				.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
-			}
-		}
-	}
 }

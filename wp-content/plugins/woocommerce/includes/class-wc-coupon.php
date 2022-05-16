@@ -4,9 +4,11 @@
  *
  * The WooCommerce coupons class gets coupon data from storage and checks coupon validity.
  *
- * @package WooCommerce/Classes
+ * @package WooCommerce\Classes
  * @version 3.0.0
  */
+
+use Automattic\WooCommerce\Utilities\NumberUtil;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -26,6 +28,7 @@ class WC_Coupon extends WC_Legacy_Coupon {
 	protected $data = array(
 		'code'                        => '',
 		'amount'                      => 0,
+		'status'                      => null,
 		'date_created'                => null,
 		'date_modified'               => null,
 		'date_expires'                => null,
@@ -65,6 +68,8 @@ class WC_Coupon extends WC_Legacy_Coupon {
 	const E_WC_COUPON_MAX_SPEND_LIMIT_MET            = 112;
 	const E_WC_COUPON_EXCLUDED_PRODUCTS              = 113;
 	const E_WC_COUPON_EXCLUDED_CATEGORIES            = 114;
+	const E_WC_COUPON_USAGE_LIMIT_COUPON_STUCK       = 115;
+	const E_WC_COUPON_USAGE_LIMIT_COUPON_STUCK_GUEST = 116;
 	const WC_COUPON_SUCCESS                          = 200;
 	const WC_COUPON_REMOVED                          = 201;
 
@@ -132,7 +137,7 @@ class WC_Coupon extends WC_Legacy_Coupon {
 	/**
 	 * Checks the coupon type.
 	 *
-	 * @param  string $type Array or string of types.
+	 * @param  string|array $type Array or string of types.
 	 * @return bool
 	 */
 	public function is_type( $type ) {
@@ -178,6 +183,17 @@ class WC_Coupon extends WC_Legacy_Coupon {
 	 */
 	public function get_description( $context = 'view' ) {
 		return $this->get_prop( 'description', $context );
+	}
+
+	/**
+	 * Get coupon status.
+	 *
+	 * @since  6.2.0
+	 * @param  string $context What the value is for. Valid values are 'view' and 'edit'.
+	 * @return string
+	 */
+	public function get_status( $context = 'view' ) {
+		return $this->get_prop( 'status', $context );
 	}
 
 	/**
@@ -247,7 +263,7 @@ class WC_Coupon extends WC_Legacy_Coupon {
 	}
 
 	/**
-	 * Get the "indvidual use" checkbox status.
+	 * Get the "individual use" checkbox status.
 	 *
 	 * @since  3.0.0
 	 * @param  string $context What the value is for. Valid values are 'view' and 'edit'.
@@ -446,7 +462,14 @@ class WC_Coupon extends WC_Legacy_Coupon {
 			$discount = $single ? $discount : $discount * $cart_item_qty;
 		}
 
-		return apply_filters( 'woocommerce_coupon_get_discount_amount', round( min( $discount, $discounting_amount ), wc_get_rounding_precision() ), $discounting_amount, $cart_item, $single, $this );
+		return apply_filters(
+			'woocommerce_coupon_get_discount_amount',
+			NumberUtil::round( min( $discount, $discounting_amount ), wc_get_rounding_precision() ),
+			$discounting_amount,
+			$cart_item,
+			$single,
+			$this
+		);
 	}
 
 	/*
@@ -478,6 +501,16 @@ class WC_Coupon extends WC_Legacy_Coupon {
 	 */
 	public function set_description( $description ) {
 		$this->set_prop( 'description', $description );
+	}
+
+	/**
+	 * Set coupon status.
+	 *
+	 * @since 3.0.0
+	 * @param string $status Status.
+	 */
+	public function set_status( $status ) {
+		$this->set_prop( 'status', $status );
 	}
 
 	/**
@@ -984,6 +1017,17 @@ class WC_Coupon extends WC_Legacy_Coupon {
 				break;
 			case self::E_WC_COUPON_NOT_APPLICABLE:
 				$err = __( 'Sorry, this coupon is not applicable to your cart contents.', 'woocommerce' );
+				break;
+			case self::E_WC_COUPON_USAGE_LIMIT_COUPON_STUCK:
+				if ( is_user_logged_in() && wc_get_page_id( 'myaccount' ) > 0 ) {
+					/* translators: %s: myaccount page link. */
+					$err = sprintf( __( 'Coupon usage limit has been reached. If you were using this coupon just now but order was not complete, you can retry or cancel the order by going to the <a href="%s">my account page</a>.', 'woocommerce' ), wc_get_endpoint_url( 'orders', '', wc_get_page_permalink( 'myaccount' ) ) );
+				} else {
+					$err = $this->get_coupon_error( self::E_WC_COUPON_USAGE_LIMIT_REACHED );
+				}
+				break;
+			case self::E_WC_COUPON_USAGE_LIMIT_COUPON_STUCK_GUEST:
+				$err = __( 'Coupon usage limit has been reached. Please try again after some time, or contact us for help.', 'woocommerce' );
 				break;
 			case self::E_WC_COUPON_EXCLUDED_PRODUCTS:
 				// Store excluded products that are in cart in $products.

@@ -42,6 +42,23 @@ class Flexible_Checkout_Fields_User_Meta {
 	}
 
 	/**
+	 * Is allowed section to be stored in User Metadata?
+	 *
+	 * @param string $settings_section Key of fields section.
+	 *
+	 * @return bool Status of section, returns true if no data.
+	 */
+	private function is_section_allowed_for_usermeta( $settings_section ) {
+		$sections = $this->plugin->sections;
+		foreach ( $sections as $section ) {
+			if ( isset( $section['section'] ) && $section['section'] === $settings_section ) {
+				return ( ! isset( $section['user_meta'] ) || $section['user_meta'] );
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * Update customer meta data.
 	 *
 	 * @param int   $customer_id Customer ID.
@@ -51,7 +68,7 @@ class Flexible_Checkout_Fields_User_Meta {
 		$settings = $this->plugin->get_settings();
 		if ( ! empty( $settings ) ) {
 			foreach ( $settings as $key => $type ) {
-				if ( ! $this->is_fcf_section( $key ) ) {
+				if ( ! $this->is_fcf_section( $key ) || ! $this->is_section_allowed_for_usermeta( $key ) ) {
 					continue;
 				}
 				foreach ( $type as $field ) {

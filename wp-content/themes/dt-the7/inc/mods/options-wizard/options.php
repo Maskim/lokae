@@ -235,30 +235,6 @@ $options['general-accent_bg_color_gradient'] = array(
 	),
 );
 
-$options[] = array( 'name' => _x( 'Buttons style', 'theme-options', 'the7mk2' ), 'type' => 'block' );
-
-$options['buttons-style'] = array(
-	'name'    => 'Choose buttons style',
-	'id'      => 'buttons-style',
-	'std'     => 'flat',
-	'type'    => 'images',
-	'class'   => 'small',
-	'options' => array(
-		'flat'   => array(
-			'title' => _x( 'Flat', 'theme-options', 'the7mk2' ),
-			'src'   => '/inc/admin/assets/images/buttons-style-flat.gif',
-		),
-		'3d'     => array(
-			'title' => _x( '3D', 'theme-options', 'the7mk2' ),
-			'src'   => '/inc/admin/assets/images/buttons-style-3d.gif',
-		),
-		'shadow' => array(
-			'title' => _x( 'Shadow', 'theme-options', 'the7mk2' ),
-			'src'   => '/inc/admin/assets/images/buttons-style-shadow.gif',
-		),
-	),
-);
-
 $options[] = array(
 	'name' => _x( 'Top Bar & Header', 'theme-options', 'the7mk2' ),
 	'type' => 'heading',

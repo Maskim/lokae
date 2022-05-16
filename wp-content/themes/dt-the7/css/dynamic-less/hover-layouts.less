@@ -39,12 +39,9 @@
 @percent-to-num-opacity: (unit(@project-bg-hover-opacity) / 100);
 
  > a > img{
-	.mobile-false .effect-bubba:not(.hover-color-static) .rollover-project:hover &,
-	.mobile-false .effect-layla:not(.hover-color-static) .rollover-project:hover &,
-	.mobile-false .effect-sarah:not(.hover-color-static) .rollover-project:hover &,
-	.mobile-true .effect-bubba:not(.hover-color-static) .is-clicked &,
-	.mobile-true .effect-layla:not(.hover-color-static) .is-clicked &,
-	.mobile-true .effect-sarah:not(.hover-color-static) .is-clicked & {
+	.effect-bubba:not(.hover-color-static) .rollover-project:hover &,
+	.effect-layla:not(.hover-color-static) .rollover-project:hover &,
+	.effect-sarah:not(.hover-color-static) .rollover-project:hover & {
 		opacity: 1 - @percent-to-num-opacity;
 	}
 }
@@ -88,11 +85,11 @@
 	.blog-carousel-shortcode & {
 		& span,
 		&:before {
-			color: @accent-bg-color;
+			color: var(--the7-accent-color);
 		}
-		border-color: @accent-bg-color;
+		border-color: var(--the7-accent-color);
 		.dt-icon-bg-on& {
-			background-color: @accent-bg-color;
+			background-color: var(--the7-accent-color);
 			.accent-gradient & {
 				.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
 			}
@@ -102,11 +99,11 @@
 .album-zoom-ico {
 	.albums-shortcode & {
 		& span {
-			color: @accent-bg-color;
+			color: var(--the7-accent-color);
 		}
-		border-color: @accent-bg-color;
+		border-color: var(--the7-accent-color);
 		.dt-icon-bg-on& {
-			background-color: @accent-bg-color;
+			background-color: var(--the7-accent-color);
 			.accent-gradient & {
 				.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
 			}
@@ -115,7 +112,7 @@
 }
 
 .rollover-content {
-	line-height: @base-line-height;
+	line-height: var(--the7-base-line-height);
 }
 	.rollover-content h2.entry-title {
 		.header-color;
@@ -127,5 +124,5 @@
 .portfolio-categories a,
 .portfolio-categories a *,
 .portfolio-categories span {
-	color: @secondary-text-color;
+	color: var(--the7-secondary-text-color);
 }

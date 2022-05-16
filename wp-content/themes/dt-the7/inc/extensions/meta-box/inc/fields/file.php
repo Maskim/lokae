@@ -54,7 +54,7 @@ if ( ! class_exists( 'THE7_RWMB_File_Field' ) )
 		 * Ajax callback for deleting files.
 		 * Modified from a function used by "Verve Meta Boxes" plugin
 		 *
-		 * @link http://goo.gl/LzYSq
+		 * @link https://goo.gl/LzYSq
 		 * @return void
 		 */
 		static function wp_ajax_delete_file()

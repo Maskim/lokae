@@ -9,6 +9,7 @@ jQuery(document).on("click",".inspire-file-delete-button",function() {
 	jQuery(this).parent().find('.inspire-file-info').hide();
 	jQuery(this).parent().find('.inspire-file-delete-button').hide();
 	jQuery(this).parent().find('.inspire-file-add-button').show();
+	jQuery(this).parent().find('input[type=text]').trigger('change');
 });
 
 jQuery(document).on("change",".inspire-file-file",function() {
@@ -51,6 +52,7 @@ jQuery(document).on("change",".inspire-file-file",function() {
 					$file_error.show();
                     jQuery('#' + id).find('.inspire-file-file').val('');
                     jQuery('#' + id).find('.inspire-file').val('');
+					jQuery('#' + id).find('.inspire-file').trigger('change');
             	}
             	else {
             		jQuery('#' + id).find('.inspire-file-delete-button').show();

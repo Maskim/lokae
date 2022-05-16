@@ -308,6 +308,28 @@ class HTMega_Settings_API {
     }
 
     /**
+     * Displays a multiselect for a settings field
+     *
+     * @param array   $args settings field args
+     */
+    function callback_multiselect( $args ) {
+
+        $value = $this->get_option( $args['id'], $args['section'], $args['std'] );
+        $html = sprintf( '<select multiple="multiple" class="%1$s" name="%1$s[%2$s][]" id="%1$s[%2$s]">', $args['section'], $args['id'] );
+        foreach ( $args['options'] as $key => $label ) {
+            $selected = '';
+            if( !empty( $value ) ){
+                $selected = in_array( $key, $value ) ? $key : '';
+            }
+            $html .= sprintf( '<option value="%1$s" %2$s>%3$s</option>', $key, selected( $selected, $key, false ), $label );
+        }
+        $html .= sprintf( '</select>' );
+        $html .= $this->get_field_description( $args );
+
+        echo $html;
+    }
+
+    /**
      * Displays a textarea for a settings field
      *
      * @param array   $args settings field args

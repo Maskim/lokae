@@ -329,6 +329,7 @@ if ( ! function_exists( 'presscore_config_populate_header_options' ) ) :
 
 		$prefix = '_dt_header_';
 
+
 		$header_title = get_post_meta( $post_id, "{$prefix}title", true );
 		$config->set( 'header_title', ( $header_title ? $header_title : null ), 'enabled' );
 
@@ -356,6 +357,18 @@ if ( ! function_exists( 'presscore_config_populate_header_options' ) ) :
 			case 'side':
 				$config->set( 'header_background', 'normal' );
 				break;
+		}
+		$show_header = true;
+		if (the7_elementor_is_active() && $post_id){
+			$show_header = get_post_meta( $post_id, "{$prefix}show", true );
+		}
+		$config->set( 'header.show', $show_header, true );
+
+		if ($config->get( 'header.layout' ) === 'disabled'){
+			$config->set( 'header.show', false);
+		}
+		if (!$config->get( 'header.show')) {
+			$config->set( 'header.floating_navigation.enabled', false);
 		}
 
 		////////////////////////////
@@ -471,6 +484,9 @@ if ( ! function_exists( 'presscore_config_logo_options' ) ) :
 		$config->set( 'logo.header.transparent.regular', of_get_option( 'header-style-transparent-logo_regular', array( '', 0 ) ) );
 		$config->set( 'logo.header.transparent.hd', of_get_option( 'header-style-transparent-logo_hd', array( '', 0 ) ) );
 
+		$config->set( 'logo.header.transparent.top.line', of_get_option( 'header-style-mixed-transparent-top_line-logo_regular', array( '', 0 ) ) );
+		$config->set( 'logo.header.transparent.top.line.hd', of_get_option( 'header-style-mixed-transparent-top_line-logo_hd', array( '', 0 ) ) );
+
 		$config->set( 'logo.header.floating.regular', of_get_option( 'header-style-floating-logo_regular', array( '', 0 ) ) );
 		$config->set( 'logo.header.floating.hd', of_get_option( 'header-style-floating-logo_hd', array( '', 0 ) ) );
 
@@ -501,7 +517,7 @@ if ( ! function_exists( 'presscore_config_populate_sidebar_and_footer_options' )
 		$prefix = '_dt_sidebar_';
 
 		// Sidebar options
-		$config->set( 'sidebar_position', get_post_meta( $post_id, "{$prefix}position", true ), 'right' );
+		$config->set( 'sidebar_position', get_post_meta( $post_id, "{$prefix}position", true ), is_page() ? 'right' : 'disabled' );
 		$config->set( 'sidebar_hide_on_mobile', get_post_meta( $post_id, "{$prefix}hide_on_mobile", true ), false );
 		$config->set( 'sidebar_widgetarea_id', get_post_meta( $post_id, "{$prefix}widgetarea_id", true ) );
 
@@ -697,6 +713,7 @@ if ( ! function_exists( 'presscore_config_get_theme_option' ) ) :
 			'header.mobile.hamburger.close.border.hover'                                => array( 'option', 'header-mobile-menu_close_icon-border-hover' ),
 
 			'header.menu.submenu.parent_clickable'                => array( 'option', 'header-menu-submenu-parent_is_clickable', true ),
+			'header.menu.submenu.display'                => array( 'option', 'header-menu-submenu-display', true ),
 			'header.menu.hover.decoration.style'                  => array( 'option', 'menu-decoration_style', '' ),
 			'header.decoration'                                   => array( 'option', 'header-decoration', 'shadow' ),
 			'header.elements.search.caption'                      => array( 'option', 'header-elements-search-caption' ),

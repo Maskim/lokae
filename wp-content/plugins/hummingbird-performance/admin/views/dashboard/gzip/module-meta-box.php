@@ -14,23 +14,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 <p><?php esc_html_e( 'Gzip compresses your webpages and style sheets before sending them over to the browser.', 'wphb' ); ?></p>
-<?php if ( $inactive_types ) : ?>
-	<div class="sui-notice sui-notice-warning">
-		<p>
-			<?php
-			printf(
-				/* translators: %s: Number of inactive types */
-				__( '%s of your compression types are inactive.', 'wphb' ),
-				absint( $inactive_types )
-			);
-			?>
-		</p>
-	</div>
-<?php else : ?>
-	<div class="sui-notice sui-notice-success">
-		<p><?php esc_html_e( 'Gzip compression is currently active. Good job!', 'wphb' ); ?></p>
-	</div>
-<?php endif; ?>
+<?php
+if ( $inactive_types ) {
+	$this->admin_notices->show_inline(
+		sprintf( /* translators: %s: Number of inactive types */
+			__( '%s of your compression types are inactive.', 'wphb' ),
+			absint( $inactive_types )
+		),
+		'warning'
+	);
+} else {
+	$this->admin_notices->show_inline( esc_html__( 'Gzip compression is currently active. Good job!', 'wphb' ) );
+}
+?>
 
 <ul class="sui-list sui-no-margin-bottom">
 	<li class="sui-list-header">

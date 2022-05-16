@@ -6,7 +6,7 @@
  * Time: 8:56
  */
 
-namespace The7\Adapters\Elementor\ShortcodeAdapters;
+namespace The7\Mods\Compatibility\Elementor\Shortcode_Adapters;
 
 abstract class Query_Interface {
 
@@ -28,11 +28,11 @@ abstract class Query_Interface {
 	 * @return string
 	 */
 	protected function get_att( $att_name, $default = null ) {
-		if ( array_key_exists( $att_name, $this->atts ) && '' !== $this->atts[ $att_name ] ) {
+		if ( array_key_exists( $att_name, $this->atts ) && ! in_array( $this->atts[ $att_name ], [ '', null ], true ) ) {
 			return $this->atts[ $att_name ];
 		}
 
-		if ( ! is_null( $default ) ) {
+		if ( $default !== null ) {
 			return $default;
 		}
 

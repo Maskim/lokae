@@ -289,22 +289,16 @@
 	}
 			//testim placeholder
 			.testimonial-vcard .no-avatar {
+				display: inline-flex;
+				justify-content: center;
+				align-items: center;
 				width: 60px;
 				height: 60px;
-				&:after {
-				 	content: "\e502";
-				 	font-size: 28px;
-				}
 			}
 			.testimonial-vcard  a.no-avatar:hover:after {
 				color: #fff;
 			}
-			.text-secondary,
-			.text-primary {
-				.widget .testimonial-vcard & {
-					font-weight: normal;
-				}
-			}
+			
 				.testimonial-vcard .rollover i {
 					width: 60px;
 					height: 60px;
@@ -341,9 +335,13 @@ body.testimonials {
 		}
 
 			.testimonial-vcard .alignleft {
-				margin: 0 20px 5px 0;
+				margin: 0 15px 5px 0;
 				font-size: 0;
 				line-height: 0;
+				#sidebar &,
+				#footer & {
+					margin: 0 15px 5px 0;
+				}
 			}
 				.testimonial-vcard .alignleft div {
 					overflow: hidden;
@@ -590,7 +588,7 @@ svg {
 	}
 	#sidebar .team-desc,
 	#footer .team-desc {
-		padding: 8px 0 7px;
+		padding: 13px 0 7px;
 	}
 
 			.team-container .soc-ico {
@@ -612,7 +610,6 @@ svg {
 		text-align: center;
 	}
 	.team-author-name {
-		margin-bottom: 5px;
 		& a {
 			text-decoration: none;
 			
@@ -637,6 +634,12 @@ svg {
 	}
 	.dt-team-shortcode .team-author p {
 		display: inline-block;
+	}
+	.team-author {
+		padding-bottom: 5px;
+	}
+	.team-author p {
+		margin-bottom: 5px;
 	}
 	.hide-team-position .team-author p,
 	.dt-team-shortcode.hide-team-position .team-author p {
@@ -1282,8 +1285,10 @@ svg {
 ========================================================================= */
 .widget .instagram-photos {
 	overflow: hidden;
-	margin-bottom: 15px;
 	padding-top: 5px;
+}
+.widget_media_gallery .gallery-item {
+	line-height: 0;
 }
 	.instagram-photos a {
 		position: relative;
@@ -2070,16 +2075,10 @@ article {
 	}
 	//article:hover > .post-thumbnail-wrap .post-thumbnail .rollover i,
 	article:hover > .post-thumbnail-wrap .post-thumbnail-rollover:after {
-		.mobile-false .content-rollover-layout-list &,
-		.mobile-false .gradient-overlay-layout-list &,
-		.mobile-false .gradient-overlap-layout-list & {
+		.content-rollover-layout-list &,
+		.gradient-overlay-layout-list &,
+		.gradient-overlap-layout-list & {
 			opacity: 1;
 		}	
 	}
-	article.is-clicked > .post-thumbnail-wrap .post-thumbnail-rollover:after {
-		.mobile-true .content-rollover-layout-list &,
-		.mobile-true .gradient-overlay-layout-list &,
-		.mobile-true .gradient-overlap-layout-list & {
-			opacity: 1;
-		}	
-	}
+	

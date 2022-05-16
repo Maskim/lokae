@@ -3,22 +3,32 @@
  * Options to inject in header.
  */
 
-// File Security Check
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+defined( 'ABSPATH' ) || exit;
 
-$new_options = array();
+$new_options = [];
 
-$new_options[] = array( 'name' => _x( 'WPML language switcher', 'theme-options', 'the7mk2' ), 'id' => 'microwidgets-language-block', 'class' => 'block-disabled', 'type' => 'block' );
+$new_options[] = [
+	'name'  => _x( 'WPML language switcher', 'theme-options', 'the7mk2' ),
+	'id'    => 'microwidgets-language-block',
+	'class' => 'block-disabled',
+	'type'  => 'block',
+];
 
-	presscore_options_apply_template( $new_options, 'basic-header-element', 'header-elements-language', array(
+presscore_options_apply_template(
+	$new_options,
+	'basic-header-element',
+	'header-elements-language',
+	[
 		'caption' => false,
-		'icon' => false,
-	) );
+		'icon'    => false,
+		'url'     => false,
+	]
+);
 
-// add new options
+// Add new options.
 if ( isset( $options ) ) {
 	$options = dt_array_push_after( $options, $new_options, 'header-before-elements-placeholder' );
 }
 
-// cleanup
+// Cleanup.
 unset( $new_options );

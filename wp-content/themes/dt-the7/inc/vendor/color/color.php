@@ -1,8 +1,8 @@
 <?php
 /**
- * Author: Arlo Carreon <http://arlocarreon.com>
- * Info: http://mexitek.github.io/phpColors/
- * License: http://arlo.mit-license.org/
+ * Author: Arlo Carreon <https://arlocarreon.com>
+ * Info: https://mexitek.github.io/phpColors/
+ * License: https://arlo.mit-license.org/
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -30,19 +30,19 @@ class Color {
      * @param string $color
      */
     function __construct( $color ) {
-    	if ( self::_isRGB( $color ) ) {
-    		// rgb and rgba
-		    list( $this->_rgb, $this->_opacity ) = self::_checkRGB( $color );
+		if ( self::_isRGB( $color ) ) {
+			// rgb and rgba
+			list( $this->_rgb, $this->_opacity ) = self::_checkRGB( $color );
 			$this->_hex = self::rgbToHex( $this->_rgb );
-	    } else {
-    		// hex
-		    $hex = self::_checkHex( $color );
-		    $this->_hex = $hex;
-		    $this->_rgb = self::hexToRgb( $hex );
-		    $this->_opacity = 100;
-	    }
+		} else {
+			// hex
+			$hex            = self::_checkHex( $color );
+			$this->_hex     = $hex;
+			$this->_rgb     = self::hexToRgb( $hex );
+			$this->_opacity = self::getHexOpacity( $color );
+		}
 
-        $this->_hsl = self::hexToHsl( $this->_hex );
+		$this->_hsl = self::hexToHsl( $this->_hex );
     }
 
     // ====================
@@ -347,7 +347,7 @@ class Color {
      * @param boolean $vintageBrowsers Optional: include vendor prefixes for browsers that almost died out already
      * @param string $prefix Optional: prefix for every lines
      * @param string $suffix Optional: suffix for every lines
-     * @link  http://caniuse.com/css-gradients Resource for the browser support
+     * @link  https://caniuse.com/css-gradients Resource for the browser support
      * @return string CSS3 gradient for chrome, safari, firefox, opera and IE10
      */
     public function getCssGradient( $amount = self::DEFAULT_ADJUST, $vintageBrowsers = FALSE, $suffix = "" , $prefix = "" ) {
@@ -437,7 +437,7 @@ class Color {
      * @param int $amount ranged -100..0..+100
      * @return array $rgb
      *
-     * 	ported from http://phpxref.pagelines.com/nav.html?includes/class.colors.php.source.html
+     * 	ported from https://phpxref.pagelines.com/nav.html?includes/class.colors.php.source.html
      */
     private function _mix($rgb1, $rgb2, $amount = 0) {
 
@@ -489,19 +489,37 @@ class Color {
      * @return string Color
      * @throws Exception "Bad color format"
      */
-    private static function _checkHex( $hex ) {
-        // Strip # sign is present
-        $color = str_replace("#", "", $hex);
+	private static function _checkHex( $hex ) {
+		// Strip # sign is present.
+		$color = substr( str_replace( '#', '', $hex ), 0, 6 );
 
-        // Make sure it's 6 digits
-        if( strlen($color) == 3 ) {
-            $color = $color[0].$color[0].$color[1].$color[1].$color[2].$color[2];
-        } else if( strlen($color) != 6 ) {
-            throw new Exception("HEX color ($hex) needs to be 6 or 3 digits long");
-        }
+		// Make sure it's 6 digits only.
+		if ( strlen( $color ) === 3 ) {
+			$color = $color[0] . $color[0] . $color[1] . $color[1] . $color[2] . $color[2];
+		}
 
-        return $color;
-    }
+		if ( strlen( $color ) !== 6 ) {
+			throw new Exception( "HEX color ($hex) needs to be 6 or 3 digits long" );
+		}
+
+		return $color;
+	}
+
+	/**
+	 * @param string $hex
+	 *
+	 * @return int
+	 */
+	private static function getHexOpacity( $hex ) {
+		// Strip # sign is present.
+		$color = substr( str_replace( '#', '', $hex ), 0, 8 );
+
+		if ( strlen( $color ) < 8 ) {
+			return 100;
+		}
+
+		return round( ( hexdec( substr( $color, 6, 2 ) ) / 255 ) * 100 );
+	}
 
     private static function _checkRGB( $rgb ) {
         $rgb_str = str_replace( array( 'rgb(', 'rgba(', ')' ), '', $rgb );

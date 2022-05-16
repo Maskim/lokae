@@ -601,6 +601,14 @@ class HTMega_Admin_Settings {
                     'class'=>'htmega_table_row',
                 ),
 
+                array(
+                    'name'  => 'template_selector',
+                    'label'  => __( 'Remote Template', 'htmega-addons' ),
+                    'type'  => 'checkbox',
+                    'default'=>'off',
+                    'class'=>'htmega_table_row',
+                ),
+
             ),
 
             'htmega_general_tabs'=>array(
@@ -658,6 +666,14 @@ class HTMega_Admin_Settings {
                 array(
                     'name'  => 'megamenubuilder',
                     'label'  => __( 'Menu Builder', 'htmega-addons' ),
+                    'type'  => 'checkbox',
+                    'default'=>'off',
+                    'class'=>'htmega_table_row',
+                ),
+
+                array(
+                    'name'  => 'postduplicator',
+                    'label'  => __( 'Post Duplicator', 'htmega-addons' ),
                     'type'  => 'checkbox',
                     'default'=>'off',
                     'class'=>'htmega_table_row',
@@ -852,9 +868,25 @@ class HTMega_Admin_Settings {
             ),
 
         );
+
+        // Post Duplicator Condition
+        if( htmega_get_option( 'postduplicator', 'htmega_advance_element_tabs', 'off' ) === 'on' ){
+            $post_types = htmega_get_post_types( array('defaultadd'=>'all') );
+            if ( did_action( 'elementor/loaded' ) && defined( 'ELEMENTOR_VERSION' ) ) {
+                $post_types['elementor_library'] = esc_html__( 'Templates', 'htmega-addons' );
+            }
+            $settings_fields['htmega_general_tabs'][] = [
+                'name'    => 'postduplicate_condition',
+                'label'   => __( 'Post Duplicator Condition', 'htmega-addons' ),
+                'desc'    => __( 'You can enable duplicator for individual post.', 'htmega-addons' ),
+                'type'    => 'multiselect',
+                'default' => '',
+                'options' => $post_types,
+            ];
+        }
         
-        // Third Party Addons
         $third_party_element = array();
+        // Third Party Addons
         if( is_plugin_active('bbpress/bbpress.php') ) {
             $third_party_element['htmega_thirdparty_element_tabs'][] = [
                 'name'    => 'bbpress',
@@ -1070,10 +1102,16 @@ class HTMega_Admin_Settings {
     function plugin_page() {
 
         echo '<div class="wrap">';
-            echo '<h2>'.esc_html__( 'HTMega Addons Settings','htmega-addons' ).'</h2>';
-            $this->save_message();
-            $this->settings_api->show_navigation();
-            $this->settings_api->show_forms();
+            echo '<div class="htoptions-area">';
+                echo '<h2>'.esc_html__( 'HTMega Addons Settings','htmega-addons' ).'</h2>';
+                $this->save_message();
+                $this->settings_api->show_navigation();
+                $this->settings_api->show_forms();
+            echo '</div>';
+
+            $side_banner_html = $this->sidebar_add_banner_html();
+            echo apply_filters( 'htmega_sidebar_adds_banner', $side_banner_html );
+
         echo '</div>';
 
     }
@@ -1086,6 +1124,57 @@ class HTMega_Admin_Settings {
             
             <?php
         }
+    }
+
+    /**
+     * [sidebar_add_banner_html] Pro add sidebar banner
+     * @return [void]
+     */
+    function sidebar_add_banner_html(){
+
+        ob_start();
+        ?>
+        <div class="htoptions-sidebar-adds-area">
+
+            <div class="htoption-banner-area">
+                <div class="htoption-banner-head">
+                    <div class="htoption-logo">
+                        <img src="<?php echo HTMEGA_ADDONS_PL_URL; ?>/admin/assets/images/logo.png" alt="<?php echo esc_attr__( 'HTMega', 'htmega-addons' ); ?>">
+                    </div>
+                    <div class="htoption-intro">
+                        <p><?php echo wp_kses_post( 'HTMega is an absolute addon for elementor that includes 80+ elements & 360 Blocks with unlimited variations. HT Mega brings limitless possibilities. Embellish your site with the elements of HT Mega.' ); ?></p>
+                    </div>
+                </div>
+
+                <ul class="htoption-feature">
+                    <li><?php echo esc_html__( '80+ Elementor Elements', 'htmega-addons' ); ?></li>
+                    <li><?php echo esc_html__( '360 Elementor Blocks', 'htmega-addons' ); ?></li>
+                    <li><?php echo esc_html__( '39 Categories and 491 Page Templates.', 'htmega-addons' ); ?></li>
+                    <li><?php echo esc_html__( 'Drag n Drop, No coding Required', 'htmega-addons' ); ?></li>
+                    <li><?php echo esc_html__( 'Responsive, supports all major devices', 'htmega-addons' ); ?></li>
+                </ul>
+
+                <div class="htoption-action-btn">
+                    <a class="htoption-btn" href="<?php echo esc_url( 'https://hasthemes.com/plugins/ht-mega-pro/' ); ?>" target="_blank">
+                        <span class="htoption-btn-text"><?php echo esc_html__( 'Get Pro Now', 'htmega-addons' ); ?></span>
+                        <span class="htoption-btn-icon"><img src="<?php echo HTMEGA_ADDONS_PL_URL; ?>/admin/assets/images/icon/plus.png" alt="<?php echo esc_attr__( 'Get pro now', 'htmega-addons' ); ?>"></span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="htoption-rating-area">
+                <div class="htoption-rating-icon">
+                    <img src="<?php echo HTMEGA_ADDONS_PL_URL; ?>/admin/assets/images/icon/rating.png" alt="<?php echo esc_attr__( 'Rating icon', 'htmega-addons' ); ?>">
+                </div>
+                <div class="htoption-rating-intro">
+                    <?php echo esc_html__('If you’re loving how our product has helped your business, please let the WordPress community know by','htmega-addons'); ?> <a target="_blank" href="https://wordpress.org/support/plugin/ht-mega-for-elementor/reviews/?filter=5#new-post"><?php echo esc_html__( 'leaving us a review on our WP repository', 'htmega-addons' ); ?></a>. <?php echo esc_html__( 'Which will motivate us a lot.', 'htmega-addons' ); ?>
+                </div>
+            </div>
+
+        </div>
+        <?php
+        return ob_get_clean();
+
     }
 
     /**
@@ -1156,7 +1245,6 @@ class HTMega_Admin_Settings {
                                 <li class="fedel"><del><?php echo esc_html__( 'Content color option', 'htmega-addons');?></del></li>
                                 <li class="fedel"><del><?php echo esc_html__( 'Cross icon color option', 'htmega-addons');?></del></li>
                             </ul>
-                            <a class="button button-primary" href="<?php echo esc_url( admin_url() ); ?>/plugin-install.php" target="_blank"><?php echo esc_html__( 'Install Now', 'htmega-addons' ); ?></a>
                         </div>
                         <div class="features-list-area">
                             <h3><?php echo esc_html__( 'HTMega Pro', 'htmega-addons' ); ?></h3>

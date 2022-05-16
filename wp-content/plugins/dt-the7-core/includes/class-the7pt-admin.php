@@ -82,9 +82,19 @@ class The7PT_Admin {
 	 * @return array
 	 */
 	public static function add_plugin_action_links( $links = array() ) {
-		if ( defined( 'THE7_VERSION' ) && current_user_can( 'edit_theme_options' ) ) {
-			$links['the7pt_modules'] = '<a href="' . esc_url( 'admin.php?page=of-blog-and-portfolio-menu' ) . '">' . _x( 'Settings', 'admin', 'dt-the7-core' ) . '</a>';
+		if ( ! defined( 'THE7_VERSION' ) ) {
+			return $links;
 		}
+
+		if ( ! current_user_can( 'edit_theme_options' ) ) {
+			return $links;
+		}
+
+		if ( function_exists( 'the7_is_elementor_theme_style_enabled') && the7_is_elementor_theme_style_enabled() ) {
+			return $links;
+		}
+
+		$links['the7pt_modules'] = '<a href="' . esc_url( 'admin.php?page=of-blog-and-portfolio-menu' ) . '">' . _x( 'Settings', 'admin', 'dt-the7-core' ) . '</a>';
 
 		return $links;
 	}
@@ -180,6 +190,32 @@ class The7PT_Admin {
 				<?php echo wp_kses_post( sprintf( __( '<strong>Important notice</strong>: You have an outdated version of <strong>The7</strong> theme. For better compatibility with <strong>The7 Elements</strong> plugin it is required to <a href="%s">update the theme</a>.', 'dt-the7-core' ), admin_url( 'themes.php' ) ) ) ?>
 			</p>
 		</div>
+		<?php
+	}
+
+	public static function display_pro_elements_removal_notice() {
+		if ( ! current_user_can( 'install_plugins' ) ) {
+			return;
+		}
+		?>
+
+		<p>
+			<?php
+			printf(
+				wp_kses_post(
+					_x(
+						// translators: 1: elementor pro link, 2: pro elements link
+						'<strong>Attention!</strong> In order to use The7 with Elementor to its full potential, please install %1$s or its free alternative - %2$s plugin.',
+						'admin',
+						'dt-the7-core'
+					)
+				),
+				'<a href="https://elementor.com/pro/" target="_blank" rel="nofollow">' . esc_html_x( 'Elementor Pro', 'admin', 'dt-the7-core' ) . '</a>',
+				'<a href="https://proelements.org" target="_blank" rel="nofollow">' . esc_html_x( 'PRO Elements', 'admin', 'dt-the7-core' ) . '</a>'
+			);
+			?>
+		</p>
+
 		<?php
 	}
 

@@ -29,8 +29,10 @@ class The7_Option_Field_Info extends The7_Option_Field_Abstract {
 			$output .= '<h4 class="heading">' . esc_html( $this->option['name'] ) . '</h4>';
 		}
 
+		$filter = isset( $this->option['sanitize'] ) ? 'of_sanitize_' . $this->option['sanitize'] : 'of_sanitize_info';
+
 		if ( $this->option['desc'] ) {
-			$output .= '<div class="info-description">' . apply_filters( 'of_sanitize_info', $this->option['desc'] ) . '</div>';
+			$output .= '<div class="info-description">' . apply_filters( $filter, $this->option['desc'] ) . '</div>';
 		}
 
 		if ( ! empty( $this->option['image'] ) ) {

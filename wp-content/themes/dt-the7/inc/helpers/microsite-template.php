@@ -131,6 +131,14 @@ if ( ! function_exists( 'presscore_microsite_theme_options_filter' ) ) :
 				'value_meta_id' => 'mixed_logo_hd',
 				'type_meta_id' => 'mixed_logo_type'
 			),
+			'header-style-mixed-transparent-top_line-logo_regular' => array(
+				'value_meta_id' => 'mixed_transparent_logo_regular',
+				'type_meta_id' => 'mixed_transparent_logo_type'
+			),
+			'header-style-mixed-transparent-top_line-logo_hd' => array(
+				'value_meta_id' => 'mixed_transparent_logo_hd',
+				'type_meta_id' => 'mixed_transparent_logo_type'
+			),
 			'header-style-floating-logo_regular' => array(
 				'value_meta_id' => 'floating_logo_regular',
 				'type_meta_id' => 'floating_logo_type',
@@ -228,62 +236,22 @@ if ( ! function_exists( 'presscore_microsite_add_options_filters' ) ) :
 
 endif;
 
-if ( ! function_exists( 'presscore_microsite_menu_filter' ) ) :
+if ( ! function_exists( 'presscore_microsite_add_menu_hooks' ) ) {
 
-	/**
-	 * Microsite menu filter.
-	 *
-	 */
-	function presscore_microsite_menu_filter( $args = array() ) {
-		$location = $args['theme_location'];
-		$page_menu = get_post_meta( get_the_ID(), "_dt_microsite_{$location}_menu", true );
-		$page_menu = intval( $page_menu );
+	function presscore_microsite_add_menu_hooks() {
+		$post_id = presscore_config()->get( 'post_id' );
 
-		if ( $page_menu > 0 ) {
-			$args['menu'] = $page_menu;
+		if ( ! $post_id || ! in_array( get_page_template_slug( $post_id ), [ 'template-microsite.php', 'elementor_header_footer', '' ], true ) ) {
+			return;
 		}
 
-		return $args;
+		$menus_override_handler = new The7_Header_Menus_Override_Handler( $post_id );
+		$menus_override_handler->bootstrap();
 	}
 
-endif;
+	add_action( 'presscore_config_base_init', 'presscore_microsite_add_menu_hooks' );
 
-if ( ! function_exists( 'presscore_microsite_pre_nav_menu_filter' ) ) :
-
-	/**
-	 * Add capability to display page menu on microsite. Same as empty menu location.
-	 *
-	 * @since  3.0.0
-	 * @param mixed $nav_menu
-	 * @param array $args
-	 * @return string
-	 */
-	function presscore_microsite_pre_nav_menu_filter( $nav_menu, $args = array() ) {
-		$location = $args['theme_location'];
-		$page_menu = get_post_meta( get_the_ID(), "_dt_microsite_{$location}_menu", true );
-		if ( intval( $page_menu ) < 0 && isset( $args['fallback_cb'] ) && is_callable( $args['fallback_cb'] ) ) {
-			$args['echo'] = false;
-			return call_user_func( $args['fallback_cb'], $args );
-		}
-
-		return $nav_menu;
-	}
-
-endif;
-
-if ( ! function_exists( 'presscore_microsite_has_mobile_menu_filter' ) ) :
-
-	function presscore_microsite_has_mobile_menu_filter( $has_menu ) {
-		$page_menu = get_post_meta( get_the_ID(), '_dt_microsite_mobile_menu', true );
-		$page_menu = intval( $page_menu );
-		if ( 0 !== $page_menu ) {
-			return true;
-		}
-
-		return $has_menu;
-	}
-
-endif;
+}
 
 if ( ! function_exists( 'presscore_microsite_setup' ) ) :
 
@@ -294,16 +262,12 @@ if ( ! function_exists( 'presscore_microsite_setup' ) ) :
 			return;
 		}
 
-		// add menu filter here
-		add_filter( 'presscore_nav_menu_args', 'presscore_microsite_menu_filter' );
-		add_filter( 'presscore_pre_nav_menu', 'presscore_microsite_pre_nav_menu_filter', 10, 2 );
-		add_filter( 'presscore_has_mobile_menu', 'presscore_microsite_has_mobile_menu_filter' );
-
-		// hide template parts
-		$config = presscore_config();
-		$hidden_parts = get_post_meta( $post->ID, "_dt_microsite_hidden_parts", false );
-		$hide_header = in_array( 'header', $hidden_parts );
-		$hide_floating_menu = in_array( 'floating_menu', $hidden_parts );
+		// Hide template parts.
+		$config             = presscore_config();
+		$hidden_parts       = get_post_meta( $post->ID, '_dt_microsite_hidden_parts', false );
+		$hide_header        = in_array( 'header', $hidden_parts, true );
+		$hide_floating_menu = in_array( 'floating_menu', $hidden_parts, true );
+		$hide_top_bar       = in_array( 'top_bar', $hidden_parts, true );
 
 		if ( $hide_header ) {
 			add_filter( 'body_class', 'presscore_microsite_hide_header' );
@@ -315,7 +279,7 @@ if ( ! function_exists( 'presscore_microsite_setup' ) ) :
 		}
 
 		// Hide top bar.
-		if ( in_array( 'top_bar', $hidden_parts ) ) {
+		if ( $hide_top_bar ) {
 			add_filter( 'presscore_top_bar_class', 'presscore_microsite_top_bar_class_filter' );
 		}
 
@@ -355,3 +319,22 @@ if ( ! function_exists( 'presscore_is_microsite' ) ) :
 	}
 
 endif;
+
+/**
+ * Used to populate 'select' options in 'Menus' metabox and elementor page settings tab.
+ *
+ * @return array
+ */
+function the7_microsite_get_nav_menu_options_for_select() {
+	$options = [ -1 => _x( 'Menu based on public pages', 'backend metabox', 'the7mk2' ) ];
+	$nav_menus = wp_get_nav_menus();
+	foreach ( $nav_menus as $nav_menu ) {
+		$options[ $nav_menu->term_id ] = wp_html_excerpt( $nav_menu->name, 40, '&hellip;' );
+	}
+
+	return $options;
+}
+function presscore_microsite_disable_headers( $classes = array() ) {
+	$classes[] = 'disable-headers';
+	return array_diff( $classes, [ 'sticky-mobile-header' ] );
+}

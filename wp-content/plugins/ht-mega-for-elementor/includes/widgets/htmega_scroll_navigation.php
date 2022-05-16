@@ -1,6 +1,10 @@
 <?php
 namespace Elementor;
 
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class HTMega_Elementor_Widget_Scroll_Navigation extends Widget_Base {
@@ -19,10 +23,6 @@ class HTMega_Elementor_Widget_Scroll_Navigation extends Widget_Base {
 
     public function get_categories() {
         return [ 'htmega-addons' ];
-    }
-
-    public function get_style_depends() {
-        return [];
     }
 
     public function get_script_depends() {
@@ -85,7 +85,7 @@ class HTMega_Elementor_Widget_Scroll_Navigation extends Widget_Base {
                 'navigator_content_list',
                 [
                     'type'    => Controls_Manager::REPEATER,
-                    'fields'  => array_values( $repeater->get_controls() ),
+                    'fields'  => $repeater->get_controls() ,
                     'default' => [
 
                         [
@@ -226,10 +226,6 @@ class HTMega_Elementor_Widget_Scroll_Navigation extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#000000',
                     'selectors' => [
                         '{{WRAPPER}} .scroll-navigation-content' => 'color: {{VALUE}};',

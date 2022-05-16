@@ -78,6 +78,10 @@ class Scanner {
 	 * Mark the scan as finished
 	 */
 	public function finish_scan() {
+		if ( get_transient( self::IS_SCANNING_SLUG ) ) {
+			do_action( 'wphb_process_fonts' );
+		}
+
 		delete_transient( self::IS_SCANNING_SLUG );
 		update_option( self::IS_SCANNED_SLUG, true );
 		delete_option( self::CURRENT_STEP );
@@ -109,7 +113,7 @@ class Scanner {
 	/**
 	 * Get the current scan step being scanned
 	 *
-	 * @return mixed
+	 * @return int
 	 */
 	public function get_current_scan_step() {
 		$this->refresh_status();
@@ -219,12 +223,20 @@ class Scanner {
 
 		$result = array();
 
-		$args             = array(
+		$args = array(
 			'timeout'   => 0.01,
 			'cookies'   => $cookies,
 			'blocking'  => false,
 			'sslverify' => false,
 		);
+
+		// Add support for basic auth in WPMU DEV staging.
+		if ( isset( $_SERVER['WPMUDEV_HOSTING_ENV'] ) && 'staging' === $_SERVER['WPMUDEV_HOSTING_ENV'] && isset( $_SERVER['PHP_AUTH_USER'] ) ) {
+			$args['headers'] = array(
+				'Authorization' => 'Basic ' . base64_encode( $_SERVER['PHP_AUTH_USER'] . ':' . $_SERVER['PHP_AUTH_PW'] ),
+			);
+		}
+
 		$result['cookie'] = wp_remote_get( $url, $args );
 
 		// One call logged out.

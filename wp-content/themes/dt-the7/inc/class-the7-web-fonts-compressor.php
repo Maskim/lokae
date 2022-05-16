@@ -45,7 +45,7 @@ class The7_Web_Fonts_Compressor {
 	public function compress_to_url() {
 		$compressed_fonts = $this->compress_fonts_to_array( $this->fonts );
 		$query_args       = array(
-			'family' => implode( '|', $compressed_fonts ),
+			'family' => implode( '%7C', $compressed_fonts ),
 		);
 
 		if ( $this->display ) {

@@ -108,6 +108,9 @@ if( !function_exists('htmega_get_post_types') ){
         $_post_types = get_post_types( $post_type_args , 'objects' );
 
         $post_types  = [];
+        if( !empty( $args['defaultadd'] ) ){
+            $post_types[ strtolower($args['defaultadd']) ] = ucfirst($args['defaultadd']);
+        }
         foreach ( $_post_types as $post_type => $object ) {
             $post_types[ $post_type ] = $object->label;
         }
@@ -134,6 +137,32 @@ if( !function_exists('htmega_html_tag_lists') ){
         ];
         return $html_tag_list;
     }
+}
+
+/*
+ * HTML Tag Validation
+ * return strig
+ */
+function htmega_validate_html_tag( $tag ) {
+    $allowed_html_tags = [
+        'article',
+        'aside',
+        'footer',
+        'header',
+        'section',
+        'nav',
+        'main',
+        'div',
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+        'p',
+        'span',
+    ];
+    return in_array( strtolower( $tag ), $allowed_html_tags ) ? $tag : 'div';
 }
 
 /*

@@ -15,7 +15,7 @@ add_action( 'widgets_init', array( 'Presscore_Inc_Widgets_BlogPosts', 'presscore
 class Presscore_Inc_Widgets_BlogPosts extends WP_Widget {
 
 	/* Widget defaults */
-	public static $widget_defaults = array( 
+	public static $widget_defaults = array(
 		'title' => '',
 		'order' => 'DESC',
 		'orderby' => 'date',
@@ -29,7 +29,7 @@ class Presscore_Inc_Widgets_BlogPosts extends WP_Widget {
 	);
 
 	/* Widget setup  */
-	function __construct() {  
+	function __construct() {
 		/* Widget settings. */
 		$widget_ops = array( 'description' => _x( 'Blog posts', 'widget', 'the7mk2' ) );
 
@@ -41,43 +41,49 @@ class Presscore_Inc_Widgets_BlogPosts extends WP_Widget {
 		);
 	}
 
-	/* Display the widget  */
-	function widget( $args, $instance ) {
-
+	/**
+	 * Display the widget.
+	 *
+	 * @param array $args     Display arguments including 'before_title', 'after_title',
+	 *                        'before_widget', and 'after_widget'.
+	 * @param array $instance The settings for the particular instance of the widget.
+	 */
+	public function widget( $args, $instance ) {
 		extract( $args );
 
 		$instance = wp_parse_args( (array) $instance, self::$widget_defaults );
 
 		/* Our variables from the widget settings. */
 		$title = apply_filters( 'widget_title', $instance['title'] );
-		$terms = empty($instance['cats']) ? array(0) : (array) $instance['cats'];
+		$terms = empty( $instance['cats'] ) ? [ 0 ] : (array) $instance['cats'];
 
 		$html = '';
 		if ( $terms ) {
-
-			$attachments_data = presscore_get_related_posts( array(
-				'exclude_current'	=> false,
-				'cats'				=> $terms,
-				'select'			=> $instance['select'],
-				'post_type' 		=> 'post',
-				'taxonomy'			=> 'category',
-				'field'				=> 'term_id',
-				'args'				=> array(
-					'posts_per_page' 	=> $instance['show'],
-					'orderby'			=> $instance['orderby'],
-					'order'             => $instance['order'],
-				)
-			) );
-
-			$list_args = array(
-				'show_images' => (bool) $instance['thumbnails'],
-				'show_excerpts' => (bool) $instance['show_excerpts'],
-				'image_dimensions' => $instance['images_dimensions']
+			$attachments_data = presscore_get_related_posts(
+				[
+					'exclude_current' => false,
+					'cats'            => $terms,
+					'select'          => $instance['select'],
+					'post_type'       => 'post',
+					'taxonomy'        => 'category',
+					'field'           => 'term_id',
+					'args'            => [
+						'posts_per_page' => $instance['show'],
+						'orderby'        => $instance['orderby'],
+						'order'          => $instance['order'],
+					],
+				]
 			);
 
-			$posts_list = presscore_get_posts_small_list( $attachments_data, $list_args );
-			if ( $posts_list ) {
-
+			if ( $attachments_data ) {
+				$posts_list = $this->get_posts_html_list(
+					$attachments_data,
+					[
+						'show_images'      => (bool) $instance['thumbnails'],
+						'show_excerpts'    => (bool) $instance['show_excerpts'],
+						'image_dimensions' => $instance['images_dimensions'],
+					]
+				);
 				foreach ( $posts_list as $p ) {
 					$html .= sprintf( '<li>%s</li>', $p );
 				}
@@ -86,10 +92,11 @@ class Presscore_Inc_Widgets_BlogPosts extends WP_Widget {
 			}
 		}
 
-		echo $before_widget ;
+		echo $before_widget;
 
-		// title
-		if ( $title ) echo $before_title . $title . $after_title;
+		if ( $title ) {
+			echo $before_title . esc_html( $title ) . $after_title;
+		}
 
 		echo $html;
 
@@ -99,12 +106,12 @@ class Presscore_Inc_Widgets_BlogPosts extends WP_Widget {
 	/* Update the widget settings  */
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
-		
+
 		$instance['title'] 		= strip_tags($new_instance['title']);
 		$instance['order']    	= esc_attr($new_instance['order']);
 		$instance['orderby']   	= esc_attr($new_instance['orderby']);
 		$instance['show']     	= intval($new_instance['show']);
-		
+
 		$instance['select']   	= in_array( $new_instance['select'], array('all', 'only', 'except') ) ? $new_instance['select'] : 'all';
 		$instance['cats']    	= (array) $new_instance['cats'];
 		if ( empty($instance['cats']) ) { $instance['select'] = 'all'; }
@@ -129,7 +136,7 @@ class Presscore_Inc_Widgets_BlogPosts extends WP_Widget {
 
 		$terms = get_terms( 'category', array(
 			'hide_empty'    => 1,
-			'hierarchical'  => false 
+			'hierarchical'  => false
 		) );
 
 		$orderby_list = array(
@@ -221,6 +228,116 @@ class Presscore_Inc_Widgets_BlogPosts extends WP_Widget {
 
 		<div style="clear: both;"></div>
 	<?php
+	}
+
+	/**
+	 * Just a quick copy of presscore_get_posts_small_list.
+	 *
+	 * @see presscore_get_posts_small_list
+	 *
+	 * @param array $attachments_data Attachnets data.
+	 * @param array $options List options.
+	 *
+	 * @return array
+	 */
+	protected function get_posts_html_list( $attachments_data, $options = [] ) {
+		if ( empty( $attachments_data ) ) {
+			return [];
+		}
+
+		$options = wp_parse_args(
+			$options,
+			[
+				'links_rel'        => '',
+				'show_images'      => true,
+				'show_excerpts'    => false,
+				'image_dimensions' => [
+					'w' => 60,
+					'h' => 60,
+				],
+			]
+		);
+
+		$image_args = [
+			'img_class' => '',
+			'class'     => 'alignleft post-rollover',
+			'custom'    => $options['links_rel'],
+			'options'   => [
+				'w' => $options['image_dimensions']['w'],
+				'h' => $options['image_dimensions']['h'],
+				'z' => true,
+			],
+			'echo'      => false,
+		];
+
+		$articles = [];
+
+		presscore_remove_masonry_lazy_load_attrs();
+
+		foreach ( $attachments_data as $data ) {
+			$current_post = null;
+			if ( isset( $data['parent_id'] ) ) {
+				$current_post = get_post( $data['parent_id'] );
+			}
+
+			$permalink = esc_url( $data['permalink'] );
+
+			$attachment_args = [
+				'href'     => $permalink,
+				'img_meta' => [ $data['full'], $data['width'], $data['height'] ],
+				'img_id'   => empty( $data['ID'] ) ? 0 : $data['ID'],
+				'echo'     => false,
+				'custom'   => 'aria-label="' . esc_attr__( 'Post image', 'the7mk2' ) . '"',
+				'wrap'     => '<a %CLASS% %HREF% %CUSTOM%><img %IMG_CLASS% %SRC% %SIZE% %ALT% /></a>',
+			];
+
+			// Show something if there is no title.
+			if ( empty( $data['title'] ) ) {
+				$data['title'] = __( 'No title', 'the7mk2' );
+			}
+
+			$class = '';
+			if ( ! empty( $data['parent_id'] ) ) {
+				$class = 'post-format-standard';
+
+				if ( empty( $data['ID'] ) ) {
+					$attachment_args['wrap']     = '<a class="' . esc_attr( $image_args['class'] . ' no-avatar' ) . '" %HREF% %TITLE% style="width:' . (int) $options['image_dimensions']['w'] . 'px; height: ' . (int) $options['image_dimensions']['h'] . 'px;" %CUSTOM%></a>';
+					$attachment_args['img_meta'] = [ '', 0, 0 ];
+					$attachment_args['options']  = false;
+				}
+			}
+
+			$article = '<article class="' . esc_attr( $class ) . '">';
+
+			if ( $options['show_images'] ) {
+				$article .= sprintf(
+					'<div class="mini-post-img">%s</div>',
+					dt_get_thumb_img( array_merge( $image_args, $attachment_args ) )
+				);
+			}
+
+			$article .= '<div class="post-content">';
+			$article .= '<a href="' . $permalink . '">' . esc_html( apply_filters( 'post_title', $data['title'] ) ) . '</a>';
+
+			if ( $options['show_excerpts'] ) {
+				$article .= '<p>' . esc_html( $data['description'] ) . '</p>';
+			} else {
+				$article .= '<br />';
+			}
+
+			$article .= '<time datetime="' . get_the_date( 'c', $current_post ) . '">';
+			$article .= get_the_date( get_option( 'date_format' ), $current_post );
+			$article .= '</time>';
+
+			$article .= '</div>';
+			$article .= '</article>';
+
+			$articles[] = $article;
+		}
+
+		presscore_add_masonry_lazy_load_attrs();
+
+		return $articles;
 	}
 
 	public static function presscore_register_widget() {

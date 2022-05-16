@@ -1,8 +1,8 @@
 <?php
 
-namespace The7\Adapters\Elementor\ShortcodeAdapters;
+namespace The7\Mods\Compatibility\Elementor\Shortcode_Adapters;
 
-use The7\Adapters\Elementor\The7_Elementor_Less_Vars_Decorator_Interface;
+use The7\Mods\Compatibility\Elementor\The7_Elementor_Less_Vars_Decorator_Interface;
 
 defined( 'ABSPATH' ) || exit;
 

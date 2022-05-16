@@ -27,7 +27,7 @@ include $path . '/the7-ti-wishlist-compatibility.php';
 
 The7_Sensei_Compatibility::bootstrap();
 
-if ( class_exists( 'Woocommerce', false ) ) {
+if ( class_exists( 'WooCommerce', false ) ) {
 	require_once $path . '/woocommerce/class-the7-woocommerce-compatibility.php';
 	$woocommerce_adapter = new The7_Woocommerce_Compatibility();
 	$woocommerce_adapter->bootstrap();
@@ -54,4 +54,10 @@ if ( defined( 'ULTIMATE_VERSION' ) ) {
 if ( the7_elementor_is_active() ) {
 	require_once $path . '/elementor/class-the7-elementor-compatibility.php';
 	The7_Elementor_Compatibility::instance();
+}
+
+if ( the7_fvm_is_active() && of_get_option( 'advanced-fvm_enable_integration' ) ) {
+	require_once $path . '/class-the7-fvm-compatibility.php';
+	$fvm_adapter = new The7_FVM_Compatibility();
+	$fvm_adapter->bootstrap();
 }

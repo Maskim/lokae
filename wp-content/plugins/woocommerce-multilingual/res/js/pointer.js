@@ -16,7 +16,7 @@ var WCML_Pointer = WCML_Pointer || {};
                 },
                 buttons: function( event, t ) {
                     var button_close = $( '<a href="javascript:void(0);" class="notice-dismiss alignright"></a>' );
-                    button_close.bind( 'click.pointer', function( e ) {
+                    button_close.on( 'click.pointer', function( e ) {
                         e.preventDefault();
                         t.element.pointer( 'close' );
                     });
@@ -45,7 +45,7 @@ var WCML_Pointer = WCML_Pointer || {};
 
 } )( jQuery );
 
-jQuery( document ).ready( function($) {
+jQuery( function($) {
 
     $('.wcml-pointer-block').each( function(){
         var selector = $(this).data('selector');

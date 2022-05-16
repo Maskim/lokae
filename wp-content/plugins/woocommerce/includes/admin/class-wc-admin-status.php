@@ -2,11 +2,12 @@
 /**
  * Debug/Status page
  *
- * @package WooCommerce/Admin/System Status
+ * @package WooCommerce\Admin\System Status
  * @version 2.2.0
  */
 
 use Automattic\Jetpack\Constants;
+use Automattic\WooCommerce\Utilities\ArrayUtil;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -19,14 +20,14 @@ class WC_Admin_Status {
 	 * Handles output of the reports page in admin.
 	 */
 	public static function output() {
-		include_once dirname( __FILE__ ) . '/views/html-admin-page-status.php';
+		include_once __DIR__ . '/views/html-admin-page-status.php';
 	}
 
 	/**
 	 * Handles output of report.
 	 */
 	public static function status_report() {
-		include_once dirname( __FILE__ ) . '/views/html-admin-page-status-report.php';
+		include_once __DIR__ . '/views/html-admin-page-status-report.php';
 	}
 
 	/**
@@ -37,7 +38,8 @@ class WC_Admin_Status {
 			wp_die( 'Cannot load the REST API to access WC_REST_System_Status_Tools_Controller.' );
 		}
 
-		$tools = self::get_tools();
+		$tools                 = self::get_tools();
+		$tool_requires_refresh = false;
 
 		if ( ! empty( $_GET['action'] ) && ! empty( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( wp_unslash( $_REQUEST['_wpnonce'] ), 'debug_action' ) ) { // WPCS: input var ok, sanitization ok.
 			$tools_controller = new WC_REST_System_Status_Tools_Controller();
@@ -46,14 +48,16 @@ class WC_Admin_Status {
 			if ( array_key_exists( $action, $tools ) ) {
 				$response = $tools_controller->execute_tool( $action );
 
-				$tool = $tools[ $action ];
-				$tool = array(
+				$tool                  = $tools[ $action ];
+				$tool_requires_refresh = ArrayUtil::get_value_or_default( $tool, 'requires_refresh', false );
+				$tool                  = array(
 					'id'          => $action,
 					'name'        => $tool['name'],
 					'action'      => $tool['button'],
 					'description' => $tool['desc'],
+					'disabled'    => ArrayUtil::get_value_or_default( $tool, 'disabled', false ),
 				);
-				$tool = array_merge( $tool, $response );
+				$tool                  = array_merge( $tool, $response );
 
 				/**
 				 * Fires after a WooCommerce system status tool has been executed.
@@ -80,7 +84,11 @@ class WC_Admin_Status {
 			echo '<div class="updated inline"><p>' . esc_html__( 'Your changes have been saved.', 'woocommerce' ) . '</p></div>';
 		}
 
-		include_once dirname( __FILE__ ) . '/views/html-admin-page-status-tools.php';
+		if ( $tool_requires_refresh ) {
+			$tools = self::get_tools();
+		}
+
+		include_once __DIR__ . '/views/html-admin-page-status-tools.php';
 	}
 
 	/**
@@ -124,7 +132,7 @@ class WC_Admin_Status {
 			self::remove_log();
 		}
 
-		include_once 'views/html-admin-page-status-logs.php';
+		include_once __DIR__ . '/views/html-admin-page-status-logs.php';
 	}
 
 	/**
@@ -142,7 +150,7 @@ class WC_Admin_Status {
 		$log_table_list = new WC_Admin_Log_Table_List();
 		$log_table_list->prepare_items();
 
-		include_once 'views/html-admin-page-status-logs-db.php';
+		include_once __DIR__ . '/views/html-admin-page-status-logs-db.php';
 	}
 
 	/**
@@ -340,6 +348,33 @@ class WC_Admin_Status {
 	}
 
 	/**
+	 * Prints table info if a base table is not present.
+	 */
+	private static function output_tables_info() {
+		$missing_tables = WC_Install::verify_base_tables( false );
+		if ( 0 === count( $missing_tables ) ) {
+			return;
+		}
+		?>
+
+		<br>
+		<strong style="color:#a00;">
+			<span class="dashicons dashicons-warning"></span>
+			<?php
+				echo esc_html(
+					sprintf(
+					// translators: Comma seperated list of missing tables.
+						__( 'Missing base tables: %s. Some WooCommerce functionality may not work as expected.', 'woocommerce' ),
+						implode( ', ', $missing_tables )
+					)
+				);
+			?>
+		</strong>
+
+		<?php
+	}
+
+	/**
 	 * Prints the information about plugins for the system status report.
 	 * Used for both active and inactive plugins sections.
 	 *
@@ -349,6 +384,11 @@ class WC_Admin_Status {
 	 */
 	private static function output_plugins_info( $plugins, $untested_plugins ) {
 		$wc_version = Constants::get_constant( 'WC_VERSION' );
+
+		if ( 'major' === Constants::get_constant( 'WC_SSR_PLUGIN_UPDATE_RELEASE_VERSION_TYPE' ) ) {
+			// Since we're only testing against major, we don't need to show minor and patch version.
+			$wc_version = $wc_version[0] . '.0';
+		}
 
 		foreach ( $plugins as $plugin ) {
 			if ( ! empty( $plugin['name'] ) ) {

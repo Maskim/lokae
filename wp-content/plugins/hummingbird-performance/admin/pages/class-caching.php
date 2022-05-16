@@ -12,6 +12,8 @@ namespace Hummingbird\Admin\Pages;
 use Hummingbird\Admin\Page;
 use Hummingbird\Core\Integration\Opcache;
 use Hummingbird\Core\Module_Server;
+use Hummingbird\Core\Modules\Caching\Preload;
+use Hummingbird\Core\Modules\Cloudflare;
 use Hummingbird\Core\Modules\Page_Cache;
 use Hummingbird\Core\Settings;
 use Hummingbird\Core\Utils;
@@ -27,14 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Caching extends Page {
 
-	/**
-	 * Current report.
-	 *
-	 * @since  1.5.3
-	 * @var    array $report
-	 * @access private
-	 */
-	private $report;
+	use \Hummingbird\Core\Traits\WPConfig;
 
 	/**
 	 * Number of issues.
@@ -47,132 +42,75 @@ class Caching extends Page {
 	private $issues = 0;
 
 	/**
-	 * Settings expiration values.
-	 *
-	 * @since 1.5.3
-	 * @var   array $expires
-	 */
-	private $expires;
-
-	/**
-	 * Cloudflare module status.
-	 *
-	 * @since  1.5.3
-	 * @var    bool $cloudflare  Default false.
-	 * @access private
-	 */
-	private $cloudflare = false;
-
-	/**
-	 * If site is using Cloudflare.
-	 *
-	 * @since 1.7.1
-	 * @var   bool $cf_server
-	 */
-	private $cf_server = false;
-
-	/**
-	 * Cloudflare expiration value.
-	 *
-	 * @since  1.5.3
-	 * @var    int $expiration Default 0.
-	 * @access private
-	 */
-	private $expiration = 0;
-
-	/**
-	 * If .htaccess is written by the module.
-	 *
-	 * @var bool
-	 */
-	private $htaccess_written = false;
-
-	/**
 	 * Register meta boxes for the page.
 	 */
 	public function register_meta_boxes() {
 		/**
 		 * PAGE CACHING META BOXES.
 		 */
-
+		$caching_callback = false;
 		if ( ( is_multisite() && is_network_admin() ) || ! is_multisite() ) {
 			/**
-			 * Main site
+			 * SUMMARY META BOX
 			 */
 			$this->add_meta_box(
-				'caching/summary',
+				'summary',
 				null,
 				array( $this, 'caching_summary' ),
 				null,
 				null,
-				'summary',
+				'main',
 				array(
-					'box_class'         => 'sui-box sui-summary',
+					'box_class'         => 'sui-box sui-summary ' . Utils::get_whitelabel_class(),
 					'box_content_class' => false,
 				)
 			);
 
-			if ( Utils::get_module( 'page_cache' )->is_active() ) {
-				$this->add_meta_box(
-					'caching/page-caching',
-					__( 'Page Caching', 'wphb' ),
-					array( $this, 'page_caching_metabox' ),
-					null,
-					null,
-					'page_cache'
-				);
-
-				/**
-				 * SETTINGS META BOX
-				 */
-				$this->add_meta_box(
-					'caching/other-settings',
-					__( 'Settings', 'wphb' ),
-					array( $this, 'settings_metabox' ),
-					null,
-					null,
-					'settings'
-				);
-			} else {
-				$this->add_meta_box(
-					'page-caching-disabled',
-					__( 'Page Caching', 'wphb' ),
-					array( $this, 'page_caching_disabled_metabox' ),
-					null,
-					null,
-					'page_cache',
-					array(
-						'box_content_class' => 'sui-box sui-message',
-					)
-				);
-			}
+			// Main site.
+			$caching_callback = true;
 		} elseif ( is_super_admin() || 'blog-admins' === Settings::get_setting( 'enabled', 'page_cache' ) ) {
-			/**
-			 * Sub sites
-			 */
-			if ( Utils::get_module( 'page_cache' )->is_active() ) {
-				$this->add_meta_box(
-					'page-caching',
-					__( 'Page Caching', 'wphb' ),
-					array( $this, 'page_caching_subsite_metabox' ),
-					array( $this, 'page_caching_subsite_metabox_header' ),
-					null,
-					'page_cache'
-				);
-			} else {
-				$this->add_meta_box(
-					'page-caching-disabled',
-					__( 'Page Caching', 'wphb' ),
-					array( $this, 'page_caching_disabled_metabox' ),
-					null,
-					null,
-					'page_cache',
-					array(
-						'box_content_class' => 'sui-box sui-message',
-					)
-				);
-			}
+			// Sub sites.
+			$caching_callback = true;
 		}
+
+		/**
+		 * PAGE CACHE META BOXES
+		 */
+		if ( Utils::get_module( 'page_cache' )->is_active() ) {
+			$footer = ( is_multisite() && is_network_admin() ) || ! is_multisite();
+			$this->add_meta_box(
+				'caching/page-caching',
+				__( 'Page Caching', 'wphb' ),
+				array( $this, 'page_caching_metabox' ),
+				array( $this, 'page_caching_metabox_header' ),
+				$footer ? array( $this, 'page_caching_metabox_footer' ) : null,
+				'page_cache'
+			);
+		} elseif ( $caching_callback ) {
+			$this->add_meta_box(
+				'caching/page-caching-disabled',
+				__( 'Page Caching', 'wphb' ),
+				array( $this, 'page_caching_disabled_metabox' ),
+				null,
+				null,
+				'page_cache',
+				array( 'box_content_class' => 'sui-box sui-message' )
+			);
+		}
+
+		/**
+		 * INTEGRATION META BOXES.
+		 *
+		 * @since 2.5.0
+		 */
+		$this->add_meta_box(
+			'integrations',
+			__( 'Integrations', 'wphb' ),
+			array( $this, 'integrations_metabox' ),
+			null,
+			null,
+			'integrations'
+		);
 
 		// Do not continue on subsites.
 		if ( is_multisite() && ! is_network_admin() ) {
@@ -180,33 +118,8 @@ class Caching extends Page {
 		}
 
 		/**
-		 * BROWSER CACHING META BOXES.
-		 */
-
-		if ( is_multisite() && is_network_admin() || ! is_multisite() ) {
-			$this->add_meta_box(
-				'caching-status',
-				__( 'Status', 'wphb' ),
-				array( $this, 'caching_summary_metabox' ),
-				array( $this, 'caching_summary_metabox_header' ),
-				null,
-				'caching'
-			);
-
-			$this->add_meta_box(
-				'caching-settings',
-				__( 'Configure', 'wphb' ),
-				array( $this, 'caching_settings_metabox' ),
-				array( $this, 'caching_settings_metabox_header' ),
-				null,
-				'caching'
-			);
-		}
-
-		/**
 		 * GRAVATAR CACHING META BOXES.
 		 */
-
 		if ( Utils::get_module( 'gravatar' )->is_active() ) {
 			$this->add_meta_box(
 				'caching/gravatar',
@@ -224,35 +137,157 @@ class Caching extends Page {
 				null,
 				null,
 				'gravatar',
-				array(
-					'box_content_class' => 'sui-box sui-message',
-				)
+				array( 'box_content_class' => 'sui-box sui-message' )
 			);
 		}
 
 		/**
 		 * RSS CACHING META BOXES.
 		 */
+		$this->add_meta_box(
+			Utils::get_module( 'rss' )->is_active() ? 'caching/rss' : 'caching/rss-disabled',
+			__( 'RSS Caching', 'wphb' ),
+			array( $this, 'caching_rss_metabox' ),
+			null,
+			function () {
+				$this->view( 'caching/meta-box-footer', array() );
+			},
+			'rss'
+		);
 
-		if ( Utils::get_module( 'rss' )->is_active() ) {
-			$this->add_meta_box(
-				'caching/rss',
-				__( 'RSS Caching', 'wphb' ),
-				array( $this, 'caching_rss_metabox' ),
-				null,
-				array( $this, 'caching_rss_footer' ),
-				'rss'
-			);
-		} else {
-			$this->add_meta_box(
-				'caching/rss-disabled',
-				__( 'RSS Caching', 'wphb' ),
-				array( $this, 'caching_rss_metabox' ),
-				null,
-				null,
-				'rss'
+		/**
+		 * SETTINGS META BOX
+		 */
+		$this->add_meta_box(
+			'caching/other-settings',
+			__( 'Settings', 'wphb' ),
+			array( $this, 'settings_metabox' ),
+			null,
+			function () {
+				$this->view( 'caching/meta-box-footer', array() );
+			},
+			'settings'
+		);
+	}
+
+	/**
+	 * Enqueue scripts.
+	 *
+	 * @param string $hook  Hook from where the call is made.
+	 */
+	public function enqueue_scripts( $hook ) {
+		parent::enqueue_scripts( $hook );
+
+		// Only for integrations and browser caching.
+		if ( ! in_array( $this->get_current_tab(), array( 'caching', 'integrations' ), true ) ) {
+			return;
+		}
+
+		$cloudflare = Utils::get_module( 'cloudflare' )->is_connected() && Utils::get_module( 'cloudflare' )->is_zone_selected();
+		if ( 'caching' === $this->get_current_tab() && is_multisite() && ! is_main_site() && ! $cloudflare ) {
+			return;
+		}
+
+		// Load styles.
+		if ( file_exists( WPHB_DIR_PATH . 'admin/assets/css/wphb-react-' . $this->get_current_tab() . '.min.css' ) ) {
+			wp_enqueue_style(
+				'wphb-styles-' . $this->get_current_tab(),
+				WPHB_DIR_URL . 'admin/assets/css/wphb-react-' . $this->get_current_tab() . '.min.css',
+				array(),
+				WPHB_VERSION
 			);
 		}
+
+		// Load scripts.
+		if ( file_exists( WPHB_DIR_PATH . 'admin/assets/js/wphb-react-' . $this->get_current_tab() . '.min.js' ) ) {
+			wp_enqueue_script(
+				'wphb-react-' . $this->get_current_tab(),
+				WPHB_DIR_URL . 'admin/assets/js/wphb-react-' . $this->get_current_tab() . '.min.js',
+				array( 'wp-i18n', 'lodash' ),
+				WPHB_VERSION,
+				true
+			);
+		}
+
+		// Common settings.
+		$settings = array(
+			'links'  => array(
+				'wphbDirUrl' => WPHB_DIR_URL,
+			),
+			'nonces' => array(
+				'HBFetchNonce' => wp_create_nonce( 'wphb-fetch' ),
+			),
+		);
+
+		if ( 'caching' === $this->get_current_tab() ) {
+			$settings = array_merge_recursive(
+				$settings,
+				array(
+					'isMember' => Utils::is_member(),
+					'links'    => array(
+						'support' => array(
+							'chat'  => Utils::get_link( 'chat' ),
+							'forum' => Utils::get_link( 'support' ),
+						),
+					),
+					'module'   => array(
+						'isWhiteLabeled'   => apply_filters( 'wpmudev_branding_hide_branding', false ),
+						'htaccessWritable' => Module_Server::is_htaccess_writable(),
+						'htaccessWritten'  => Module_Server::is_htaccess_written( 'caching' ),
+						'cacheTypes'       => Utils::get_module( 'caching' )->get_types(),
+						'recommended'      => Utils::get_module( 'caching' )->get_recommended_caching_values(),
+						'detectedServer'   => Module_Server::get_server_type(),
+						'frequencies'      => \Hummingbird\Core\Modules\Caching::get_frequencies(),
+						'frequenciesCF'    => Cloudflare::get_frequencies(),
+						'snippets'         => array(
+							'apache' => Module_Server::get_code_snippet( 'caching', 'apache' ),
+							'nginx'  => Module_Server::get_code_snippet( 'caching', 'nginx' ),
+							'iis'    => Module_Server::get_code_snippet( 'caching', 'iis' ),
+						),
+					),
+				)
+			);
+		}
+
+		if ( 'integrations' === $this->get_current_tab() ) {
+			$options     = Utils::get_module( 'cloudflare' )->get_options();
+			$expiry      = Utils::get_module( 'cloudflare' )->get_caching_expiration();
+			$frequencies = Cloudflare::get_frequencies();
+
+			$settings = array_merge_recursive(
+				$settings,
+				array(
+					'modify' => ( is_multisite() && ( is_network_admin() || ! is_main_site() ) ) || ! is_multisite(),
+					'links'  => array(
+						'caching' => Utils::get_admin_menu_url( 'caching' ) . '&view=caching#wphb-box-caching-settings',
+					),
+					'module' => array(
+						'cloudflare' => array(
+							'accountId' => $options['account_id'],
+							'connected' => Utils::get_module( 'cloudflare' )->is_connected(),
+							'dnsSet'    => Utils::get_module( 'cloudflare' )->has_cloudflare(),
+							'expiry'    => $expiry,
+							'human'     => $frequencies[ $expiry ],
+							'zone'      => $options['zone'],
+							'zoneName'  => $options['zone_name'],
+						),
+						'apo'        => array(
+							'enabled'   => Utils::get_module( 'cloudflare' )->is_apo_enabled(),
+							'purchased' => $options['apo_paid'],
+							'settings'  => $options['apo'],
+						),
+					),
+				)
+			);
+		}
+
+		wp_localize_script( 'wphb-react-' . $this->get_current_tab(), 'wphbReact', $settings );
+
+		wp_add_inline_script(
+			'wphb-react-' . $this->get_current_tab(),
+			'wp.i18n.setLocaleData( ' . wp_json_encode( Utils::get_locale_data() ) . ', "wphb" );',
+			'before'
+		);
 	}
 
 	/**
@@ -263,99 +298,71 @@ class Caching extends Page {
 	 */
 	public function on_load() {
 		$this->tabs = array(
-			'page_cache' => __( 'Page Caching', 'wphb' ),
-			'caching'    => __( 'Browser Caching', 'wphb' ),
-			'gravatar'   => __( 'Gravatar Caching', 'wphb' ),
-			'rss'        => __( 'RSS Caching', 'wphb' ),
-			'settings'   => __( 'Settings', 'wphb' ),
+			'page_cache'   => __( 'Page Caching', 'wphb' ),
+			'caching'      => __( 'Browser Caching', 'wphb' ),
+			'gravatar'     => __( 'Gravatar Caching', 'wphb' ),
+			'rss'          => __( 'RSS Caching', 'wphb' ),
+			'integrations' => __( 'Integrations', 'wphb' ),
+			'settings'     => __( 'Settings', 'wphb' ),
 		);
-
-		// Remove modules that are not used on subsites in a network.
-		if ( is_multisite() && ! is_network_admin() ) {
-			unset( $this->tabs['caching'] );
-			unset( $this->tabs['gravatar'] );
-			unset( $this->tabs['rss'] );
-			unset( $this->tabs['settings'] );
-
-			// Don't run anything else.
-			return;
-		}
-
-		// Remove settings menu point.
-		if ( ! Utils::get_module( 'page_cache' )->is_active() && isset( $this->tabs['settings'] ) ) {
-			unset( $this->tabs['settings'] );
-		}
 
 		// We need to update the status on all pages, for the menu icons to function properly.
 		$this->update_cache_status();
+
+		// Remove modules that are not used on subsites in a network.
+		if ( is_multisite() && ! is_network_admin() ) {
+			if ( ! Settings::get_setting( 'enabled', 'page_cache' ) ) {
+				unset( $this->tabs['page_cache'] );
+			}
+
+			$cloudflare_is_setup = Utils::get_module( 'cloudflare' )->is_connected() && Utils::get_module( 'cloudflare' )->is_zone_selected();
+			if ( ! $cloudflare_is_setup ) {
+				unset( $this->tabs['caching'] );
+			}
+
+			unset( $this->tabs['gravatar'] );
+			unset( $this->tabs['rss'] );
+			unset( $this->tabs['settings'] );
+		}
 	}
 
 	/**
-	 * Trigger an action before this screen is loaded
+	 * Execute an action for specified module.
+	 *
+	 * Action will execute if:
+	 * - Both action and module vars are defined;
+	 * - Action is available as a methods in a selected module.
+	 *
+	 * Used actions: enable, disable, disconnect.
+	 * Supported modules: page_cache, caching, cloudflare, gravatar, rss.
 	 *
 	 * @since 1.9.0  Moved here from on_load().
 	 */
 	public function trigger_load_action() {
 		parent::trigger_load_action();
 
-		/**
-		 * Execute an action for specified module.
-		 *
-		 * Action will execute if:
-		 * - Both action and module vars are defined;
-		 * - Action is available as a methods in a selected module.
-		 *
-		 * Currently used actions: enable, disable, disconnect.
-		 * Currently supported modules: page_cache, caching, cloudflare, gravatar, rss.
-		 */
-		if ( isset( $_GET['action'] ) && isset( $_GET['module'] ) ) { // Input var ok.
-			check_admin_referer( 'wphb-caching-actions' );
-			$action = sanitize_text_field( wp_unslash( $_GET['action'] ) ); // Input var ok.
-			$module = sanitize_text_field( wp_unslash( $_GET['module'] ) ); // Input var ok.
-
-			// If unsupported module - exit.
-			if ( ! $mod = Utils::get_module( $module ) ) {
-				return;
-			}
-
-			// Allow only supported actions.
-			if ( ! in_array( $action, array( 'enable', 'disable', 'disconnect' ), true ) ) {
-				return;
-			}
-
-			if ( method_exists( $mod, $action ) ) {
-				call_user_func( array( $mod, $action ) );
-			}
-
-			// Cloudflare module is located on caching page.
-			if ( 'cloudflare' === $module ) {
-				$module = 'caching';
-			}
-
-			$redirect_url = add_query_arg(
-				array(
-					'view' => $module,
-				),
-				Utils::get_admin_menu_url( 'caching' )
-			);
-
-			if ( 'enable' === $action && 'caching' === $module ) {
-				$redirect_url = add_query_arg(
-					array(
-						'enabled' => true,
-					),
-					$redirect_url
-				);
-			} elseif ( 'disable' === $action && 'caching' === $module ) {
-				$redirect_url = add_query_arg(
-					array(
-						'disabled' => true,
-					),
-					$redirect_url
-				);
-			}
-			wp_safe_redirect( $redirect_url );
+		if ( ! isset( $_GET['action'] ) || ! isset( $_GET['module'] ) ) { // Input var ok.
+			return;
 		}
+
+		check_admin_referer( 'wphb-caching-actions' );
+		$action = sanitize_text_field( wp_unslash( $_GET['action'] ) ); // Input var ok.
+		$module = sanitize_text_field( wp_unslash( $_GET['module'] ) ); // Input var ok.
+
+		// If unsupported module - exit.
+		$mod = Utils::get_module( $module );
+
+		// Allow only supported actions.
+		if ( ! $mod || ! in_array( $action, array( 'enable', 'disable', 'disconnect' ), true ) ) {
+			return;
+		}
+
+		if ( method_exists( $mod, $action ) ) {
+			call_user_func( array( $mod, $action ) );
+		}
+
+		$redirect_url = add_query_arg( array( 'view' => $module ), Utils::get_admin_menu_url( 'caching' ) );
+		wp_safe_redirect( $redirect_url );
 	}
 
 	/**
@@ -368,33 +375,9 @@ class Caching extends Page {
 
 		// Icons in the submenu.
 		add_filter( 'wphb_admin_after_tab_' . $this->get_slug(), array( $this, 'after_tab' ) );
-	}
 
-	/**
-	 * Overwrites parent class render_header method.
-	 *
-	 * Renders the template header that is repeated on every page.
-	 * From WPMU DEV Dashboard
-	 */
-	public function render_header() {
-		if ( isset( $_GET['enabled'] ) ) { // Input var ok.
-			$this->admin_notices->show( 'updated', __( 'Browser cache enabled. Your .htaccess file has been updated', 'wphb' ), 'success' );
-		} elseif ( isset( $_GET['disabled'] ) ) { // Input var ok.
-			$this->admin_notices->show( 'updated', __( 'Browser cache disabled. Your .htaccess file has been updated', 'wphb' ), 'success' );
-		}
-		?>
-		<div class="sui-header">
-			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-			<div class="sui-actions-right">
-				<?php if ( ! apply_filters( 'wpmudev_branding_hide_doc_link', false ) ) : ?>
-					<a href="<?php echo esc_url( Utils::get_documentation_url( $this->slug, $this->get_current_tab() ) ); ?>" target="_blank" class="sui-button sui-button-ghost">
-						<i class="sui-icon-academy" aria-hidden="true"></i>
-						<?php esc_html_e( 'View Documentation', 'wphb' ); ?>
-					</a>
-				<?php endif; ?>
-			</div>
-		</div><!-- end header -->
-		<?php
+		// Redis notice text.
+		add_filter( 'wphb_update_notice_text', array( $this, 'redis_notice_update_text' ) );
 	}
 
 	/**
@@ -403,15 +386,6 @@ class Caching extends Page {
 	 * @since 1.8.1
 	 */
 	private function update_cache_status() {
-		$options = Settings::get_settings( 'caching' );
-
-		$this->expires = array(
-			'css'        => $options['expiry_css'],
-			'javascript' => $options['expiry_javascript'],
-			'media'      => $options['expiry_media'],
-			'images'     => $options['expiry_images'],
-		);
-
 		/**
 		 * Check Cloudflare status.
 		 *
@@ -419,42 +393,30 @@ class Caching extends Page {
 		 * Else - we store the local setting in the report variable. That way we don't have to query and check
 		 * later on what report to show to the user.
 		 */
-		$cf_module = Utils::get_module( 'cloudflare' );
+		if ( Utils::get_module( 'cloudflare' )->is_connected() && Utils::get_module( 'cloudflare' )->is_zone_selected() ) {
+			$options = Settings::get_settings( 'caching' );
+			$expires = array(
+				'CSS'        => $options['expiry_css'],
+				'JavaScript' => $options['expiry_javascript'],
+				'Media'      => $options['expiry_media'],
+				'Images'     => $options['expiry_images'],
+			);
 
-		$this->cf_server  = $cf_module->has_cloudflare();
-		$this->cloudflare = $cf_module->is_connected() && $cf_module->is_zone_selected();
-
-		if ( $this->cloudflare ) {
-			$this->expiration = $cf_module->get_caching_expiration();
+			$expiration = Utils::get_module( 'cloudflare' )->get_caching_expiration();
 			// Fill the report with values from Cloudflare.
-			$this->report = array_fill_keys( array_keys( $this->expires ), $this->expiration );
-			// Save status.
-			$this->cf_server = $cf_module->has_cloudflare();
+			$report = array_fill_keys( array_keys( $expires ), $expiration );
 			// Get number of issues.
-			if ( 691200 > $this->expiration ) {
-				$this->issues = count( $this->report );
+			if ( YEAR_IN_SECONDS > $expiration ) {
+				$this->issues = count( $report ) + 1; // One additional issue for Cloudflare.
 			}
 			return;
 		}
 
-		/*
-		 * Remove no-background-image class on the metabox.
-		 * We do it here, because register_metx_boxes() is fired before this code and there's no way to get CF status.
-		 */
-		$cf_notice = get_site_option( 'wphb-cloudflare-dash-notice' );
-		if ( ! $cf_notice && 'dismissed' !== $cf_notice ) {
-			$this->meta_boxes[ $this->get_slug() ]['caching']['caching-status']['args']['box_content_class'] = 'sui-box-body sui-upsell-items';
-		}
-
-		$mod = Utils::get_module( 'caching' );
-		$mod->get_analysis_data();
-
-		// Get latest local report.
-		$this->report = $mod->status;
+		// Get the latest local report.
+		$report = Utils::get_module( 'caching' )->get_analysis_data();
 
 		// Get number of issues.
-		$this->htaccess_written = Module_Server::is_htaccess_written( 'caching' );
-		$this->issues           = Utils::get_number_of_issues( 'caching', $this->report );
+		$this->issues = Utils::get_number_of_issues( 'caching', $report );
 	}
 
 	/**
@@ -464,21 +426,12 @@ class Caching extends Page {
 	 */
 	public function after_tab( $tab ) {
 		if ( 'caching' === $tab ) {
-			$issues = 0;
-			if ( ! $this->cloudflare ) {
-				$issues = Utils::get_number_of_issues( 'caching', $this->report );
-			} elseif ( 691200 > $this->expiration ) {
-				$issues = count( $this->report );
-				// Add an issue for the CloudFlare type.
-				$issues++;
-			}
-
-			if ( 0 !== $issues ) {
-				echo '<span class="sui-tag sui-tag-warning">' . absint( $issues ) . '</span>';
+			if ( 0 !== $this->issues ) {
+				echo '<span class="sui-tag sui-tag-warning">' . absint( $this->issues ) . '</span>';
 				return;
 			}
 
-			echo '<i class="sui-icon-check-tick sui-success" aria-hidden="true"></i>';
+			echo '<span class="sui-icon-check-tick sui-success" aria-hidden="true"></span>';
 			return;
 		}
 
@@ -490,29 +443,10 @@ class Caching extends Page {
 		$module = Utils::get_module( $tab );
 
 		if ( $module->is_active() && ( ! isset( $module->error ) || ! is_wp_error( $module->error ) ) ) {
-			echo '<i class="sui-icon-check-tick sui-success" aria-hidden="true"></i>';
+			echo '<span class="sui-icon-check-tick sui-success" aria-hidden="true"></span>';
 		} elseif ( isset( $module->error ) && is_wp_error( $module->error ) ) {
-			echo '<i class="sui-icon-warning-alert sui-warning" aria-hidden="true"></i>';
+			echo '<span class="sui-icon-warning-alert sui-warning" aria-hidden="true"></span>';
 		}
-	}
-
-	/**
-	 * Check to see if caching is fully enabled.
-	 *
-	 * @access private
-	 * @return bool
-	 */
-	private function is_caching_fully_enabled() {
-		$result_sum  = 0;
-		$recommended = Utils::get_module( 'caching' )->get_recommended_caching_values();
-
-		foreach ( $this->report as $key => $result ) {
-			if ( $result >= $recommended[ $key ]['value'] ) {
-				$result_sum++;
-			}
-		}
-
-		return count( $this->report ) === $result_sum;
 	}
 
 	/**
@@ -526,6 +460,8 @@ class Caching extends Page {
 	 * Caching summary meta box.
 	 */
 	public function caching_summary() {
+		$preloader = new Preload();
+
 		$this->view(
 			'caching/summary-meta-box',
 			array(
@@ -534,7 +470,7 @@ class Caching extends Page {
 				'issues'          => $this->issues,
 				'gravatar'        => Utils::get_module( 'gravatar' )->is_active(),
 				'rss'             => Settings::get_setting( 'duration', 'rss' ),
-				'preload_running' => get_transient( 'wphb-preloading' ),
+				'preload_running' => $preloader->is_process_running(),
 				'preload_active'  => Settings::get_setting( 'preload', 'page_cache' ),
 			)
 		);
@@ -552,7 +488,7 @@ class Caching extends Page {
 	 */
 	public function page_caching_disabled_metabox() {
 		$this->view(
-			'caching/disabled-page-caching-meta-box',
+			'caching/page/disabled-meta-box',
 			array(
 				'activate_url' => wp_nonce_url(
 					add_query_arg(
@@ -574,33 +510,46 @@ class Caching extends Page {
 		$module  = Utils::get_module( 'page_cache' );
 		$options = $module->get_options();
 
-		$custom_post_types = array();
-		$settings          = $module->get_settings();
-		if ( isset( $settings['custom_post_types'] ) ) {
-			$custom_post_types = $settings['custom_post_types'];
-		}
-		$settings['custom_post_types'] = $custom_post_types;
+		$common_args = array(
+			'error'          => $module->error,
+			'deactivate_url' => wp_nonce_url(
+				add_query_arg(
+					array(
+						'action' => 'disable',
+						'module' => 'page_cache',
+					)
+				),
+				'wphb-caching-actions'
+			),
+			'minify_active'  => Utils::get_module( 'minify' )->is_active(),
+			'cdn_active'     => Utils::get_module( 'minify' )->get_cdn_status(),
+		);
 
-		$log = WP_CONTENT_DIR . '/wphb-logs/page-caching-log.php';
-		if ( ! file_exists( $log ) ) {
-			$log = false;
-		} else {
-			$log = content_url() . '/wphb-logs/page-caching-log.php';
-		}
+		if ( ( is_multisite() && is_network_admin() ) || ! is_multisite() ) {
+			$custom_post_types = array();
+			$settings          = $module->get_settings();
+			if ( isset( $settings['custom_post_types'] ) ) {
+				$custom_post_types = $settings['custom_post_types'];
+			}
+			$settings['custom_post_types'] = $custom_post_types;
 
-		$opcache = new Opcache();
+			$log = WP_CONTENT_DIR . '/wphb-logs/page-caching-log.php';
+			if ( ! file_exists( $log ) ) {
+				$log = false;
+			} else {
+				$log = content_url() . '/wphb-logs/page-caching-log.php';
+			}
 
-		$gzip = Utils::get_module( 'gzip' )->get_analysis_data();
+			$opcache = Opcache::get_instance();
 
-		$this->view(
-			'caching/page-caching-meta-box',
-			array(
-				'error'              => $module->error,
+			$gzip = Utils::get_module( 'gzip' )->get_analysis_data();
+
+			$args = array(
 				'settings'           => $settings,
 				'clear_interval'     => Utils::format_interval_hours( $settings['clear_interval']['interval'] ),
 				'options'            => $options,
-				'admins_can_disable' => ( 'blog-admins' === $options['enabled'] ) ? true : false,
-				'blog_is_frontpage'  => ( 'posts' === get_option( 'show_on_front' ) && ! is_multisite() ) ? true : false,
+				'admins_can_disable' => 'blog-admins' === $options['enabled'],
+				'blog_is_frontpage'  => 'posts' === get_option( 'show_on_front' ) && ! is_multisite(),
 				'opcache_enabled'    => $opcache->is_enabled(),
 				'pages'              => Page_Cache::get_page_types(),
 				'can_compress'       => ! isset( $gzip['HTML'] ) || ! $gzip['HTML'],
@@ -609,8 +558,7 @@ class Caching extends Page {
 						'public'   => true,
 						'_builtin' => false,
 					),
-					'objects',
-					'and'
+					'objects'
 				),
 				'logs_link'          => $log,
 				'download_url'       => wp_nonce_url(
@@ -622,229 +570,34 @@ class Caching extends Page {
 					),
 					'wphb-log-action'
 				),
-				'deactivate_url'     => wp_nonce_url(
-					add_query_arg(
-						array(
-							'action' => 'disable',
-							'module' => 'page_cache',
-						)
-					),
-					'wphb-caching-actions'
-				),
-			)
-		);
+			);
+
+			$this->view( 'caching/page/meta-box', wp_parse_args( $args, $common_args ) );
+		} else {
+			$args = array(
+				'can_deactivate' => 'blog-admins' === $options['enabled'],
+			);
+
+			$this->view( 'caching/page/subsite-meta-box', wp_parse_args( $args, $common_args ) );
+		}
 	}
 
 	/**
-	 * Page caching subsite meta box.
+	 * Page caching header meta box.
 	 *
-	 * @since 1.8.0
+	 * @since 2.7.1
 	 */
-	public function page_caching_subsite_metabox() {
-		$page_cache_module = Utils::get_module( 'page_cache' );
-		$options           = $page_cache_module->get_options();
-		$can_deactivate    = false;
-		if ( 'blog-admins' === $options['enabled'] ) {
-			$can_deactivate = true;
-		}
-		$this->view(
-			'caching/page-caching-subsite-meta-box',
-			array(
-				'error'          => Utils::get_module( 'page_cache' )->error,
-				'can_deactivate' => $can_deactivate,
-				'deactivate_url' => wp_nonce_url(
-					add_query_arg(
-						array(
-							'action' => 'disable',
-							'module' => 'page_cache',
-						)
-					),
-					'wphb-caching-actions'
-				),
-			)
-		);
+	public function page_caching_metabox_header() {
+		$this->view( 'caching/page/meta-box-header', array( 'title' => __( 'Page Caching', 'wphb' ) ) );
 	}
 
 	/**
-	 * Page caching subsite meta box header.
+	 * Page caching footer meta box.
 	 *
-	 * @since 1.8.0
+	 * @since 2.7.1
 	 */
-	public function page_caching_subsite_metabox_header() {
-		$this->view(
-			'caching/page-caching-meta-box-header',
-			array(
-				'title' => __( 'Page Caching', 'wphb' ),
-			)
-		);
-	}
-
-	/**
-	 * *************************
-	 * BROWSER CACHING
-	 *
-	 * @since forever
-	 ***************************/
-
-	/**
-	 * Display header for caching summary meta box.
-	 */
-	public function caching_summary_metabox_header() {
-		$issues = 0;
-		if ( ! $this->cloudflare ) {
-			$issues = Utils::get_number_of_issues( 'caching', $this->report );
-		} elseif ( 691200 > $this->expiration ) {
-			// Add an issue for the CloudFlare type.
-			$issues = count( $this->report ) + 1;
-		}
-
-		$this->view(
-			'caching/browser-caching-meta-box-header',
-			array(
-				'title'  => __( 'Status', 'wphb' ),
-				'issues' => $issues,
-			)
-		);
-	}
-
-	/**
-	 * Render caching meta box.
-	 */
-	public function caching_summary_metabox() {
-		// Defaults.
-		$htaccess_issue = false;
-		$show_cf_notice = false;
-
-		// Check if .htaccess file has rules included.
-		if ( $this->htaccess_written && in_array( false, $this->report, true ) ) {
-			$htaccess_issue = true;
-		}
-
-		$cf_module = Utils::get_module( 'cloudflare' );
-		if ( ! $cf_module->is_connected() && ( ! get_site_option( 'wphb-cloudflare-dash-notice' ) && 'dismissed' !== get_site_option( 'wphb-cloudflare-dash-notice' ) ) ) {
-			$show_cf_notice = true;
-		}
-		$cf_notice = $this->cf_server ? __( 'Ahoi, we’ve detected you’re using CloudFlare!', 'wphb' ) : __( 'Using CloudFlare?', 'wphb' );
-
-		$caching = Utils::get_module( 'caching' );
-
-		$this->view(
-			'caching/browser-caching-meta-box',
-			array(
-				'htaccess_issue'        => $htaccess_issue,
-				'results'               => $this->report,
-				'issues'                => $this->issues,
-				'human_results'         => array_map( array( 'Hummingbird\\Core\\Utils', 'human_read_time_diff' ), $this->report ),
-				'recommended'           => $caching->get_recommended_caching_values(),
-				'show_cf_notice'        => $show_cf_notice,
-				'cf_notice'             => $cf_notice,
-				'cf_server'             => $this->cf_server,
-				'cf_active'             => $this->cloudflare,
-				'caching_type_tooltips' => $caching->get_types(),
-			)
-		);
-	}
-
-	/**
-	 * Display browser caching settings header meta box.
-	 */
-	public function caching_settings_metabox_header() {
-		$this->view(
-			'caching/browser-caching-configure-meta-box-header',
-			array(
-				'title'     => __( 'Configure', 'wphb' ),
-				'cf_active' => $this->cloudflare,
-			)
-		);
-	}
-
-	/**
-	 * Display browser caching settings meta box.
-	 */
-	public function caching_settings_metabox() {
-		$show_cf_notice    = false;
-		$htaccess_writable = Module_Server::is_htaccess_writable();
-		$server_type       = Module_Server::get_server_type();
-
-		// Server code snippets.
-		$snippets = array(
-			'apache' => Module_Server::get_code_snippet( 'caching', 'apache' ),
-			'nginx'  => Module_Server::get_code_snippet( 'caching', 'nginx' ),
-			'iis'    => Module_Server::get_code_snippet( 'caching', 'iis' ),
-		);
-
-		// Default to show Cloudflare or Apache if set up.
-		if ( $this->cloudflare ) {
-			$server_type = 'cloudflare';
-			// Clear cached status.
-			Utils::get_module( 'caching' )->clear_cache();
-		} elseif ( $this->cf_server ) {
-			$server_type = 'cloudflare';
-			$cf_module   = Utils::get_module( 'cloudflare' );
-			if ( ! ( $cf_module->is_active() && $cf_module->is_connected() && $cf_module->is_zone_selected() ) ) {
-				if ( get_site_option( 'wphb-cloudflare-dash-notice' ) && 'dismissed' === get_site_option( 'wphb-cloudflare-dash-notice' ) ) {
-					$show_cf_notice = true;
-				}
-			}
-		} elseif ( $htaccess_writable && $this->htaccess_written ) {
-			$server_type = 'apache';
-		}
-
-		$labels = array(
-			'javascript' => 'JavaScript',
-			'images'     => 'Images',
-			'css'        => 'CSS',
-			'media'      => 'Media',
-		);
-
-		$this->view(
-			'caching/browser-caching-configure-meta-box',
-			array(
-				'results'            => $this->report,
-				'labels'             => $labels,
-				'human_results'      => array_map( array( 'Hummingbird\\Core\\Utils', 'human_read_time_diff' ), $this->report ),
-				'expires'            => $this->expires,
-				'different_expiry'   => ( 1 >= count( array_unique( array_values( $this->expires ) ) ) ) ? true : false,
-				'server_type'        => $server_type,
-				'snippets'           => $snippets,
-				'htaccess_written'   => $this->htaccess_written,
-				'htaccess_writable'  => $htaccess_writable,
-				'already_enabled'    => $this->is_caching_fully_enabled() && ! $this->htaccess_written,
-				'cf_active'          => $this->cloudflare,
-				'cf_server'          => $this->cf_server,
-				'cf_current'         => $this->expiration,
-				'all_expiry'         => count( array_unique( $this->expires ) ) === 1,
-				'show_cf_notice'     => $show_cf_notice,
-				'recheck_expiry_url' => add_query_arg( 'run', 'true' ),
-				'cf_disable_url'     => wp_nonce_url(
-					add_query_arg(
-						array(
-							'action' => 'disconnect',
-							'module' => 'cloudflare',
-						)
-					),
-					'wphb-caching-actions'
-				),
-				'enable_link'        => wp_nonce_url(
-					add_query_arg(
-						array(
-							'action' => 'enable',
-							'module' => 'caching',
-						)
-					),
-					'wphb-caching-actions'
-				),
-				'disable_link'       => wp_nonce_url(
-					add_query_arg(
-						array(
-							'action' => 'disable',
-							'module' => 'caching',
-						)
-					),
-					'wphb-caching-actions'
-				),
-			)
-		);
+	public function page_caching_metabox_footer() {
+		$this->view( 'caching/page/meta-box-footer', array() );
 	}
 
 	/**
@@ -861,7 +614,7 @@ class Caching extends Page {
 	 */
 	public function caching_gravatar_disabled_metabox() {
 		$this->view(
-			'caching/disabled-gravatar-meta-box',
+			'caching/gravatar/disabled-meta-box',
 			array(
 				'activate_url' => wp_nonce_url(
 					add_query_arg(
@@ -883,7 +636,7 @@ class Caching extends Page {
 		$module = Utils::get_module( 'gravatar' );
 
 		$this->view(
-			'caching/gravatar-meta-box',
+			'caching/gravatar/meta-box',
 			array(
 				'module_active'  => $module->is_active(),
 				'error'          => $module->error,
@@ -925,13 +678,58 @@ class Caching extends Page {
 			),
 		);
 
-		$meta_box = 'caching/rss-disabled-meta-box';
+		$meta_box = 'caching/rss/disabled-meta-box';
 		if ( $active ) {
-			$meta_box         = 'caching/rss-meta-box';
+			$meta_box         = 'caching/rss/meta-box';
 			$args['duration'] = Settings::get_setting( 'duration', 'rss' );
 		}
 
 		$this->view( $meta_box, $args );
+	}
+
+	/**
+	 * *************************
+	 * INTEGRATIONS
+	 *
+	 * @since 2.5.0
+	 ***************************/
+
+	/**
+	 * Display integrations meta box.
+	 */
+	public function integrations_metabox() {
+		$redis_vars = Utils::get_module( 'redis' )->get_status_related_vars();
+
+		$this->view(
+			'caching/integrations/meta-box',
+			array(
+				'apo_purchased'         => Settings::get_setting( 'apo_paid', 'cloudflare' ),
+				'cf_is_connected'       => Utils::get_module( 'cloudflare' )->is_connected(),
+				'has_cloudflare'        => Utils::get_module( 'cloudflare' )->has_cloudflare(),
+				'redis_connected'       => $redis_vars['redis_connected'],
+				'redis_enabled'         => $redis_vars['redis_enabled'],
+				'is_redis_object_cache' => $redis_vars['is_redis_object_cache'],
+				'disable_redis'         => $redis_vars['disable_redis'],
+				'error'                 => $redis_vars['connection_error'],
+			)
+		);
+	}
+
+	/**
+	 * Adjust Redis notice text (update/save changes) according to design.
+	 *
+	 * @param string $text  Current notice text.
+	 *
+	 * @return string
+	 */
+	public function redis_notice_update_text( $text ) {
+		$updated = filter_input( INPUT_GET, 'updated', FILTER_UNSAFE_RAW );
+
+		if ( 0 === strpos( $updated, 'redis' ) ) {
+			return Utils::get_module( 'redis' )->get_update_notice( $updated );
+		}
+
+		return $text;
 	}
 
 	/**
@@ -945,13 +743,8 @@ class Caching extends Page {
 	 * Display settings meta box.
 	 */
 	public function settings_metabox() {
-		$this->view(
-			'caching/other-settings-meta-box',
-			array(
-				'control'   => Settings::get_setting( 'control', 'page_cache' ),
-				'detection' => Settings::get_setting( 'detection', 'page_cache' ),
-			)
-		);
+		$detection = Settings::get_setting( 'detection', 'page_cache' );
+		$this->view( 'caching/settings/meta-box', compact( 'detection' ) );
 	}
 
 }

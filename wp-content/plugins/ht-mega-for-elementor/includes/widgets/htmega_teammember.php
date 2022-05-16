@@ -1,6 +1,10 @@
 <?php
 namespace Elementor;
 
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class HTMega_Elementor_Widget_TeamMember extends Widget_Base {
@@ -228,7 +232,7 @@ class HTMega_Elementor_Widget_TeamMember extends Widget_Base {
                 'htmega_team_member_social_link_list',
                 [
                     'type'    => Controls_Manager::REPEATER,
-                    'fields'  => array_values( $repeater->get_controls() ),
+                    'fields'  => $repeater->get_controls(),
                     'default' => [
 
                         [
@@ -293,17 +297,14 @@ class HTMega_Elementor_Widget_TeamMember extends Widget_Base {
                 [
                     'label' => __( 'Hover Content background color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
-                    'default'=>'',
+                    'default' => 'rgba(24, 1, 44, 0.6)',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-team:hover .htmega-team-hover-action' => 'background-color: {{VALUE}};',
                         '{{WRAPPER}} .htmega-team-style-6:hover .htmega-team-info' => 'background-color: {{VALUE}};',
+                        '{{WRAPPER}} .htmega-team-style-4 .htmega-team-hover-action::before' => 'background-color: {{VALUE}};',
                     ],
                     'condition' =>[
-                        'htmega_team_style' => array( '1','5','6' ),
+                        'htmega_team_style' => array( '1','4','5','6' ),
                     ],
                 ]
             );
@@ -313,10 +314,6 @@ class HTMega_Elementor_Widget_TeamMember extends Widget_Base {
                 [
                     'label' => __( 'Hover Content background color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default'=>'#18012c',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-team-style-2 .htmega-team-hover-action .htmega-hover-action' => 'background-color: {{VALUE}};',
@@ -324,6 +321,46 @@ class HTMega_Elementor_Widget_TeamMember extends Widget_Base {
                     ],
                     'condition' =>[
                         'htmega_team_style' => array('2','3'),
+                    ],
+                    'separator' => 'after',
+                ]
+            );
+
+            $this->add_control(
+                'team_member_plus_icon_color',
+                [
+                    'label' => __( 'Plus Icon Color', 'htmega-addons' ),
+                    'type' => Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .htmega-team-style-3 .plus_click::before' => 'color: {{VALUE}};',
+                    ],
+                    'condition' =>[
+                        'htmega_team_style' => array('3'),
+                    ],
+                ]
+            );
+
+            $this->add_group_control(
+                Group_Control_Background::get_type(),
+                [
+                    'name' => 'team_member_plus_icon_background',
+                    'label' => __( 'Background', 'htmega-addons' ),
+                    'types' => [ 'classic', 'gradient' ],
+                    'selector' => '{{WRAPPER}} .htmega-team-style-3 .plus_click::before',
+                    'condition' =>[
+                        'htmega_team_style' => array('3'),
+                    ],
+                ]
+            );
+
+            $this->add_group_control(
+                Group_Control_Border::get_type(),
+                [
+                    'name' => 'team_member_plus_icon_border',
+                    'label' => __( 'Border', 'htmega-addons' ),
+                    'selector' => '{{WRAPPER}} .htmega-team-style-3 .plus_click::before',
+                    'condition' =>[
+                        'htmega_team_style' => array('3'),
                     ],
                 ]
             );
@@ -347,10 +384,6 @@ class HTMega_Elementor_Widget_TeamMember extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#343434',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-team .htmega-team-name' => 'color: {{VALUE}};',
@@ -444,10 +477,6 @@ class HTMega_Elementor_Widget_TeamMember extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#343434',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-team .htmega-team-designation' => 'color: {{VALUE}};',
@@ -541,10 +570,6 @@ class HTMega_Elementor_Widget_TeamMember extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#ffffff',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-team .htmega-team-bio-info' => 'color: {{VALUE}};',

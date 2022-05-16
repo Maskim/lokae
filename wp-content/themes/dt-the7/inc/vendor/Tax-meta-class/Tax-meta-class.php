@@ -12,7 +12,7 @@
  * @version 2.1.0
  * @copyright 2012-2015 Ohad Raz 
  * @author Ohad Raz (email: admin@bainternet.info)
- * @link http://en.bainternet.info
+ * @link https://en.bainternet.info
  * 
  * @license GNU General Public LIcense v3.0 - license.txt
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -372,14 +372,14 @@ class Tax_Meta_Class {
            if ($this->_Local_images){
              echo $plugin_path.'/images/edit.png';
            }else{
-             echo 'http://i.imgur.com/ka0E2.png';
+             echo 'https://i.imgur.com/ka0E2.png';
            }
            echo '" alt="Edit" title="Edit"/></span> 
         <img src="';
         if ($this->_Local_images){
           echo $plugin_path.'/images/remove.png';
         }else{
-          echo 'http://i.imgur.com/g8Duj.png';
+          echo 'https://i.imgur.com/g8Duj.png';
         }
         echo '" alt="'.__('Remove','tax-meta').'" title="'.__('Remove','tax-meta').'" id="remove-'.$field['id'].'"></div>';
         $c = $c + 1;
@@ -392,7 +392,7 @@ class Tax_Meta_Class {
     if ($this->_Local_images){
       echo $plugin_path.'/images/add.png';
     }else{
-      echo 'http://i.imgur.com/w5Tuc.png';
+      echo 'https://i.imgur.com/w5Tuc.png';
     }
     echo '" alt="'.__('Add','tax-meta').'" title="'.__('Add','tax-meta').'" id="add-'.$field['id'].'"><br/></div>';
     
@@ -426,7 +426,7 @@ class Tax_Meta_Class {
     if ($this->_Local_images){
       echo $plugin_path.'/images/remove.png';
     }else{
-      echo 'http://i.imgur.com/g8Duj.png';
+      echo 'https://i.imgur.com/g8Duj.png';
     }
     echo '" alt="'.__('Remove','tax-meta').'" title="'.__('Remove','tax-meta').'" id="remove-'.$field['id'].'"></div>';
     $counter = 'countadd_'.$field['id'];
@@ -1427,7 +1427,7 @@ class Tax_Meta_Class {
    *    'desc' => // field description, string optional
    *    'std' => // default value, string optional
    *    'validate_func' => // validate function, string optional
-   *    'format' => // date format, default yy-mm-dd. Optional. Default "'d MM, yy'"  See more formats here: http://goo.gl/Wcwxn
+   *    'format' => // date format, default yy-mm-dd. Optional. Default "'d MM, yy'"  See more formats here: https://goo.gl/Wcwxn
    *  @param $repeater bool  is this a field inside a repeatr? true|false(default) 
    */
   public function addDate($id,$args,$repeater=false){
@@ -1451,7 +1451,7 @@ class Tax_Meta_Class {
    *    'desc' => // field description, string optional
    *    'std' => // default value, string optional
    *    'validate_func' => // validate function, string optional
-   *    'format' => // time format, default hh:mm. Optional. See more formats here: http://goo.gl/83woX
+   *    'format' => // time format, default hh:mm. Optional. See more formats here: https://goo.gl/83woX
    *  @param $repeater bool  is this a field inside a repeatr? true|false(default) 
    */
   public function addTime($id,$args,$repeater=false){
@@ -1564,7 +1564,7 @@ class Tax_Meta_Class {
    *  @param $options mixed|array options of taxonomy field
    *    'taxonomy' =>    // taxonomy name can be category,post_tag or any custom taxonomy default is category
    *     'type' =>  // how to show taxonomy? 'select' (default) or 'checkbox_list'
-   *    'args' =>  // arguments to query taxonomy, see http://goo.gl/uAANN default ('hide_empty' => false)  
+   *    'args' =>  // arguments to query taxonomy, see https://goo.gl/uAANN default ('hide_empty' => false)
    *  @param $args mixed|array
    *    'name' => // field name/label string optional
    *    'desc' => // field description, string optional
@@ -1595,7 +1595,7 @@ class Tax_Meta_Class {
    *  @param $id string  field id, i.e. the meta key
    *  @param $options mixed|array options of taxonomy field
    *    'type' =>  // how to show posts? 'select' (default) or 'checkbox_list'
-   *    'args' =>  // arguments to query posts, see http://goo.gl/is0yK default ('posts_per_page' => -1, 'post_type' => 'post')  
+   *    'args' =>  // arguments to query posts, see https://goo.gl/is0yK default ('posts_per_page' => -1, 'post_type' => 'post')
    *  @param $args mixed|array
    *    'name' => // field name/label string optional
    *    'desc' => // field description, string optional

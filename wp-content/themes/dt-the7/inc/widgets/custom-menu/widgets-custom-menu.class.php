@@ -31,7 +31,7 @@ class Dt_Inc_Classes_WidgetsCustomMenu_Walker extends Walker_Nav_Menu {
 	 *
 	 * Calls parent function in wp-includes/class-wp-walker.php
 	 */
-	function display_element( $element, &$children_elements, $max_depth, $depth = 0, $args, &$output ) {
+	function display_element( $element, &$children_elements, $max_depth, $depth, $args, &$output ) {
 
 		if ( !$element ) {
 			return;

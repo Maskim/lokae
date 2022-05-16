@@ -246,7 +246,10 @@
  }
 //Custom lightbox icons
 .pswp button.pswp__button {
-  height: 43px;
+  
+  height: 1.5em;
+  width: 1.5em;
+  margin-top: -0.75em;
   background: none !important;
   font-family: 'icomoon-the7-font';
   font-size: 16px;
@@ -255,6 +258,9 @@
   -webkit-font-smoothing: antialiased;
   color: #fff;
   opacity: 0.5;
+}
+.pswp .pswp__top-bar button.pswp__button {
+  top: 50%;
 }
 .pswp--touch .pswp__ui:not(.pswp__ui--hidden) .pswp__button--arrow--left,
 .pswp--touch .pswp__ui:not(.pswp__ui--hidden) .pswp__button--arrow--right {
@@ -291,7 +297,13 @@
 }
 .pswp .pswp__button--arrow--left:before,
 .pswp .pswp__button--arrow--right:before {
-  top: 0;
+  position: static;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.5em;
+  height: 1.5em;
+  //top: 0;
 }
 .pswp .pswp__button--arrow--left:before {
   content: "\f052" !important;

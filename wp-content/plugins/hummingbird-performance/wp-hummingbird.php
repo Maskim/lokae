@@ -4,15 +4,15 @@
  *
  * Hummingbird zips through your site finding new ways to make it load faster, from file compression and minification to browser caching – because when it comes to pagespeed, every millisecond counts.
  *
- * @link              https://premium.wpmudev.org/project/wp-hummingbird/
+ * @link              https://wpmudev.com/project/wp-hummingbird/
  * @since             1.0.0
  * @package           Hummingbird
  *
  * @wordpress-plugin
  * Plugin Name:       Hummingbird
- * Plugin URI:        https://premium.wpmudev.org/project/wp-hummingbird/
+ * Plugin URI:        https://wpmudev.com/project/wp-hummingbird/
  * Description:       Hummingbird zips through your site finding new ways to make it load faster, from file compression and minification to browser caching – because when it comes to pagespeed, every millisecond counts.
- * Version:           2.4.2
+ * Version:           3.3.2
  * Author:            WPMU DEV
  * Author URI:        https://profiles.wordpress.org/wpmudev/
  * Network:           true
@@ -23,7 +23,7 @@
  */
 
 /*
-Copyright 2007-2019 Incsub (http://incsub.com)
+Copyright 2007-2022 Incsub (http://incsub.com)
 Author – Ignacio Cruz (igmoweb), Ricardo Freitas (rtbfreitas), Anton Vanyukov (vanyukov)
 
 This program is free software; you can redistribute it and/or modify
@@ -43,11 +43,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 namespace Hummingbird;
 
 if ( ! defined( 'WPHB_VERSION' ) ) {
-	define( 'WPHB_VERSION', '2.4.2' );
+	define( 'WPHB_VERSION', '3.3.2' );
 }
 
 if ( ! defined( 'WPHB_SUI_VERSION' ) ) {
-	define( 'WPHB_SUI_VERSION', 'sui-2-5-2' );
+	define( 'WPHB_SUI_VERSION', 'sui-2-12-2' );
 }
 
 if ( ! defined( 'WPHB_DIR_PATH' ) ) {
@@ -154,7 +154,7 @@ if ( ! class_exists( 'Hummingbird\\WP_Hummingbird' ) ) {
 				return;
 			}
 
-			// Prevents from erroring out on free version.
+			// Prevents errors on free version.
 			if ( ! is_readable( WPHB_DIR_PATH . 'core/pro/class-pro.php' ) ) {
 				if ( ! defined( 'WPHB_WPORG' ) ) {
 					define( 'WPHB_WPORG', true );
@@ -170,7 +170,7 @@ if ( ! class_exists( 'Hummingbird\\WP_Hummingbird' ) ) {
 				$this->pro->init();
 			}
 
-			$this->pro->load_ajax();
+			add_action( 'admin_init', array( $this->pro, 'load_ajax' ) );
 		}
 
 		/**
@@ -178,9 +178,8 @@ if ( ! class_exists( 'Hummingbird\\WP_Hummingbird' ) ) {
 		 *
 		 * @param bool $remove_data      Remove data.
 		 * @param bool $remove_settings  Remove settings.
-		 * @param bool $disable_cache    Disable page cache module.
 		 */
-		public static function flush_cache( $remove_data = true, $remove_settings = true, $disable_cache = true ) {
+		public static function flush_cache( $remove_data = true, $remove_settings = true ) {
 			$hummingbird = self::get_instance();
 
 			/**
@@ -193,21 +192,13 @@ if ( ! class_exists( 'Hummingbird\\WP_Hummingbird' ) ) {
 					continue;
 				}
 
-				if ( 'page_cache' === $module->get_slug() && $disable_cache ) {
+				if ( 'minify' === $module->get_slug() ) {
 					/**
 					 * Page caching module. Remove page cache files.
 					 *
-					 * @var Core\Modules\Page_Cache $module
+					 * @var Core\Modules\Minify $module
 					 */
-					$module->toggle_service( false );
-				}
-
-				if ( ! $remove_data ) {
-					continue;
-				}
-
-				if ( 'minify' === $module->get_slug() ) {
-					$module->clear_cache( false );
+					$module->clear_cache( $remove_settings );
 					continue;
 				}
 
@@ -251,7 +242,7 @@ if ( ! class_exists( 'Hummingbird\\WP_Hummingbird' ) ) {
 			$free_installation = get_site_option( 'wphb-free-install-date' );
 			if ( empty( $free_installation ) ) {
 				update_site_option( 'wphb-notice-free-rated-show', 'yes' );
-				update_site_option( 'wphb-free-install-date', current_time( 'timestamp' ) );
+				update_site_option( 'wphb-free-install-date', time() );
 			}
 
 			// This plugin is the free version so if the Pro version is activated we need to deactivate this one.
@@ -273,7 +264,6 @@ if ( ! class_exists( 'Hummingbird\\WP_Hummingbird' ) ) {
 				// Pro is activated, deactivate this one.
 				deactivate_plugins( WPHB_BASENAME );
 				update_site_option( 'wphb-notice-free-deactivated-show', 'yes' );
-				return;
 			} elseif ( $pro_installed ) {
 				// Pro is installed but not activated, let's activate it.
 				deactivate_plugins( WPHB_BASENAME );

@@ -1,6 +1,9 @@
 <?php
-
 namespace Elementor;
+
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -56,184 +59,200 @@ class HTMega_Elementor_Widget_Accordion extends Widget_Base {
             );
 
             // Accordion One Repeater
-            $this->add_control(
-                'htmega_accordion_list',
+            $repeater = new Repeater();
+
+            $repeater->add_control(
+                'accordion_title', 
                 [
-                    'label' => __( 'Accordion Items', 'htmega-addons' ),
-                    'condition' => [
-                        'accordiantstyle' =>'one',
+                    'label'       => __( 'Title', 'htmega-addons' ),
+                    'type'        => Controls_Manager::TEXT,
+                ]
+            );
+            $repeater->add_control(
+                'content_source', 
+                [
+                    'label'   => __( 'Select Content Source', 'htmega-addons' ),
+                    'type'    => Controls_Manager::SELECT,
+                    'default' => 'custom',
+                    'options' => [
+                        'custom'    => __( 'Custom', 'htmega-addons' ),
+                        "elementor" => __( 'Elementor Template', 'htmega-addons' ),
                     ],
-                    'type' => Controls_Manager::REPEATER,
-                    'default' => [
-                        [
-                            'accordion_title'   => __('Accordion Title One','htmega-addons'),
-                            'accordion_content' => __('Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably have not heard of them accusamus labore sustainable VHS.','htmega-addons'),
-                        ],
-                        [
-                            'accordion_title'   => __('Accordion Title Two','htmega-addons'),
-                            'accordion_content' => __('Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably have not heard of them accusamus labore sustainable VHS.','htmega-addons'),
-                        ],
-                        [
-                            'accordion_title'   => __('Accordion Title Three','htmega-addons'),
-                            'accordion_content' => __('Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably have not heard of them accusamus labore sustainable VHS.','htmega-addons'),
-                        ],
+                ]
+            );
+            $repeater->add_control(
+                'accordion_content', 
+                [
+                    'label'       => __( 'Accordion Content', 'htmega-addons' ),
+                    'type'        => Controls_Manager::WYSIWYG,
+                    'condition'   => [
+                    'content_source' =>'custom',
+                     ],
+                ]
+            );
+            $repeater->add_control(
+                'template_id', 
+                [
+                    
+                    'label'       => __( 'Accordion Content', 'htmega-addons' ),
+                    'type'        => Controls_Manager::SELECT,
+                    'default'     => '0',
+                    'options'     => htmega_elementor_template(),
+                    'condition'   => [
+                        'content_source' => "elementor"
                     ],
-                    'fields' => [
-                        [
-                            'name'        => 'accordion_title',
-                            'label'       => __( 'Title', 'htmega-addons' ),
-                            'type'        => Controls_Manager::TEXT,
-                            'default'     => __( 'Accordion Title' , 'htmega-addons' ),
-                        ],
-
-                        [
-                            'name'    => 'content_source',
-                            'label'   => __( 'Select Conten Source', 'htmega-addons' ),
-                            'type'    => Controls_Manager::SELECT,
-                            'default' => 'custom',
-                            'options' => [
-                                'custom'    => __( 'Custom', 'htmega-addons' ),
-                                "elementor" => __( 'Elementor Template', 'htmega-addons' ),
-                            ],
-                        ],
-
-                        [
-                            'name'       => 'accordion_content',
-                            'label'      => __( 'Accordion Content', 'htmega-addons' ),
-                            'type'       => Controls_Manager::WYSIWYG,
-                            'default'    => __( 'Accordion Content', 'htmega-addons' ),
-                            'condition' => [
-                                'content_source' =>'custom',
-                            ],
-                        ],
-
-                        [
-                            'name'        => 'template_id',
-                            'label'       => __( 'Accordion Content', 'htmega-addons' ),
-                            'type'        => Controls_Manager::SELECT,
-                            'default'     => '0',
-                            'options'     => htmega_elementor_template(),
-                            'condition'   => [
-                                'content_source' => "elementor"
-                            ],
-                        ],
-
-
-                    ],
-                    'title_field' => '{{{ accordion_title }}}',
                 ]
             );
 
+            $this->add_control(
+            'htmega_accordion_list',
+            [
+                'label'     => __( 'Accordion Items', 'htmega-addons' ),
+                'type'      => Controls_Manager::REPEATER,
+                'fields'    => $repeater->get_controls(),
+                'condition' => [
+                    'accordiantstyle' =>'one',
+                ],
+                'default' => [
+                    [
+                        'accordion_title'   => __( 'Accordion Title One', 'htmega-addons' ),
+                        'accordion_content' => __( 'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably have not heard of them accusamus labore sustainable VHS.', 'htmega-addons' ),
+                        
+                    ],
+                    [
+                        'accordion_title'   => __( 'Accordion Title Two', 'htmega-addons' ),
+                        'accordion_content' => __( 'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably have not heard of them accusamus labore sustainable VHS.', 'htmega-addons' ),
+                    ],
+                    [
+                        'accordion_title'   => __( 'Accordion Title Two', 'htmega-addons' ),
+                        'accordion_content' => __( 'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably have not heard of them accusamus labore sustainable VHS.', 'htmega-addons' ),
+                    ],
+                ],
+                'title_field' => '{{{ accordion_title }}}',
+            ]
+        ); //end style one
 
             // Accordion Two Repeater
-            $this->add_control(
-                'htmega_accordion_list_two',
+
+            $repeater2 = new Repeater();
+
+            $repeater2->add_control(
+                'accordion_title', 
                 [
-                    'label' => __( 'Accordion Items', 'htmega-addons' ),
-                    'condition' => [
-                        'accordiantstyle' =>'two',
+                    'label'       => __( 'Title', 'htmega-addons' ),
+                    'type'        => Controls_Manager::TEXT,
+                ]
+            );
+            $repeater2->add_control(
+                'accordion_image', 
+                [
+                     'label'      => __( 'Image', 'htmega-addons' ),
+                    'type'        => Controls_Manager::MEDIA,
+                    'default'     => [
+                        'url'     => Utils::get_placeholder_image_src(),
                     ],
-                    'type' => Controls_Manager::REPEATER,
-
-                    'default' => [
-                        [
-                            'accordion_title'   => __('Accordion Title One','htmega-addons'),
-                        ],
-                    ],
-
-                    'fields' => [
-                        [
-                            'name'        => 'accordion_title',
-                            'label'       => __( 'Title', 'htmega-addons' ),
-                            'type'        => Controls_Manager::TEXT,
-                            'default'     => __( 'Accordion Title' , 'htmega-addons' ),
-                        ],
-
-                        [
-                            'name'        => 'accordion_image',
-                            'label'       => __( 'Image', 'htmega-addons' ),
-                            'type'        => Controls_Manager::MEDIA,
-                            'default'     => [
-                                'url' => Utils::get_placeholder_image_src(),
-                            ],
-                        ],
-
-                    ],
-                    'title_field' => '{{{ accordion_title }}}',
                 ]
             );
 
+            $this->add_control(
+            'htmega_accordion_list_two',
+            [
+                'label'     => __( 'Accordion Items', 'htmega-addons' ),
+                'type'      => Controls_Manager::REPEATER,
+                'fields'    => $repeater2->get_controls(),
+                'condition' => [
+                    'accordiantstyle' =>'two',
+                ],
+                'default' => [
+                    [
+                        'accordion_title'   => __( 'Accordion Title', 'htmega-addons' ),
+                        
+                    ],
+                ],
+                'title_field' => '{{{ accordion_title }}}',
+            ]
+        ); //end style two
 
             // Accordion Three Repeater
-            $this->add_control(
-                'htmega_accordion_list_three',
+
+
+
+            $repeater3 = new Repeater();
+
+            $repeater3->add_control(
+                'accordion_title', 
                 [
-                    'label' => __( 'Accordion Items', 'htmega-addons' ),
-                    'condition' => [
-                        'accordiantstyle' =>array( 'three','four' ),
-                    ],
-                    'type' => Controls_Manager::REPEATER,
-                    'default' => [
-                        [
-                            'accordion_title'   => __('Accordion Title One','htmega-addons'),
-                            'accordion_content' => __('Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably have not heard of them accusamus labore sustainable VHS.','htmega-addons'),
-                        ],
-
-                    ],
-                    'fields' => [
-                        [
-                            'name'        => 'accordion_title',
-                            'label'       => __( 'Title', 'htmega-addons' ),
-                            'type'        => Controls_Manager::TEXT,
-                            'default'     => __( 'Accordion Title' , 'htmega-addons' ),
-                        ],
-
-                        [
-                            'name'        => 'accordion_image',
-                            'label'       => __( 'Image', 'htmega-addons' ),
-                            'type'        => Controls_Manager::MEDIA,
-                            'default'     => [
-                                'url' => Utils::get_placeholder_image_src(),
-                            ],
-                        ],
-
-                        [
-                            'name'    => 'content_source',
-                            'label'   => __( 'Select Conten Source', 'htmega-addons' ),
-                            'type'    => Controls_Manager::SELECT,
-                            'default' => 'custom',
-                            'options' => [
-                                'custom'    => __( 'Custom', 'htmega-addons' ),
-                                "elementor" => __( 'Elementor Template', 'htmega-addons' ),
-                            ],
-                        ],
-
-                        [
-                            'name'       => 'accordion_content',
-                            'label'      => __( 'Accordion Content', 'htmega-addons' ),
-                            'type'       => Controls_Manager::WYSIWYG,
-                            'default'    => __( 'Accordion Content', 'htmega-addons' ),
-                            'condition' => [
-                                'content_source' =>'custom',
-                            ],
-                        ],
-
-                        [
-                            'name'        => 'template_id',
-                            'label'       => __( 'Accordion Content', 'htmega-addons' ),
-                            'type'        => Controls_Manager::SELECT,
-                            'default'     => '0',
-                            'options'     => htmega_elementor_template(),
-                            'condition'   => [
-                                'content_source' => "elementor"
-                            ],
-                        ],
-
-
-                    ],
-                    'title_field' => '{{{ accordion_title }}}',
+                    'label'       => __( 'Title', 'htmega-addons' ),
+                    'type'        => Controls_Manager::TEXT,
                 ]
-            ); // End Repeater Three
+            );
+            $repeater3->add_control(
+                'accordion_image', 
+                [
+                     'label'      => __( 'Image', 'htmega-addons' ),
+                    'type'        => Controls_Manager::MEDIA,
+                    'default'     => [
+                        'url'     => Utils::get_placeholder_image_src(),
+                    ],
+                ]
+            );
+            $repeater3->add_control(
+                'content_source', 
+                [
+                    'label'   => __( 'Select Content Source', 'htmega-addons' ),
+                    'type'    => Controls_Manager::SELECT,
+                    'default' => 'custom',
+                    'options' => [
+                        'custom'    => __( 'Custom', 'htmega-addons' ),
+                        "elementor" => __( 'Elementor Template', 'htmega-addons' ),
+                    ],
+                ]
+            );
+            $repeater3->add_control(
+                'accordion_content', 
+                [
+                    
+                    'label'      => __( 'Accordion Content', 'htmega-addons' ),
+                    'type'       => Controls_Manager::WYSIWYG,
+                    'default'    => __( 'Accordion Content', 'htmega-addons' ),
+                    'condition' => [
+                        'content_source' =>'custom',
+                    ],
+                ]
+            );
+            $repeater3->add_control(
+                'template_id', 
+                [
+                    'label'       => __( 'Accordion Content', 'htmega-addons' ),
+                    'type'        => Controls_Manager::SELECT,
+                    'default'     => '0',
+                    'options'     => htmega_elementor_template(),
+                    'condition'   => [
+                        'content_source' => "elementor"
+                    ],
+                ]
+            );
+
+            $this->add_control(
+            'htmega_accordion_list_three',
+            [
+                'label'     => __( 'Accordion Items', 'htmega-addons' ),
+                'type'      => Controls_Manager::REPEATER,
+                'fields'    => $repeater3->get_controls(),
+                'condition' => [
+                    'accordiantstyle' =>array( 'three','four' ),
+                ],
+                'default' => [
+                        [
+                        'accordion_title'   => __( 'Accordion Title One', 'htmega-addons' ),
+                        'accordion_content' => __('Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably have not heard of them accusamus labore sustainable VHS.','htmega-addons'),
+                        ],
+                        
+                    ],
+                
+                'title_field' => '{{{ accordion_title }}}',
+            ]
+        ); //end style three
 
             $this->add_control(
                 'accourdion_title_html_tag',
@@ -609,6 +628,67 @@ class HTMega_Elementor_Widget_Accordion extends Widget_Base {
            
         $this->end_controls_section(); // Title style tab end
 
+        // Title Three style collapesd tab start
+        $this->start_controls_section(
+            'htmega_accordion_title_three_collapsed_style',
+            [
+                'label'     => __( 'Accordion Title Collapsed', 'htmega-addons' ),
+                'tab'       => Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'accordiantstyle' => array( 'three'),
+                ],
+            ]
+        );
+
+            $this->add_responsive_control(
+                'title_three_collapsed_align',
+                [
+                    'label'   => __( 'Alignment', 'htmega-addons' ),
+                    'type'    => Controls_Manager::CHOOSE,
+                    'options' => [
+                        'left'    => [
+                            'title' => __( 'Left', 'htmega-addons' ),
+                            'icon'  => 'fa fa-align-left',
+                        ],
+                        'center' => [
+                            'title' => __( 'Center', 'htmega-addons' ),
+                            'icon'  => 'fa fa-align-center',
+                        ],
+                        'right' => [
+                            'title' => __( 'Right', 'htmega-addons' ),
+                            'icon'  => 'fa fa-align-right',
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .accordion--4 .heading'   => 'text-align: {{VALUE}};',
+                    ],
+                ]
+            );
+
+            $this->add_control(
+                'accordion_title_three_collapsed_color',
+                [
+                    'label'     => __( 'Color', 'htmega-addons' ),
+                    'type'      => Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .accordion--4 .heading'   => 'color: {{VALUE}};',
+                    ],
+                    'separator' => 'before',
+                ]
+            );
+
+            $this->add_group_control(
+                Group_Control_Background::get_type(),
+                [
+                    'name' => 'title_three_collapsed_background',
+                    'label' => __( 'Background', 'htmega-addons' ),
+                    'types' => [ 'classic', 'gradient' ],
+                    'selector' => '{{WRAPPER}} .accordion--4 .heading',
+                ]
+            );
+
+        // Title Three style collapesd tab end
+        $this->end_controls_section();
 
         // Title Three style tab start
         $this->start_controls_section(
@@ -728,6 +808,36 @@ class HTMega_Elementor_Widget_Accordion extends Widget_Base {
                     'scheme' => Scheme_Typography::TYPOGRAPHY_1,
                     'selector' => '{{WRAPPER}} h2.heading-three, {{WRAPPER}} .accordion--5 .single_accordion .va-title',
                     'separator' => 'before',
+                ]
+            );
+
+            $this->add_responsive_control(
+                'titlethree_margin',
+                [
+                    'label' => __( 'Active Title Space', 'htmega-addons' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'selectors' => [
+                        '{{WRAPPER}} ul.accordion--4 li .description h2' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                    ],
+                    'condition' => [
+                        'accordiantstyle' =>'three',
+                    ],
+                ]
+            );
+
+            $this->add_responsive_control(
+                'titlefour_lineheight',
+                [
+                    'label' => __( 'Active Title Line Height', 'htmega-addons' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'selectors' => [
+                        '{{WRAPPER}} .accordion--5 .single_accordion .va-title.htmegava-active' => 'line-height: {{SIZE}}{{UNIT}} !important;',
+                    ],
+                    'condition' => [
+                        'accordiantstyle' =>'four',
+                    ],
                 ]
             );
 
@@ -1004,6 +1114,7 @@ class HTMega_Elementor_Widget_Accordion extends Widget_Base {
                     'size_units' => [ 'px', '%', 'em' ],
                     'selectors' => [
                         '{{WRAPPER}} .accordion-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                        '{{WRAPPER}} .accordion--5 .single_accordion .va-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                     ],
                     'separator' => 'before',
                 ]
@@ -1075,6 +1186,8 @@ class HTMega_Elementor_Widget_Accordion extends Widget_Base {
         $accordion_list_three = $settings['htmega_accordion_list_three'];
         $accordion_id       = $this->get_id();
         $this->add_render_attribute( 'accordion_heading', 'data-toggle', 'htbcollapse' );
+
+        $title_tag = htmega_validate_html_tag( $settings['accourdion_title_html_tag'] );
 
         // Accordiant Style Two
         if( $settings['accordiantstyle'] == 'two' ){
@@ -1166,9 +1279,9 @@ class HTMega_Elementor_Widget_Accordion extends Widget_Base {
                                 <div class="htmega-accourdion-title">
                                     <?php
                                         if( ( $current_item == $i ) && ( $settings['accordion_close_all'] != 'yes' ) ){
-                                            echo sprintf('<%1$s %2$s data-target="#htmega-collapse%3$s" class="htmega-items-hedding">%4$s %5$s</%1$s>', $settings['accourdion_title_html_tag'], $this->get_render_attribute_string( 'accordion_heading' ), $j, $item['accordion_title'], $buttonicon );
+                                            echo sprintf('<%1$s %2$s data-target="#htmega-collapse%3$s" class="htmega-items-hedding">%4$s %5$s</%1$s>', $title_tag, $this->get_render_attribute_string( 'accordion_heading' ), $j, $item['accordion_title'], $buttonicon );
                                         }else{
-                                            echo sprintf('<%1$s %2$s data-target="#htmega-collapse%3$s" class="htb-collapsed htmega-items-hedding">%4$s %5$s</%1$s>', $settings['accourdion_title_html_tag'], $this->get_render_attribute_string( 'accordion_heading' ), $j, $item['accordion_title'], $buttonicon );
+                                            echo sprintf('<%1$s %2$s data-target="#htmega-collapse%3$s" class="htb-collapsed htmega-items-hedding">%4$s %5$s</%1$s>', $title_tag, $this->get_render_attribute_string( 'accordion_heading' ), $j, $item['accordion_title'], $buttonicon );
                                         }
                                     ?>
                                 </div>

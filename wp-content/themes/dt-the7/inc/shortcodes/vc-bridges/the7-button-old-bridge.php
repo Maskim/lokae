@@ -6,6 +6,7 @@ return array(
 	"weight" => -1,
 	"name" => __("Button (old)", 'the7mk2'),
 	"base" => "dt_button",
+	'description' => '',
 	"icon" => "dt_vc_ico_button",
 	"class" => "dt_vc_sc_button",
 	"category" => __('The7 Old', 'the7mk2'),

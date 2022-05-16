@@ -1,6 +1,7 @@
 <?php
-
 namespace HTMega_Builder\Elementor\Widget;
+
+// Elementor Classes
 use Elementor\Plugin as Elementor;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
@@ -8,7 +9,6 @@ use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
-use Elementor\Scheme_Typography;
 use Elementor\Utils;
 use Elementor\Group_Control_Image_Size;
 

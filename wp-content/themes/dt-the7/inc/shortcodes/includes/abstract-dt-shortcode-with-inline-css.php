@@ -281,7 +281,7 @@ abstract class DT_Shortcode_With_Inline_Css extends DT_Shortcode {
 		 *
 		 * @since 7.1.3
 		 *
-		 * @param string Live empty to execute default inline css logic.
+		 * @param string Leave empty to execute default inline css logic.
 		 * @param DT_Shortcode_With_Inline_Css This object.
 		 */
 		$inline_css = apply_filters( 'the7_shortcodes_get_custom_inline_css', '', $this );

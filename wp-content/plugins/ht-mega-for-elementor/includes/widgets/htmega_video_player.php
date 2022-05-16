@@ -166,7 +166,7 @@ class HTMega_Elementor_Widget_VideoPlayer extends Widget_Base {
             $this->add_control(
                 'videosourselogo',
                 [
-                    'label' => __( 'Show video sourse Logo', 'htmega-addons' ),
+                    'label' => __( 'Show video source Logo', 'htmega-addons' ),
                     'type' => Controls_Manager::SWITCHER,
                     'label_on' => __( 'Yes', 'htmega-addons' ),
                     'label_off' => __( 'No', 'htmega-addons' ),
@@ -253,10 +253,6 @@ class HTMega_Elementor_Widget_VideoPlayer extends Widget_Base {
                     [
                         'label' => __( 'Color', 'htmega-addons' ),
                         'type' => Controls_Manager::COLOR,
-                        'scheme' => [
-                            'type' => Scheme_Color::get_type(),
-                            'value' => Scheme_Color::COLOR_1,
-                        ],
                         'default' => '#18012c',
                         'selectors' => [
                             '{{WRAPPER}} .htmega-player-container .magnify-video-active' => 'color: {{VALUE}};',
@@ -384,10 +380,6 @@ class HTMega_Elementor_Widget_VideoPlayer extends Widget_Base {
                     [
                         'label' => __( 'Color', 'htmega-addons' ),
                         'type' => Controls_Manager::COLOR,
-                        'scheme' => [
-                            'type' => Scheme_Color::get_type(),
-                            'value' => Scheme_Color::COLOR_1,
-                        ],
                         'default' => '#ffffff',
                         'selectors' => [
                             '{{WRAPPER}} .htmega-player-container .magnify-video-active:hover' => 'color: {{VALUE}};',

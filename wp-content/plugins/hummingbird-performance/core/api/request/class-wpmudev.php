@@ -1,8 +1,14 @@
 <?php
+/**
+ * Class for requests to WPMU DEV API.
+ *
+ * @package Hummingbird\Core\Api\Request
+ */
 
 namespace Hummingbird\Core\Api\Request;
 
 use Hummingbird\Core\Api\Exception;
+use Hummingbird\Core\Api\Service\Hosting;
 use Hummingbird\Core\Api\Service\Performance;
 use Hummingbird\Core\Api\Service\Uptime;
 use WPMUDEV_Dashboard;
@@ -13,11 +19,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Class WPMUDEV
- *
- * @package Hummingbird\Core\Api\Request
  */
 class WPMUDEV extends Request {
-
+	/**
+	 * Get API key.
+	 *
+	 * @return string
+	 */
 	public function get_api_key() {
 		global $wpmudev_un;
 
@@ -38,19 +46,28 @@ class WPMUDEV extends Request {
 		return $api_key;
 	}
 
+	/**
+	 * Get API URL.
+	 *
+	 * @param string $path  API path.
+	 *
+	 * @return string
+	 */
 	public function get_api_url( $path = '' ) {
-		/** @var Performance|Uptime $service */
+		/**
+		 * Service.
+		 *
+		 * @var Performance|Uptime|Hosting $service
+		 */
+		$service = $this->get_service();
+
 		if ( defined( 'WPHB_TEST_API_URL' ) && WPHB_TEST_API_URL ) {
-			$service = $this->get_service();
-			$url     = WPHB_TEST_API_URL . $service->get_name() . '/' . $service->get_version() . '/';
+			$url = WPHB_TEST_API_URL . $service->get_name() . '/' . $service->get_version() . '/';
 		} else {
-			$service = $this->get_service();
-			$url     = 'https://premium.wpmudev.org/api/' . $service->get_name() . '/' . $service->get_version() . '/';
+			$url = 'https://wpmudev.com/api/' . $service->get_name() . '/' . $service->get_version() . '/';
 		}
 
-		$url = trailingslashit( $url . $path );
-
-		return $url;
+		return trailingslashit( $url . $path );
 	}
 
 	/**
@@ -83,6 +100,9 @@ class WPMUDEV extends Request {
 		return $domain;
 	}
 
+	/**
+	 * Sign request.
+	 */
 	protected function sign_request() {
 		$key = $this->get_api_key();
 		if ( ! empty( $key ) ) {
@@ -90,12 +110,19 @@ class WPMUDEV extends Request {
 		}
 	}
 
-
 	/**
-	 * @inheritdoc
+	 * Do request.
+	 *
+	 * @param string $path    API path.
+	 * @param array  $data    Request data.
+	 * @param string $method  Method type.
+	 * @param array  $extra   Extra data.
+	 *
+	 * @return array|mixed|object
+	 * @throws Exception  Exception.
 	 */
 	public function request( $path, $data = array(), $method = 'post', $extra = array() ) {
-		$response = parent::request( $path, $data, $method, $extra );
+		$response = parent::request( $path, $data, $method );
 
 		if ( is_wp_error( $response ) ) {
 			throw new Exception( $response->get_error_message(), $response->get_error_code() );
@@ -106,7 +133,7 @@ class WPMUDEV extends Request {
 		/* translators: %s: error code */
 		$message = isset( $body->message ) ? $body->message : sprintf( __( 'Unknown Error. Code: %s', 'wphb' ), $code );
 
-		if ( 200 != $code ) {
+		if ( 200 !== (int) $code ) {
 			throw new Exception( $message, $code );
 		} else {
 			if ( is_object( $body ) && isset( $body->error ) && $body->error ) {

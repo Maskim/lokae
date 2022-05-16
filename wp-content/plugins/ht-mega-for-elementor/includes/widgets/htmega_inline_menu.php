@@ -1,6 +1,10 @@
 <?php
 namespace Elementor;
 
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class HTMega_Elementor_Widget_InlineMenu extends Widget_Base {
@@ -55,9 +59,6 @@ class HTMega_Elementor_Widget_InlineMenu extends Widget_Base {
                         '5'  => __( 'Style Five', 'htmega-addons' ),
                         '6'  => __( 'Style Six', 'htmega-addons' ),
                         '7'  => __( 'Style Seven', 'htmega-addons' ),
-                        '8'  => __( 'Style Eight', 'htmega-addons' ),
-                        '9'  => __( 'Style Nine', 'htmega-addons' ),
-                        '10'  => __( 'Style Ten', 'htmega-addons' ),
                     ],
                 ]
             );

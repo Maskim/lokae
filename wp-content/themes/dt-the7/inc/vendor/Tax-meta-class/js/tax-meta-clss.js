@@ -239,24 +239,8 @@ jQuery(document).ready(function($) {
     //radio
     $( "input[type='radio']",form ).prop('checked',false);
   }
-  /** pre bind jquery function **/
-  $.fn.preBind = function (type, data, fn) {
-    this.each(function () {
-        var $this = $(this);
-
-        $this.bind(type, data, fn);
-        if (version_compare($.fn.jquery,'1.8') == 'lt')
-          var currentBindings = $this.data('events')[type];
-        else
-          var currentBindings = $._data(this, "events")[type];
-        if ($.isArray(currentBindings)) {
-            currentBindings.unshift(currentBindings.pop());
-        }
-    });
-    return this;
-  };
   /** fix tinymce not saving on add screen*/
-  $('#submit').preBind('click', function() {
+  $('#submit').on('click', function() {
     if(typeof tinymce !== "undefined" && $('input[name=action]').val() == 'add-tag'){
       $.each(tinymce.editors,function(i,editor){
         var tx = editor.targetElm;

@@ -6,6 +6,7 @@ return array(
 	"weight" => -1,
 	"name" => __("Fancy List", 'the7mk2'),
 	"base" => "dt_vc_list",
+	'description' => '',
 	"icon" => "dt_vc_ico_list",
 	"class" => "dt_vc_sc_list",
 	"category" => __('by Dream-Theme', 'the7mk2'),

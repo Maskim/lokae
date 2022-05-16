@@ -11,6 +11,9 @@ body {
 		overflow-x: auto;
 	}
 }
+div[data-pagination-mode="load-more"]{
+	overflow-anchor: none;
+}
 
 /* #Headers
 ================================================== */
@@ -416,4 +419,11 @@ article.attachment:before {
 	content: "";
 	display: table;
 	clear: both;
+}
+
+.one-line {
+	white-space: nowrap;
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }

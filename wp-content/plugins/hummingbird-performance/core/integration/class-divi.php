@@ -20,7 +20,7 @@ class Divi {
 	 * Divi constructor.
 	 */
 	public function __construct() {
-		if ( $this->wphb_et_divi_theme_active() || class_exists( 'ET_Builder_Plugin' ) ) {
+		if ( self::is_divi_theme_active() || class_exists( 'ET_Builder_Plugin' ) ) {
 			add_action( 'init', array( $this, 'wphb_divi_after_init' ), 1 );
 			add_filter( 'wphb_minify_resource', array( $this, 'wphb_et_maybe_exclude_divi_essential_scripts' ), 10, 3 );
 			add_filter( 'wphb_combine_resource', array( $this, 'wphb_et_maybe_exclude_divi_essential_scripts' ), 10, 3 );
@@ -32,7 +32,7 @@ class Divi {
 	 * Run on init action.
 	 */
 	public function wphb_divi_after_init() {
-		if ( $this->wphb_et_divi_theme_active() ) {
+		if ( self::is_divi_theme_active() ) {
 			remove_action( 'wp_head', 'et_add_custom_css', 100 );
 			add_action( 'wp_head', 'et_add_custom_css', 9999 );
 
@@ -50,7 +50,7 @@ class Divi {
 	 *
 	 * @return bool
 	 */
-	private function wphb_et_divi_theme_active() {
+	public static function is_divi_theme_active() {
 		$theme = wp_get_theme();
 		return ( 'divi' === strtolower( $theme->get( 'Name' ) ) || 'divi' === strtolower( $theme->get_template() ) );
 	}

@@ -6,6 +6,7 @@ return array(
 	"weight" => -1,
 	"name" => __("Contact Form", 'the7mk2'),
 	"base" => "dt_contact_form",
+	'description' => '',
 	"icon" => "dt_vc_ico_contact_form",
 	"class" => "dt_vc_sc_contact_form",
 	"category" => __('by Dream-Theme', 'the7mk2'),

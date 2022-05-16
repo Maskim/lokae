@@ -1,6 +1,10 @@
 <?php
 namespace Elementor;
 
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class HTMegaMenu_Verticle_Menu extends Widget_Base {

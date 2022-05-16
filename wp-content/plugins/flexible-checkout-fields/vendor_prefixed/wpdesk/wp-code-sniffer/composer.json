@@ -9,7 +9,7 @@
     ],
     "homepage": "https:\/\/gitlab.com\/wpdesk\/wp-code-sniffer",
     "type": "phpcodesniffer-standard",
-    "minimum-stability": "stable",
+    "prefer-stable": true,
     "authors": [
         {
             "name": "grola",
@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "dealerdirect\/phpcodesniffer-composer-installer": "^0.6.2",
+        "dealerdirect\/phpcodesniffer-composer-installer": "0.6|^0.7",
         "phpcompatibility\/php-compatibility": "^9.3",
         "squizlabs\/php_codesniffer": "^3.5",
         "wp-coding-standards\/wpcs": "^2.2"

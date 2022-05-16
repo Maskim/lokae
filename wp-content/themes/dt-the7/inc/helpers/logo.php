@@ -150,6 +150,28 @@ if ( ! function_exists( 'presscore_get_the_transparent_mobile_logo_image' ) ) :
 
 endif;
 
+if ( ! function_exists( 'presscore_get_the_floating_mobile_logo_image' ) ) :
+
+	/**
+	 * Return the transparent mobile logo image html.
+	 * @since 6.1.0
+	 *
+	 * @param string $class HTML class.
+	 *
+	 * @return string
+	 */
+	function presscore_get_the_floating_mobile_logo_image( $class = 'mobile-logo' ) {
+		$logo = of_get_option( 'header-style-floating-mobile-logo_regular', array( '', 0 ) );
+		$logo_retina = of_get_option( 'header-style-floating-mobile-logo_hd', array( '', 0 ) );
+
+		return presscore_get_logo_image( array(
+			'logo'        => dt_get_uploaded_logo( $logo ),
+			'logo_retina' => dt_get_uploaded_logo( $logo_retina, 'retina' ),
+		), $class );
+	}
+
+endif;
+
 
 if ( ! function_exists( 'presscore_get_mobile_logos_meta' ) ) :
 
@@ -178,6 +200,31 @@ if ( ! function_exists( 'presscore_get_mobile_logos_meta' ) ) :
 
 endif;
 
+if ( ! function_exists( 'presscore_get_floating_mobile_logos_meta' ) ) :
+
+	/**
+	 * Returns the mobile first switch logos array.
+	 *
+	 * @since 6.1.0
+	 *
+	 * @return array
+	 */
+	function presscore_get_floating_mobile_logos_meta() {
+		if ( 'desktop' === of_get_option( 'header-floating-mobile-first_switch-logo' ) ) {
+			return presscore_get_mobile_logos_meta();
+		}
+
+		$logo    = of_get_option( 'header-style-floating-mobile-logo_regular' );
+		$hd_logo = of_get_option( 'header-style-floating-mobile-logo_hd' );
+
+		return array(
+			'logo'        => dt_get_uploaded_logo( $logo ),
+			'logo_retina' => dt_get_uploaded_logo( $hd_logo, 'retina' ),
+		);
+	}
+
+endif;
+
 if ( ! function_exists( 'presscore_get_mobile_logos_meta_second' ) ) :
 
 	/**
@@ -196,6 +243,30 @@ if ( ! function_exists( 'presscore_get_mobile_logos_meta_second' ) ) :
 			$logo    = of_get_option( 'header-style-mobile-logo_regular' );
 			$hd_logo = of_get_option( 'header-style-mobile-logo_hd' );
 		}
+
+		return array(
+			'logo'        => dt_get_uploaded_logo( $logo ),
+			'logo_retina' => dt_get_uploaded_logo( $hd_logo, 'retina' ),
+		);
+	}
+
+endif;
+if ( ! function_exists( 'presscore_get_floating_mobile_logos_meta_second' ) ) :
+
+	/**
+	 * Returns the mobile second switch logos array.
+	 *
+	 * @since 6.1.0
+	 *
+	 * @return array
+	 */
+	function presscore_get_floating_mobile_logos_meta_second() {
+		if ( 'desktop' === of_get_option( 'header-floating-mobile-second_switch-logo' ) ) {
+			return presscore_get_mobile_logos_meta_second();
+		}
+
+		$logo    = of_get_option( 'header-style-floating-mobile-logo_regular' );
+		$hd_logo = of_get_option( 'header-style-floating-mobile-logo_hd' );
 
 		return array(
 			'logo'        => dt_get_uploaded_logo( $logo ),
@@ -245,10 +316,15 @@ if ( ! function_exists( 'presscore_get_the_mixed_logo' ) ) :
 	 * @return string
 	 */
 	function presscore_get_the_mixed_logo() {
-		if ( presscore_header_is_transparent() && presscore_mixed_header_with_top_line() ) {
-			$config = presscore_config();
-			$logo = $config->get( 'logo.header.transparent.regular' );
-			$hd_logo = $config->get( 'logo.header.transparent.hd' );
+		if ( presscore_header_is_transparent() && presscore_config()->get( 'header.layout' ) === 'top_line' && of_get_option( 'header-style-mixed-transparent-top_line-choose_logo') !== 'main' ) {
+		
+
+			if ( 'none' === of_get_option( 'header-style-mixed-transparent-top_line-choose_logo') ) {
+				return '';
+			}
+
+			$logo = of_get_option( 'header-style-mixed-transparent-top_line-logo_regular', array( '', 0 ) );
+			$hd_logo = of_get_option( 'header-style-mixed-transparent-top_line-logo_hd', array( '', 0 ) );
 		} else {
 			$logo = of_get_option( 'header-style-mixed-logo_regular', array('', 0) );
 			$hd_logo = of_get_option( 'header-style-mixed-logo_hd', array('', 0) );

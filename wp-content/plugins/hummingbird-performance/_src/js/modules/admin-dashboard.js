@@ -1,51 +1,67 @@
+/* global WPHB_Admin */
+/* global SUI */
+
 import Fetcher from '../utils/fetcher';
 
 ( function( $ ) {
 	WPHB_Admin.dashboard = {
 		module: 'dashboard',
 
-		init: function() {
-			if ( wphbDashboardStrings )
-				this.strings = wphbDashboardStrings;
-
-			$( '.wphb-performance-report-item' ).click( function() {
+		init() {
+			$( '.wphb-performance-report-item' ).on( 'click', function() {
 				const url = $( this ).data( 'performance-url' );
 				if ( url ) {
 					location.href = url;
 				}
 			} );
 
-			$( '#dismiss-cf-notice' ).click( function( e ) {
-				e.preventDefault();
-				Fetcher.notice.dismissCloudflareDash();
-				const cloudFlareDashNotice = $( '.cf-dash-notice' );
-				cloudFlareDashNotice.slideUp();
-				cloudFlareDashNotice.parent().addClass( 'no-background-image' );
-			} );
+			const clearCacheModalButton = document.getElementById(
+				'clear-cache-modal-button'
+			);
+			if ( clearCacheModalButton ) {
+				clearCacheModalButton.addEventListener(
+					'click',
+					this.clearCache
+				);
+			}
 
 			return this;
 		},
 
 		/**
-		 * Skip quick setup.
+		 * Clear selected cache.
+		 *
+		 * @since 2.7.1
 		 */
-		skipSetup() {
-			Fetcher.dashboard.skipSetup()
-				.then( () => {
-					location.reload();
-				} );
+		clearCache() {
+			this.classList.toggle( 'sui-button-onload-text' );
+
+			const checkboxes = document.querySelectorAll(
+				'input[type="checkbox"]'
+			);
+
+			const modules = [];
+			for ( let i = 0; i < checkboxes.length; i++ ) {
+				if ( false === checkboxes[ i ].checked ) {
+					continue;
+				}
+
+				modules.push( checkboxes[ i ].dataset.module );
+			}
+
+			Fetcher.common.clearCaches( modules ).then( ( response ) => {
+				this.classList.toggle( 'sui-button-onload-text' );
+				SUI.closeModal();
+				WPHB_Admin.notices.show( response.message );
+			} );
 		},
 
 		/**
-		 * Run performance test after quick setup.
+		 * Hide upgrade summary modal.
 		 */
-		runPerformanceTest() {
-			window.SUI.closeModal(); // Hide wphb-quick-setup-modal.
-			// Show performance test modal
-			window.SUI.openModal( 'run-performance-test-modal', 'wpbody-content', undefined, false );
-
-			// Run performance test
-			window.WPHB_Admin.getModule( 'performance' ).performanceTest( this.strings.finishedTestURLsLink );
+		hideUpgradeSummary: () => {
+			window.SUI.closeModal();
+			Fetcher.common.call( 'wphb_hide_upgrade_summary' );
 		},
 	};
 }( jQuery ) );

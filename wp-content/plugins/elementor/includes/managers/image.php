@@ -1,8 +1,6 @@
 <?php
 namespace Elementor;
 
-use Elementor\Core\Settings\Manager as SettingsManager;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -28,7 +26,8 @@ class Images_Manager {
 	 * @access public
 	 */
 	public function get_images_details() {
-		$items = $_POST['items'];
+		// PHPCS - Already validated by wp_ajax.
+		$items = $_POST['items']; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$urls  = [];
 
 		foreach ( $items as $item ) {
@@ -106,23 +105,26 @@ class Images_Manager {
 
 	public function get_lightbox_image_attributes( $id ) {
 		$attributes = [];
-		$general_settings_model = SettingsManager::get_settings_managers( 'general' )->get_model();
-		$lightbox_title_src = $general_settings_model->get_settings( 'elementor_lightbox_title_src' );
-		$lightbox_description_src = $general_settings_model->get_settings( 'elementor_lightbox_description_src' );
+		$kit = Plugin::$instance->kits_manager->get_active_kit();
+		$lightbox_title_src = $kit->get_settings( 'lightbox_title_src' );
+		$lightbox_description_src = $kit->get_settings( 'lightbox_description_src' );
 		$attachment = get_post( $id );
-		$image_data = [
-			'alt' => get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ),
-			'caption' => $attachment->post_excerpt,
-			'description' => $attachment->post_content,
-			'title' => $attachment->post_title,
-		];
 
-		if ( $lightbox_title_src && $image_data[ $lightbox_title_src ] ) {
-			$attributes['title'] = $image_data[ $lightbox_title_src ];
-		}
+		if ( $attachment ) {
+			$image_data = [
+				'alt' => get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ),
+				'caption' => $attachment->post_excerpt,
+				'description' => $attachment->post_content,
+				'title' => $attachment->post_title,
+			];
 
-		if ( $lightbox_description_src && $image_data[ $lightbox_description_src ] ) {
-			$attributes['description'] = $image_data[ $lightbox_description_src ];
+			if ( $lightbox_title_src && $image_data[ $lightbox_title_src ] ) {
+				$attributes['title'] = $image_data[ $lightbox_title_src ];
+			}
+
+			if ( $lightbox_description_src && $image_data[ $lightbox_description_src ] ) {
+				$attributes['description'] = $image_data[ $lightbox_description_src ];
+			}
 		}
 
 		return $attributes;

@@ -87,7 +87,7 @@ $new_options['header-elements-edd_cart-show_counter'] = array(
 	'options' => array(
 		'never'        => _x( 'Never', 'theme-options', 'the7mk2' ),
 		'if_not_empty' => _x( 'If not empty', 'theme-options', 'the7mk2' ),
-		'allways'      => _x( 'Allways', 'theme-options', 'the7mk2' ),
+		'allways'      => _x( 'Always', 'theme-options', 'the7mk2' ),
 	),
 );
 

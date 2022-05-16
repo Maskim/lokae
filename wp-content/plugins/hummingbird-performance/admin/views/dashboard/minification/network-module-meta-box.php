@@ -17,18 +17,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <p>
-	<?php esc_html_e( 'Compress, combine and position your assets to dramatically improve your pageload speed. Choose which user roles can configure Asset Optimization.', 'wphb' ); ?>
+	<?php esc_html_e( 'Compress, combine and position your assets to dramatically improve your page load speed. Choose which user roles can configure Asset Optimization.', 'wphb' ); ?>
 </p>
 
 <?php if ( $enabled ) : ?>
-	<div class="sui-notice sui-notice-success">
-		<p><?php esc_html_e( 'Asset Optimization is enabled for subsites.', 'wphb' ); ?></p>
-	</div>
+	<?php $this->admin_notices->show_inline( esc_html__( 'Asset Optimization is enabled for subsites.', 'wphb' ) ); ?>
 
 	<ul class="sui-list sui-no-margin-bottom">
 		<li>
 			<span class="sui-list-label">
-				<span><?php esc_html_e( 'Minimun user role', 'wphb' ); ?></span>
+				<span><?php esc_html_e( 'Minimum user role', 'wphb' ); ?></span>
 			</span>
 
 			<span class="sui-list-detail">
@@ -64,15 +62,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</li>
 	</ul>
 <?php else : ?>
-	<div class="sui-notice">
-		<p><?php esc_html_e( 'Asset Optimization is disabled for subsites.', 'wphb' ); ?></p>
-	</div>
+	<?php $this->admin_notices->show_inline( esc_html__( 'Asset Optimization is disabled for subsites.', 'wphb' ), 'grey' ); ?>
 <?php endif; ?>
 
 <?php if ( isset( $_GET['minify-instructions'] ) ) : ?>
-	<div class="sui-notice sui-notice-warning">
-		<p>
-			<?php esc_html_e( 'Please, activate minification first. A new menu will appear in every site on your Network.', 'wphb' ); ?>
-		</p>
-	</div>
+	<?php $this->admin_notices->show_inline( esc_html__( 'Please, activate minification first. A new menu will appear in every site on your Network.', 'wphb' ), 'warning' ); ?>
 <?php endif; ?>

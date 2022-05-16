@@ -10,35 +10,60 @@
   }
 }
 
-.show-filter-by (@show) when (@show = y) {
-  .filter-by {
-    display: inline-flex;
-  }
-}
 
-.show-filter-sorting (@show) when (@show = y) {
-  .filter-sorting {
-    display: inline-flex;
-  }
+.hide-filter-categ (@hide) when (@hide = hide) {
+    display: none;
 }
-
+.@{unique-shortcode-class-name} .show-filter-categories  .filter-categories {
+    display: flex;
+}
+.@{unique-shortcode-class-name} .hide-filter-categories  .filter-categories {
+    display: none;
+}
+#main .@{unique-shortcode-class-name} .filter-extras {
+    display: block;
+    & .filter-by {
+      display: var(--display-by);
+    }
+    .filter-sorting {
+      display: var(--display-sort);
+    }
+  }
 @media screen and (max-width: @elementor-lg-breakpoint - 1) {
+  #main .@{unique-shortcode-class-name}  .filter-categories {
+    display: flex;
+    .hide-filter-categ (@show-filter-categories-tablet);
+  }
+
+  .@{unique-shortcode-class-name}  {
+    & .show-filter-categories-tablet .filter-categories {
+      display: flex;
+    }
+  }
+  .@{unique-shortcode-class-name} .hide-filter-categories-tablet  .filter-categories {
+      display: none;
+  }
   #main .@{unique-shortcode-class-name} .filter-extras {
     display: block;
-
-    .hide-filter-extras-by-default();
-    .show-filter-by(@show-filter-by-tablet);
-    .show-filter-sorting(@show-filter-sorting-tablet);
   }
 }
 
 @media screen and (max-width: @elementor-md-breakpoint - 1) {
+  #main .@{unique-shortcode-class-name}  .filter-categories {
+    display: flex;
+    .hide-filter-categ (@show-filter-categories-mobile);
+  }
+
+  .@{unique-shortcode-class-name} {
+    & .show-filter-categories-mobile .filter-categories {
+      display: flex;
+    }
+  }
+  .@{unique-shortcode-class-name} .hide-filter-categories-mobile  .filter-categories {
+      display: none;
+  }
   #main .@{unique-shortcode-class-name} .filter-extras {
     display: block;
-
-    .hide-filter-extras-by-default();
-    .show-filter-by(@show-filter-by-mobile);
-    .show-filter-sorting(@show-filter-sorting-mobile);
   }
 }
 

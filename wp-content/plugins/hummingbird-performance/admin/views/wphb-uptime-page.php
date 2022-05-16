@@ -26,12 +26,18 @@ if ( $this->has_meta_boxes( 'box-uptime-disabled' ) ) {
 			<div class="sui-box">
 				<div class="sui-box-header"><?php esc_html_e( 'Uptime', 'wphb' ); ?></div>
 				<div class="sui-box-body">
-					<div class="sui-notice sui-notice-error can-close">
-						<span class="close"></span>
-						<p><?php echo esc_html( $error ); ?></p>
-						<a href="<?php echo esc_url( $retry_url ); ?>" class="sui-button sui-button-blue">
-							<?php esc_html_e( 'Try again', 'wphb' ); ?>
-						</a>
+					<div class="sui-notice sui-notice-error">
+						<div class="sui-notice-content">
+							<div class="sui-notice-message">
+								<span class="sui-notice-icon sui-icon-info sui-md" aria-hidden="true"></span>
+								<p><?php echo esc_html( $error ); ?></p>
+								<p>
+									<a href="<?php echo esc_url( $retry_url ); ?>" class="sui-button sui-button-blue">
+										<?php esc_html_e( 'Try again', 'wphb' ); ?>
+									</a>
+								</p>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -42,8 +48,6 @@ if ( $this->has_meta_boxes( 'box-uptime-disabled' ) ) {
 	<?php
 }
 ?>
-
-<?php $this->modal( 'add-recipient' ); ?>
 
 <script>
 	jQuery(document).ready( function() {

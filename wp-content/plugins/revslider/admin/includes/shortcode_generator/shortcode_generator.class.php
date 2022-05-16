@@ -12,28 +12,31 @@ class RevSliderShortcodeWizard extends RevSliderFunctions {
 	public static function enqueue_scripts(){
 		global $pagenow;
 
-		$f = new RevSliderFunctions();
+		$f = RevSliderGlobals::instance()->get('RevSliderFunctions');
 		$action = $f->get_val($_GET, 'action');
 		if($action === 'elementor') return;
 
 		// only add scripts if native WordPress editor, Gutenberg or Visual Composer
 		// Elementor has its own hooks for adding scripts
-		if($action === 'edit' || $pagenow === 'post-new.php' || $f->get_val($_GET, 'vc_action', '') === 'vc_inline'){
+		
+		if($action === 'edit' || $pagenow === 'post-new.php' || $pagenow === 'widgets.php' || $f->get_val($_GET, 'vc_action', '') === 'vc_inline'){
 			self::add_scripts();
 		}
 
 	}
 
 	public static function add_styles(){
-		wp_enqueue_style('revslider-material-icons', RS_PLUGIN_URL . 'admin/assets/icons/material-icons.css', array(), RS_REVISION);
+		wp_enqueue_style('revslider-material-icons', RS_PLUGIN_URL . 'public/assets/fonts/material/material-icons.css', array(), RS_REVISION);
+		//wp_enqueue_style('revslider-material-icons', RS_PLUGIN_URL . 'admin/assets/icons/material-icons.css', array(), RS_REVISION);
 		wp_enqueue_style('revslider-basics-css', RS_PLUGIN_URL . 'admin/assets/css/basics.css', array(), RS_REVISION);
 		wp_enqueue_style('rs-color-picker-css', RS_PLUGIN_URL . 'admin/assets/css/tp-color-picker.css', array(), RS_REVISION);
-		wp_enqueue_style('revbuilder-select2RS', RS_PLUGIN_URL . 'admin/assets/css/select2RS.css', array(), RS_REVISION);			
+		wp_enqueue_style('revbuilder-ddTP', RS_PLUGIN_URL . 'admin/assets/css/ddTP.css', array(), RS_REVISION);
+		wp_enqueue_style('rs-roboto', '//fonts.googleapis.com/css?family=Roboto');
+		wp_enqueue_style('tp-material-icons', '//fonts.googleapis.com/icon?family=Material+Icons');
 	}
 
-	public static function add_scripts($elementor = false){
-
-		$f = new RevSliderFunctions();
+	public static function add_scripts($elementor = false, $divi = false){
+		$f = RevSliderGlobals::instance()->get('RevSliderFunctions');
 		$action = $f->get_val($_GET, 'action');
 		if($elementor && $action !== 'elementor') return;
 
@@ -44,18 +47,18 @@ class RevSliderShortcodeWizard extends RevSliderFunctions {
 
 		//check user permissions
 		if(!current_user_can('edit_posts') && !current_user_can('edit_pages')) return;
-		if(!$elementor){
+		if(!$elementor && !$divi){
 			//verify the post type
-			global $typenow;
+			global $typenow, $pagenow;
 
 			$post_types = get_post_types();
 			if(empty($post_types) || !is_array($post_types)) $post_types = array('post', 'page');
-			if(!in_array($typenow, $post_types)) return;
+			if(!in_array($typenow, $post_types) && $pagenow !== 'widgets.php') return;
 
 			$current_screen = get_current_screen();
 
 			// checks for built-in gutenberg version
-			$is_gutenberg = method_exists($current_screen, 'is_block_editor') && $current_screen->is_block_editor();
+			$is_gutenberg = !empty($current_screen) && method_exists($current_screen, 'is_block_editor') && $current_screen->is_block_editor();
 
 			// checks for old plugin version
 			if(!$is_gutenberg) $is_gutenberg = function_exists('is_gutenberg_page') && is_gutenberg_page();
@@ -78,16 +81,16 @@ class RevSliderShortcodeWizard extends RevSliderFunctions {
 
 		if($dev_mode === true){
 			wp_enqueue_script('revbuilder-basics', RS_PLUGIN_URL . 'admin/assets/js/modules/basics.js', array('jquery'), RS_REVISION, false);
-			wp_enqueue_script('revbuilder-select2RS', RS_PLUGIN_URL . 'admin/assets/js/plugins/select2RS.full.min.js', array('jquery'), RS_REVISION, false);
-			wp_enqueue_script('revbuilder-color-picker-js', RS_PLUGIN_URL . 'admin/assets/js/plugins/tp-color-picker.min.js', array('jquery', 'revbuilder-select2RS', 'wp-color-picker'), RS_REVISION);
+			wp_enqueue_script('revbuilder-ddTP', RS_PLUGIN_URL . 'admin/assets/js/plugins/ddTP.js', array('jquery'), RS_REVISION, false);
+			wp_enqueue_script('revbuilder-color-picker-js', RS_PLUGIN_URL . 'admin/assets/js/plugins/tp-color-picker.min.js', array('jquery', 'revbuilder-ddTP', 'wp-i18n', 'wp-color-picker'), RS_REVISION);
 			wp_enqueue_script('revbuilder-clipboard', RS_PLUGIN_URL . 'admin/assets/js/plugins/clipboard.min.js', array('jquery'), RS_REVISION, false);
 			wp_enqueue_script('revbuilder-utils', RS_PLUGIN_URL . 'admin/assets/js/modules/objectlibrary.js', array('jquery'), RS_REVISION, false);
 			wp_enqueue_script('revbuilder-optimizer', RS_PLUGIN_URL . 'admin/assets/js/modules/optimizer.js', array('jquery'), RS_REVISION, false);					
 		}else{
-			wp_enqueue_script('revbuilder-utils', RS_PLUGIN_URL . 'admin/assets/js/plugins/utils.min.js', array('jquery','wp-color-picker'), RS_REVISION, false);
+			wp_enqueue_script('revbuilder-utils', RS_PLUGIN_URL . 'admin/assets/js/plugins/utils.min.js', array('jquery', 'wp-i18n', 'wp-color-picker'), RS_REVISION, false);
 		}
 
-		wp_enqueue_script('tp-tools', RS_PLUGIN_URL . 'public/assets/js/rbtools.min.js', array('jquery'), RS_REVISION, true);
+		wp_enqueue_script('tp-tools', RS_PLUGIN_URL . 'public/assets/js/rbtools.min.js', array('jquery'), RS_TP_TOOLS, true);
 
 		// object library translations
 		wp_localize_script('revbuilder-utils', 'RVS_LANG', array(			
@@ -151,12 +154,18 @@ class RevSliderShortcodeWizard extends RevSliderFunctions {
 			'setupnotes' => __('Setup Notes', 'revslider'),
 			'requirements' => __('Requirements', 'revslider'),
 			'installedversion' => __('Installed Version', 'revslider'),
-			'availableversion' => __('Available Version', 'revslider'),
-			'installpackage' => __('Installing Template Package', 'revslider'),
+			'availableversion' => __('Available Version', 'revslider'),			
+			'installpackage' => __('Installing Template Package', 'revslider'),			
+			'doinstallpackage' => __('Install Template Package', 'revslider'),
 			'installtemplate' => __('Install Template', 'revslider'),
+			'installingaddon' => __('Installing Add-on', 'revslider'),
+			'checkversion' => __('Update To Latest Version', 'revslider'),
+			'installpackageandaddons' => __('Install Template Package & Addon(s)', 'revslider'),
+			'installtemplateandaddons' => __('Install Template & Addon(s)', 'revslider'),
 			'licencerequired' => __('Activate License', 'revslider'),
 			'redownloadTemplate' => __('Re-Download Online', 'revslider'),
 			'createBlankPage' => __('Create Blank Page', 'revslider'),
+			'pluginsmustbeupdated' => __('Plugin Outdated. Please Update', 'revslider'),
 			'please_wait_a_moment' => __('Please Wait a Moment', 'revslider'),
 			'search' => __('Search', 'revslider'),
 			'folderBIG' => __('FOLDER', 'revslider'),
@@ -200,11 +209,15 @@ class RevSliderShortcodeWizard extends RevSliderFunctions {
 			'active_sr_plg_activ' => __('Register Purchase Code', 'revslider'),
 			'active_sr_plg_activ_key' => __('Register License Key', 'revslider'),
 			'getpurchasecode' => __('Get a Purchase Code', 'revslider'),
-			'getlicensekey' => __('Licensing Options', 'revslider'),
+			'getlicensekey' => __('Get a License Key', 'revslider'),
 			'ihavepurchasecode' => __('I have a Purchase Code', 'revslider'),
 			'ihavelicensekey' => __('I have a License Key', 'revslider'),
 			'enterlicensekey' => __('Enter License Key', 'revslider'),
-			'enterpurchasecode' => __('Enter Purchase Code', 'revslider')
+			'enterpurchasecode' => __('Enter Purchase Code', 'revslider'),
+			'premium_template' => __('PREMIUM TEMPLATE', 'revslider'),
+			'rs_premium_content' => __('This is a Premium template from the Slider Revolution <a target="_blank" rel="noopener" href="https://www.sliderrevolution.com/examples/">template library</a>. It can only be used on this website with a <a target="_blank" rel="noopener" href="https://www.sliderrevolution.com/manual/quick-setup-register-your-plugin/?utm_source=admin&utm_medium=button&utm_campaign=srusers&utm_content=registermanual">registered license key</a>.', 'revslider'),
+			'premium' => __('Premium', 'revslider'),
+			'premiumunlock' => __('REGISTER LICENSE TO UNLOCK', 'revslider')
 
 		));
 
@@ -212,14 +225,17 @@ class RevSliderShortcodeWizard extends RevSliderFunctions {
 
 		$rsaf = new RevSliderFunctionsAdmin();
 		$rsa = $rsaf->get_short_library();
-
 		if(!empty($rsa)) $obj = $rsaf->json_encode_client_side($rsa);
 
 		$rs_compression = $rsaf->compression_settings();
 		$favs = get_option('rs_favorite', array());
 		$favs = !empty($favs) ? $rsaf->json_encode_client_side($favs) : false;
+		
+		$rs_color_picker_presets = RSColorpicker::get_color_presets();
+		
 		?>
-		<script type="text/javascript">
+		<script>
+            var ajaxurl = '<?php echo esc_js( admin_url( 'admin-ajax.php', 'relative' ) ); ?>';
 			window.RVS = window.RVS === undefined ? {F:{}, C:{}, ENV:{}, LIB:{}, V:{}, S:{}} : window.RVS;
 			RVS.LIB.OBJ = RVS.LIB.OBJ===undefined ? {} : RVS.LIB.OBJ;
 
@@ -228,21 +244,23 @@ class RevSliderShortcodeWizard extends RevSliderFunctions {
 
 			RVS.ENV.plugin_url	= '<?php echo RS_PLUGIN_URL; ?>';
 			RVS.ENV.plugin_dir	= 'revslider';
+			RVS.ENV.ajax_url	= '<?php echo esc_js( admin_url( 'admin-ajax.php') ); ?>';
 			RVS.ENV.admin_url	= '<?php echo admin_url('admin.php?page=revslider'); ?>';
 			RVS.ENV.nonce		= '<?php echo wp_create_nonce('revslider_actions'); ?>';
 			RVS.ENV.activated	= '<?php echo (get_option('revslider-valid', 'false')) == 'true' ? 'true' : 'false'; ?>';
 			RVS.ENV.activated	= RVS.ENV.activated == 'true' || RVS.ENV.activated == true ? true : false;
 			RVS.ENV.selling		= <?php echo ($rsaf->get_addition('selling') === true) ? 'true' : 'false'; ?>;
+			RVS.LIB.COLOR_PRESETS	= <?php echo (!empty($rs_color_picker_presets)) ? 'JSON.parse('. $rsaf->json_encode_client_side($rs_color_picker_presets) .')' : '{}'; ?>;
 			
 			window.addEventListener('load', function(){
-				RVS.ENV.output_compress	= <?php echo (!empty($rs_compression)) ? 'jQuery.parseJSON('. $rsaf->json_encode_client_side($rs_compression) .')' : '[]'; ?>;
+				RVS.ENV.output_compress	= <?php echo (!empty($rs_compression)) ? 'JSON.parse('. $rsaf->json_encode_client_side($rs_compression) .')' : '[]'; ?>;
 				<?php if(!empty($rsa)){ ?>
-				RVS.LIB.OBJ = {shortcode_generator: true, types: jQuery.parseJSON(<?php echo $obj; ?>)};
+				RVS.LIB.OBJ = {shortcode_generator: true, types: JSON.parse(<?php echo $obj; ?>)};
 				<?php }else{ ?>
 				RVS.LIB.OBJ = {};
 				<?php }
 				if(!empty($favs)){ ?>
-				RS_SHORTCODE_FAV = jQuery.parseJSON(<?php echo $favs; ?>);
+				RS_SHORTCODE_FAV = JSON.parse(<?php echo $favs; ?>);
 				<?php } ?>
 			});
 
@@ -251,7 +269,6 @@ class RevSliderShortcodeWizard extends RevSliderFunctions {
 	}
 
 	public static function enqueue_files(){
-
 		echo '<div id="rb_modal_underlay" style="display:none"></div>';
 
 		require_once(RS_PLUGIN_PATH . 'admin/views/modals-copyright.php');
@@ -286,4 +303,3 @@ class RevSliderShortcodeWizard extends RevSliderFunctions {
  **/
 class RevSlider_TinyBox extends RevSliderShortcodeWizard {}
 class RevSliderTinyBox extends RevSlider_TinyBox {}
-?>

@@ -8,10 +8,11 @@
 if(!defined('ABSPATH')) exit();
 
 class RevSliderFunctions extends RevSliderData {
-	
+
 	public function __construct(){
+		parent::__construct();
 	}
-	
+
 	/**
 	 * START: DEPRECATED FUNCTIONS THAT ARE IN HERE FOR OLD ADDONS TO WORK PROPERLY
 	 **/
@@ -22,7 +23,7 @@ class RevSliderFunctions extends RevSliderData {
 	 **/
 	public static function getVal($arr, $key, $default = ''){
 		//echo 'Slider Revolution Notice: Please do not use RevSliderFunctions::getVal() anymore, use $f->get_val()'."\n";
-		$f = new RevSliderFunctions();
+		$f = RevSliderGlobals::instance()->get('RevSliderFunctions');
 		return $f->get_val($arr, $key, $default);
 	}
 	
@@ -31,20 +32,27 @@ class RevSliderFunctions extends RevSliderData {
 	 * added for compatibility with old AddOns
 	 **/
 	public static function cleanStdClassToArray($arr){
-		$f = new RevSliderFunctions();
+		$f = RevSliderGlobals::instance()->get('RevSliderFunctions');
 		return $f->class_to_array_single($arr);
 	}
 	
 	/**
 	 * END: DEPRECATED FUNCTIONS THAT ARE IN HERE FOR OLD ADDONS TO WORK PROPERLY
 	 **/
-	
-	
+
+	/**
+	 * attempt to load cache for _get_global_settings
+	 * @return mixed
+	 */
+	public function get_global_settings(){
+		return $this->get_wp_cache('_get_global_settings');
+	}
+
 	/**
 	 * Get Global Settings
 	 * @before: RevSliderOperations::getGeneralSettingsValues()
 	 **/
-	public function get_global_settings(){
+	protected function _get_global_settings(){
 		$gs = get_option('revslider-global-settings', '');
 		if(!is_array($gs)){
 			$gs = json_decode($gs, true);
@@ -52,8 +60,19 @@ class RevSliderFunctions extends RevSliderData {
 		
 		return apply_filters('rs_get_global_settings', $gs);
 	}
-	
-	
+
+	/**
+	 * update general settings
+	 * @before: RevSliderOperations::updateGeneralSettings()
+	 */
+	public function set_global_settings($global){
+		$this->delete_wp_cache('_get_global_settings');
+		
+		$global = json_encode($global);
+		return update_option('revslider-global-settings', $global);
+	}
+
+
 	/**
 	 * get all additions from the update checks
 	 * @since: 6.2.0
@@ -64,19 +83,8 @@ class RevSliderFunctions extends RevSliderData {
 		
 		return (empty($key)) ? $additions : $this->get_val($additions, $key);
 	}
-	
-	
-	/**
-	 * update general settings
-	 * @before: RevSliderOperations::updateGeneralSettings()
-	 */
-	public function set_global_settings($global){
-		$global = json_encode($global);
-		
-		return update_option('revslider-global-settings', $global);
-	}
-	
-	
+
+
 	/**
 	 * throw an error
 	 * @before: RevSliderFunctions::throwError()
@@ -88,30 +96,34 @@ class RevSliderFunctions extends RevSliderData {
 			throw new Exception($message);
 		}
 	}
-	
-	
+
+
 	/**
 	 * get value from array. if not - return alternative
 	 * before: RevSliderFunctions::get_val();
+	 * 
+	 * @param mixed $arr  could be array | object | scalar 
+	 * @param mixed $key  could be array | string
+	 * @param mixed $default  value to return if key not found
+	 * @return mixed  
 	 */
 	public function get_val($arr, $key, $default = ''){
-		$arr = (array)$arr;	
-		
-		if(is_array($key)){
-			$a = $arr;
-			foreach($key as $k => $v){
-				$a = $this->get_val($a, $v, $default);				
+		//scalar =  int, float, string и bool
+		if(is_scalar($arr)) return $default;
+		//convert obj to array 
+		if(is_object($arr)) $arr = (array)$arr;
+		//if key is string, check immediately 
+		if(!is_array($key)) return (isset($arr[$key])) ? $arr[$key] : $default;
+		//loop thru keys
+		foreach($key as $v){
+			if(is_object($arr)) $arr = (array)$arr;
+			if(isset($arr[$v])) {
+				$arr = $arr[$v];
+			} else {
+				return $default;
 			}
-			return $a;
-			/*$val = $default;
-			foreach($key as $k => $v){
-				$val = (array)$val;
-				$val = (isset($val[$v])) ? $val[$v] : $default;
-			}*/
-		}else{						
-			$val = (isset($arr[$key])) ? $arr[$key] : $default;			 		
 		}
-		return $val;
+		return $arr;
 	}
 
 	
@@ -134,54 +146,42 @@ class RevSliderFunctions extends RevSliderData {
 		}else{
 			$base[$name] = $value;
 		}
-		//no return required, as the base is given with &$base
-		//return $base;
 	}
-	
 	
 	/**
 	 * get POST variable
 	 * before: RevSliderBase::getPostVar();
 	 */
-	public function get_post_var($key, $default = ''){
+	public function get_post_var($key, $default = '', $esc = true){
 		$val = $this->get_var($_POST, $key, $default);
-		
-		return $val;			
+		return ($esc) ? esc_html($val) : $val;
 	}
-	
 	
 	/**
 	 * get GET variable
 	 * before: RevSliderBase::getGetVar();
 	 */
-	public function get_get_var($key, $default = ''){
+	public function get_get_var($key, $default = '', $esc = true){
 		$val = $this->get_var($_GET, $key, $default);
-		
-		return $val;
+		return ($esc) ? esc_html($val) : $val;
 	}
-	
 	
 	/**
 	 * get POST or GET variable in this order
 	 * before: RevSliderBase::getPostGetVar();
 	 */
-	public function get_request_var($key, $default = ''){
+	public function get_request_var($key, $default = '', $esc = true){
 		$val = (array_key_exists($key, $_POST)) ? $this->get_var($_POST, $key, $default) : $this->get_var($_GET, $key, $default);
-		
-		return $val;
+		return ($esc) ? esc_html($val) : $val;
 	}
-	
 	
 	/**
 	 * get a variable from an array,
 	 * before: RevSliderBase::getVar()
 	 */
 	public function get_var($arr, $key, $default = ''){
-		$val = (isset($arr[$key])) ? $arr[$key] : $default;
-		
-		return $val;
+		return (isset($arr[$key])) ? $arr[$key] : $default;
 	}
-	
 	
 	/**
 	 * check for true and false in all possible ways
@@ -197,7 +197,6 @@ class RevSliderFunctions extends RevSliderData {
 		return $v;
 	}
 	
-	
 	/**
 	 * validate that some value is numeric
 	 * before: RevSliderFunctions::validateNumeric
@@ -209,7 +208,6 @@ class RevSliderFunctions extends RevSliderData {
 			$this->throw_error($fn.__(' should be numeric', 'revslider'));
 	}
 	
-	
 	/**
 	 * validate that some variable not empty
 	 * before: RevSliderFunctions::validateNotEmpty
@@ -219,8 +217,6 @@ class RevSliderFunctions extends RevSliderData {
 			$this->throw_error($fn.__(' should not be empty', 'revslider'));
 	}
 	
-	
-	
 	/**
 	 * encode array into json for client side
 	 * @before: RevSliderFunctions::jsonEncodeForClientSide()
@@ -229,7 +225,11 @@ class RevSliderFunctions extends RevSliderData {
 		$json = '';
 		
 		if(!empty($arr)){
-			$json = json_encode($arr);
+			if(defined('JSON_INVALID_UTF8_IGNORE')){
+				$json = json_encode($arr, JSON_INVALID_UTF8_IGNORE);
+			}else{
+				$json = json_encode($arr);
+			}
 			$json = addslashes($json);
 		}
 
@@ -259,36 +259,19 @@ class RevSliderFunctions extends RevSliderData {
 	/**
 	 * Convert std class to array, with all sons
 	 * before: RevSliderFunctions::convertStdClassToArray();
+	 * @return array|null
 	 */
 	public function class_to_array($arr){
-		$arr = (array)$arr;
-		$new = array();
-		
-		if(!empty($arr)){
-			foreach($arr as $key => $item){
-				$new[$key]	= (array)$item;
-			}
-		}else{
-			$new = $arr;
-		}
-		
-		return $new;
+		return json_decode(json_encode($arr), true);
 	}
-	
 	
 	/**
 	 * Convert std class to array, single
 	 * before: RevSliderFunctions::cleanStdClassToArray();
+	 * @return array
 	 */
 	public function class_to_array_single($arr){
-		$arr = (array)$arr;
-		$new = array();
-		
-		foreach($arr as $key => $item){
-			$new[$key] = $item;
-		}
-		
-		return $new;
+		return (array)$arr;
 	}
 	
 	/**
@@ -381,16 +364,17 @@ class RevSliderFunctions extends RevSliderData {
 	}
 	
 	/**
-	 * Check if Path is a Valid Image File	 	
-	 **/	 
-	public function check_valid_image($url){		
+	 * Check if Path is a Valid Image File
+	 **/
+	public function check_valid_image($url){
+		if(empty($url)) return false;
 		$pos = strrpos($url, '.', -1);
-	    if($pos === false) return false;
-	    $ext = strtolower(substr($url, $pos));
-	    $img_exts = array('.gif', '.jpg', '.jpeg', '.png');
-	    if(in_array($ext, $img_exts)) return $url;
+		if($pos === false) return false;
+		$ext = strtolower(substr($url, $pos));
+		$img_exts = array('.gif', '.jpg', '.jpeg', '.png');
+		if(in_array($ext, $img_exts)) return $url;
 		
-	    return false;
+		return false;
 	}
 	
 	/**
@@ -407,7 +391,6 @@ class RevSliderFunctions extends RevSliderData {
 		
 		return $url;
 	}
-	
 	
 	/**
 	 * strip slashes recursive
@@ -436,27 +419,31 @@ class RevSliderFunctions extends RevSliderData {
 	 * before: RevSliderOperations::getPostTypesWithCatsForClient();
 	 */
 	public function get_post_types_with_categories_for_client(){
-		$post_types		= $this->get_post_types_with_categories();
-		$globalCounter	= 0;
-		$arrOutput		= array();
-		foreach($post_types as $postType => $arrTaxWithCats){
+		$c = 0;
+		$ret = array();
+		$post_types = $this->get_post_types_with_taxonomies();
+		foreach($post_types as $name => $tax){
+			$cat = array();
+			if(empty($tax)){
+				$ret[$name] = $cat;
+				continue;
+			}
+			
+			foreach($tax as $tax_name => $tax_title){
+				$cats = $this->get_categories_assoc($tax_name);
+				if(empty($cats)) continue;
 
-			$arrCats = array();
-			foreach($arrTaxWithCats as $tax){
-				$taxName	= $tax['name'];
-				$taxTitle	= $tax['title'];
-				$globalCounter++;
-				$arrCats['option_disabled_'.$globalCounter] = '---- '.$taxTitle.' ----';
-				foreach($tax['cats'] as $catID=>$catTitle){
-					$arrCats[$taxName.'_'.$catID] = $catTitle;
+				$c++;
+				$cat['option_disabled_'.$c] = '---- '. $tax_title .' ----';
+				foreach($cats as $catID => $catTitle){
+					$cat[$tax_name.'_'.$catID] = $catTitle;
 				}
-			}//loop tax
+			}
+			
+			$ret[$name] = $cat;
+		}
 
-			$arrOutput[$postType] = $arrCats;
-
-		}//loop types
-		
-		return $arrOutput;
+		return $ret;
 	}
 	
 	
@@ -659,6 +646,49 @@ class RevSliderFunctions extends RevSliderData {
 		return $image;
 	}
 	
+	/**
+	 *
+	 **/
+	public function import_media_raw($name, $id, $bitmap){
+		if(intval($id) === 0) return __('Invalid id given', 'revslider');
+		
+		$ul_dir	 = wp_upload_dir();
+		$path = $ul_dir['basedir'].'/rstemp/';
+		
+		if(preg_match('/^data:image\/(\w+);base64,/', $bitmap, $type)){
+			$data = substr($bitmap, strpos($bitmap, ',') + 1);
+			$type = strtolower($type[1]); // jpg, png, gif
+
+			if(!in_array($type, array('jpg', 'jpeg', 'gif', 'png'))){
+				return __('Image has an invalid type', 'revslider');
+			}
+			
+			if(strpos($name, '.') !== false){
+				$name = explode('.', $name);
+				$name = $name[0];
+			}
+			$name .= '_'.$id.'.'.$type;
+			$name = preg_replace("/[^a-zA-Z0-9\-\.\_]/", '', $name);
+			
+			$data = str_replace(' ', '+', $data);
+			$data = base64_decode($data);
+
+			if($data === false){
+				return __('Image has an invalid type', 'revslider');
+			}
+		}else{
+			return __('Image has invalid data', 'revslider');
+		}
+		
+		if(!is_dir($path)){
+			mkdir($path, 0777, true);
+		}
+		$return = file_put_contents($path.$name, $data);
+		if($return === false) return __('Image could not be saved', 'revslider');
+
+		return $this->import_media($path.$name , 'video-media/');
+	}
+	
 	
 	/**
 	 * Import media from url
@@ -754,7 +784,7 @@ class RevSliderFunctions extends RevSliderData {
 					'post_parent'	 => '',
 					'post_type'		 => 'attachment',
 					'guid'			 => $ul_dir['baseurl'].'/'.$s_dir,
-					'post_mime_type' => $file_info['mime'],
+					'post_mime_type' => $this->get_val($file_info, 'mime'),
 					'post_excerpt'	 => '',
 					'post_content'	 => ''
 				);
@@ -813,7 +843,7 @@ class RevSliderFunctions extends RevSliderData {
 	 * @before: RevSliderOperations::getCaptionsContentArray();
 	 */
 	public function get_captions_content($handle = false){
-		$css = new RevSliderCssParser();
+		$css = RevSliderGlobals::instance()->get('RevSliderCssParser');
 		$this->fill_css();
 		
 		return $css->db_array_to_array($this->css, $handle);
@@ -836,22 +866,13 @@ class RevSliderFunctions extends RevSliderData {
 		return $path;
 	}
 	
-	
 	/**
 	 * get contents of the static css file
 	 * @before: RevSliderOperations::getStaticCss()
 	 */
 	public function get_static_css(){
-		if(!get_option('revslider-static-css')){
-			if(file_exists(RS_PLUGIN_PATH . 'public/assets/css/static-captions.css')){
-				$css = @file_get_contents(RS_PLUGIN_PATH . 'public/assets/css/static-captions.css');
-				$this->update_static_css($css);
-			}
-		}
-		
 		return get_option('revslider-static-css', '');
 	}
-	
 	
 	/**
 	 * get contents of the static css file
@@ -859,12 +880,9 @@ class RevSliderFunctions extends RevSliderData {
 	 */
 	public function update_static_css($css){
 		$css = str_replace(array("\'", '\"', '\\\\'),array("'", '"', '\\'), trim($css));
-		
 		update_option('revslider-static-css', $css);
-
 		return $css;
 	}
-	
 	
 	/**
 	 * print html font import
@@ -918,7 +936,7 @@ class RevSliderFunctions extends RevSliderData {
 									if(!$mgfirst) $t_tcf .= urlencode(',');
 									$t_tcf .= urlencode($mgvv);
 									$mgfirst = false;
-								}
+								} 
 								
 								//we did not add any variants, so dont add the font
 								if($mgfirst === true) continue;
@@ -1018,7 +1036,7 @@ class RevSliderFunctions extends RevSliderData {
 					}
 					
 					if(!empty($weights) && is_array($weights)){
-						$ret .= '<style type="text/css">';
+						$ret .= '<style>';
 						foreach($weights as $weight){
 							$style	 = (strpos($weight, 'italic') !== false) ? 'italic' : 'normal';
 							$_weight = str_replace('italic', '', $weight);
@@ -1028,6 +1046,7 @@ class RevSliderFunctions extends RevSliderData {
   font-family: '".$f_family."';
   font-style: ".$style.";
   font-weight: ".$_weight.";
+  font-display: swap;
   src: local('".$f_family."'), local('".$f_family."'), url(".$base_url.'/revslider/gfonts/'. $font_name . '/' . $font_name . '-' . $weight . '.woff2'.") format('woff2');
 }";
 						}
@@ -1038,13 +1057,12 @@ class RevSliderFunctions extends RevSliderData {
 			
 		}else{
 			$url = $this->modify_fonts_url('https://fonts.googleapis.com/css?family=');
-			$ret .= ($tcf !== '') ? '<link href="'.$url.$tcf.'" rel="stylesheet" property="stylesheet" media="all" type="text/css" >'."\n" : '';
+			$ret .= ($tcf !== '') ? '<link href="'.$url.$tcf.'&display=swap" rel="stylesheet" property="stylesheet" media="all" type="text/css" >'."\n" : '';
 			$ret .= ($tcf2 !== '') ? html_entity_decode(stripslashes($tcf2)) : '';
 		}
 		
 		return apply_filters('revslider_printCleanFontImport', $ret);
 	}
-	
 	
 	/**
 	 * Change FontURL to new URL (added for chinese support since google is blocked there)
@@ -1057,7 +1075,6 @@ class RevSliderFunctions extends RevSliderData {
 		
 		return ($df !== '') ? $df : $url;
 	}
-	
 	
 	/**
 	 * convert date to the date format that the user chose.
@@ -1077,12 +1094,15 @@ class RevSliderFunctions extends RevSliderData {
 	 * @since: 5.0
 	 **/
 	public function get_biggest_device_setting($obj, $enabled_devices, $default = '########'){
-		
-		if($this->get_val($enabled_devices, 'd') === true && $this->get_val($obj, array('d', 'v')) != '') return $this->get_val($obj, array('d', 'v'));
+		$dv = $this->get_val($obj, array('d', 'v')); 
+		if($this->get_val($enabled_devices, 'd') === true && $dv != '') return $dv;
 		if($default !== '########') return $default;
-		if($this->get_val($enabled_devices, 'n') === true && $this->get_val($obj, array('n', 'v')) != '') return $this->get_val($obj, array('n', 'v'));
-		if($this->get_val($enabled_devices, 't') === true && $this->get_val($obj, array('t', 'v')) != '') return $this->get_val($obj, array('t', 'v'));
-		if($this->get_val($enabled_devices, 'm') === true && $this->get_val($obj, array('m', 'v')) != '') return $this->get_val($obj, array('m', 'v'));
+		$nv = $this->get_val($obj, array('n', 'v'));
+		if($this->get_val($enabled_devices, 'n') === true && $nv != '') return $nv;
+		$tv = $this->get_val($obj, array('t', 'v'));
+		if($this->get_val($enabled_devices, 't') === true && $tv != '') return $tv;
+		$mv = $this->get_val($obj, array('m', 'v'));
+		if($this->get_val($enabled_devices, 'm') === true && $mv != '') return $mv;
 		
 		return '';
 	}
@@ -1104,16 +1124,10 @@ class RevSliderFunctions extends RevSliderData {
 			}
 		}
 		
-		$_def = '########';
-		if(!empty($default)){
-			foreach($default as $_d){
-				$_def = $_d;
-				break;
-			}
-		}
+		$_def = !empty($default) ? reset($default) : '########';
 		
 		$inherit_size = $this->get_biggest_device_setting($obj, $enabled_devices, $_def);
-		if($enabled_devices['d'] === true){			
+		if($enabled_devices['d'] === true){
 			if($this->get_val($obj, array('d', 'v'), '') === ''){
 				$obj['d']['v'] = ($_def !== '########') ? $_def : $inherit_size;
 			}else{
@@ -1165,7 +1179,6 @@ class RevSliderFunctions extends RevSliderData {
 				return $new_obj;
 			break;
 			case 'html-array':
-				$html_array = '';
 				if($obj['d']['v'] === $obj['n']['v'] && $obj['d']['v'] === $obj['m']['v'] && $obj['d']['v'] === $obj['t']['v']){
 					$html_array = $obj['d']['v'];
 				}else{
@@ -1178,7 +1191,7 @@ class RevSliderFunctions extends RevSliderData {
 				if(!empty($default)){
 					foreach($default as $key => $value){
 						if((is_string($html_array) && $html_array == "".$value) || (!(is_string($html_array)) && $html_array == $value)){
-							$html_array = '';	
+							$html_array = '';
 							break;
 						}
 					}
@@ -1225,6 +1238,7 @@ class RevSliderFunctions extends RevSliderData {
 			foreach($push as $p){
 				$obj[$p] = array('v' => $t);
 			}
+			return $obj;
 		}
 		
 		foreach($push as $p){
@@ -1238,6 +1252,51 @@ class RevSliderFunctions extends RevSliderData {
 		}
 		
 		return $obj;
+	}
+	
+	/**
+	 * get the values for the given transition
+	 **/
+	public function get_slide_transition_values($transition, $base_transitions = array()){
+		if(empty($base_transitions)) $base_transitions = $this->get_base_transitions();
+		foreach($base_transitions as $t){
+			if(!is_array($t)) continue;
+			foreach($t as $_t){
+				if(!is_array($_t)) continue;
+				foreach($_t as $name => $values){
+					if($name !== $transition) continue;
+					
+					return $values;
+				}
+			}
+		}
+		return array();
+	}
+	
+	
+	/**
+	 * get a random slide transition for the given main and grp
+	 **/
+	public function get_random_slide_transition($main, $grp, $base_transitions = array()){
+		if(empty($base_transitions)) $base_transitions = $this->get_base_transitions();
+		
+		if(!is_array($grp) && !empty($grp)) $grp = explode(',', $grp);
+		if($grp === '') $grp = array();
+		
+		$items = array();
+		foreach($base_transitions as $m => $bt){
+			if(!is_string($m) || $m === 'random' || $m === 'custom' || ($main !== 'all' && $main !== $m)) continue;
+			foreach($bt as $g => $_bt){
+				if(is_array($_bt) && $g !== 'icon' && (empty($grp) || in_array($g, $grp))){
+					foreach($_bt as $e => $__bt){
+						$items[] = $e;
+					}
+				}
+			}
+		}
+		
+		$num = (!empty($items)) ? array_rand($items, 1) : false;
+		return ($num !== false) ? $items[$num] : '';
 	}
 	
 	
@@ -1258,9 +1317,11 @@ class RevSliderFunctions extends RevSliderData {
 		switch($special){
 			case 'http':
 				$url = str_replace('https://', 'http://', $url);
+				if(strpos($url, 'http://') === false) $url = 'http://'.$url;
 			break;
 			case 'https':
 				$url = str_replace('http://', 'https://', $url);
+				if(strpos($url, 'https://') === false) $url = 'https://'.$url;
 			break;
 			case 'keep': //do nothing
 			break;
@@ -1271,52 +1332,81 @@ class RevSliderFunctions extends RevSliderData {
 		}
 		return $url;
 	}
-	
-	
-	/**
-	 * go through folders and return all files, $only checking for certain file types
-	 **/
-	/*public function get_all_files($dir, &$results = array(), $only = false){
-		$files = scandir($dir);
-		
-		foreach($files as $key => $value){
-			$add	= true;
-			$path	= realpath($dir.DIRECTORY_SEPARATOR.$value);
-			if($only !== false){
-				$path_parts = pathinfo($path);
-				if($this->get_val($path_parts, 'extension') != $only){
-					$add = false;
-				}
-			}
-			
-			if(!is_dir($path)){
-				if($add){
-					$results[] = $path;
-				}
-			}elseif($value != '.' && $value != '..'){
-				$this->get_all_files($path, $results, $only);
-				if($add){
-					$results[] = $path;
-				}
-			}
-		}
-
-		return $results;
-	}*/
 
 	/**
 	 * set the memory limit to at least 256MB if possible
 	 * @since: 6.1.6
 	 **/
 	public static function set_memory_limit(){
-		$cml = wp_convert_hr_to_bytes(ini_get('memory_limit'));
-		if($cml < 268435456){
-			$wp_ml = wp_convert_hr_to_bytes(WP_MAX_MEMORY_LIMIT);
-			$wp_ml = ($wp_ml < 268435456) ? 268435456 : $wp_ml;
-			if($cml < $wp_ml) @ini_set('memory_limit', WP_MAX_MEMORY_LIMIT);
+		wp_raise_memory_limit('revslider');
+	}
+	
+	
+	/**
+	 * Check if page is edited in Gutenberg
+	 */
+	public function _is_gutenberg_page(){
+		if(isset($_GET['action']) && $_GET['action'] == 'elementor') return false; // Elementor Page Edit
+		if(isset($_GET['vc_action']) && $_GET['vc_action'] == 'vc_inline') return false; // WP Bakery Front Edit
+		if(function_exists('is_gutenberg_page') && is_gutenberg_page()) return true; // Gutenberg Edit with WP < 5
+		$current_screen = get_current_screen();
+		if(!empty($current_screen) && method_exists($current_screen, 'is_block_editor') && $current_screen->is_block_editor()) return true; //Gutenberg Edit with WP >= 5
+		
+		return false;
+	}
+	
+	
+	
+	/**
+	 * get custom transitions
+	 **/
+	public function get_custom_slidetransitions(){
+		$custom = get_option('revslider_template_slidetransitions', array());
+		
+		return apply_filters('rs_get_custom_slidetransitions', $custom);
+	}
+	
+	
+	/**
+	 * get custom transitions
+	 **/
+	public function save_custom_slidetransitions($template){
+		$custom = $this->get_custom_slidetransitions();
+		
+		//empty custom templates?
+		if(empty($custom)){
+			$custom = array();
+			$new_id = 1;
+		}else{
+			$id = $this->get_val($template, 'id', 0);
+			//custom templates exist
+			$new_id = ($id > 0) ? $id : max(array_keys($custom)) + 1;
 		}
+		
+		//update or insert template
+		$custom[$new_id]['title']	= $template['obj']['title'];
+		$custom[$new_id]['preset']	= $template['obj']['preset'];
+		//return the ID the template was saved with
+		return (update_option('revslider_template_slidetransitions', $custom)) ? $new_id : false;
+	}
+	
+	
+	/**
+	 * get custom transitions
+	 **/
+	public function delete_custom_slidetransitions($template){
+		//load templates array
+		$custom = $this->get_custom_slidetransitions();
+		
+		$id = intval($this->get_val($template, 'id', 0));
+		//custom template exist
+		if($id > 0 && isset($custom[$id])){
+			//delete given ID
+			unset($custom[$id]);
+			//save the resulting templates array again
+			if(update_option('revslider_template_slidetransitions', $custom)) return true;	
+		}
+		
+		return false;
 	}
 }
-
-//class RevSliderFunctions extends rs_functions {}
-?>

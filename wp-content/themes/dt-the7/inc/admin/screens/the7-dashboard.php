@@ -32,9 +32,9 @@ defined( 'ABSPATH' ) || exit;
 			<div class="the7-column" style="width: 40%">
 				<?php
 				if ( presscore_theme_is_activated() ) {
-					include dirname( __FILE__ ) . '/partials/the7-dashboard/theme-de-registration-form.php';
+					include __DIR__ . '/partials/the7-dashboard/theme-de-registration-form.php';
 				} else {
-					include dirname( __FILE__ ) . '/partials/the7-dashboard/theme-registration-form.php';
+					include __DIR__ . '/partials/the7-dashboard/theme-registration-form.php';
 				}
 				?>
 			</div>
@@ -45,16 +45,27 @@ defined( 'ABSPATH' ) || exit;
 				<ul class="the7-links">
 					<li><a href="<?php echo admin_url( 'admin.php?page=the7-demo-content' ); ?>" class="the7-dashboard-icons-cloud-download"><?php esc_html_e( 'Import a pre-made site', 'the7mk2' ); ?></a></li>
 					<li><a href="<?php echo admin_url( 'admin.php?page=the7-plugins' ); ?>" class="the7-dashboard-icons-plug"><?php esc_html_e( 'Install or update plugins', 'the7mk2' ); ?></a></li>
-					<li><a href="<?php echo admin_url( 'admin.php?page=options-framework' ); ?>" class="the7-dashboard-icons-paint-brush"><?php esc_html_e( 'Customize your site', 'the7mk2' ); ?></a></li>
+					<li>
+						<?php
+						$customize_your_site_text = esc_html( __( 'Customize your site', 'the7mk2' ) );
+						if ( the7_is_elementor_theme_style_enabled() ) {
+							// Elementor Settings link.
+							printf( '<a href="%1$s" class="the7-dashboard-icons-paint-brush" rel="nofollow" target="_blank">%2$s</a>', 'https://guide.the7.io/elementor/user-guide/theme-style/', $customize_your_site_text ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						} else {
+							// Theme Options link.
+							printf( '<a href="%1$s" class="the7-dashboard-icons-paint-brush">%2$s</a>', esc_url( admin_url( 'admin.php?page=options-framework' ) ), $customize_your_site_text ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						}
+						?>
+					</li>
 				</ul>
 			</div>
 
 			<div class="the7-column" style="width: 30%">
 				<h3><?php esc_html_e( 'Guides & Support', 'the7mk2' ); ?></h3>
 				<ul class="the7-links">
-					<li><a href="http://guide.the7.io/start/" target="_blank" class="the7-dashboard-icons-rocket"><?php esc_html_e( 'Quick start guide', 'the7mk2' ); ?></a></li>
-					<li><a href="http://guide.the7.io/" target="_blank" class="the7-dashboard-icons-graduation-cap"><?php esc_html_e( 'Advanced user guide', 'the7mk2' ); ?></a></li>
-					<li><a href="http://support.dream-theme.com" target="_blank" class="the7-dashboard-icons-life-bouy"><?php esc_html_e( 'Support portal', 'the7mk2' ); ?></a></li>
+					<li><a href="https://guide.the7.io/start/" target="_blank" class="the7-dashboard-icons-rocket"><?php esc_html_e( 'Quick start guide', 'the7mk2' ); ?></a></li>
+					<li><a href="https://guide.the7.io/" target="_blank" class="the7-dashboard-icons-graduation-cap"><?php esc_html_e( 'Advanced user guide', 'the7mk2' ); ?></a></li>
+					<li><a href="https://support.dream-theme.com" target="_blank" class="the7-dashboard-icons-life-bouy"><?php esc_html_e( 'Support portal', 'the7mk2' ); ?></a></li>
 				</ul>
 			</div>
 		</div>
@@ -114,7 +125,7 @@ defined( 'ABSPATH' ) || exit;
 				if ( class_exists( 'ZipArchive' ) ) {
 					_e( '<code class="status-good">Yes</code>', 'the7mk2' );
 				} else {
-					_e( '<code class="status-bad">No</code> ZipArchive is required for plugins installation and pre-made websites import.<br><span class="the7-tip">Please contact your hosting provider.</span>', 'the7mk2' );
+					_e( '<code class="status-okay">No</code> ZipArchive is required for Icons Manager to work properly.<br><span class="the7-tip">You may want to contact your hosting provider.</span>', 'the7mk2' );
 				}
 				?>
 				</td>
@@ -161,7 +172,7 @@ defined( 'ABSPATH' ) || exit;
 				<?php
 				$memory = presscore_get_wp_memory_limit();
 				// translators: %1$s - wp codex article url.
-				$tip = sprintf( __( '<br><span class="the7-tip">See <a href="%1$s" target="_blank" rel="noopener noreferrer">increasing memory allocated to PHP</a> or contact your hosting provider.</span>', 'the7mk2' ), 'http://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP' );
+				$tip = sprintf( __( '<br><span class="the7-tip">See <a href="%1$s" target="_blank" rel="noopener noreferrer">increasing memory allocated to PHP</a> or contact your hosting provider.</span>', 'the7mk2' ), 'https://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP' );
 				if ( $memory < 67108864 ) {
 					// translators: %1$s - memory limit.
 					echo sprintf( __( '<code class="status-bad">%1$s</code> Minimum value is <strong>64 MB</strong>. <strong>128 MB</strong> is recommended. <strong>256 MB</strong> or more may be required if lots of plugins are in use and/or you want to install the Main Demo.', 'the7mk2' ), size_format( $memory ) );
@@ -188,7 +199,7 @@ defined( 'ABSPATH' ) || exit;
 						<?php
 						$time_limit = ini_get( 'max_execution_time' );
 						// translators: %1$s - wp codex article url.
-						$tip = sprintf( __( '<br><span class="the7-tip">See <a href="%1$s" target="_blank" rel="noopener noreferrer">increasing max PHP execution time</a> or contact your hosting provider.</span>', 'the7mk2' ), 'http://codex.wordpress.org/Common_WordPress_Errors#Maximum_execution_time_exceeded' );
+						$tip = sprintf( __( '<br><span class="the7-tip">See <a href="%1$s" target="_blank" rel="noopener noreferrer">increasing max PHP execution time</a> or contact your hosting provider.</span>', 'the7mk2' ), 'https://wordpress.org/support/article/common-wordpress-errors/#php-errors' );
 
 						if ( 30 > $time_limit && 0 != $time_limit ) {
 							// translators: %1$s - php time limit.
@@ -212,8 +223,56 @@ defined( 'ABSPATH' ) || exit;
 					</td>
 				</tr>
 			<?php endif; ?>
+
+			<?php if ( class_exists( 'WP_Site_Health' ) && method_exists( 'WP_Site_Health', 'get_test_php_extensions' ) ) : ?>
+
+				<?php
+				$result = WP_Site_Health::get_instance()->get_test_php_extensions();
+				if ( isset( $result['status'] ) && $result['status'] !== 'good' ) {
+					?>
+
+						<style>
+							.the7-php-modules-message p {
+								display: none;
+							}
+
+                            #the7-dashboard .the7-php-modules-message li {
+                                margin: 7px 0;
+                            }
+
+                            .the7-php-modules-message .warning {
+                                color: orange;
+                            }
+
+                            .the7-php-modules-message .error {
+                                color: red;
+                            }
+						</style>
+
+					<tr>
+						<td>
+							<?php echo esc_html_e( 'PHP Modules:', 'the7mk2' ); ?>
+						</td>
+						<td class="the7-php-modules-message">
+							<?php
+							$class = 'status-okay';
+							if ( $result['status'] === 'critical' ) {
+								$class = 'status-bad';
+							}
+							echo '<code class="' . esc_attr( $class ) . '">' . esc_html( $result['status'] ) . '</code> ' . esc_html( $result['label'] . '.' );
+							echo wp_kses_post( str_replace( [ 'warning', 'error' ], [ 'warning dashicons-info', 'error dashicons-warning' ], $result['description'] ) );
+							?>
+						</td>
+					</tr>
+
+					<?php
+				}
+				?>
+
+			<?php endif; ?>
+
 		</table>
 	</div>
 
-	<?php include dirname( __FILE__ ) . '/partials/the7-dashboard/settings.php'; ?>
+	<?php require dirname( __FILE__ ) . '/partials/the7-dashboard/settings.php'; ?>
 </div>

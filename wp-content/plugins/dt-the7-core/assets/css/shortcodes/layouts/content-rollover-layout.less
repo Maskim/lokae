@@ -45,7 +45,7 @@
 		
 	}
 	.mobile-false .content-rollover-layout-list:not(.disable-layout-hover) article:hover &,
-	.mobile-true .content-rollover-layout-list:not(.disable-layout-hover) article.is-clicked & {
+	.mobile-true .content-rollover-layout-list:not(.disable-layout-hover) article & {
 		opacity: 1;
 	}
 }
@@ -75,10 +75,10 @@
 	opacity: 1;
 	bottom: 0;
 }
-article.is-clicked  .post-entry-wrapper {
+.post-entry-wrapper {
 	.mobile-true .content-rollover-layout-list:not(.disable-layout-hover) & {
 		opacity: 1;
-		bottom: 0;
+		bottom: 0 !important;
 		-webkit-transform: translateY(0) !important;
 		transform: translateY(0) !important;
 	}

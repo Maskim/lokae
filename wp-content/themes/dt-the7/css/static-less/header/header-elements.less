@@ -324,6 +324,9 @@
 					max-width: 100%;
 					border-style: solid;
 					.box-sizing (border-box);
+					.elementor-widget & {
+						border-style: var(--the7-form-border, solid);
+					}
 				}
 			}
 				.popup-search-wrap {
@@ -553,8 +556,10 @@
 			}
 	/* !-- Log in */
 	.mini-login {
-		.flex-display(@display: inline-flex);
-		.align-items(@align: center);
+		.masthead .mini-widgets & {
+			.flex-display(@display: inline-flex);
+			.align-items(@align: center);
+		}
 		& i {
 			margin-right: 5px;
 		}

@@ -12,12 +12,26 @@ defined( 'ABSPATH' ) || exit;
  */
 class The7_Less_Vars_Manager implements The7_Less_Vars_Manager_Interface {
 
+	/**
+	 * @var Presscore_Lib_SimpleBag
+	 */
 	protected $storage;
+
+	/**
+	 * @var The7_Less_Vars_Factory_Interface
+	 */
 	protected $factory;
 
 	public function __construct( Presscore_Lib_SimpleBag $storage, The7_Less_Vars_Factory_Interface $factory ) {
 		$this->storage = $storage;
 		$this->factory = $factory;
+	}
+
+	/**
+	 * @return Presscore_Lib_SimpleBag
+	 */
+	public function storage() {
+		return $this->storage;
 	}
 
 	public function import( $items ) {
@@ -69,6 +83,17 @@ class The7_Less_Vars_Manager implements The7_Less_Vars_Manager_Interface {
 		$this->storage->set( $var, $this->factory->number( $value )->wrap( $wrap )->get_percents() );
 	}
 
+	public function add_unitized_number( $var, $value, $wrap = null ) {
+		$number_obj = $this->factory->number( $value )->wrap( $wrap );
+		if ( ! $number_obj->get_units() ) {
+			$number = $number_obj->get_pixels();
+		} else {
+			$number = $number_obj->get();
+		}
+
+		$this->storage->set( $var, $number );
+	}
+
 	public function add_number( $var, $value, $wrap = null ) {
 		$this->storage->set( $var, $this->factory->number( $value )->wrap( $wrap )->get() );
 	}
@@ -111,34 +136,27 @@ class The7_Less_Vars_Manager implements The7_Less_Vars_Manager_Interface {
 	 * @param string|null $wrap
 	 * @param string      $units
 	 */
-	public function add_paddings( $vars, $value, $units = 'px', $wrap = null ) {
+	public function add_paddings( $vars, $value, $units = '', $wrap = null ) {
 		if ( ! is_array( $value ) ) {
 			$value = explode( ' ', $value );
 		}
 
 		for ( $i = 0; $i < 4; $i ++ ) {
 			$value[ $i ] = ( isset( $value[ $i ] ) ? $value[ $i ] : '0' );
+			$first_char  = isset( $value[ $i ][0] ) ? $value[ $i ][0] : '';
+			if ( $first_char !== '-' && ! is_numeric( $first_char ) ) {
+				$value[ $i ] = '';
+			}
 		}
 
 		$value = array_slice( $value, 0, 4 );
 
 		foreach ( $vars as $i => $var ) {
-			if ( ! isset( $value[ $i ] ) ) {
-				$this->add_keyword( $var, '~""', $wrap );
+			if ( ! isset( $value[ $i ] ) || $value[ $i ] === '' ) {
+				$this->add_keyword( $var, '', $wrap );
+				continue;
 			}
-
-			switch ( $units ) {
-				case '%|px':
-				case 'px|%':
-					$this->add_pixel_or_percent_number( $var, $value[ $i ], $wrap );
-					break;
-				case '%':
-					$this->add_percent_number( $var, $value[ $i ], $wrap );
-					break;
-				case 'px':
-				default:
-					$this->add_pixel_number( $var, $value[ $i ], $wrap );
-			}
+			$this->add_unitized_number( $var, $value[ $i ], $wrap );
 		}
 	}
 
@@ -153,5 +171,17 @@ class The7_Less_Vars_Manager implements The7_Less_Vars_Manager_Interface {
 		}
 
 		return $color_obj;
+	}
+
+	/**
+	 * Register less var as a padding onliner.
+	 *
+	 * @param  string      $var Var name.
+	 * @param  string      $value Var value.
+	 * @param  string      $units Units, px by default.
+	 * @param  string|null $wrap Wrap.
+	 */
+	public function add_padding( $var, $value, $units = 'px', $wrap = null ) {
+		$this->add_keyword( $var, The7_Option_Field_Spacing::encode( The7_Option_Field_Spacing::sanitize( $value, $units ) ), $wrap );
 	}
 }

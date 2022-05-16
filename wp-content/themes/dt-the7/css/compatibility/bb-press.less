@@ -16,18 +16,7 @@
 .bbp-forum-form fieldset.bbp-form,
 .bbp-reply-form fieldset.bbp-form {
 	.border-radius;
-
-	border: 1px solid @divider-color;
-}
-
-#bbpress-forums div.even,
-#bbpress-forums ul.even {
-	/* background-color: #fff; */
-}
-
-#bbpress-forums div.odd,
-#bbpress-forums ul.odd {
-	/* background-color: #fbfbfb; */
+	border: 1px solid var(--the7-divider-color);
 }
 
 #bbpress-forums div.bbp-forum-header,
@@ -36,24 +25,10 @@
 	background-color: fade(@h1-color, 3%);
 }
 
-#bbpress-forums .status-trash.even,
-#bbpress-forums .status-spam.even {
-	/* background-color: #fee; */
-}
-#bbpress-forums .status-trash.odd,
-#bbpress-forums .status-spam.odd {
-	/* background-color: #fdd; */
-}
-
 #bbpress-forums li.bbp-header,
 #bbpress-forums li.bbp-footer {
 	background-color: fade(@h1-color, 5%);
-	color: @h1-color;
-}
-
-
-#bbpress-forums li.bbp-header {
-	/* background: #eaeaea; */
+	color: var(--the7-h1-color);
 }
 
 #bbpress-forums div.bbp-forum-header,
@@ -64,39 +39,19 @@
 #bbpress-forums .bbp-forums-list,
 #bbpress-forums fieldset.bbp-form,
 #bbpress-forums li.bbp-footer {
-	border-color: @divider-color;
+	border-color: var(--the7-divider-color);
 }
 
 span.bbp-admin-links,
 #subscription-toggle {
-	color: @divider-color;
-}
-span.bbp-admin-links a {
-	/* color: #bbb; */
-}
-tr td span.bbp-admin-links a:hover {
-	/* color: #ff4b33; */
-}
-.bbp-forum-header a.bbp-forum-permalink,
-.bbp-topic-header a.bbp-topic-permalink,
-.bbp-reply-header a.bbp-reply-permalink {
-	/* color: #ccc; */
-}
-span.bbp-author-ip {
-	/* color: #aaa; */
+	color: var(--the7-divider-color);
 }
 
 #bbpress-forums,
 #bbpress-forums .reply {
-	font: @base-font-style @base-font-variant @base-font-weight @base-font-size~"/"@base-line-height @base-font-family;
+	font: var(--the7-base-font);
 }
 #main .quicktags-toolbar input {
-	background-color: @dt-btn-bg-color;
-	.background-gradient (@startColor: @dt-btn-bg-color, @endColor: @dt-btn-bg-color-2);
-	text-decoration: none;
-}
-#main .quicktags-toolbar input {
-	background-color: @dt-btn-bg-color;
-	.background-gradient (@startColor: @dt-btn-bg-color, @endColor: @dt-btn-bg-color-2);
+	.css-var-background("--the7-btn-bg", @startColor: @dt-btn-bg-color, @endColor: @dt-btn-bg-color-2);
 	text-decoration: none;
 }

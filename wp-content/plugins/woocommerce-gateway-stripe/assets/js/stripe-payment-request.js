@@ -2,7 +2,9 @@
 jQuery( function( $ ) {
 	'use strict';
 
-	var stripe = Stripe( wc_stripe_payment_request_params.stripe.key ),
+	var stripe = Stripe( wc_stripe_payment_request_params.stripe.key, {
+		locale: wc_stripe_payment_request_params.stripe.locale
+	} ),
 		paymentRequestType;
 
 	/**
@@ -94,7 +96,7 @@ jQuery( function( $ ) {
 				billing_last_name:         null !== name ? name.split( ' ' ).slice( 1 ).join( ' ' ) : '',
 				billing_company:           '',
 				billing_email:             null !== email   ? email : evt.payerEmail,
-				billing_phone:             null !== phone   ? phone : evt.payerPhone.replace( '/[() -]/g', '' ),
+				billing_phone:             null !== phone   ? phone : evt.payerPhone && evt.payerPhone.replace( '/[() -]/g', '' ),
 				billing_country:           null !== billing ? billing.country : '',
 				billing_address_1:         null !== billing ? billing.line1 : '',
 				billing_address_2:         null !== billing ? billing.line2 : '',
@@ -147,21 +149,16 @@ jQuery( function( $ ) {
 		},
 
 		/**
-		 * Abort payment and display error messages.
+		 * Display error messages.
 		 *
-		 * @since 3.1.0
-		 * @version 4.0.0
-		 * @param {PaymentResponse} payment Payment response instance.
-		 * @param {String}          message Error message to display.
+		 * @since 4.8.0
+		 * @param {Object} message DOM object with error message to display.
 		 */
-		abortPayment: function( payment, message ) {
-			payment.complete( 'fail' );
-
+		displayErrorMessage: function( message ) {
 			$( '.woocommerce-error' ).remove();
 
 			if ( wc_stripe_payment_request_params.is_product_page ) {
-				var element = $( '.product' );
-
+				var element = $( '.product' ).first();
 				element.before( message );
 
 				$( 'html, body' ).animate({
@@ -169,13 +166,24 @@ jQuery( function( $ ) {
 				}, 600 );
 			} else {
 				var $form = $( '.shop_table.cart' ).closest( 'form' );
-
 				$form.before( message );
-
 				$( 'html, body' ).animate({
 					scrollTop: $form.prev( '.woocommerce-error' ).offset().top
 				}, 600 );
 			}
+		},
+
+		/**
+		 * Abort payment and display error messages.
+		 *
+		 * @since 3.1.0
+		 * @version 4.8.0
+		 * @param {PaymentResponse} payment Payment response instance.
+		 * @param {Object}          message DOM object with error message to display.
+		 */
+		abortPayment: function( payment, message ) {
+			payment.complete( 'fail' );
+			wc_stripe_payment_request.displayErrorMessage( message );
 		},
 
 		/**
@@ -315,7 +323,7 @@ jQuery( function( $ ) {
 				country: wc_stripe_payment_request_params.checkout.country_code,
 				requestPayerName: true,
 				requestPayerEmail: true,
-				requestPayerPhone: true,
+				requestPayerPhone: wc_stripe_payment_request_params.checkout.needs_payer_phone,
 				requestShipping: wc_stripe_payment_request_params.product.requestShipping,
 				displayItems: wc_stripe_payment_request_params.product.displayItems
 			};
@@ -325,7 +333,7 @@ jQuery( function( $ ) {
 		 * Starts the payment request
 		 *
 		 * @since 4.0.0
-		 * @version 4.0.0
+		 * @version 4.8.0
 		 */
 		startPaymentRequest: function( cart ) {
 			var paymentDetails,
@@ -342,7 +350,7 @@ jQuery( function( $ ) {
 					country: cart.order_data.country_code,
 					requestPayerName: true,
 					requestPayerEmail: true,
-					requestPayerPhone: true,
+					requestPayerPhone: wc_stripe_payment_request_params.checkout.needs_payer_phone,
 					requestShipping: cart.shipping_required ? true : false,
 					displayItems: cart.order_data.displayItems
 				};
@@ -350,54 +358,73 @@ jQuery( function( $ ) {
 				paymentDetails = cart.order_data;
 			}
 
-			var paymentRequest = stripe.paymentRequest( options );
+			// Puerto Rico (PR) is the only US territory/possession that's supported by Stripe.
+			// Since it's considered a US state by Stripe, we need to do some special mapping.
+			if ( 'PR' === options.country ) {
+				options.country = 'US';
+			}
 
-			var elements = stripe.elements( { locale: wc_stripe_payment_request_params.button.locale } );
-			var prButton = wc_stripe_payment_request.createPaymentRequestButton( elements, paymentRequest );
+			// Handle errors thrown by Stripe, so we don't break the product page
+			try {
+				var paymentRequest = stripe.paymentRequest( options );
 
-			// Check the availability of the Payment Request API first.
-			paymentRequest.canMakePayment().then( function( result ) {
-				if ( ! result ) {
-					return;
-				}
-				paymentRequestType = result.applePay ? 'apple_pay' : 'payment_request_api';
-				wc_stripe_payment_request.attachPaymentRequestButtonEventListeners( prButton, paymentRequest );
-				wc_stripe_payment_request.showPaymentRequestButton( prButton );
-			} );
+				var elements = stripe.elements( { locale: wc_stripe_payment_request_params.button.locale } );
+				var prButton = wc_stripe_payment_request.createPaymentRequestButton( elements, paymentRequest );
 
-			// Possible statuses success, fail, invalid_payer_name, invalid_payer_email, invalid_payer_phone, invalid_shipping_address.
-			paymentRequest.on( 'shippingaddresschange', function( evt ) {
-				$.when( wc_stripe_payment_request.updateShippingOptions( paymentDetails, evt.shippingAddress ) ).then( function( response ) {
-					evt.updateWith( { status: response.result, shippingOptions: response.shipping_options, total: response.total, displayItems: response.displayItems } );
-				} );
-			} );
-
-			paymentRequest.on( 'shippingoptionchange', function( evt ) {
-				$.when( wc_stripe_payment_request.updateShippingDetails( paymentDetails, evt.shippingOption ) ).then( function( response ) {
-					if ( 'success' === response.result ) {
-						evt.updateWith( { status: 'success', total: response.total, displayItems: response.displayItems } );
+				// Check the availability of the Payment Request API first.
+				paymentRequest.canMakePayment().then( function( result ) {
+					if ( ! result ) {
+						return;
+					}
+					if ( result.applePay ) {
+						paymentRequestType = 'apple_pay';
+					} else if ( result.googlePay ) {
+						paymentRequestType = 'google_pay';
+					} else {
+						paymentRequestType = 'payment_request_api';
 					}
 
-					if ( 'fail' === response.result ) {
-						evt.updateWith( { status: 'fail' } );
-					}
+					wc_stripe_payment_request.attachPaymentRequestButtonEventListeners( prButton, paymentRequest );
+					wc_stripe_payment_request.showPaymentRequestButton( prButton );
 				} );
-			} );
 
-			paymentRequest.on( 'source', function( evt ) {
-				// Check if we allow prepaid cards.
-				if ( 'no' === wc_stripe_payment_request_params.stripe.allow_prepaid_card && 'prepaid' === evt.source.card.funding ) {
-					wc_stripe_payment_request.abortPayment( evt, wc_stripe_payment_request.getErrorMessageHTML( wc_stripe_payment_request_params.i18n.no_prepaid_card ) );
-				} else {
-					$.when( wc_stripe_payment_request.processSource( evt, paymentRequestType ) ).then( function( response ) {
+				// Possible statuses success, fail, invalid_payer_name, invalid_payer_email, invalid_payer_phone, invalid_shipping_address.
+				paymentRequest.on( 'shippingaddresschange', function( evt ) {
+					$.when( wc_stripe_payment_request.updateShippingOptions( paymentDetails, evt.shippingAddress ) ).then( function( response ) {
+						evt.updateWith( { status: response.result, shippingOptions: response.shipping_options, total: response.total, displayItems: response.displayItems } );
+					} );
+				} );
+
+				paymentRequest.on( 'shippingoptionchange', function( evt ) {
+					$.when( wc_stripe_payment_request.updateShippingDetails( paymentDetails, evt.shippingOption ) ).then( function( response ) {
 						if ( 'success' === response.result ) {
-							wc_stripe_payment_request.completePayment( evt, response.redirect );
-						} else {
-							wc_stripe_payment_request.abortPayment( evt, response.messages );
+							evt.updateWith( { status: 'success', total: response.total, displayItems: response.displayItems } );
+						}
+
+						if ( 'fail' === response.result ) {
+							evt.updateWith( { status: 'fail' } );
 						}
 					} );
-				}
-			} );
+				} );
+
+				paymentRequest.on( 'source', function( evt ) {
+					// Check if we allow prepaid cards.
+					if ( 'no' === wc_stripe_payment_request_params.stripe.allow_prepaid_card && 'prepaid' === evt.source.card.funding ) {
+						wc_stripe_payment_request.abortPayment( evt, wc_stripe_payment_request.getErrorMessageHTML( wc_stripe_payment_request_params.i18n.no_prepaid_card ) );
+					} else {
+						$.when( wc_stripe_payment_request.processSource( evt, paymentRequestType ) ).then( function( response ) {
+							if ( 'success' === response.result ) {
+								wc_stripe_payment_request.completePayment( evt, response.redirect );
+							} else {
+								wc_stripe_payment_request.abortPayment( evt, response.messages );
+							}
+						} );
+					}
+				} );
+			} catch( e ) {
+				// Leave for troubleshooting
+				console.error( e );
+			}
 		},
 
 		getSelectedProductData: function() {
@@ -425,7 +452,6 @@ jQuery( function( $ ) {
 				url:  wc_stripe_payment_request.getAjaxURL( 'get_selected_product_data' )
 			} );
 		},
-
 
 		/**
 		 * Creates a wrapper around a function that ensures a function can not
@@ -524,7 +550,7 @@ jQuery( function( $ ) {
 		},
 
 		createGooglePayButton: function () {
-			var allowedThemes = [ 'dark', 'light' ];
+			var allowedThemes = [ 'dark', 'light', 'light-outline' ];
 			var allowedTypes = [ 'short', 'long' ];
 
 			var theme  = wc_stripe_payment_request_params.button.theme;
@@ -532,14 +558,15 @@ jQuery( function( $ ) {
 			var locale = wc_stripe_payment_request_params.button.locale;
 			var height = wc_stripe_payment_request_params.button.height;
 			theme = allowedThemes.includes( theme ) ? theme : 'light';
+			var gpaySvgTheme = 'dark' === theme ? 'dark' : 'light';
 			type = allowedTypes.includes( type ) ? type : 'long';
 
 			var button = $( '<button type="button" id="wc-stripe-branded-button" aria-label="Google Pay" class="gpay-button"></button>' );
 			button.css( 'height', height + 'px' );
 			button.addClass( theme + ' ' + type );
 			if ( 'long' === type ) {
-				var url = 'https://www.gstatic.com/instantbuy/svg/' + theme + '/' + locale + '.svg';
-				var fallbackUrl = 'https://www.gstatic.com/instantbuy/svg/' + theme + '/en.svg';
+				var url = 'https://www.gstatic.com/instantbuy/svg/' + gpaySvgTheme + '/' + locale + '.svg';
+				var fallbackUrl = 'https://www.gstatic.com/instantbuy/svg/' + gpaySvgTheme + '/en.svg';
 				// Check if locale GPay button exists, default to en if not
 				setBackgroundImageWithFallback( button, url, fallbackUrl );
 			}
@@ -548,6 +575,13 @@ jQuery( function( $ ) {
 		},
 
 		attachPaymentRequestButtonEventListeners: function( prButton, paymentRequest ) {
+			// First, mark the body so we know a payment request button was used.
+			// This way error handling can any display errors in the most appropriate place.
+			prButton.on( 'click', function ( evt ) {
+				$( 'body' ).addClass( 'woocommerce-stripe-prb-clicked' );
+			});
+
+			// Then, attach specific handling for selected pages and button types
 			if ( wc_stripe_payment_request_params.is_product_page ) {
 				wc_stripe_payment_request.attachProductPageEventListeners( prButton, paymentRequest );
 			} else {
@@ -560,6 +594,13 @@ jQuery( function( $ ) {
 			var addToCartButton = $( '.single_add_to_cart_button' );
 
 			prButton.on( 'click', function ( evt ) {
+				// If login is required for checkout, display redirect confirmation dialog.
+				if ( wc_stripe_payment_request_params.login_confirmation ) {
+					evt.preventDefault();
+					displayLoginConfirmation( paymentRequestType );
+					return;
+				}
+
 				// First check if product can be added to cart.
 				if ( addToCartButton.is( '.disabled' ) ) {
 					evt.preventDefault(); // Prevent showing payment request modal.
@@ -585,8 +626,20 @@ jQuery( function( $ ) {
 				}
 			});
 
+			$( document.body ).on( 'wc_stripe_unblock_payment_request_button wc_stripe_enable_payment_request_button', function () {
+				wc_stripe_payment_request.unblockPaymentRequestButton();
+			} );
+
+			$( document.body ).on( 'wc_stripe_block_payment_request_button', function () {
+				wc_stripe_payment_request.blockPaymentRequestButton( 'wc_request_button_is_blocked' );
+			} );
+
+			$( document.body ).on( 'wc_stripe_disable_payment_request_button', function () {
+				wc_stripe_payment_request.blockPaymentRequestButton( 'wc_request_button_is_disabled' );
+			} );
+
 			$( document.body ).on( 'woocommerce_variation_has_changed', function () {
-				wc_stripe_payment_request.blockPaymentRequestButton( prButton );
+				$( document.body ).trigger( 'wc_stripe_block_payment_request_button' );
 
 				$.when( wc_stripe_payment_request.getSelectedProductData() ).then( function ( response ) {
 					$.when(
@@ -595,7 +648,7 @@ jQuery( function( $ ) {
 							displayItems: response.displayItems,
 						} )
 					).then( function () {
-						wc_stripe_payment_request.unblockPaymentRequestButton( prButton );
+						$( document.body ).trigger( 'wc_stripe_unblock_payment_request_button' );
 					} );
 				});
 			} );
@@ -603,17 +656,17 @@ jQuery( function( $ ) {
 			// Block the payment request button as soon as an "input" event is fired, to avoid sync issues
 			// when the customer clicks on the button before the debounced event is processed.
 			$( '.quantity' ).on( 'input', '.qty', function() {
-				wc_stripe_payment_request.blockPaymentRequestButton( prButton );
+				$( document.body ).trigger( 'wc_stripe_block_payment_request_button' );
 			} );
 
 			$( '.quantity' ).on( 'input', '.qty', wc_stripe_payment_request.debounce( 250, function() {
-				wc_stripe_payment_request.blockPaymentRequestButton( prButton );
+				$( document.body ).trigger( 'wc_stripe_block_payment_request_button' );
 				paymentRequestError = [];
 
 				$.when( wc_stripe_payment_request.getSelectedProductData() ).then( function ( response ) {
 					if ( response.error ) {
 						paymentRequestError = [ response.error ];
-						wc_stripe_payment_request.unblockPaymentRequestButton( prButton );
+						$( document.body ).trigger( 'wc_stripe_unblock_payment_request_button' );
 					} else {
 						$.when(
 							paymentRequest.update( {
@@ -621,22 +674,43 @@ jQuery( function( $ ) {
 								displayItems: response.displayItems,
 							} )
 						).then( function () {
-							wc_stripe_payment_request.unblockPaymentRequestButton( prButton );
+							$( document.body ).trigger( 'wc_stripe_unblock_payment_request_button' );
 						});
 					}
 				} );
 			}));
+
+			if ( $('.variations_form').length ) {
+				$( '.variations_form' ).on( 'found_variation.wc-variation-form', function ( evt, variation ) {
+					if ( variation.is_in_stock ) {
+						wc_stripe_payment_request.unhidePaymentRequestButton();
+					} else {
+						wc_stripe_payment_request.hidePaymentRequestButton();
+					}
+				} );
+			}
 		},
 
 		attachCartPageEventListeners: function ( prButton, paymentRequest ) {
-			if ( ( ! wc_stripe_payment_request_params.button.is_custom || ! wc_stripe_payment_request.isCustomPaymentRequestButton( prButton ) ) &&
-				( ! wc_stripe_payment_request_params.button.is_branded || ! wc_stripe_payment_request.isBrandedPaymentRequestButton( prButton ) ) ) {
-				return;
-			}
-
 			prButton.on( 'click', function ( evt ) {
-				evt.preventDefault();
-				paymentRequest.show();
+				// If login is required for checkout, display redirect confirmation dialog.
+				if ( wc_stripe_payment_request_params.login_confirmation ) {
+					evt.preventDefault();
+					displayLoginConfirmation( paymentRequestType );
+					return;
+				}
+
+				if (
+					wc_stripe_payment_request.isCustomPaymentRequestButton(
+						prButton
+					) ||
+					wc_stripe_payment_request.isBrandedPaymentRequestButton(
+						prButton
+					)
+				) {
+					evt.preventDefault();
+					paymentRequest.show();
+				}
 			} );
 		},
 
@@ -653,24 +727,36 @@ jQuery( function( $ ) {
 			}
 		},
 
-		blockPaymentRequestButton: function( prButton ) {
+		hidePaymentRequestButton: function () {
+			$( '#wc-stripe-payment-request-wrapper, #wc-stripe-payment-request-button-separator' ).hide();
+		},
+
+		unhidePaymentRequestButton: function () {
+			const stripe_wrapper = $( '#wc-stripe-payment-request-wrapper' );
+			const stripe_separator = $( '#wc-stripe-payment-request-button-separator' );
+			// If either element is hidden, ensure both show.
+			if ( stripe_wrapper.is(':hidden') || stripe_separator.is(':hidden') ) {
+				stripe_wrapper.show();
+				stripe_separator.show();
+			}
+		},
+
+		blockPaymentRequestButton: function( cssClassname ) {
 			// check if element isn't already blocked before calling block() to avoid blinking overlay issues
 			// blockUI.isBlocked is either undefined or 0 when element is not blocked
 			if ( $( '#wc-stripe-payment-request-button' ).data( 'blockUI.isBlocked' ) ) {
 				return;
 			}
 
-			$( '#wc-stripe-payment-request-button' ).block( { message: null } );
-			if ( wc_stripe_payment_request.isCustomPaymentRequestButton( prButton ) ) {
-				prButton.addClass( 'is-blocked' );
-			}
+			$( '#wc-stripe-payment-request-button' )
+				.addClass( cssClassname )
+				.block( { message: null } );
 		},
 
-		unblockPaymentRequestButton: function( prButton ) {
-			$( '#wc-stripe-payment-request-button' ).unblock();
-			if ( wc_stripe_payment_request.isCustomPaymentRequestButton( prButton ) ) {
-				prButton.removeClass( 'is-blocked' );
-			}
+		unblockPaymentRequestButton: function() {
+			$( '#wc-stripe-payment-request-button' )
+				.removeClass( ['wc_request_button_is_blocked', 'wc_request_button_is_disabled'] )
+				.unblock();
 		},
 
 		/**
@@ -709,5 +795,31 @@ jQuery( function( $ ) {
 			element.css( 'background-image', 'url(' + fallback + ')' );
 		}
 		testImg.src = background;
+	}
+
+	// TODO: Replace this by `client/blocks/payment-request/login-confirmation.js`
+	// when we start using webpack to build this file.
+	function displayLoginConfirmation( paymentRequestType ) {
+		if ( ! wc_stripe_payment_request_params.login_confirmation ) {
+			return;
+		}
+
+		var message = wc_stripe_payment_request_params.login_confirmation.message;
+
+		// Replace dialog text with specific payment request type "Apple Pay" or "Google Pay".
+		if ( 'payment_request_api' !== paymentRequestType ) {
+			message = message.replace(
+				/\*\*.*?\*\*/,
+				'apple_pay' === paymentRequestType ? 'Apple Pay' : 'Google Pay'
+			);
+		}
+
+		// Remove asterisks from string.
+		message = message.replace( /\*\*/g, '' );
+
+		if ( confirm( message ) ) {
+			// Redirect to my account page.
+			window.location.href = wc_stripe_payment_request_params.login_confirmation.redirect_url;
+		}
 	}
 } );

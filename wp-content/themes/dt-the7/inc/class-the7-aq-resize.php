@@ -1,23 +1,6 @@
 <?php
 /**
- * Title         : Aqua Resizer
- * Description   : Resizes WordPress images on the fly
- * Version       : 1.2.0
- * Author        : Syamil MJ
- * Author URI    : http://aquagraphite.com
- * License       : WTFPL - http://sam.zoy.org/wtfpl/
- * Documentation : https://github.com/sy4mil/Aqua-Resizer/
- *
- * @param string  $url    - (required) must be uploaded using wp media uploader
- * @param int     $width  - (required)
- * @param int     $height - (optional)
- * @param bool    $crop   - (optional) default to soft crop
- * @param bool    $single - (optional) returns an array if false
- * @uses  wp_upload_dir()
- * @uses  image_resize_dimensions()
- * @uses  wp_get_image_editor()
- *
- * @return str|array
+ * The7 image resize utility.
  *
  * @package The7
  */
@@ -88,7 +71,7 @@ class The7_Aq_Resize
 		if(!strncmp($url,$https_prefix,strlen($https_prefix))){ //if url begins with https:// make $upload_url begin with https:// as well
 			$upload_url = str_replace($http_prefix,$https_prefix,$upload_url);
 		}
-		elseif(!strncmp($url,$http_prefix,strlen($http_prefix))){ //if url begins with http:// make $upload_url begin with http:// as well
+		elseif(!strncmp($url,$http_prefix,strlen($http_prefix))){ //if url begins with https:// make $upload_url begin with https:// as well
 			$upload_url = str_replace($https_prefix,$http_prefix,$upload_url);
 		}
 
@@ -118,8 +101,8 @@ class The7_Aq_Resize
 
 		// Get image size after cropping.
 		$dims = image_resize_dimensions( $orig_w, $orig_h, $width, $height, $crop );
-		$dst_w = $dims[4];
-		$dst_h = $dims[5];
+		$dst_w = isset( $dims[4] ) ? $dims[4] : $orig_w;
+		$dst_h = isset( $dims[5] ) ? $dims[5] : $orig_h;
 
 		// Return the original image only if it exactly fits the needed measures.
 		if ( ! $dims && ( ( ( null === $height && $orig_w == $width ) xor ( null === $width && $orig_h == $height ) ) xor ( $height == $orig_h && $width == $orig_w ) ) ) {
@@ -153,6 +136,8 @@ class The7_Aq_Resize
 				if ( ! is_wp_error( $resized_file ) ) {
 					$resized_rel_path = str_replace( $upload_dir, '', $resized_file['path'] );
 					$img_url = $upload_url . $resized_rel_path;
+					$dst_w = $resized_file['width'];
+					$dst_h = $resized_file['height'];
 				} else {
 					return false;
 				}

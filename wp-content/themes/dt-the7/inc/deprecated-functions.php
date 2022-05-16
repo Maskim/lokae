@@ -612,7 +612,7 @@ if ( ! function_exists( 'presscore_get_share_buttons_list' ) ) :
 					break;
 				case 'facebook':
 					$icon_class = 'facebook';
-					$url = add_query_arg( array( 'u' => rawurlencode( $u ), 't' => urlencode( $t ) ), 'http://www.facebook.com/sharer.php' );
+					$url = add_query_arg( array( 'u' => rawurlencode( $u ), 't' => urlencode( $t ) ), 'https://www.facebook.com/sharer.php' );
 					break;
 				case 'pinterest':
 					$icon_class = 'pinterest pinit-marklet';
@@ -1051,4 +1051,155 @@ if ( ! function_exists( 'the7_main_container_wrap_style' ) ) {
 
 		echo presscore_get_inline_style_attr( $style );
 	}
+}
+
+if ( ! function_exists( 'presscore_post_navigation_controller' ) ) :
+
+	/**
+	 * Post pagination controller.
+	 *
+	 * @deprecated 9.2.0
+	 */
+	function presscore_post_navigation_controller() {
+		if ( ! in_the_loop() ) {
+			return;
+		}
+
+		$show_navigation = presscore_is_post_navigation_enabled();
+
+		if ( $show_navigation ) {
+			presscore_post_navigation();
+		}
+	}
+
+endif;
+
+if ( ! function_exists( 'presscore_post_navigation' ) ) :
+
+	/**
+	 * @deprecated 9.2.0
+	 */
+	function presscore_post_navigation() {
+
+		if ( ! in_the_loop() ) {
+			return '';
+		}
+
+		$config = Presscore_Config::get_instance();
+
+		$output = '';
+
+		if ( $config->get( 'post.navigation.arrows.enabled' ) ) {
+			$output .= presscore_get_previous_post_link( '', 'prev-post', '<a class="prev-post disabled" href="javascript:void(0);"></a>' );
+		}
+
+		if ( $config->get( 'post.navigation.back_button.enabled' ) ) {
+			$output .= presscore_get_post_back_link();
+		}
+
+		if ( $config->get( 'post.navigation.arrows.enabled' ) ) {
+			$output .= presscore_get_next_post_link( '', 'next-post', '<a class="next-post disabled" href="javascript:void(0);"></a>' );
+		}
+
+		return $output;
+	}
+
+endif;
+
+if ( ! function_exists( 'presscore_add_more_anchor' ) ) :
+
+	/**
+	 * Add anchor #more-{$post->ID} to href.
+	 *
+	 * @deprecated 9.1.1
+	 *
+	 * @param string $content
+	 *
+	 * @return string
+	 */
+	function presscore_add_more_anchor( $content = '' ) {
+		global $post;
+
+		if ( $post ) {
+			$content = preg_replace( '/href=[\'"]?([^\'" >]+)/', ( 'href="$1#more-' . $post->ID ), $content );
+		}
+
+		// Added in helpers.php:3120+.
+		remove_filter( 'presscore_post_details_link', 'presscore_add_more_anchor', 15 );
+
+		return $content;
+	}
+
+endif;
+
+if ( ! function_exists( 'presscore_microsite_menu_filter' ) ) :
+
+	/**
+	 * Microsite menu filter.
+	 *
+	 * @depreacted 9.2.0
+	 */
+	function presscore_microsite_menu_filter( $args = array() ) {
+		$location = $args['theme_location'];
+		$page_menu = (int) get_post_meta( get_the_ID(), "_dt_microsite_{$location}_menu", true );
+
+		if ( $page_menu > 0 ) {
+			$args['menu'] = $page_menu;
+		}
+
+		return $args;
+	}
+
+endif;
+
+if ( ! function_exists( 'presscore_microsite_pre_nav_menu_filter' ) ) :
+
+	/**
+	 * Add capability to display page menu on microsite. Same as empty menu location.
+	 *
+	 * @depreacted 9.2.0
+	 *
+	 * @since  3.0.0
+	 * @param mixed $nav_menu
+	 * @param array $args
+	 * @return string
+	 */
+	function presscore_microsite_pre_nav_menu_filter( $nav_menu, $args = array() ) {
+		$location  = $args['theme_location'];
+		$page_menu = (int) get_post_meta( get_the_ID(), "_dt_microsite_{$location}_menu", true );
+		if ( $page_menu < 0 && isset( $args['fallback_cb'] ) && is_callable( $args['fallback_cb'] ) ) {
+			$args['echo'] = false;
+
+			return call_user_func( $args['fallback_cb'], $args );
+		}
+
+		return $nav_menu;
+	}
+
+endif;
+
+if ( ! function_exists( 'presscore_microsite_has_mobile_menu_filter' ) ) :
+
+	/**
+	 * @depreacted 9.2.0
+	 */
+	function presscore_microsite_has_mobile_menu_filter( $has_menu ) {
+		$page_menu = (int) get_post_meta( get_the_ID(), '_dt_microsite_mobile_menu', true );
+		if ( 0 !== $page_menu ) {
+			return true;
+		}
+
+		return $has_menu;
+	}
+
+endif;
+
+/**
+ * Determine if the WooCommerce plugin is active.
+ *
+ * @depreacted 9.6.1
+ * @return bool
+ */
+function dt_is_woocommerce_enabled() {
+	return class_exists( 'WooCommerce' );
 }

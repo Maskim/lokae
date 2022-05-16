@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
 
 return array(
 	array(
-		'name'    => _x( 'Icon Type', 'admin', 'the7mk2' ),
+		'name'    => _x( 'Graphic element', 'admin', 'the7mk2' ),
 		'id'      => 'menu-item-icon-type',
 		'type'    => 'select',
 		'std'     => 'none',
@@ -93,7 +93,7 @@ return array(
 		),
 	),
 	array(
-		'name'       => _x( 'Padding', 'theme-options', 'the7mk2' ),
+		'name'       => _x( 'Margin', 'theme-options', 'the7mk2' ),
 		'id'         => 'menu-item-image-padding',
 		'type'       => 'spacing',
 		'std'        => '0px 6px 0px 0px',
@@ -103,6 +103,24 @@ return array(
 			'value'    => array( 'image', 'icon' ),
 		),
 	),
+
+	array(
+		'name'       => _x( 'Hide graphic element on mobile', 'admin', 'the7mk2' ),
+		'desc'       => _x( 'This setting hides graphic element in mobile menu.', 'admin', 'the7mk2' ),
+		'id'         => 'menu-item-hide-icon-on-mobile',
+		'type'       => 'switch',
+		'std'        => 'off',
+		'options'    => array(
+			'on'  => _x( 'Yes', 'admin', 'the7mk2' ),
+			'off' => _x( 'No', 'admin', 'the7mk2' ),
+		),
+		'dependency' => array(
+			'field'    => 'menu-item-icon-type',
+			'operator' => 'IN',
+			'value'    => array( 'image', 'icon' ),
+		),
+	),
+
 	array(
 		'name'       => _x( 'HTML', 'admin', 'the7mk2' ),
 		'id'         => 'menu-item-icon-html',
@@ -293,6 +311,16 @@ return array(
 			),
 		),
 		'divider'    => 'top',
+	),
+	array(
+		'name'       => _x( 'Widget area padding', 'theme-options', 'the7mk2' ),
+		'id'         => 'mega-menu-widgets-padding',
+		'type'       => 'spacing',
+		'std'        => '0px 6px 0px 0px',
+		'dependency' => array(
+			'field'    => 'mega-menu-widgets',
+			'operator' => '!=',
+			'value'    => 'none' ),
 	),
 	array(
 		'name'       => _x( 'Hide menu item on mobile', 'admin', 'the7mk2' ),

@@ -3,7 +3,7 @@
  * @package The7
  */
 
-namespace The7\Adapters\Elementor\Page_Settings;
+namespace The7\Mods\Compatibility\Elementor\Page_Settings;
 
 use Elementor\Controls_Manager;
 use Elementor\Modules\PageTemplates\Module as PageTemplatesModule;
@@ -57,7 +57,7 @@ if ( ! empty( $slideshow_mode_options ) ) {
 
 return [
 	'args'     => [
-		'label'      => __( 'Page header settings', 'the7mk2' ),
+		'label'      => __( 'Page Header Settings', 'the7mk2' ),
 		'tab'        => Controls_Manager::TAB_SETTINGS,
 		'conditions' => [
 			'relation' => 'or',
@@ -96,6 +96,20 @@ return [
 		],
 	],
 	'controls' => [
+		'the7_document_show_header' => [
+			'meta' => '_dt_header_show',
+			'args' => [
+				'label'        => __( 'Header', 'the7mk2' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'default'      => '1',
+				'prefix_class' => 'elementor-',
+				'label_on'     => __( 'Show', 'the7mk2' ),
+				'label_off'    => __( 'Hide', 'the7mk2' ),
+				'return_value' => '1',
+				'empty_value'  => '0',
+				'separator'    => 'none',
+			],
+		],
 		'the7_document_title'                  => [
 			'meta' => '_dt_header_title',
 			'args' => [
@@ -178,6 +192,7 @@ return [
 				'separator' => 'before',
 				'condition' => [
 					'the7_document_title' => 'disabled',
+					'the7_document_show_header' => '1',
 				],
 			],
 		],
@@ -194,6 +209,7 @@ return [
 				],
 				'condition' => [
 					'the7_document_title' => 'disabled',
+					'the7_document_show_header' => '1',
 				],
 			],
 		],
@@ -211,6 +227,7 @@ return [
 				'condition' => [
 					'the7_document_title'                 => 'disabled',
 					'the7_document_disabled_header_style' => 'transparent',
+					'the7_document_show_header' => '1',
 				],
 			],
 		],
@@ -220,11 +237,11 @@ return [
 				'opacity' => '_dt_header_disabled_transparent_top_bar_bg_opacity',
 			],
 			'on_save'   => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Color_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Color_Meta_Adapter::class,
 				'update_alpha_color',
 			],
 			'on_read'   => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Color_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Color_Meta_Adapter::class,
 				'get_alpha_color',
 			],
 			'on_change' => 'do_not_reload_page',
@@ -236,6 +253,7 @@ return [
 				'condition' => [
 					'the7_document_title'                 => 'disabled',
 					'the7_document_disabled_header_style' => 'transparent',
+					'the7_document_show_header' => '1',
 				],
 			],
 		],
@@ -245,11 +263,11 @@ return [
 				'opacity' => '_dt_header_disabled_transparent_bg_opacity',
 			],
 			'on_save'   => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Color_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Color_Meta_Adapter::class,
 				'update_alpha_color',
 			],
 			'on_read'   => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Color_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Color_Meta_Adapter::class,
 				'get_alpha_color',
 			],
 			'on_change' => 'do_not_reload_page',
@@ -261,6 +279,7 @@ return [
 				'condition' => [
 					'the7_document_title'                 => 'disabled',
 					'the7_document_disabled_header_style' => 'transparent',
+					'the7_document_show_header' => '1',
 				],
 			],
 		],
@@ -273,6 +292,7 @@ return [
 				'separator' => 'before',
 				'condition' => [
 					'the7_document_title' => [ 'slideshow' ],
+					'the7_document_show_header' => '1',
 				],
 			],
 		],
@@ -286,6 +306,7 @@ return [
 				'default'      => '',
 				'condition'    => [
 					'the7_document_title' => 'slideshow',
+					'the7_document_show_header' => '1',
 				],
 			],
 		],
@@ -303,6 +324,7 @@ return [
 				],
 				'condition' => [
 					'the7_document_title' => [ 'slideshow' ],
+					'the7_document_show_header' => '1',
 				],
 			],
 		],
@@ -329,11 +351,11 @@ return [
 				'opacity' => '_dt_header_transparent_top_bar_bg_opacity',
 			],
 			'on_save'   => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Color_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Color_Meta_Adapter::class,
 				'update_alpha_color',
 			],
 			'on_read'   => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Color_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Color_Meta_Adapter::class,
 				'get_alpha_color',
 			],
 			'on_change' => 'do_not_reload_page',
@@ -354,11 +376,11 @@ return [
 				'opacity' => '_dt_header_transparent_bg_opacity',
 			],
 			'on_save'   => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Color_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Color_Meta_Adapter::class,
 				'update_alpha_color',
 			],
 			'on_read'   => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Color_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Color_Meta_Adapter::class,
 				'get_alpha_color',
 			],
 			'on_change' => 'do_not_reload_page',

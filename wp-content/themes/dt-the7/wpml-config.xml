@@ -1,4 +1,187 @@
 <wpml-config>
+    <built-with-page-builder>/\[vc_row\]/</built-with-page-builder>
+    <elementor-widgets>
+        <widget name="the7-woocommerce-product-related">
+            <fields>
+                <field type="Title" editor_type="LINE">heading_title</field>
+            </fields>
+        </widget>
+        <widget name="the7-woocommerce-product-upsell">
+            <fields>
+                <field type="Title" editor_type="LINE">heading_title</field>
+            </fields>
+        </widget>
+        <widget name="the7-woocommerce-product-navigation">
+            <fields>
+                <field type="Link" editor_type="LINK" key_of="back_link">url</field>
+            </fields>
+        </widget>
+        <widget name="the7-elements-woo-simple-products">
+            <fields>
+                <field type="Title" editor_type="LINE">widget_title_text</field>
+                <field type="Button Text" editor_type="LINE">pagination_load_more_text</field>
+            </fields>
+        </widget>
+        <widget name="the7-elements-woo-simple-products-carousel">
+            <fields>
+                <field type="Title" editor_type="LINE">widget_title_text</field>
+            </fields>
+        </widget>
+        <widget name="the7-woocommerce-filter-attribute">
+            <fields>
+                <field type="Widget Title" editor_type="LINE">title_text</field>
+                <field type="Show More Items Text" editor_type="LINE">navigation_items_more_button_text</field>
+            </fields>
+        </widget>
+        <widget name="the7-woocommerce-filter-price">
+            <fields>
+                <field type="Widget Title" editor_type="LINE">title_text</field>
+                <field type="Min Price Label" editor_type="LINE">min_text</field>
+                <field type="Max Price Label" editor_type="LINE">max_text</field>
+                <field type="Price Label" editor_type="LINE">price_text</field>
+                <field type="Button Text" editor_type="LINE">button_text</field>
+            </fields>
+        </widget>
+        <widget name="the7-woocommerce-filter-active">
+            <fields>
+                <field type="Widget Title" editor_type="LINE">title_text</field>
+                <field type="Button Name" editor_type="LINE">clear_all_text</field>
+            </fields>
+        </widget>
+        <widget name="the7-woocommerce-product-review">
+            <fields>
+                <field type="Text" editor_type="LINE">button_text</field>
+            </fields>
+            <fields-in-item items_of="form_fields">
+                <field type="Label" editor_type="LINE">field_label</field>
+                <field type="Placeholder" editor_type="LINE">placeholder</field>
+            </fields-in-item>
+        </widget>
+        <widget name="the7-elements-simple-product-categories">
+            <fields>
+                <field type="Title" editor_type="LINE">widget_title_text</field>
+                <field type="No Products" editor_type="LINE">string_no_products</field>
+                <field type="One Product" editor_type="LINE">string_one_product</field>
+                <field type="Products" editor_type="LINE">string_products</field>
+                <field type="Button Text" editor_type="LINE">read_more_button_text</field>
+                <field type="Button Text" editor_type="LINE">pagination_load_more_text</field>
+            </fields>
+        </widget>
+        <widget name="the7-simple-product-categories-carousel">
+            <fields>
+                <field type="Title" editor_type="LINE">widget_title_text</field>
+                <field type="No Products" editor_type="LINE">string_no_products</field>
+                <field type="One Product" editor_type="LINE">string_one_product</field>
+                <field type="Products" editor_type="LINE">string_products</field>
+                <field type="Button Text" editor_type="LINE">read_more_button_text</field>
+            </fields>
+        </widget>
+        <widget name="the7_button_widget">
+            <fields>
+                <field type="Text" editor_type="LINE">button_text</field>
+                <field type="Link" editor_type="LINK" key_of="link">url</field>
+                <field type="Button ID" editor_type="LINE">button_css_id</field>
+            </fields>
+        </widget>
+        <widget name="the7_icon_widget">
+            <fields>
+                <field type="Link" editor_type="LINK" key_of="link">url</field>
+            </fields>
+        </widget>
+        <widget name="the7_icon_box_widget">
+            <fields>
+                <field type="Title &amp; Description" editor_type="LINE">title_text</field>
+                <field type="" editor_type="VISUAL">description_text</field>
+                <field type="Button Text" editor_type="LINE">button_text</field>
+                <field type="Link" editor_type="LINK" key_of="link">url</field>
+            </fields>
+        </widget>
+        <widget name="the7_icon_box_grid_widget">
+            <fields>
+                <field type="Title" editor_type="LINE">widget_title_text</field>
+            </fields>
+            <fields-in-item items_of="icon_boxes_items">
+                <field type="Title &amp; Description" editor_type="LINE">title_text</field>
+                <field type="" editor_type="VISUAL">description_text</field>
+                <field type="Button Text" editor_type="LINE">button_text</field>
+                <field type="Link" editor_type="LINK" key_of="link">url</field>
+            </fields-in-item>
+        </widget>
+        <widget name="the7_elements">
+            <fields>
+                <field type="Button Text" editor_type="LINE">read_more_button_text</field>
+                <field type="&quot;All&quot; Filter Label" editor_type="LINE">filter_all_text</field>
+                <field type="Button Text" editor_type="LINE">pagination_load_more_text</field>
+            </fields>
+        </widget>
+        <widget name="the7_elements_carousel">
+            <fields>
+                <field type="Button Text" editor_type="LINE">read_more_button_text</field>
+            </fields>
+        </widget>
+        <widget name="the7_nav-menu">
+            <fields>
+                <field type="Title" editor_type="LINE">widget_title_text</field>
+            </fields>
+        </widget>
+        <widget name="the7_horizontal-menu">
+            <fields>
+                <field type="Toggle Text" editor_type="LINE">toggle_text</field>
+            </fields>
+        </widget>
+        <widget name="the7_content_carousel">
+            <fields-in-item items_of="list">
+                <field type="Title" editor_type="LINE">list_title</field>
+                <field type="Subtitle" editor_type="AREA">list_content</field>
+                <field type="Button text" editor_type="LINE">button</field>
+                <field type="Link" editor_type="LINK" key_of="link">url</field>
+            </fields-in-item>
+        </widget>
+        <widget name="the7_testimonials_carousel">
+            <fields-in-item items_of="list">
+                <field type="Title" editor_type="LINE">list_title</field>
+                <field type="Subtitle" editor_type="LINE">list_subtitle</field>
+                <field type="Text" editor_type="AREA">list_content</field>
+                <field type="Button text" editor_type="LINE">button</field>
+                <field type="Link" editor_type="LINK" key_of="link">url</field>
+            </fields-in-item>
+        </widget>
+        <widget name="the7-accordion">
+            <fields-in-item items_of="tabs">
+                <field type="Title &amp; Description" editor_type="LINE">tab_title</field>
+                <field type="Content" editor_type="VISUAL">tab_content</field>
+            </fields-in-item>
+        </widget>
+        <widget name="the7-elements-simple-posts">
+            <fields>
+                <field type="Title" editor_type="LINE">widget_title_text</field>
+                <field type="Button Text" editor_type="LINE">read_more_button_text</field>
+                <field type="Button Text" editor_type="LINE">pagination_load_more_text</field>
+            </fields>
+        </widget>
+        <widget name="the7-elements-simple-posts-carousel">
+            <fields>
+                <field type="Title" editor_type="LINE">widget_title_text</field>
+                <field type="Button Text" editor_type="LINE">read_more_button_text</field>
+            </fields>
+        </widget>
+        <widget name="the7-taxonomy-filter">
+            <fields>
+                <field type="&quot;All&quot; Filter Label" editor_type="LINE">filter_all_text</field>
+            </fields>
+        </widget>
+        <widget name="the7-wc-products">
+            <fields>
+                <field type="Title" editor_type="LINE">widget_title_text</field>
+                <field type="Button Text" editor_type="LINE">pagination_load_more_text</field>
+            </fields>
+        </widget>
+        <widget name="the7-wc-products-carousel">
+            <fields>
+                <field type="Title" editor_type="LINE">widget_title_text</field>
+            </fields>
+        </widget>
+    </elementor-widgets>
     <shortcodes>
         <shortcode>
             <tag>dt_fancy_title</tag>
@@ -91,6 +274,7 @@
         <taxonomy translate="1">dt_gallery_category</taxonomy>
     </taxonomies>
     <custom-fields>
+        <custom-field action="ignore">_wpb_shortcodes_custom_css</custom-field>
         <custom-field action="copy">_dt_albums_display</custom-field>
         <custom-field action="copy">_dt_albums_media_display</custom-field>
         <custom-field action="copy">_dt_albums_options_bg_under_masonry_posts</custom-field>
@@ -424,6 +608,12 @@
         <custom-field action="copy">_dt_fancy_header_subtitle_text_transform</custom-field>
         <custom-field action="copy">_dt_fancy_header_text_transform</custom-field>
         <custom-field action="translate">_dt_testimonial_options_position</custom-field>
+        <custom-field action="copy">_dt_header_disabled_background</custom-field>
+        <custom-field action="copy">_dt_header_disabled_transparent_bg_color_scheme</custom-field>
+        <custom-field action="copy">_dt_header_disabled_transparent_top_bar_bg_color</custom-field>
+        <custom-field action="copy">_dt_header_disabled_transparent_top_bar_bg_opacity</custom-field>
+        <custom-field action="copy">_dt_header_disabled_transparent_bg_color</custom-field>
+        <custom-field action="copy">_dt_header_disabled_transparent_bg_opacity</custom-field>
     </custom-fields>
     <admin-texts>
         <key name="the7">
@@ -437,93 +627,96 @@
                     <key name="sidebar_desc"/>
                 </key>
             </key>
-            <key name="header-elements-text" />
-            <key name="header-elements-text-2" />
-            <key name="header-elements-text-3" />
+            <key name="header-elements-text"/>
+            <key name="header-elements-text-2"/>
+            <key name="header-elements-text-3"/>
             <key name="header-elements-text-4" />
             <key name="header-elements-text-5" />
-            <key name="header-elements-login-url" />
-            <key name="header-elements-logout-caption" />
-            <key name="header-elements-login-caption" />
-            <key name="header-elements-contact-clock-caption" />
-            <key name="header-elements-contact-skype-caption" />
-            <key name="header-elements-contact-email-caption" />
-            <key name="header-elements-contact-phone-caption" />
-            <key name="header-elements-contact-address-caption" />
+            <key name="header-elements-login-url"/>
+            <key name="header-elements-logout-caption"/>
+            <key name="header-elements-login-caption"/>
+            <key name="header-elements-contact-clock-caption"/>
+            <key name="header-elements-contact-skype-caption"/>
+            <key name="header-elements-contact-email-caption"/>
+            <key name="header-elements-contact-phone-caption"/>
+            <key name="header-elements-contact-address-caption"/>
             <key name="header-elements-contact-multipurpose_1-caption" />
             <key name="header-elements-contact-multipurpose_2-caption" />
             <key name="header-elements-contact-multipurpose_3-caption" />
             <key name="header-elements-contact-multipurpose_4-caption" />
-            <key name="header-elements-search-caption" />
+            <key name="header-elements-search-caption"/>
             <key name="header-elements-search-input-caption" />
-            <key name="header-elements-woocommerce_cart-caption" />
+            <key name="header-elements-woocommerce_cart-caption"/>
             <key name="header-elements-button-1-name" />
+            <key name="header-elements-button-1-url" />
             <key name="header-elements-button-2-name" />
-            <key name="bottom_bar-copyrights" />
-            <key name="bottom_bar-text" />
+            <key name="header-elements-button-2-url" />
+            <key name="bottom_bar-copyrights"/>
+            <key name="bottom_bar-text"/>
             <key name="header-logo_regular">
-                <key name="0" />
-                <key name="1" />
+                <key name="0"/>
+                <key name="1"/>
             </key>
             <key name="header-logo_hd">
-                <key name="0" />
-                <key name="1" />
+                <key name="0"/>
+                <key name="1"/>
             </key>
             <key name="header-style-mobile-logo_regular">
-                <key name="0" />
-                <key name="1" />
+                <key name="0"/>
+                <key name="1"/>
             </key>
             <key name="header-style-mobile-logo_hd">
-                <key name="0" />
-                <key name="1" />
+                <key name="0"/>
+                <key name="1"/>
             </key>
             <key name="header-style-transparent-logo_regular">
-                <key name="0" />
-                <key name="1" />
+                <key name="0"/>
+                <key name="1"/>
             </key>
             <key name="header-style-transparent-logo_hd">
-                <key name="0" />
-                <key name="1" />
+                <key name="0"/>
+                <key name="1"/>
             </key>
             <key name="header-style-mixed-logo_regular">
-                <key name="0" />
-                <key name="1" />
+                <key name="0"/>
+                <key name="1"/>
             </key>
             <key name="header-style-mixed-logo_hd">
-                <key name="0" />
-                <key name="1" />
+                <key name="0"/>
+                <key name="1"/>
             </key>
             <key name="header-style-floating-logo_regular">
-                <key name="0" />
-                <key name="1" />
+                <key name="0"/>
+                <key name="1"/>
             </key>
             <key name="header-style-floating-logo_hd">
-                <key name="0" />
-                <key name="1" />
+                <key name="0"/>
+                <key name="1"/>
             </key>
             <key name="bottom_bar-logo_regular">
-                <key name="0" />
-                <key name="1" />
+                <key name="0"/>
+                <key name="1"/>
             </key>
             <key name="bottom_bar-logo_hd">
-                <key name="0" />
-                <key name="1" />
+                <key name="0"/>
+                <key name="1"/>
             </key>
             <key name="general-post_back_button_target_page_url" />
             <key name="general-project_back_button_target_page_url" />
             <key name="general-album_back_button_target_page_url" />
-            <key name="general-rel_posts_head_title" />
-            <key name="general-rel_projects_head_title" />
-            <key name="social_buttons-post-button_title" />
-            <key name="social_buttons-portfolio_post-button_title" />
-            <key name="social_buttons-photo-button_title" />
-            <key name="social_buttons-page-button_title" />
-            <key name="social_buttons-product-button_title" />
-            <key name="custom_error_messages_validation" />
-            <key name="custom_error_messages" />
-            <key name="custom_success_messages" />
+            <key name="general-rel_posts_head_title"/>
+            <key name="general-rel_projects_head_title"/>
+            <key name="social_buttons-post-button_title"/>
+            <key name="social_buttons-portfolio_post-button_title"/>
+            <key name="social_buttons-photo-button_title"/>
+            <key name="social_buttons-page-button_title"/>
+            <key name="social_buttons-product-button_title"/>
+            <key name="custom_error_messages_validation"/>
+            <key name="custom_error_messages"/>
+            <key name="custom_success_messages"/>
             <key name="header-mobile-menu_icon-caption-text" />
             <key name="header-mobile-menu-close_icon-caption-text" />
+            <key name="portfolio-breadcrumbs-text" />
         </key>
     </admin-texts>
 </wpml-config>

@@ -23,7 +23,7 @@ if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
 
 ?>
 <div class="wc-coupon-wrap">
-	<?php wc_print_notice( apply_filters( 'woocommerce_checkout_coupon_message', '<span class="showcoupon-tag"><i class="icomoon-the7-font-the7-tag-05" aria-hidden="true"></i>' . __( 'Have a coupon?', 'the7mk2' ) . '</span> <a href="#" class="showcoupon">' . __( 'Click here to enter your code', 'woocommerce' ) . '</a>' ), 'notice' ); ?>
+	<?php wc_print_notice( apply_filters( 'woocommerce_checkout_coupon_message', '<span class="showcoupon-tag">' . __( 'Have a coupon?', 'the7mk2' ) . '</span> <a href="#" class="showcoupon">' . __( 'Click here to enter your code', 'woocommerce' ) . '</a>' ), 'notice' ); ?>
     <form class="checkout_coupon woocommerce-form-coupon" method="post" style="display:none">
         <div class="form-coupon-wrap">
             <p><?php esc_html_e( 'If you have a coupon code, please apply it below.', 'the7mk2' ); ?></p>

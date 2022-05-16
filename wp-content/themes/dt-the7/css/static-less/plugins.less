@@ -7,15 +7,6 @@
 @import "plugins/photoswipe.less";
 @import "plugins/default-skin.less";
 
-.vc_grid-container div[style*="vc_gitem_image.png"] {
-	display: none;
-}
-.ult_modal-header > * {
-	font-family: inherit;
-	font-style: inherit;
-	font-weight: inherit;
-}
-
 //Stripe payments
 .asp_all_buttons_container {
 	margin-top: 20px;
@@ -45,7 +36,14 @@
 .ifb-flip-box.ifb-hover .ifb-face.ifb-front {
     opacity: 0;
 }
-
+.mec-container {
+    max-width: 100%;
+}
+@media only screen and (min-width: 961px){
+	.mec-container {
+	    width: auto;
+	}
+}
 .mec-event-footer .mec-booking-button,
 .mec-event-sharing-wrap li a {
 	text-decoration: none;
@@ -64,4 +62,7 @@
 
 #page .mec-topsec .mec-event-image {
 	line-height: 0;
+}
+#page.ls-overflow-visible {
+	overflow-x: hidden !important;
 }

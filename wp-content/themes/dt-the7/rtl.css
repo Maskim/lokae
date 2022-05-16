@@ -35,9 +35,6 @@ http://codex.wordpress.org/Right_to_Left_Language_Support
 .st-accordion li > a {
 	padding-right: 25px;
 }
-.product div.images {
-	direction: ltr;
-}
 .wc-img-hover .woocom-project img.back-image {
 	right: auto;
 }
@@ -76,8 +73,7 @@ http://codex.wordpress.org/Right_to_Left_Language_Support
 .single-product .share-link-description, .woocommerce-Reviews .comment-notes, .shopping-cart-inner, .content th {
 	text-align: right;
 }
-.product table.variations .reset_variations,
-.elementor-widget table.variations .reset_variations {
+.product table.variations .reset_variations {
 	left: 0px;
 	right: auto;
 }
@@ -173,4 +169,20 @@ select:not(.elementor-field) {
 .showcoupon-tag i, .showlogin-tag i {
 	margin: 2px 0 0 5px;
 	float: right;
+}
+.vc_progress_bar .vc_single_bar {
+	-webkit-transform:rotate(180deg);
+	-moz-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	-o-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+.mobile-main-nav .sub-nav {
+	margin-right: 20px;
+}
+.mobile-menu-show-divider .mobile-main-nav > li > a {
+	padding: 15.2px 0px 15.2px 25px;
+}
+.dt-mobile-header .mobile-main-nav > li > .dt-mega-menu-wrap, .dt-mobile-header .mobile-main-nav > li > .dt-mega-menu-wrap > .sub-nav .sub-nav, .dt-mobile-header .mobile-main-nav > li > .sub-nav, .dt-mobile-header .mobile-main-nav > li > .sub-nav .sub-nav, .sub-downwards.side-header .main-nav > li > .dt-mega-menu-wrap {
+	right: 0;
 }

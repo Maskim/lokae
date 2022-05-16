@@ -15,6 +15,7 @@ RVS.V = RVS.V === undefined ? {} : RVS.V;
 RVS.S = RVS.S === undefined ? {} : RVS.S;
 RVS.C = RVS.C === undefined ? {} : RVS.C;
 RVS.WIN = RVS.WIN === undefined ? jQuery(window) : RVS.WIN;
+
 RVS.DOC = RVS.DOC === undefined ? jQuery(document) : RVS.DOC;
 RVS.OZ = RVS.OZ === undefined ? {} : RVS.OZ;
 RVS.SC = RVS.SC === undefined ? {} : RVS.SC;
@@ -94,6 +95,8 @@ RVS.SC = RVS.SC === undefined ? {} : RVS.SC;
 							case "s":block.popup.scroll.use = true;  block.popup.scroll.type="container"; block.popup.scroll.container = v[1]; break;
 							case "so":block.popup.scroll.use = true;  block.popup.scroll.type="offset"; block.popup.scroll.v = v[1]; break;
 							case "e":block.popup.event.use = true; block.popup.event.v = v[1]; break;
+							case "ha":block.popup.hash.use = true; break;
+							case "co":block.popup.cookie.use = true; block.popup.cookie.v = v[1]; break;
 						}
 					} 
 				}
@@ -109,8 +112,9 @@ RVS.SC = RVS.SC === undefined ? {} : RVS.SC;
 		
 		
 
-		updateBlockViews : function(show) {
-			if (show===true) jQuery('.rs_optimizer_button_wrapper').closest('.components-panel__body').addClass("rs_component_panel"); else jQuery('.rs_component_panel').removeClass("rs_component_panel");
+		updateBlockViews : function(show) {			
+		
+			if (show===true) jQuery('.rs_optimizer_button_wrapper').closest('.components-panel').addClass("rs_component_panel"); else jQuery('.rs_component_panel').removeClass("rs_component_panel");
 		},
 
 		buildShortCode : function() {
@@ -125,6 +129,8 @@ RVS.SC = RVS.SC === undefined ? {} : RVS.SC;
 					if (RVS.SC.BLOCK.popup.time!==undefined && RVS.SC.BLOCK.popup.time.use) popup += 't:'+RVS.SC.BLOCK.popup.time.v+";";
 					if (RVS.SC.BLOCK.popup.scroll!==undefined && RVS.SC.BLOCK.popup.scroll.use) if(RVS.SC.BLOCK.popup.scroll.type==="offset")  popup += 'so:'+RVS.SC.BLOCK.popup.scroll.v+";"; else popup += 's:'+RVS.SC.BLOCK.popup.scroll.container+";";					
 					if (RVS.SC.BLOCK.popup.event!==undefined && RVS.SC.BLOCK.popup.event.use) popup += 'e:'+RVS.SC.BLOCK.popup.event.v+";";
+					if (RVS.SC.BLOCK.popup.hash!==undefined && RVS.SC.BLOCK.popup.hash.use) popup += 'ha:t;';
+					if (RVS.SC.BLOCK.popup.cookie!==undefined && RVS.SC.BLOCK.popup.cookie.use) popup += 'co:'+RVS.SC.BLOCK.popup.cookie.v+';';
 					if (popup!=='') RVS.SC.BLOCK.content +=' modal="'+popup+'"';
 				}
 			} else {
@@ -173,10 +179,14 @@ RVS.SC = RVS.SC === undefined ? {} : RVS.SC;
 					QTags.insertContent(RVS.SC.BLOCK.content);				
 				break;
 				case 'gutenberg':					
-					var obj = {slidertitle: RVS.SC.BLOCK.slidertitle, alias: RVS.SC.BLOCK.alias, modal: RVS.SC.BLOCK.modal ,  content: RVS.SC.BLOCK.content , zindex: RVS.SC.BLOCK.zindex};					
+					var obj = {slidertitle: RVS.SC.BLOCK.slidertitle, alias: RVS.SC.BLOCK.alias, modal: RVS.SC.BLOCK.modal ,  content: RVS.SC.BLOCK.content , zindex: RVS.SC.BLOCK.zindex , wrapperid: RVS.SC.BLOCK.wrapperid};					
 					revslider_react.setState(obj);						
 					revslider_react.props.setAttributes(obj);
 					revslider_react.forceUpdate();
+				break;
+				case 'divi':
+					revslider_divi.props._onChange(revslider_divi.props.name, RVS.SC.BLOCK.content);
+					revslider_divi.setState(RVS.SC.BLOCK);
 				break;
 				default:break;
 			}
@@ -185,15 +195,22 @@ RVS.SC = RVS.SC === undefined ? {} : RVS.SC;
 		openTemplateLibrary: function(type) {		
 			// 5.0 to 6.0 update patch
 			if(typeof RVS.LIB.OBJ === 'undefined') return;
-						
+			if (type==="tinymce") {
+				RVS.SC.BLOCK = {};
+			}						
 			RVS.SC.type = type;
 			if(!RVS.SC.libraryInited) {				
 				RVS.SC.libraryInited = true;
 				RVS.F.initObjectLibrary(true); 
-				RVS.F.initOnOff(jQuery('#obj_addsliderasmodal').css('display', 'inline-block'));				
+				var oas = document.getElementById('obj_addsliderasmodal');
+				if (oas!==null) {
+					oas.style.display = 'inline-block';
+					RVS.F.initOnOff(oas);	
+				}
 				
 				
-				jQuery('body').on('change', '#sel_olibrary_sorting', function() {										
+				
+				jQuery(document.body).on('change', '#sel_olibrary_sorting', function() {										
 					jQuery('#reset_objsorting').css((this.value === 'datedesc' ? {display: 'none'} : {display: 'inline-block', opacity: '1', visibility: 'visible'} ));
 					if(this.dataset.evt!==undefined) RVS.DOC.trigger(this.dataset.evt, this.dataset.evtparam);					
 				}).on('change', '#ol_pagination', function(e) {					
@@ -202,7 +219,7 @@ RVS.SC = RVS.SC === undefined ? {} : RVS.SC;
 			}
 			
 			var successObj = {modules: 'addRevSliderShortcode', event: 'selectRevSliderItem'};						
-			jQuery('#obj_addsliderasmodal .tponoffwrap').addClass('off').find('input').removeAttr('checked').prop('checked', false);
+			jQuery('#obj_addsliderasmodal .tponoffwrap').addClass('off').find('input').prop('checked', false);
 			RVS.F.openObjectLibrary({types: ['modules'], filter: 'all', selected: ['modules'], success: successObj});
 			
 			var folder = RVS.F.getCookie('rs6_wizard_folder');
@@ -210,14 +227,15 @@ RVS.SC = RVS.SC === undefined ? {} : RVS.SC;
 			
 		},
 		
-		openBlockSettings : function(type,sc){
+		openBlockSettings : function(type,sc){			
+			if (RVS===undefined || RVS.SC===undefined) return;
 			if (RVS.ENV.activated!==true) RVS.F.showRegisterSliderInfo();
 			if (sc===undefined && RVS.SC.BLOCK===undefined) return;			
 			RVS.SC.BLOCK = sc!==undefined ?  RVS.SC.scToBlock(sc) : RVS.SC.BLOCK===undefined || RVS.SC.BLOCK.text===undefined ? RVS.SC.scToBlock(RVS.SC.BLOCK.content) : RVS.SC.scToBlock(RVS.SC.BLOCK.text);
 
 			if (RVS!==undefined && RVS.SC!==undefined && RVS.SC.BLOCK!==undefined && RVS.SC.BLOCK.alias.length>0) {	
 				RVS.SC.type = type;
-				//Ajax Call to get the original Layout
+				//Ajax Call to get the original Layout				
 			      RVS.F.ajaxRequest('getSliderSizeLayout', { alias : RVS.SC.BLOCK.alias }, function(response) {    
 			      	
 			          if(response.success) {  
@@ -226,20 +244,21 @@ RVS.SC = RVS.SC === undefined ? {} : RVS.SC;
 			          		 RVS.SC.BLOCK.origlayout = response.layout;
 			          		 RVS.SC.BLOCK.slidertitle = response.slidertitle!==undefined ? response.slidertitle : response.sliderTitle!==undefined ? response.sliderTitle : response.title!==undefined ? response.title : RVS.SC.BLOCK.slidertitle;			  
 			                if(typeof RVS.SC.BLOCK.layout === "undefined" || RVS.SC.BLOCK.layout==="") RVS.SC.BLOCK.layout = RVS.SC.BLOCK.origlayout;
-			          	}          			             
-			            RVS.F.showWaitAMinute({fadeIn:0,text:RVS_LANG.loadingcontent});				
-						RVS.F.initOnOff(jQuery('#rbm_blocksettings'));
+			          	}          				          			             
+			            RVS.F.showWaitAMinute({fadeOut:0,text:RVS_LANG.loadingcontent});
+			            RVS.C.RBBS = jQuery('#rbm_blocksettings');				
+						RVS.F.initOnOff(RVS.C.RBBS);
 						RVS.F.RSDialog.create({modalid:'#rbm_blocksettings', bgopacity:0.5});
-						jQuery('#rbm_blocksettings').RSScroll({wheelPropagation:false, suppressScrollX:true});
-						RVS.F.RSDialog.center();			
-						jQuery('#rbm_blocksettings .origlayout').hide();
-						jQuery('#rbm_blocksettings .origlayout.origlayout_'+RVS.SC.BLOCK.origlayout).show();		
-						
-						if (RVS.SC.type==="wpbackery") {			
-							setTimeout(RVS.F.RSDialog.center,19);
-							setTimeout(RVS.F.RSDialog.center,50);
-						}
+						RVS.C.RBBS.RSScroll({wheelPropagation:false, suppressScrollX:true});						
+						RVS.C.RBBS.find('.origlayout').hide();
+						RVS.C.RBBS.find('.origlayout.origlayout_'+RVS.SC.BLOCK.origlayout).show();		
+						RVS.F.RSDialog.center();					
+						setTimeout(RVS.F.RSDialog.center,19);
+						setTimeout(RVS.F.RSDialog.center,50);
+						setTimeout(RVS.F.RSDialog.center,400);					
 						blockSettingsUpdate();
+					
+						
 			          }
 			      });										
 		    } 		
@@ -249,8 +268,20 @@ RVS.SC = RVS.SC === undefined ? {} : RVS.SC;
 		openOptimizer : function(alias){ if (alias!==undefined && alias.length>0) RVS.F.openOptimizer({alias:alias});}						
 	};
 
+	
 	// INITIALISE PROCESSES
-	jQuery(document).ready(function() {	RVS.SC.init();	});
+	var RVSSCINIT_once = false
+	if (document.readyState === "loading") 
+		document.addEventListener('readystatechange',function(){
+			if ((document.readyState === "interactive" || document.readyState === "complete") && !RVSSCINIT_once) {
+				RVSSCINIT_once = true;
+				RVS.SC.init();
+			}
+		});
+	else {
+		RVSSCINIT_once = true;
+		RVS.SC.init();
+	}
 		
 	function updateInherits(novisual) {
 		if (RVS==undefined || RVS.SC.BLOCK==undefined || RVS.SC.BLOCK.offset===undefined) return;
@@ -292,7 +323,10 @@ RVS.SC = RVS.SC === undefined ? {} : RVS.SC;
 			zindex:0,
 			popup: { time : {use:false, v:2000}, 
 					 scroll : {use:false, type:"offset", v:2000,container:""},
-					 event : {use:false, v:"popup_"+alias}},
+					 event : {use:false, v:"popup_"+alias},
+					 hash : {use:false},
+					 cookie:{use:false,v:24}
+					},
 			offset: { d : {top:"0px", bottom:"0px", left:"0px", right:"0px" ,use:false}, 
 					  n : {top:"0px", bottom:"0px", left:"0px", right:"0px",use:false}, 
 					  t : {top:"0px", bottom:"0px", left:"0px", right:"0px",use:false}, 
@@ -306,8 +340,11 @@ RVS.SC = RVS.SC === undefined ? {} : RVS.SC;
 		RVS.F.updateAllOnOff();
 		updateInherits();
 		jQuery('.scblockinput').trigger('init');
-		document.getElementById('srbs_scr_evt').innerHTML = RVS.SC.BLOCK.popup.event.v;
-		if (RVS.ENV.activated!==false) jQuery('.rb_not_on_notactive').removeClass("disabled"); else jQuery('.rb_not_on_notactive').addClass("disabled");
+		if (RVS.SC.BLOCK.popup!==undefined) {
+			document.getElementById('srbs_scr_evt').innerHTML = RVS.SC.BLOCK.popup.event.v;
+			document.getElementById('srbs_scr_hash').innerHTML = RVS.SC.BLOCK.alias;
+			if (RVS.ENV.activated!==false) jQuery('.rb_not_on_notactive').removeClass("disabled"); else jQuery('.rb_not_on_notactive').addClass("disabled");
+		}
 	}
 
 	function blockSettingsReset() {
@@ -350,7 +387,7 @@ ELEMENTOR HOOKS
 			});
 
 			// BASIC LISTENER
-			window.elementorSelectRevSlider = function(e) {	if (e) RVS.SC.openTemplateLibrary('elementor'); else jQuery('button[data-event="themepunch.selectslider"]').click();}
+			window.elementorSelectRevSlider = function(e) {	if (e) RVS.SC.openTemplateLibrary('elementor'); else jQuery('button[data-event="themepunch.selectslider"]').trigger('click');}
 			/*
 			 FURTHER LISTNERS
 			*/
@@ -414,7 +451,7 @@ VISUAL COMPOSER HOOKS
 		if(typeof(window.InlineShortcodeView) !== 'undefined') {			
 			var rs_show_frontend_overlay = false;
 			jQuery(window).on('vc_build', function() {				
-				vc.add_element_block_view.$el.find('[data-element="rev_slider"]').click(function() {
+				vc.add_element_block_view.$el.find('[data-element="rev_slider"]').on('click',function() {
 					rs_show_frontend_overlay = true;
 				});				
 			});		
@@ -468,10 +505,16 @@ VISUAL COMPOSER HOOKS
 		RVS.S.shortCodeListener = true;
 
 		// COOKIE HANDLING
-		jQuery('body').on('click', '#objectlibrary *[data-folderid]', function() {RVS.F.setCookie("rs6_wizard_folder",this.dataset.folderid,360);});
+		jQuery(document.body).on('click', '#objectlibrary *[data-folderid]', function() {RVS.F.setCookie("rs6_wizard_folder",this.dataset.folderid,360);});
 
 		// 
-		RVS.F.initOnOff(jQuery('#slide_template_row').css('display', 'inline-block'));	
+		var _str = document.getElementById('slide_template_row') ;
+		if (_str!==null) {		
+			_str.style.display = 'inline-block';
+			RVS.F.initOnOff(_str);
+		}
+
+		RVS.DOC.on('click','.rs_lib_premium_red',RVS.F.showRegisterSliderInfo);
 		
 		RVS.DOC.on('registrationdone',function() {
 			if (RVS.ENV.activated===false) {
@@ -503,28 +546,55 @@ VISUAL COMPOSER HOOKS
 				currentInput.data('ghost').val(cssColor);
 				currentInput.val(cssColor);
 			}
-		});			
+		});	
 
+		function isSelectWithThemes(sel) {
+			if (sel===undefined || sel.options===undefined) return false;
+			var ret = false;
+			for (var opt in sel.options) {
+				if (!sel.options.hasOwnProperty(opt) || ret) continue;
+				ret = sel.options[opt].value === "../public/views/revslider-page-template.php";
+			}
+			return ret;
+		}	
+
+		function findSelectWithThemes() {
+			var wpsc = document.getElementsByClassName('components-select-control__input'),
+				ret = false;
+			for (var i in wpsc) {
+				if (!wpsc.hasOwnProperty(i) || ret!==false) continue
+				if (isSelectWithThemes(wpsc[i])) ret = wpsc[i];
+			}
+			return ret;
+		}
+				
 		// Page Template , Color Picker, checkbox check only when RevSlider Blank Template
-		jQuery('body').on('change', '.editor-page-attributes__template select', function() {
-			if(jQuery(this).val() === "../public/views/revslider-page-template.php"){
+		jQuery(document.body).on('change', '.components-select-control__input, .editor-page-attributes__template select', function() {
+			
+			if (!isSelectWithThemes(this)) return;
+			
+			if(this.value === "../public/views/revslider-page-template.php"){				
 				jQuery('#rs_page_bg_color_column').show(); 
 				jQuery('#rs_blank_template').prop('checked', true);
+				jQuery('#slide_template_row .tponoffwrap').removeClass('off');
 			}
-			else {
+			else {				
 				jQuery('#rs_page_bg_color_column').hide();									
 				jQuery('#rs_blank_template').prop('checked', false);
+				jQuery('#slide_template_row .tponoffwrap').addClass('off');
 			}
 		});
 		
 		// Page Template , checkbox check sync Page Template Selectbox
-		jQuery('body').on('change', '#rs_blank_template', function() {
-			if(jQuery(this).prop('checked')){
-				jQuery('.editor-page-attributes__template select').val("../public/views/revslider-page-template.php").change(); 
+		jQuery(document.body).on('change', '#rs_blank_template', function() {
+			var sel = findSelectWithThemes();
+			if (sel===false) sel = jQuery('.editor-page-attributes__template select'); else sel=jQuery(sel);
+			if(jQuery(this).prop('checked')){			
+				sel.val("../public/views/revslider-page-template.php").change(); 
 				jQuery('#rs_page_bg_color_column').show(); 
 			}
 			else {
-				jQuery('.editor-page-attributes__template select').val("").change();
+				sel.val("").change();
 				jQuery('#rs_page_bg_color_column').hide();
 			}
 		});
@@ -533,7 +603,7 @@ VISUAL COMPOSER HOOKS
 		/*
 		DEFAULT LISTENERS
 		 */
-		RVS.DOC.on('click','.wp-block.editor-block-list__block[data-type="themepunch/revslider"]',function() {RVS.SC.updateBlockViews(true);});
+		RVS.DOC.on('click','.block-editor-editor-skeleton__content, .interface-interface-skeleton__content', function() {RVS.SC.updateBlockViews(true);});		
 		RVS.DOC.on('addRevSliderShortcode', function(e, data) {				
 			if(data!==undefined && data.alias !== '-1'){
 				data.size = data.size==="" || data.size===undefined ? "auto" : data.size;				

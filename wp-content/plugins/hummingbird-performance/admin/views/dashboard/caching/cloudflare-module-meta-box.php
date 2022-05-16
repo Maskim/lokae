@@ -1,6 +1,6 @@
 <?php
 /**
- * Browser caching meta box on dashboard page when CloudFlare is active.
+ * Browser caching meta box on dashboard page when Cloudflare is active.
  *
  * @package Hummingbird
  *
@@ -9,9 +9,9 @@
  * @var array  $recommended              Array of recommended values.
  * @var array  $results                  Array of results. Raw.
  * @var int    $issues                   Number of issues.
- * @var bool   $show_cf_notice           Show the CloudFlare notice.
- * @var string $cf_notice                CloudFlare copy to show.
- * @var string $cf_connect_url           Connect CloudFlare URL.
+ * @var bool   $show_cf_notice           Show the Cloudflare notice.
+ * @var string $cf_notice                Cloudflare copy to show.
+ * @var string $cf_connect_url           Connect Cloudflare URL.
  * @var array  $caching_type_tooltips    Caching types array if browser caching is enabled.
  */
 
@@ -21,24 +21,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 <p><?php esc_html_e( "Store temporary data on your visitors' devices so that they don’t have to download assets twice if they don’t have to.", 'wphb' ); ?></p>
-<?php if ( $issues ) : ?>
-	<div class="sui-notice sui-notice-warning">
-		<p>
-			<?php
-			printf(
-				/* translators: %s: Number of issues */
-				__( '%1$s of your cache types don’t meet the recommended expiry period of 1 year. Configure browser caching <a href="%2$s" id="configure-link">here</a>.', 'wphb' ),
-				absint( $issues ),
-				esc_attr( $configure_caching_url )
-			);
-			?>
-		</p>
-	</div>
-<?php else : ?>
-	<div class="sui-notice sui-notice-success">
-		<p><?php esc_html_e( 'All of your cache types meet the recommended expiry period of 1 year. Great work!', 'wphb' ); ?></p>
-	</div>
-<?php endif; ?>
+<?php
+if ( $issues ) {
+	$this->admin_notices->show_inline(
+		sprintf( /* translators: %s: Number of issues */
+			__( '%1$s of your cache types don’t meet the recommended expiry period of 1 year. Configure browser caching <a href="%2$s" id="configure-link">here</a>.', 'wphb' ),
+			absint( $issues ),
+			esc_attr( $configure_caching_url )
+		),
+		'warning'
+	);
+} else {
+	$this->admin_notices->show_inline( esc_html__( 'All of your cache types meet the recommended expiry period of 1 year. Great work!', 'wphb' ) );
+}
+?>
 
 <ul class="sui-list sui-no-margin-bottom">
 	<li class="sui-list-header">
@@ -75,8 +71,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 							echo 'img';
 							break;
 						case 'css':
-							echo esc_html( $type );
-							break;
 						case 'media':
 							echo esc_html( $type );
 							break;

@@ -11,19 +11,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 $config = presscore_config();
 $classes = array( 'hide-overlay' );
-$classes[] = presscore_array_value( $config->get( 'header.hamburger.close.bg' ), array(
+$classes[] = the7_array_match( $config->get( 'header.hamburger.close.bg' ), array(
 'enabled' => 'hamburger-close-bg-enable',
 'disabled' => 'hamburger-close-bg-disable',
 ) );
-$classes[] = presscore_array_value( $config->get( 'header.hamburger.close.bg.hover' ), array(
+$classes[] = the7_array_match( $config->get( 'header.hamburger.close.bg.hover' ), array(
 'enabled' => 'hamburger-close-bg-hover-enable',
 'disabled' => 'hamburger-close-bg-hover-disable',
 ) );
-$classes[] = presscore_array_value( $config->get( 'header.hamburger.close.border' ), array(
+$classes[] = the7_array_match( $config->get( 'header.hamburger.close.border' ), array(
 'enabled' => 'hamburger-close-border-enable',
 'disabled' => 'hamburger-close-border-disable',
 ) );
-$classes[] = presscore_array_value( $config->get( 'header.hamburger.close.border.hover' ), array(
+$classes[] = the7_array_match( $config->get( 'header.hamburger.close.border.hover' ), array(
 'enabled' => 'hamburger-close-border-hover-enable',
 'disabled' => 'hamburger-close-border-hover-disable',
 ) );

@@ -24,10 +24,14 @@
 		position: absolute;
 		top: 50%;
 		left: 0;
-		margin-top: -7px;
+		transform: translateY(-50%);
 		width: 14px;
 		height: 14px;
 		content: "";
+	}
+	.standard-arrow.list-divider:not(.bullet-top) li:first-child:before,
+	.standard-arrow.list-divider:not(.bullet-top) li:first-child:after {
+		transform: translateY(calc(-50% ~'-' 9px/2));
 	}
 	.standard-arrow li:after {
 	    content: "\f007";
@@ -48,9 +52,13 @@
 		.static-border-radius;
 	}
 	.standard-arrow.bullet-top li:after {
-		top: 0;
 		margin-top: 0;
 		height: 14px;
+	}
+	.standard-arrow.bullet-top li:before,
+	.standard-arrow.bullet-top li:after {
+		top: 0;
+		transform: translateY(0%);
 	}
 	.standard-arrow.bullet-top li:after,
 	.standard-arrow.list-divider.bullet-top li:first-child:after,
@@ -107,7 +115,7 @@
 		left: 0;
 		width: 20px;
 		height: 20px;
-		margin-top: -10px;
+		transform: translateY(-50%);
 		color: #fff;
 		background-color: red;
 		content: counter(my-badass-counter, decimal);
@@ -120,20 +128,22 @@
 		padding-top: 0;
 	}
 	.standard-number-list.list-divider li:first-child:before {
-		top: 10px;
+		//top: 10px;
 	}
 	.standard-number-list.bullet-top li:before,
 	.standard-number-list.bullet-top li:first-child:before {
 		top: 0px;
-		margin-top: 0;
+		margin-top: 2px;
+		transform: translateY(0%);
 	}
-	.standard-number-list.list-divider.bullet-top li:before,
-	.standard-number-list.list-divider.bullet-top li:first-child:before {
-		top: 10px;
-		margin-top: 0;
+	//.standard-number-list.list-divider.bullet-top li:before,
+	.standard-number-list.list-divider.bullet-top li:not(:first-child):before {
+		//top: 10px;
+		margin-top: 9px;
 	}
 	.standard-number-list.list-divider.bullet-top li:first-child:before {
-		top: 5px;
+		//top: 5px;
+		//transform: translateY(calc(-50% ~'-' 9px/2));
 	}
 	.image-arrow li {
 		overflow: hidden;

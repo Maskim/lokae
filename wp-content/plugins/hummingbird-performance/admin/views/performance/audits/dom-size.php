@@ -20,46 +20,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 </p>
 
 <h4><?php esc_html_e( 'Status', 'wphb' ); ?></h4>
-<?php if ( isset( $audit->errorMessage ) && ! isset( $audit->score ) ) { ?>
-	<div class="sui-notice sui-notice-error">
-		<p>
-			<?php
-			printf(
-				/* translators: %s - error message */
-				esc_html__( 'Error: %s', 'wphb' ),
-				esc_html( $audit->errorMessage )
-			);
-			?>
-		</p>
-	</div>
-	<?php
+<?php if ( isset( $audit->errorMessage ) && ! isset( $audit->score ) ) {
+	$this->admin_notices->show_inline(
+		/* translators: %s - error message */
+		sprintf( esc_html__( 'Error: %s', 'wphb' ), esc_html( $audit->errorMessage ) ),
+		'error'
+	);
 	return;
 }
 ?>
 <?php if ( isset( $audit->score ) && 1 === $audit->score ) : ?>
-	<div class="sui-notice sui-notice-success">
-		<p>
-			<?php
-			printf(
-				/* translators: %s - nodes in total */
-				esc_html__( 'Nice! Your DOM only has %s in total.', 'wphb' ),
-				esc_html( $audit->displayValue )
-			);
-			?>
-		</p>
-	</div>
+	<?php
+	$this->admin_notices->show_inline(
+		sprintf(
+			/* translators: %s - nodes in total */
+			esc_html__( 'Nice! Your DOM only has %s in total.', 'wphb' ),
+			esc_html( $audit->displayValue )
+		)
+	);
+	?>
 <?php else : ?>
-	<div class="sui-notice sui-notice-<?php echo esc_attr( \Hummingbird\Core\Modules\Performance::get_impact_class( $audit->score ) ); ?>">
-		<p>
-			<?php
-			printf(
-				/* translators: %s - nodes in total */
-				esc_html__( 'Your DOM has %s in total.', 'wphb' ),
-				esc_html( $audit->displayValue )
-			);
-			?>
-		</p>
-	</div>
+	<?php
+	$this->admin_notices->show_inline(
+		sprintf(
+			/* translators: %s - nodes in total */
+			esc_html__( 'Your DOM has %s in total.', 'wphb' ),
+			esc_html( $audit->displayValue )
+		),
+		\Hummingbird\Core\Modules\Performance::get_impact_class( $audit->score )
+	);
+	?>
 
 	<?php if ( $audit->details->items ) : ?>
 		<table class="sui-table">
@@ -71,12 +61,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</tr>
 			<tr>
 				<td><strong><?php esc_html_e( 'Maximum DOM Depth', 'wphb' ); ?></strong></td>
-				<td><?php echo esc_html( $audit->details->items[1]->element->value ); ?></td>
+				<td>
+					<?php
+					if ( isset( $audit->details->items[1]->element ) ) {
+						echo esc_html( $audit->details->items[1]->element->value );
+					}
+					?>
+				</td>
 				<td><?php echo esc_html( $audit->details->items[1]->value ); ?></td>
 			</tr>
 			<tr>
 				<td><strong><?php esc_html_e( 'Maximum Child Elements', 'wphb' ); ?></strong></td>
-				<td><?php echo esc_html( $audit->details->items[2]->element->value ); ?></td>
+				<td>
+					<?php
+					if ( isset( $audit->details->items[2]->element ) ) {
+						echo esc_html( $audit->details->items[2]->element->value );
+					}
+					?>
+				</td>
 				<td><?php echo esc_html( $audit->details->items[2]->value ); ?></td>
 			</tr>
 			</tbody>

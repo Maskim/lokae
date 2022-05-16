@@ -6,6 +6,7 @@ return array(
 	'weight'                  => -1,
 	'name'                    => __( 'Multipurpose Carousel', 'the7mk2' ),
 	'base'                    => 'dt_carousel',
+	'description' => '',
 	'icon'                    => 'dt_vc_ico_carousel',
 	'class'                   => 'dt_carousel',
 	'as_parent'               => array( 'except' => 'dt_carousel, dt_slideshow, ult_tab_element, dt_team_carousel, dt_testimonials_carousel, dt_small_photos, dt_albums, dt_photos_masonry, dt_testimonials, dt_team, dt_albums_scroller, dt_portfolio_carousel, dt_portfolio_slide, dt_portfolio, dt_albums_carousel, dt_photos_carousel, dt_portfolio_slider, dt_products_carousel, dt_media_gallery_carousel, dt_before_after, dt_blog_scroller, dt_blog_posts, dt_blog_carousel, ult_range_slider, ultimate_carousel' ),
@@ -280,7 +281,7 @@ return array(
 		array(
 			'group'       => __( 'Arrows', 'the7mk2' ),
 			'heading'     => __( 'Arrow icon color', 'the7mk2' ),
-			'description' => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'param_name'  => 'arrow_icon_color',
 			'type'        => 'colorpicker',
 			'value'       => '#ffffff',
@@ -307,7 +308,7 @@ return array(
 		array(
 			'group'       => __( 'Arrows', 'the7mk2' ),
 			'heading'     => __( 'Arrow border color', 'the7mk2' ),
-			'description' => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'param_name'  => 'arrow_border_color',
 			'type'        => 'colorpicker',
 			'value'       => '',
@@ -334,7 +335,7 @@ return array(
 		array(
 			'group'       => __( 'Arrows', 'the7mk2' ),
 			'heading'     => __( 'Arrow background color', 'the7mk2' ),
-			'description' => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'param_name'  => 'arrow_bg_color',
 			'type'        => 'colorpicker',
 			'value'       => '',
@@ -357,7 +358,7 @@ return array(
 		array(
 			'group'       => __( 'Arrows', 'the7mk2' ),
 			'heading'     => __( 'Arrow icon color hover', 'the7mk2' ),
-			'description' => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'param_name'  => 'arrow_icon_color_hover',
 			'type'        => 'colorpicker',
 			'value'       => 'rgba(255,255,255,0.75)',
@@ -384,7 +385,7 @@ return array(
 		array(
 			'group'       => __( 'Arrows', 'the7mk2' ),
 			'heading'     => __( 'Arrow border color hover ', 'the7mk2' ),
-			'description' => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'param_name'  => 'arrow_border_color_hover',
 			'type'        => 'colorpicker',
 			'value'       => '',
@@ -411,7 +412,7 @@ return array(
 		array(
 			'group'       => __( 'Arrows', 'the7mk2' ),
 			'heading'     => __( 'Arrow background hover color', 'the7mk2' ),
-			'description' => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'param_name'  => 'arrow_bg_color_hover',
 			'type'        => 'colorpicker',
 			'value'       => '',
@@ -714,7 +715,7 @@ return array(
 		array(
 			'group'       => __( 'Bullets', 'the7mk2' ),
 			'heading'     => __( 'Bullets color', 'the7mk2' ),
-			'description' => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'param_name'  => 'bullet_color',
 			'type'        => 'colorpicker',
 			'value'       => '',
@@ -726,7 +727,7 @@ return array(
 		array(
 			'group'       => __( 'Bullets', 'the7mk2' ),
 			'heading'     => __( 'Bullets hover color', 'the7mk2' ),
-			'description' => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'param_name'  => 'bullet_color_hover',
 			'type'        => 'colorpicker',
 			'value'       => '',

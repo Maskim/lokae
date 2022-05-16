@@ -27,30 +27,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 </p>
 
 <h4><?php esc_html_e( 'Status', 'wphb' ); ?></h4>
-<?php if ( isset( $audit->errorMessage ) && ! isset( $audit->score ) ) { ?>
-	<div class="sui-notice sui-notice-error">
-		<p>
-			<?php
-			printf(
-				/* translators: %s - error message */
-				esc_html__( 'Error: %s', 'wphb' ),
-				esc_html( $audit->errorMessage )
-			);
-			?>
-		</p>
-	</div>
-	<?php
+<?php if ( isset( $audit->errorMessage ) && ! isset( $audit->score ) ) {
+	$this->admin_notices->show_inline(
+		/* translators: %s - error message */
+		sprintf( esc_html__( 'Error: %s', 'wphb' ), esc_html( $audit->errorMessage ) ),
+		'error'
+	);
 	return;
 }
 ?>
 <?php if ( isset( $audit->score ) && 1 === $audit->score ) : ?>
-	<div class="sui-notice sui-notice-success">
-		<p><?php esc_html_e( "Nice! We couldn't find any web font loading without font-display CSS rule.", 'wphb' ); ?></p>
-	</div>
+	<?php $this->admin_notices->show_inline( esc_html__( "Nice! We couldn't find any web font loading without font-display CSS rule.", 'wphb' ) ); ?>
 <?php else : ?>
-	<div class="sui-notice sui-notice-<?php echo esc_attr( \Hummingbird\Core\Modules\Performance::get_impact_class( $audit->score ) ); ?>">
-		<p><?php esc_html_e( 'Your page is not using font-display rule when loading the following web fonts.', 'wphb' ); ?></p>
-	</div>
+	<?php
+	$this->admin_notices->show_inline(
+		esc_html__( 'Your page is not using font-display rule when loading the following web fonts.', 'wphb' ),
+		\Hummingbird\Core\Modules\Performance::get_impact_class( $audit->score )
+	);
+	?>
 
 	<?php if ( $audit->details->items ) : ?>
 		<table class="sui-table">

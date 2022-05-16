@@ -6,7 +6,6 @@
  *
  * @var object    $uptime_stats    Last stats report.
  * @var string    $error           Error message.
- * @var string    $error_type      Error type.
  * @var string    $retry_url       Run uptime URL.
  * @var string    $support_url     Support URL.
  */
@@ -16,19 +15,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
+
 <?php if ( $error && ( ! strpos( $error, 'down for maintenance' ) ) ) : ?>
-	<div class="sui-notice sui-notice-<?php echo esc_attr( $error_type ); ?>">
-		<p><?php echo esc_html( $error ); ?></p>
-
-		<div class="sui-notice-buttons">
-			<a href="<?php echo esc_url( $retry_url ); ?>" class="sui-button sui-button-blue button-notice"><?php esc_html_e( 'Try again', 'wphb' ); ?></a>
-			<a target="_blank" href="<?php echo esc_url( $support_url ); ?>" class="sui-button sui-button-blue button-notice"><?php esc_html_e( 'Support', 'wphb' ); ?></a>
-		</div>
-
-		<span class="sui-notice-dismiss">
-			<a href="#">Dismiss</a>
-		</span>
-	</div>
+	<?php
+	$this->admin_notices->show_inline(
+		$error,
+		'error',
+		sprintf( /* translators: %1$s - opening a tag, %2$s - </a> */
+			esc_html__( '%1$sTry again%2$s', 'wphb' ),
+			'<a href="' . esc_url( $retry_url ) . '" class="sui-button sui-button-blue">',
+			'</a>'
+		) . sprintf( /* translators: %1$s - opening a tag, %2$s - </a> */
+			esc_html__( '%1$sSupport%2$s', 'wphb' ),
+			'<a href="' . esc_url( $support_url ) . '" target="_blank" class="sui-button sui-button-blue">',
+			'</a>'
+		)
+	);
+	?>
 <?php elseif ( strpos( $error, 'down for maintenance' ) ) : ?>
 	<div class="sui-block-content-center">
 		<?php if ( ! apply_filters( 'wpmudev_branding_hide_branding', false ) ) : ?>
@@ -60,17 +63,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		?>
 	</p>
 	<?php if ( null === $uptime_stats->response_time && ! is_wp_error( $uptime_stats ) ) : ?>
-		<div class="sui-notice sui-notice-blue">
-			<p>
-				<?php
-				esc_html_e(
-					'We don’t have any data feeding in yet. It can take an hour or two
-				for this graph to populate with data so feel free to check back soon!',
-					'wphb'
-				);
-				?>
-			</p>
-		</div>
+		<?php $this->admin_notices->show_inline( esc_html__( 'We don’t have any data feeding in yet. It can take an hour or two for this graph to populate with data so feel free to check back soon!', 'wphb' ), 'info' ); ?>
 	<?php endif; ?>
 
 	<input type="hidden" id="uptime-chart-json" value="<?php echo esc_attr( $uptime_stats->chart_json ); ?>">

@@ -11,8 +11,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<div class="sui-modal sui-modal-lg run-performance-test-modal">
-	<div role="dialog" class="sui-modal-content" id="run-performance-test-modal" aria-modal="true" aria-labelledby="runPerformanceScan" aria-describedby="dialogDescription">
+<div class="sui-modal sui-modal-lg">
+	<div
+		role="dialog"
+		id="run-performance-test-modal"
+		class="sui-modal-content"
+		aria-modal="true"
+		aria-labelledby="runPerformanceScan"
+		aria-describedby="dialogDescription"
+	>
 		<div class="sui-box">
 			<div class="sui-box-header">
 				<h3 class="sui-box-title" id="runPerformanceScan">
@@ -20,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</h3>
 			</div>
 
-			<div class="sui-box-body">
+			<div class="sui-box-body wphb-performance-scan-modal">
 				<p id="dialogDescription">
 					<?php esc_html_e( 'Hummingbird is running a test to measure your website performance, please wait.', 'wphb' ); ?>
 				</p>
@@ -28,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="sui-progress-block">
 					<div class="sui-progress">
 						<span class="sui-progress-icon" aria-hidden="true">
-							<i class="sui-icon-loader sui-loading"></i>
+							<span class="sui-icon-loader sui-loading"></span>
 						</span>
 						<div class="sui-progress-text">
 							<span>0%</span>
@@ -44,10 +51,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 			</div>
 			<?php if ( ! apply_filters( 'wpmudev_branding_hide_branding', false ) ) : ?>
-				<img class="sui-image"
-					src="<?php echo esc_url( WPHB_DIR_URL . 'admin/assets/image/hummingbird-modal-quicksetup.png' ); ?>"
-					srcset="<?php echo esc_url( WPHB_DIR_URL . 'admin/assets/image/hummingbird-modal-quicksetup@2x.png' ); ?> 2x"
-					alt="<?php esc_attr_e( 'Reduce your page load time!', 'wphb' ); ?>">
+				<img class="sui-image" alt="" src="<?php echo esc_url( WPHB_DIR_URL . 'admin/assets/image/hummingbird-modal-quicksetup.png' ); ?>"
+					srcset="<?php echo esc_url( WPHB_DIR_URL . 'admin/assets/image/hummingbird-modal-quicksetup.png' ); ?> 1x, <?php echo esc_url( WPHB_DIR_URL . 'admin/assets/image/hummingbird-modal-quicksetup@2x.png' ); ?> 2x">
 			<?php endif; ?>
 		</div>
 	</div>

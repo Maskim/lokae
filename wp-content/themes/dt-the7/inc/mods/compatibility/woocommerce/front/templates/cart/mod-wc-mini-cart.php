@@ -71,9 +71,11 @@ switch ( $config->get( 'woocommerce.mini_cart.counter.style' ) ) {
 		$dt_cart_class[] = 'rectangular-counter-style';
 		break;
 }
-
 if ( $config->get_bool( 'woocommerce.mini_cart.dropdown' ) ) {
 	$dt_cart_class[] = 'show-sub-cart';
+    if ( $config->get( 'woocommerce.mini_cart.dropdown.behavior' ) == 'click' ) {
+	    $dt_cart_class[] = 'show-on-click';
+    }
 }
 
 $cart_bottom_style = '';
@@ -121,12 +123,16 @@ if ( of_get_option( 'header-elements-woocommerce_cart-icon' ) === 'custom' ) {
 				$remove_link   = apply_filters( 'woocommerce_cart_item_remove_link', sprintf( '<a href="%s" class="remove" title="%s">&times;</a>', esc_url( wc_get_cart_remove_url( $cart_item_key ) ), __( 'Remove this item', 'the7mk2' ) ), $cart_item_key );
 				$quantity      = apply_filters( 'woocommerce_widget_cart_item_quantity', '<span class="quantity">' . sprintf( '%s &times; %s', $cart_item['quantity'], $product_price ) . '</span>', $cart_item, $cart_item_key );
 				$product_data  = wc_get_formatted_cart_item_data( $cart_item );
-				$product_link  = str_replace( array( 'http:', 'https:' ), '', $thumbnail ) . $product_name;
+				$product_link  = str_replace( array( 'http:', 'https:' ), '', $thumbnail );
+				$product_link_title  = str_replace( array( 'http:', 'https:' ), '', $product_name ) ;
 				if ( $_product->is_visible() ) {
 					$product_link = sprintf( '<a href="%1$s">%2$s</a>', esc_url( $_product->get_permalink( $cart_item ) ), $product_link );
 				}
+				if ( $_product->is_visible() ) {
+					$product_link_title = sprintf( '<a href="%1$s">%2$s</a>', esc_url( $_product->get_permalink( $cart_item ) ), $product_link_title );
+				}
 
-				$products[] = "<li>{$remove_link}{$product_link}{$product_data}{$quantity}</li>";
+				$products[] = "<li>{$remove_link}{$product_link} <span>{$product_link_title}{$product_data}<span class='price-wrap'>{$quantity}</span></span></li>";
 			}
 
 			$list_class = array( 'cart_list', 'product_list_widget' );

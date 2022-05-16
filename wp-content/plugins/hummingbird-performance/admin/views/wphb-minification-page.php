@@ -5,8 +5,6 @@
  * @package Hummingbird
  */
 
-use Hummingbird\Core\Settings;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -28,8 +26,13 @@ $this->do_meta_boxes( 'summary' );
 
 		<?php if ( 'files' === $this->get_current_tab() ) : ?>
 			<form id="wphb-minification-form" method="post">
+				<?php do_action( 'wphb_asset_optimization_http2_notice' ); ?>
 				<?php $this->do_meta_boxes( 'main' ); ?>
 			</form>
+			<?php if ( 'basic' === $this->mode ) : ?>
+				<br>
+				<div id="wrap-wphb-auto-minify"></div>
+			<?php endif; ?>
 		<?php endif; ?>
 
 		<?php if ( 'tools' === $this->get_current_tab() ) : ?>
@@ -44,31 +47,42 @@ $this->do_meta_boxes( 'summary' );
 			</form>
 		<?php endif; ?>
 
+		<?php if ( 'import' === $this->get_current_tab() ) : ?>
+			<?php $this->do_meta_boxes( 'import' ); ?>
+		<?php endif; ?>
 	</div><!-- end row -->
 	<?php
 endif;
 
-$this->modal( 'minification-advanced' );
+if ( get_option( 'wphb-minification-show-advanced_modal' ) ) {
+	$this->modal( 'minification-advanced' );
+}
+$this->modal( 'automatic-ao-how-does-it-work' );
+$this->modal( 'manual-ao-how-does-it-work' );
+
 if ( 'advanced' === $this->mode ) {
-	$this->modal( 'minification-basic' );
+	$this->modal( 'minification-tour' );
+	if ( get_option( 'wphb-minification-show-config_modal' ) ) {
+		$this->modal( 'minification-basic' );
+	}
 }
 
 $this->modal( 'found-assets' );
-$this->modal( 'minification-tour' );
 
-$tour = Settings::get( 'wphb-new-user-tour' );
+if ( ! \Hummingbird\Core\Utils::is_member() ) {
+	$this->modal( 'membership' );
+}
+
 ?>
 
 <script>
 	jQuery(document).ready( function() {
-		var module = window.WPHB_Admin.getModule( 'minification' );
-
+		window.WPHB_Admin.getModule( 'minification' );
 		<?php if ( isset( $_GET['run'] ) ) : ?>
-			module.$checkFilesButton.trigger( 'click' );
+			jQuery( document ).trigger( 'check-files' );
 		<?php endif; ?>
-
-		<?php if ( ! $tour && ! $this->has_meta_boxes( 'box-enqueued-files-empty' ) && ! is_network_admin() ) : ?>
-			window.SUI.openModal('wphb-minification-tour', 'wpbody-content', undefined, false);
+		<?php if ( 'import' === $this->get_current_tab() ) : ?>
+			window.WPHB_Admin.getModule( 'settings' );
 		<?php endif; ?>
 	});
 </script>

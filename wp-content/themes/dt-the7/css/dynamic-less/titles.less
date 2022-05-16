@@ -4,7 +4,7 @@
 @page-title-font-variant: normal;
 @breadcrumbs-font-variant: normal;
 //@page-title-line-height: 1;
-.title-background-gradient (@startColor: #eee, @endColor: white, @dir: 135deg)  when (isstring(~"@endColor")) {
+.title-background-gradient (@startColor: #eee, @endColor: white, @dir: 135deg) when not (@endColor = ~"") {
 	background: @startColor; /* Old browsers */
 	background: -webkit-linear-gradient(@endColor); /* Chrome10+,Safari5.1+ */
 	background: linear-gradient(@endColor); /* W3C */
@@ -99,7 +99,7 @@
 		}
 		.fancy-header .color-accent span {
 			#page & {
-				color: @accent-bg-color;
+				color: var(--the7-accent-color);
 			}
 			.accent-gradient #page & {
 				.text-gradient (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
@@ -108,7 +108,7 @@
 .breadcrumbs {
 	.dt-breadcrumbs-shortcode & {
 		& * {
-			color: @secondary-text-color;
+			color: var(--the7-secondary-text-color);
 		}
 	}
 }

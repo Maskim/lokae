@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit2b24f5ddc335620015ade0eba62103e1
+class ComposerStaticInite2cbce783747da1e56f5a1ab19fdb881
 {
     public static $files = array (
         'b45b351e6b6f7487d819961fef2fda77' => __DIR__ . '/..' . '/jakeasmith/http_build_url/src/http_build_url.php',
@@ -25,9 +25,15 @@ class ComposerStaticInit2b24f5ddc335620015ade0eba62103e1
     );
 
     public static $classMap = array (
+        'WCML\\AdminDashboard\\Hooks' => __DIR__ . '/../..' . '/classes/AdminDashboard/Hooks.php',
+        'WCML\\AdminNotices\\CachePlugins' => __DIR__ . '/../..' . '/classes/AdminNotices/CachePlugins.php',
+        'WCML\\AdminNotices\\RestrictedScreens' => __DIR__ . '/../..' . '/classes/AdminNotices/RestrictedScreens.php',
+        'WCML\\AdminNotices\\Review' => __DIR__ . '/../..' . '/classes/AdminNotices/Review.php',
         'WCML\\Block\\Convert\\ConverterProvider' => __DIR__ . '/../..' . '/classes/Block/Convert/ConverterProvider.php',
         'WCML\\Block\\Convert\\Converter\\ProductsByAttributes' => __DIR__ . '/../..' . '/classes/Block/Convert/Converter/ProductsByAttributes.php',
         'WCML\\Block\\Convert\\Hooks' => __DIR__ . '/../..' . '/classes/Block/Convert/Hooks.php',
+        'WCML\\CLI\\Hooks' => __DIR__ . '/../..' . '/classes/CLI/Hooks.php',
+        'WCML\\Compatibility\\WOOF\\WooCommerceProductFilter' => __DIR__ . '/../..' . '/compatibility/class-wcml-woof-woocommerce-product-filter.php',
         'WCML\\Container\\Config' => __DIR__ . '/../..' . '/classes/Container/Config.php',
         'WCML\\Email\\Settings\\Hooks' => __DIR__ . '/../..' . '/classes/Email/Settings/Hooks.php',
         'WCML\\MO\\Hooks' => __DIR__ . '/../..' . '/classes/MO/Hooks.php',
@@ -35,8 +41,55 @@ class ComposerStaticInit2b24f5ddc335620015ade0eba62103e1
         'WCML\\Media\\Wrapper\\IMedia' => __DIR__ . '/../..' . '/classes/media/Wrapper/IMedia.php',
         'WCML\\Media\\Wrapper\\NonTranslatable' => __DIR__ . '/../..' . '/classes/media/Wrapper/NonTranslatable.php',
         'WCML\\Media\\Wrapper\\Translatable' => __DIR__ . '/../..' . '/classes/media/Wrapper/Translatable.php',
+        'WCML\\MultiCurrency\\Geolocation' => __DIR__ . '/../..' . '/classes/multi-currency/geolocation/Geolocation.php',
+        'WCML\\Multicurrency\\Shipping\\AdminHooks' => __DIR__ . '/../..' . '/classes/Multicurrency/Shipping/AdminHooks.php',
+        'WCML\\Multicurrency\\Shipping\\DefaultConversion' => __DIR__ . '/../..' . '/classes/Multicurrency/Shipping/DefaultConversion.php',
+        'WCML\\Multicurrency\\Shipping\\FlatRateShipping' => __DIR__ . '/../..' . '/classes/Multicurrency/Shipping/FlatRateShipping.php',
+        'WCML\\Multicurrency\\Shipping\\FreeShipping' => __DIR__ . '/../..' . '/classes/Multicurrency/Shipping/FreeShipping.php',
+        'WCML\\Multicurrency\\Shipping\\FrontEndHooks' => __DIR__ . '/../..' . '/classes/Multicurrency/Shipping/FrontEndHooks.php',
+        'WCML\\Multicurrency\\Shipping\\LocalPickup' => __DIR__ . '/../..' . '/classes/Multicurrency/Shipping/LocalPickup.php',
+        'WCML\\Multicurrency\\Shipping\\ShippingClasses' => __DIR__ . '/../..' . '/classes/Multicurrency/Shipping/ShippingClasses.php',
+        'WCML\\Multicurrency\\Shipping\\ShippingClassesMode' => __DIR__ . '/../..' . '/classes/Multicurrency/Shipping/ShippingClassesMode.php',
+        'WCML\\Multicurrency\\Shipping\\ShippingHooksFactory' => __DIR__ . '/../..' . '/classes/Multicurrency/Shipping/ShippingHooksFactory.php',
+        'WCML\\Multicurrency\\Shipping\\ShippingMode' => __DIR__ . '/../..' . '/classes/Multicurrency/Shipping/ShippingMode.php',
+        'WCML\\Multicurrency\\Shipping\\ShippingModeBase' => __DIR__ . '/../..' . '/classes/Multicurrency/Shipping/ShippingModeBase.php',
+        'WCML\\Multicurrency\\Shipping\\ShippingModeProvider' => __DIR__ . '/../..' . '/classes/Multicurrency/Shipping/ShippingModeProvider.php',
+        'WCML\\Multicurrency\\Shipping\\UnsupportedShipping' => __DIR__ . '/../..' . '/classes/Multicurrency/Shipping/UnsupportedShipping.php',
+        'WCML\\Multicurrency\\Shipping\\VariableCost' => __DIR__ . '/../..' . '/classes/Multicurrency/Shipping/VariableCost.php',
+        'WCML\\Multicurrency\\UI\\Factory' => __DIR__ . '/../..' . '/classes/Multicurrency/UI/Factory.php',
+        'WCML\\Multicurrency\\UI\\Hooks' => __DIR__ . '/../..' . '/classes/Multicurrency/UI/Hooks.php',
+        'WCML\\PaymentGateways\\Hooks' => __DIR__ . '/../..' . '/classes/PaymentGateways/Hooks.php',
+        'WCML\\Reports\\Products\\Query' => __DIR__ . '/../..' . '/classes/Reports/Products/Query.php',
+        'WCML\\Rest\\Exceptions\\Generic' => __DIR__ . '/../..' . '/classes/Rest/Exceptions/Generic.php',
+        'WCML\\Rest\\Exceptions\\InvalidCurrency' => __DIR__ . '/../..' . '/classes/Rest/Exceptions/InvalidCurrency.php',
+        'WCML\\Rest\\Exceptions\\InvalidLanguage' => __DIR__ . '/../..' . '/classes/Rest/Exceptions/InvalidLanguage.php',
+        'WCML\\Rest\\Exceptions\\InvalidProduct' => __DIR__ . '/../..' . '/classes/Rest/Exceptions/InvalidProduct.php',
+        'WCML\\Rest\\Exceptions\\InvalidTerm' => __DIR__ . '/../..' . '/classes/Rest/Exceptions/InvalidTerm.php',
+        'WCML\\Rest\\Exceptions\\MissingLanguage' => __DIR__ . '/../..' . '/classes/Rest/Exceptions/MissingLanguage.php',
         'WCML\\Rest\\Frontend\\Language' => __DIR__ . '/../..' . '/classes/Rest/Frontend/Language.php',
+        'WCML\\Rest\\Functions' => __DIR__ . '/../..' . '/classes/Rest/Functions.php',
+        'WCML\\Rest\\Generic' => __DIR__ . '/../..' . '/classes/Rest/Generic.php',
+        'WCML\\Rest\\Hooks' => __DIR__ . '/../..' . '/classes/Rest/Hooks.php',
+        'WCML\\Rest\\Language\\Set' => __DIR__ . '/../..' . '/classes/Rest/Language/Set.php',
+        'WCML\\Rest\\ProductSaveActions' => __DIR__ . '/../..' . '/classes/Rest/ProductSaveActions.php',
+        'WCML\\Rest\\Wrapper\\Composite' => __DIR__ . '/../..' . '/classes/Rest/Wrapper/Composite .php',
+        'WCML\\Rest\\Wrapper\\Factory' => __DIR__ . '/../..' . '/classes/Rest/Wrapper/Factory.php',
+        'WCML\\Rest\\Wrapper\\Handler' => __DIR__ . '/../..' . '/classes/Rest/Wrapper/Handler.php',
+        'WCML\\Rest\\Wrapper\\Orders\\Languages' => __DIR__ . '/../..' . '/classes/Rest/Wrapper/Orders/Languages.php',
+        'WCML\\Rest\\Wrapper\\Orders\\Prices' => __DIR__ . '/../..' . '/classes/Rest/Wrapper/Orders/Prices.php',
+        'WCML\\Rest\\Wrapper\\ProductTerms' => __DIR__ . '/../..' . '/classes/Rest/Wrapper/ProductTerms.php',
+        'WCML\\Rest\\Wrapper\\Products\\Products' => __DIR__ . '/../..' . '/classes/Rest/Wrapper/Products/Products.php',
+        'WCML\\Rest\\Wrapper\\Reports\\ProductsCount' => __DIR__ . '/../..' . '/classes/Rest/Wrapper/Reports/ProductsCount.php',
+        'WCML\\Rest\\Wrapper\\Reports\\ProductsSales' => __DIR__ . '/../..' . '/classes/Rest/Wrapper/Reports/ProductsSales.php',
+        'WCML\\Rest\\Wrapper\\Reports\\TopSeller' => __DIR__ . '/../..' . '/classes/Rest/Wrapper/Reports/TopSeller.php',
         'WCML\\RewriteRules\\Hooks' => __DIR__ . '/../..' . '/classes/RewriteRules/Hooks.php',
+        'WCML\\Tax\\Strings\\Hooks' => __DIR__ . '/../..' . '/classes/Tax/Strings/Hooks.php',
+        'WCML\\User\\Store\\Cookie' => __DIR__ . '/../..' . '/classes/User/Store/Cookie.php',
+        'WCML\\User\\Store\\Noop' => __DIR__ . '/../..' . '/classes/User/Store/Noop.php',
+        'WCML\\User\\Store\\Store' => __DIR__ . '/../..' . '/classes/User/Store/Store.php',
+        'WCML\\User\\Store\\Strategy' => __DIR__ . '/../..' . '/classes/User/Store/Strategy.php',
+        'WCML\\User\\Store\\WcSession' => __DIR__ . '/../..' . '/classes/User/Store/WcSession.php',
+        'WCML\\Utilities\\Resources' => __DIR__ . '/../..' . '/classes/Utilities/Resources.php',
         'WCML_ATE_Activate_Synchronization' => __DIR__ . '/../..' . '/classes/ate/class-wcml-ate-activate-synchronization.php',
         'WCML_Accommodation_Bookings' => __DIR__ . '/../..' . '/compatibility/class-wcml-accommodation-bookings.php',
         'WCML_Admin_Cookie' => __DIR__ . '/../..' . '/classes/class-wcml-admin-cookie.php',
@@ -144,15 +197,6 @@ class ComposerStaticInit2b24f5ddc335620015ade0eba62103e1
         'WCML_Products' => __DIR__ . '/../..' . '/inc/class-wcml-products.php',
         'WCML_Products_Screen_Options' => __DIR__ . '/../..' . '/inc/class-wcml-products-screen-options.php',
         'WCML_Products_UI' => __DIR__ . '/../..' . '/inc/template-classes/class-wcml-products-ui.php',
-        'WCML_REST_API' => __DIR__ . '/../..' . '/classes/rest-api-support/class-wcml-rest-api.php',
-        'WCML_REST_API_Query_Filters_Orders' => __DIR__ . '/../..' . '/classes/rest-api-support/filters/class-wcml-rest-api-query-filters-orders.php',
-        'WCML_REST_API_Query_Filters_Products' => __DIR__ . '/../..' . '/classes/rest-api-support/filters/class-wcml-rest-api-query-filters-products.php',
-        'WCML_REST_API_Query_Filters_Terms' => __DIR__ . '/../..' . '/classes/rest-api-support/filters/class-wcml-rest-api-query-filters-terms.php',
-        'WCML_REST_API_Support' => __DIR__ . '/../..' . '/classes/rest-api-support/class-wcml-rest-api-support.php',
-        'WCML_REST_Generic_Exception' => __DIR__ . '/../..' . '/classes/rest-api-support/exceptions/class-wcml-rest-generic-exception.php',
-        'WCML_REST_Invalid_Currency_Exception' => __DIR__ . '/../..' . '/classes/rest-api-support/exceptions/class-wcml-rest-invalid-currency-exception.php',
-        'WCML_REST_Invalid_Language_Exception' => __DIR__ . '/../..' . '/classes/rest-api-support/exceptions/class-wcml-rest-invalid-language-exception.php',
-        'WCML_REST_Invalid_Product_Exception' => __DIR__ . '/../..' . '/classes/rest-api-support/exceptions/class-wcml-rest-invalid-product-exception.php',
         'WCML_Relevanssi' => __DIR__ . '/../..' . '/compatibility/class-wcml-relevanssi.php',
         'WCML_Removed_Cart_Items_UI' => __DIR__ . '/../..' . '/inc/template-classes/class-wcml-removed-cart-items-ui.php',
         'WCML_Reports' => __DIR__ . '/../..' . '/inc/class-wcml-reports.php',
@@ -238,9 +282,9 @@ class ComposerStaticInit2b24f5ddc335620015ade0eba62103e1
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit2b24f5ddc335620015ade0eba62103e1::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit2b24f5ddc335620015ade0eba62103e1::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit2b24f5ddc335620015ade0eba62103e1::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInite2cbce783747da1e56f5a1ab19fdb881::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInite2cbce783747da1e56f5a1ab19fdb881::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInite2cbce783747da1e56f5a1ab19fdb881::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -3,7 +3,7 @@
  * @package The7
  */
 
-namespace The7\Adapters\Elementor\Meta_Adapters;
+namespace The7\Mods\Compatibility\Elementor\Meta_Adapters;
 
 use \Color;
 

@@ -18,17 +18,42 @@ if ( ! function_exists( 'presscore_get_dynamic_stylesheets_list' ) ) :
 		static $dynamic_stylesheets = null;
 
 		if ( null === $dynamic_stylesheets ) {
-			$dynamic_stylesheets = array();
+			$dynamic_stylesheets = [];
 
-			$dynamic_import_top    = array(
-				'dynamic-less/plugins/gutenberg.less',
-			);
-			$dynamic_import_bottom = array();
+			/**
+			 * CSS vars is generated dynamically based on registered less vars.
+			 *
+			 * There is no actual css-vars.less file.
+			 *
+			 * @see presscore_regenerate_dynamic_css
+			 */
+			$dynamic_stylesheets['the7-css-vars'] = [
+				'src' => 'css-vars.less',
+			];
+
+			$dynamic_import_top = [];
+
+			$dynamic_import_top['gutenberg'] = 'dynamic-less/plugins/gutenberg.less';
+			if ( The7_Admin_Dashboard_Settings::get( 'disable-gutenberg-styles' ) ) {
+				unset( $dynamic_import_top['gutenberg'] );
+			}
+			if ( the7_elementor_is_active() ) {
+				if (!the7_is_elementor_theme_style_enabled()){
+					$dynamic_import_top[] = 'dynamic-less/elementor/kit-css-vars.less';
+				}
+				if ( the7_is_elementor_buttons_integration_enabled() ) {
+					$dynamic_import_top[] = 'dynamic-less/elementor/buttons.less';
+				}
+				if ( The7_Admin_Dashboard_Settings::get( 'elementor-zero-paragraph-last-spacing' ) ) {
+					$dynamic_import_top[] = 'dynamic-less/elementor/last-spacing.less';
+				}
+			}
+
+			$dynamic_import_bottom = [];
 
 			if ( The7_Admin_Dashboard_Settings::get( 'overlapping-headers' ) ) {
 				$dynamic_import_bottom[] = 'legacy/overlap-header.less';
 			}
-
 			switch ( of_get_option( 'header-layout' ) ) {
 				case 'classic':
 					$dynamic_import_top[]    = 'dynamic-less/header/header-layouts/static/_horizontal-headers.less';
@@ -49,49 +74,55 @@ if ( ! function_exists( 'presscore_get_dynamic_stylesheets_list' ) ) :
 					$dynamic_import_bottom[] = 'dynamic-less/header/header-layouts/_split-header.less';
 					break;
 				case 'side':
-					$dynamic_import_top[]    = 'dynamic-less/plugins/jquery.mCustomScrollbar.less';
 					$dynamic_import_top[]    = 'dynamic-less/header/header-layouts/static/_vertical-headers.less';
 					$dynamic_import_bottom[] = 'dynamic-less/header/header-layouts/_vertical-headers.less';
 					break;
 				case 'top_line':
 				case 'side_line':
 				case 'menu_icon':
-					$dynamic_import_top[]    = 'dynamic-less/plugins/jquery.mCustomScrollbar.less';
 					$dynamic_import_top[]    = 'dynamic-less/header/header-layouts/static/_mixed-headers.less';
 					$dynamic_import_top[]    = 'dynamic-less/header/header-layouts/static/_vertical-headers.less';
 					$dynamic_import_bottom[] = 'dynamic-less/header/header-layouts/_mixed-headers.less';
 					$dynamic_import_bottom[] = 'dynamic-less/header/header-layouts/_vertical-headers.less';
 					break;
+				case 'disabled':
+					break;
 			}
 
-			$dynamic_stylesheets['dt-custom'] = array(
+			$dynamic_import_bottom[] = 'dynamic-less/plugins/wpbakery.less';
+
+			if (the7_is_elementor_theme_style_enabled()){
+				$dynamic_import_bottom[] = 'dynamic-less/elementor/elementor-theme-styles.less';
+			}
+
+			$dynamic_stylesheets['dt-custom'] = [
 				'src'     => 'custom.less',
 				'imports' => compact( 'dynamic_import_top', 'dynamic_import_bottom' ),
-			);
+			];
 
-			if ( dt_is_woocommerce_enabled() ) {
-				$dynamic_stylesheets['wc-dt-custom'] = array(
+			if ( the7_is_woocommerce_enabled() ) {
+				$dynamic_stylesheets['wc-dt-custom'] = [
 					'src' => 'compatibility/wc-dt-custom.less',
-				);
+				];
 			}
 
 			if ( presscore_responsive() ) {
-				$dynamic_stylesheets['dt-media'] = array(
+				$dynamic_stylesheets['dt-media'] = [
 					'src' => 'media.less',
-				);
+				];
 			}
 
 			if ( The7_Admin_Dashboard_Settings::get( 'mega-menu' ) ) {
-				$dynamic_stylesheets['the7-mega-menu'] = array(
+				$dynamic_stylesheets['the7-mega-menu'] = [
 					'src' => 'mega-menu.less',
-				);
+				];
 			}
 
 			if ( The7_Admin_Dashboard_Settings::get( 'rows' ) ) {
-				$dynamic_stylesheets['the7-stripes'] = array(
+				$dynamic_stylesheets['the7-stripes'] = [
 					'src'          => 'legacy/stripes.less',
 					'auto_enqueue' => false,
-				);
+				];
 			}
 		}
 
@@ -167,13 +198,27 @@ if ( ! function_exists( 'presscore_regenerate_dynamic_css' ) ) :
 		include_once PRESSCORE_DIR . '/less-vars.php';
 
 		$wp_upload = wp_get_upload_dir();
-		$less_vars = presscore_compile_less_vars();
+		$less_vars_manager = the7_get_new_less_vars_manager();
+		$less_vars = presscore_compile_less_vars( $less_vars_manager );
 		$lessc     = new The7_Less_Compiler( $less_vars );
 
 		// Compile beautiful loading css.
 		$beautiful_loading_css = $lessc->compile_file( The7_Dynamic_Stylesheet::get_theme_css_dir() . '/beautiful-loading.less' );
 		presscore_cache_loader_inline_css( $beautiful_loading_css );
 		unset( $beautiful_loading_css );
+
+		/**
+		 * Generate css vars file.
+		 *
+		 * @see presscore_get_dynamic_stylesheets_list
+		 */
+		if ( isset( $dynamic_css['the7-css-vars']['src'] ) ) {
+			$css_vars_stylesheet = new The7_Dynamic_Stylesheet( 'the7-css-vars', $dynamic_css['the7-css-vars']['src'] );
+			unset( $dynamic_css['the7-css-vars'] );
+
+			$css_vars_file = new The7_CSS_Vars_File( $css_vars_stylesheet->get_css_file() );
+			$css_vars_file->generate_based_on_less_vars( $less_vars_manager->storage()->get_css_vars(), $lessc );
+		}
 
 		if ( $lessc->is_writable( $wp_upload['basedir'] ) ) {
 			update_option( 'presscore_less_css_is_writable', 1 );

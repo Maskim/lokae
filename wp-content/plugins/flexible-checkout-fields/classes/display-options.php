@@ -91,7 +91,7 @@ class Flexible_Checkout_Fields_Disaplay_Options {
 								}
 								$value = apply_filters( 'flexible_checkout_fields_print_value', $value, $field );
 								if ( '' !== $value ) {
-									$return[] = esc_html( wpdesk__( $field['label'], 'flexible-checkout-fields' ) ) . ': ' . esc_html( $value );
+									$return[] = strip_tags( wpdesk__( $field['label'], 'flexible-checkout-fields' ) ) . ': ' . esc_html( $value );
 								}
 							}
 						}
@@ -121,6 +121,7 @@ class Flexible_Checkout_Fields_Disaplay_Options {
 		$this->current_address_type = $address_type;
 		WC()->countries->address_formats = '';
 		$cf_fields = $this->getCheckoutFields( array(), $address_type );
+		$is_empty_address = $this->check_if_address_is_empty ( $address );
 		foreach ( $cf_fields as $field_key => $field ) {
 			$fcf_field = new Flexible_Checkout_Fields_Field( $field, $this->plugin);
 			if ( !isset( $address[$field['name']] ) ) {
@@ -135,8 +136,11 @@ class Flexible_Checkout_Fields_Disaplay_Options {
 				}
 
 				$meta_value = apply_filters( 'flexible_checkout_fields_user_meta_display_value', $meta_value, $field );
+				$val       .= $meta_value;
+				if ( $is_empty_address && ( $meta_value === '' ) ) {
+					$val = '';
+				}
 
-				$val .= $meta_value;
 				$address[$field['name']] = $val;
 				$address[$this->replace_only_first(  $address_type . '_', '', $field['name'] )] = $val;
 			}
@@ -147,6 +151,23 @@ class Flexible_Checkout_Fields_Disaplay_Options {
 
 	public function getCheckoutFields( $fields, $request_type = null ) {
 		return $this->plugin->getCheckoutFields( $fields, $request_type );
+	}
+
+	/**
+	 * Checks if all values in address array are empty.
+	 *
+	 * @param string[] $address Array keys are field names and values are field values.
+	 *
+	 * @return bool Status if all values are empty string.
+	 */
+	private function check_if_address_is_empty( array $address ) {
+		foreach ( $address as $field_key => $field_value ) {
+			if ( $field_value !== '' ) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -198,19 +219,21 @@ class Flexible_Checkout_Fields_Disaplay_Options {
 		if ( empty( $fields ) ) {
 			return $formats;
 		}
-		$default_format = $formats['default'];
-		if ( $this->is_edit_address_page()
-		     || $this->is_order_page()
-		     || $this->is_in_email()
-		     || $this->is_thankyou_page()
-		) {
-			$default_format = '';
-			foreach ( $fields as $field_key => $field ) {
-				$default_format = $this->append_field_to_address_format( $default_format, $field_key, $field );
+
+		foreach ( $formats as $format_key => $format ) {
+			if ( $this->is_edit_address_page()
+				 || $this->is_order_page()
+				 || $this->is_in_email()
+				 || $this->is_thankyou_page()
+			) {
+				$formats[ $format_key ] = '';
+				foreach ( $fields as $field_key => $field ) {
+					$formats[ $format_key ] = $this->append_field_to_address_format( $formats[ $format_key ], $field_key, $field );
+				}
 			}
 		}
 
-		return array( 'default' => $default_format );
+		return $formats;
 	}
 
 	private function is_field_displayable( $field ) {
@@ -340,6 +363,10 @@ class Flexible_Checkout_Fields_Disaplay_Options {
 
 		foreach ( $cf_fields as $field_key => $field ) {
 			$val = wpdesk_get_order_meta( $order, '_' . $field_key, true );
+			if ( empty( $val ) && isset( $fields[ $field_key ] ) ) {
+				$val = $fields[ $field_key ];
+			}
+
 			$fcf_field = new Flexible_Checkout_Fields_Field( $field, $this->plugin );
 			if ( (isset( $field['custom_field'] ) && $field['custom_field'] == '1')) {
 				$val = '';
@@ -358,8 +385,9 @@ class Flexible_Checkout_Fields_Disaplay_Options {
 			}
 
 			$val = $this->flexible_invoices_ask_field_integration($val, $field, $field_key, $fields);
+			$val = esc_html( $val );
 
-			$fields[$field['name']] = esc_html($val);
+			$fields[$field['name']] = $val;
 			$fields[$this->replace_only_first(  $address_type . '_', '', $field['name'] )] = $val;
 		}
 
@@ -419,7 +447,7 @@ class Flexible_Checkout_Fields_Disaplay_Options {
 					// if field exists and is defined as select we can use this data. If not then better do not touch as it's probably optional checkbox
 					if ( isset( $wc_field_def['options'] ) ) {
 						$select_options = $wc_meta_key_definitions[ $this->current_address_type ]['fields'][ $field_key ]['options'];
-						$option_val     = $select_options[ $val ];
+						$option_val     = isset( $select_options[ $val ] ) ? $select_options[ $val ] : '';
 
 						return $label . ': ' . $option_val;
 					} elseif ( (int) $val === 1 ) {

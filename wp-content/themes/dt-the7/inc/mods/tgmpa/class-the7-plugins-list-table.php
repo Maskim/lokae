@@ -22,9 +22,13 @@ if ( ! class_exists( 'The7_Plugins_List_Table' ) ) {
 
 			// Show all plugins.
 			foreach ( $this->tgmpa->plugins as $slug => $plugin ) {
+				if ( $this->tgmpa->is_plugin_can_be_activated_only( $slug ) ) {
+					continue;
+				}
+
 				$plugins['all'][ $slug ] = $plugin;
 
-				$plugin_is_external = ( 'external' == $plugin['source_type'] );
+				$plugin_is_external = ( 'external' === $plugin['source_type'] );
 
 				if ( ! $this->tgmpa->is_plugin_installed( $slug ) ) {
 					if ( ! $theme_is_activated && $plugin_is_external ) {
@@ -57,30 +61,30 @@ if ( ! class_exists( 'The7_Plugins_List_Table' ) ) {
 		 */
 		protected function get_plugin_status_text( $slug ) {
 			if ( ! $this->tgmpa->is_plugin_installed( $slug ) ) {
-				return __( 'Not Installed', 'tgmpa' );
+				return __( 'Not Installed', 'the7mk2' );
 			}
 
 			if ( ! $this->tgmpa->is_plugin_active( $slug ) ) {
-				$install_status = __( 'Installed But Not Activated', 'tgmpa' );
+				$install_status = __( 'Installed But Not Activated', 'the7mk2' );
 			} else {
-				$install_status = __( 'Active', 'tgmpa' );
+				$install_status = __( 'Active', 'the7mk2' );
 			}
 
 			if ( $this->tgmpa->does_plugin_require_update( $slug ) && false === $this->tgmpa->does_plugin_have_update( $slug ) ) {
-				$update_status = __( 'Required Update not Available', 'tgmpa' );
+				$update_status = __( 'Required Update not Available', 'the7mk2' );
 			} elseif ( $this->tgmpa->does_plugin_require_update( $slug ) ) {
-				$update_status = __( 'Requires Update', 'tgmpa' );
+				$update_status = __( 'Requires Update', 'the7mk2' );
 			} elseif ( false !== $this->tgmpa->does_plugin_have_update( $slug ) ) {
-				$update_status = __( 'Update recommended', 'tgmpa' );
+				$update_status = __( 'Update recommended', 'the7mk2' );
 			} else {
-				$update_status = __( 'Up to date', 'tgmpa' );
+				$update_status = __( 'Up to date', 'the7mk2' );
 			}
 
 			if ( $this->tgmpa->does_plugin_have_cross_version_update( $slug ) ) {
 				$update_url  = $this->get_action_url( 'update', $slug, 'latest' );
 				$button_text = sprintf(
 					/* translators: %s: plugin version */
-					__( 'Force Upgrade to %s', 'tgmpa' ),
+					__( 'Force Upgrade to %s', 'the7mk2' ),
 					$this->tgmpa->get_plugin_latest_version( $slug )
 				);
 				$update_status .= '<br><a class="button-link button-link-delete force-update" href="' . esc_url( $update_url ) . '">' . esc_html( $button_text ) . '</a>';
@@ -88,7 +92,7 @@ if ( ! class_exists( 'The7_Plugins_List_Table' ) ) {
 
 			$status_text = sprintf(
 				/* translators: 1: install status, 2: update status */
-				_x( '%1$s, %2$s', 'Install/Update Status', 'tgmpa' ),
+				_x( '%1$s, %2$s', 'Install/Update Status', 'the7mk2' ),
 				$install_status,
 				$update_status
 			);
@@ -109,17 +113,17 @@ if ( ! class_exists( 'The7_Plugins_List_Table' ) ) {
 
 			switch ( $type ) {
 				case 'repo':
-					$string = __( 'WordPress Repository', 'tgmpa' );
+					$string = __( 'WordPress Repository', 'the7mk2' );
 					break;
 				case 'external':
 					if ( presscore_theme_is_activated() ) {
-						$string = __( 'The7 Repository', 'tgmpa' );
+						$string = __( 'The7 Repository', 'the7mk2' );
 					} else {
-						$string = wp_kses( sprintf( __( 'Please <a href="%s">register</a> the theme', 'tgmpa' ), admin_url( 'admin.php?page=the7-dashboard' ) ), array( 'a' => array( 'href' => true ) ) );
+						$string = wp_kses( sprintf( __( 'Please <a href="%s">register</a> the theme', 'the7mk2' ), admin_url( 'admin.php?page=the7-dashboard' ) ), array( 'a' => array( 'href' => true ) ) );
 					}
 					break;
 				case 'bundled':
-					$string = __( 'Pre-Packaged', 'tgmpa' );
+					$string = __( 'Pre-Packaged', 'the7mk2' );
 					break;
 			}
 
@@ -151,18 +155,18 @@ if ( ! class_exists( 'The7_Plugins_List_Table' ) ) {
 			// Display the 'Install' action link if the plugin is not yet available.
 			if ( ! $this->tgmpa->is_plugin_installed( $item['slug'] ) ) {
 				/* translators: %2$s: plugin name in screen reader markup */
-				$actions['install'] = __( 'Install %2$s', 'tgmpa' );
+				$actions['install'] = __( 'Install %2$s', 'the7mk2' );
 			} else {
 				// Display the 'Update' action link if an update is available and WP complies with plugin minimum.
 				if ( false !== $this->tgmpa->does_plugin_have_update( $item['slug'] ) && $this->tgmpa->can_plugin_update( $item['slug'] ) ) {
 					/* translators: %2$s: plugin name in screen reader markup */
-					$actions['update'] = __( 'Update %2$s', 'tgmpa' );
+					$actions['update'] = __( 'Update %2$s', 'the7mk2' );
 				}
 
 				// Display the 'Activate' action link, but only if the plugin meets the minimum version.
 				if ( $this->tgmpa->can_plugin_activate( $item['slug'] ) ) {
 					/* translators: %2$s: plugin name in screen reader markup */
-					$actions['activate'] = __( 'Activate %2$s', 'tgmpa' );
+					$actions['activate'] = __( 'Activate %2$s', 'the7mk2' );
 				}
 			}
 
@@ -240,9 +244,9 @@ if ( ! class_exists( 'The7_Plugins_List_Table' ) ) {
 				// Did user actually select any plugins to install/update ?
 				if ( empty( $_POST['plugin'] ) ) {
 					if ( 'install' === $install_type ) {
-						$message = __( 'No plugins were selected to be installed. No action taken.', 'tgmpa' );
+						$message = __( 'No plugins were selected to be installed. No action taken.', 'the7mk2' );
 					} else {
-						$message = __( 'No plugins were selected to be updated. No action taken.', 'tgmpa' );
+						$message = __( 'No plugins were selected to be updated. No action taken.', 'the7mk2' );
 					}
 
 					echo '<div id="message" class="error"><p>', esc_html( $message ), '</p></div>';
@@ -283,9 +287,9 @@ if ( ! class_exists( 'The7_Plugins_List_Table' ) ) {
 				// No need to proceed further if we have no plugins to handle.
 				if ( empty( $plugins_to_install ) ) {
 					if ( 'install' === $install_type ) {
-						$message = __( 'No plugins are available to be installed at this time.', 'tgmpa' );
+						$message = __( 'No plugins are available to be installed at this time.', 'the7mk2' );
 					} else {
-						$message = __( 'No plugins are available to be updated at this time.', 'tgmpa' );
+						$message = __( 'No plugins are available to be updated at this time.', 'the7mk2' );
 					}
 
 					echo '<div id="message" class="error"><p>', esc_html( $message ), '</p></div>';
@@ -402,7 +406,7 @@ if ( ! class_exists( 'The7_Plugins_List_Table' ) ) {
 
 				// Did user actually select any plugins to activate ?
 				if ( empty( $_POST['plugin'] ) ) {
-					echo '<div id="message" class="error"><p>', esc_html__( 'No plugins were selected to be activated. No action taken.', 'tgmpa' ), '</p></div>';
+					echo '<div id="message" class="error"><p>', esc_html__( 'No plugins were selected to be activated. No action taken.', 'the7mk2' ), '</p></div>';
 
 					return false;
 				}
@@ -428,7 +432,7 @@ if ( ! class_exists( 'The7_Plugins_List_Table' ) ) {
 
 				// Return early if there are no plugins to activate.
 				if ( empty( $plugins_to_activate ) ) {
-					echo '<div id="message" class="error"><p>', esc_html__( 'No plugins are available to be activated at this time.', 'tgmpa' ), '</p></div>';
+					echo '<div id="message" class="error"><p>', esc_html__( 'No plugins are available to be activated at this time.', 'the7mk2' ), '</p></div>';
 
 					return false;
 				}
@@ -442,11 +446,11 @@ if ( ! class_exists( 'The7_Plugins_List_Table' ) ) {
 					$count        = count( $plugin_names ); // Count so we can use _n function.
 					$plugin_names = array_map( array( 'TGMPA_Utils', 'wrap_in_strong' ), $plugin_names );
 					$last_plugin  = array_pop( $plugin_names ); // Pop off last name to prep for readability.
-					$imploded     = empty( $plugin_names ) ? $last_plugin : ( implode( ', ', $plugin_names ) . ' ' . esc_html_x( 'and', 'plugin A *and* plugin B', 'tgmpa' ) . ' ' . $last_plugin );
+					$imploded     = empty( $plugin_names ) ? $last_plugin : ( implode( ', ', $plugin_names ) . ' ' . esc_html_x( 'and', 'plugin A *and* plugin B', 'the7mk2' ) . ' ' . $last_plugin );
 
 					printf( // WPCS: xss ok.
 						'<div id="message" class="updated"><p>%1$s %2$s.</p></div>',
-						esc_html( _n( 'The following plugin was activated successfully:', 'The following plugins were activated successfully:', $count, 'tgmpa' ) ),
+						esc_html( _n( 'The following plugin was activated successfully:', 'The following plugins were activated successfully:', $count, 'the7mk2' ) ),
 						$imploded
 					);
 

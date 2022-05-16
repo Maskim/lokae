@@ -19,13 +19,47 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class Opcache
  */
 class Opcache {
+	/**
+	 * Module instance.
+	 *
+	 * @since 2.7.1
+	 * @var Opcache|null
+	 */
+	private static $instance = null;
+
+	/**
+	 * Return module instance.
+	 *
+	 * @since 2.7.1
+	 *
+	 * @return Opcache|null
+	 */
+	public static function get_instance() {
+		if ( ! self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
 
 	/**
 	 * Opcache constructor.
 	 *
 	 * @since 2.1.0
 	 */
-	public function __construct() {
+	private function __construct() {
+		add_action( 'admin_init', array( $this, 'init' ) );
+	}
+
+	/**
+	 * Initialize module.
+	 *
+	 * We need to init the module via admin_init, because we need to make sure all Hummingbird modules have
+	 * been properly loaded prior to checking the status.
+	 *
+	 * @since 2.6.0
+	 */
+	public function init() {
 		// Page caching is not enabled.
 		if ( ! apply_filters( 'wp_hummingbird_is_active_module_page_cache', false ) ) {
 			return;
@@ -38,7 +72,7 @@ class Opcache {
 			return;
 		}
 
-		if ( ! $this->is_enabled() ) {
+		if ( ! $this->is_enabled() || get_transient( 'wphb-processing' ) ) {
 			return;
 		}
 
@@ -85,7 +119,11 @@ class Opcache {
 			return;
 		}
 
-		$status = opcache_reset();
+		try {
+			opcache_reset();
+		} catch ( \Exception $e ) {
+			error_log( 'Error purging varnish cache: ' . $e->getMessage() );
+		}
 	}
 
 }

@@ -10,7 +10,7 @@ global $product;
 		presscore_wc_template_loop_product_thumbnail( 'alignnone' );
 
 		if ( ! $product->is_in_stock() ) {
-			echo '<span class="out-stock-label">' . __( 'Out Of Stock', 'the7mk2' ) . '</span>';
+			echo '<span class="out-stock-label">' . __( 'Out of stock', 'the7mk2' ) . '</span>';
 		}
 
 		the7_ti_wishlist_button();

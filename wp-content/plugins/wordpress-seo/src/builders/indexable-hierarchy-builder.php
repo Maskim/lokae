@@ -1,16 +1,10 @@
 <?php
-/**
- * Builder for the indexables hierarchy.
- *
- * @package Yoast\YoastSEO\Builders
- */
 
 namespace Yoast\WP\SEO\Builders;
 
 use WP_Post;
 use WP_Term;
 use WPSEO_Meta;
-use Yoast\WP\SEO\Config\Migration_Status;
 use Yoast\WP\SEO\Helpers\Options_Helper;
 use Yoast\WP\SEO\Helpers\Post_Helper;
 use Yoast\WP\SEO\Models\Indexable;
@@ -19,9 +13,18 @@ use Yoast\WP\SEO\Repositories\Indexable_Repository;
 use Yoast\WP\SEO\Repositories\Primary_Term_Repository;
 
 /**
+ * Builder for the indexables hierarchy.
+ *
  * Builds the indexable hierarchy for indexables.
  */
 class Indexable_Hierarchy_Builder {
+
+	/**
+	 * Holds a list of indexables where the ancestors are saved for.
+	 *
+	 * @var array
+	 */
+	protected $saved_ancestors = [];
 
 	/**
 	 * The indexable repository.
@@ -81,9 +84,9 @@ class Indexable_Hierarchy_Builder {
 	/**
 	 * Sets the indexable repository. Done to avoid circular dependencies.
 	 *
-	 * @param Indexable_Repository $indexable_repository The indexable repository.
-	 *
 	 * @required
+	 *
+	 * @param Indexable_Repository $indexable_repository The indexable repository.
 	 */
 	public function set_indexable_repository( Indexable_Repository $indexable_repository ) {
 		$this->indexable_repository = $indexable_repository;
@@ -97,6 +100,10 @@ class Indexable_Hierarchy_Builder {
 	 * @return Indexable The indexable.
 	 */
 	public function build( Indexable $indexable ) {
+		if ( $this->hierarchy_is_built( $indexable ) ) {
+			return $indexable;
+		}
+
 		$this->indexable_hierarchy_repository->clear_ancestors( $indexable->id );
 
 		$indexable_id = $this->get_indexable_id( $indexable );
@@ -108,13 +115,30 @@ class Indexable_Hierarchy_Builder {
 		if ( $indexable->object_type === 'term' ) {
 			$this->add_ancestors_for_term( $indexable_id, $indexable->object_id, $ancestors );
 		}
-
-		$indexable->ancestors = \array_reverse( \array_values( $ancestors ) );
-		if ( ! \is_null( $indexable->id ) ) {
+		$indexable->ancestors     = \array_reverse( \array_values( $ancestors ) );
+		$indexable->has_ancestors = ! empty( $ancestors );
+		if ( $indexable->id ) {
 			$this->save_ancestors( $indexable );
 		}
 
 		return $indexable;
+	}
+
+	/**
+	 * Checks if a hierarchy is built already for the given indexable.
+	 *
+	 * @param Indexable $indexable The indexable to check.
+	 *
+	 * @return bool True when indexable has a built hierarchy.
+	 */
+	protected function hierarchy_is_built( Indexable $indexable ) {
+		if ( \in_array( $indexable->id, $this->saved_ancestors, true ) ) {
+			return true;
+		}
+
+		$this->saved_ancestors[] = $indexable->id;
+
+		return false;
 	}
 
 	/**
@@ -125,9 +149,14 @@ class Indexable_Hierarchy_Builder {
 	 * @return void
 	 */
 	private function save_ancestors( $indexable ) {
-		$depth = 1;
+		if ( empty( $indexable->ancestors ) ) {
+			$this->indexable_hierarchy_repository->add_ancestor( $indexable->id, 0, 0 );
+			return;
+		}
+		$depth = \count( $indexable->ancestors );
 		foreach ( $indexable->ancestors as $ancestor ) {
-			$this->indexable_hierarchy_repository->add_ancestor( $indexable->id, $ancestor->id, $depth++ );
+			$this->indexable_hierarchy_repository->add_ancestor( $indexable->id, $ancestor->id, $depth );
+			--$depth;
 		}
 	}
 
@@ -224,7 +253,7 @@ class Indexable_Hierarchy_Builder {
 
 		$terms = \get_the_terms( $post->ID, $main_taxonomy );
 
-		if ( ! is_array( $terms ) || empty( $terms ) ) {
+		if ( ! \is_array( $terms ) || empty( $terms ) ) {
 			return 0;
 		}
 
@@ -257,11 +286,11 @@ class Indexable_Hierarchy_Builder {
 		 */
 		$parents_count = -1;
 		$term_order    = 9999; // Because ASC.
-		$deepest_term  = reset( $terms_by_id );
+		$deepest_term  = \reset( $terms_by_id );
 		foreach ( $terms_by_id as $term ) {
 			$parents = $this->get_term_parents( $term );
 
-			$new_parents_count = count( $parents );
+			$new_parents_count = \count( $parents );
 
 			if ( $new_parents_count < $parents_count ) {
 				continue;
@@ -307,13 +336,18 @@ class Indexable_Hierarchy_Builder {
 	/**
 	 * Checks if an ancestor is valid to add.
 	 *
-	 * @param Indexable $ancestor     The ancestor to check.
+	 * @param Indexable $ancestor     The ancestor (presumed indexable) to check.
 	 * @param int       $indexable_id The indexable id we're adding ancestors for.
 	 * @param int[]     $parents      The indexable ids of the parents already added.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
-	private function is_invalid_ancestor( Indexable $ancestor, $indexable_id, $parents ) {
+	private function is_invalid_ancestor( $ancestor, $indexable_id, $parents ) {
+		// If the ancestor is not an Indexable, it is invalid by default.
+		if ( ! \is_a( $ancestor, 'Yoast\WP\SEO\Models\Indexable' ) ) {
+			return true;
+		}
+
 		// Don't add ancestors if they're unindexed, already added or the same as the main object.
 		if ( $ancestor->post_status === 'unindexed' ) {
 			return true;

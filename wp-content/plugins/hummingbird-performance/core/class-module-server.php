@@ -1,7 +1,7 @@
 <?php
 /**
  * A parent class for those modules that offers a piece of code to
- * setup the server (gzip and caching)
+ * set up the server (gzip and caching)
  *
  * @package Hummingbird\Core
  */
@@ -109,9 +109,11 @@ abstract class Module_Server extends Module {
 	/**
 	 * Return the server type (Apache, NGINX...)
 	 *
+	 * @param bool $check_for_cloudflare  If we should check for Cloudflare.
+	 *
 	 * @return string Server type
 	 */
-	public static function get_server_type() {
+	public static function get_server_type( $check_for_cloudflare = true ) {
 		global $is_apache, $is_IIS, $is_iis7, $is_nginx;
 
 		$type = '';
@@ -126,18 +128,26 @@ abstract class Module_Server extends Module {
 				$type = 'apache';
 			} else {
 				$server = strtolower( wp_remote_retrieve_header( $response, 'server' ) );
-				// Could be LiteSpeed too.
-				$type = strpos( $server, 'nginx' ) !== false ? 'nginx' : 'apache';
+
+				if ( false !== strpos( $server, 'nginx' ) ) {
+					$type = 'nginx';
+				} elseif ( false !== strpos( $server, 'litespeed' ) ) {
+					$type = 'litespeed';
+				} else {
+					$type = 'apache';
+				}
 			}
 		} elseif ( $is_nginx ) {
 			$type = 'nginx';
-		} elseif ( $is_IIS ) {
-			$type = 'IIS';
-		} elseif ( $is_iis7 ) {
-			$type = 'IIS 7';
+		} elseif ( $is_IIS || $is_iis7 ) {
+			$type = 'iis';
 		}
 
-		return apply_filters( 'wp_hummingbird_is_active_module_cloudflare', $type );
+		if ( $check_for_cloudflare && apply_filters( 'wp_hummingbird_is_active_module_cloudflare', false ) ) {
+			$type = 'cloudflare';
+		}
+
+		return $type;
 	}
 
 	/**
@@ -147,7 +157,7 @@ abstract class Module_Server extends Module {
 	 */
 	public static function get_servers() {
 		return array(
-			'apache'     => 'Apache',
+			'apache'     => 'Apache/LiteSpeed',
 			'nginx'      => 'NGINX',
 			'iis'        => 'IIS',
 			'cloudflare' => 'Cloudflare',

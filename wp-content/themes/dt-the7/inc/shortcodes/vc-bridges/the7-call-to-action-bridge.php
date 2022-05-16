@@ -6,6 +6,7 @@ return array(
 	"weight" => -1,
 	"name" => __("Call to Action", 'the7mk2'),
 	"base" => "dt_call_to_action",
+	'description' => '',
 	"icon" => "dt_vc_ico_call_to_action",
 	"class" => "dt_vc_sc_call_to_action",
 	"category" => __('The7 Old', 'the7mk2'),

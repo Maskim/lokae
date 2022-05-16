@@ -43,8 +43,13 @@
 	}
 
 	.hr-thin {
-		.divider-thin(@divider-color);
-		border-bottom: none;
+      border-style: solid;
+      border-width: 1px;
+      border-color: var(--the7-divider-color);
+
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
 	}
 
 	.hr-thin.style-dashed {
@@ -64,17 +69,14 @@
 .accent-border-color .separator-holder,
 .accent-border-color.hr-thin,
 .accent-border-color.hr-thick {
-	border-color: @accent-bg-color;
+	border-color: var(--the7-accent-color);
 }
 .accent-border-color.hr-thin.style-line,
 .accent-border-color.hr-thick {
 	.accent-gradient & {
 		border-width: 0;
-		border-color: @accent-bg-color;
-	    -moz-border-image: -moz-linear-gradient(@accent-text-color-2);
-	    -webkit-border-image: -webkit-linear-gradient(@accent-text-color-2);
-	     border-image: linear-gradient(@accent-text-color-2);
-	    border-image-slice: 1;
+		border-color: var(--the7-accent-color);
+		.border-gradient(@accent-text-color-2);
 	}
 }
 
@@ -96,45 +98,45 @@ hr.gf_rule {
 	.color-base-transparent;
 }
 .separator-holder {
-	border-color: @divider-color;
+	border-color: var(--the7-divider-color);
 }
 .separator-holder,
 .accent-border-color .bg-on .separator-holder {
 	.transparent-border-mixin;
 }
 .dt-fancy-title.bg-on {
-	min-height: @base-font-size*2;
-	line-height: @base-font-size*2;
+	min-height: calc(var(--the7-base-font-size) * 2);
+	line-height: calc(var(--the7-base-font-size) * 2);
 }
 .text-small .dt-fancy-title.bg-on {
-	min-height: @text-small*2;
-	line-height: @text-small*2;
+	min-height: calc(var(--the7-text-small-font-size) * 2);
+	line-height: calc(var(--the7-text-small-font-size) * 2);
 }
 .text-big .dt-fancy-title.bg-on {
-	min-height: @text-big*2;
-	line-height: @text-big*2;
+	min-height: calc(var(--the7-text-big-font-size) * 2);
+	line-height: calc(var(--the7-text-big-font-size) * 2);
 }
 .h1-size .dt-fancy-title.bg-on {
-	min-height: @h1-font-size*2;
-	line-height: @h1-font-size*2;
+	min-height: calc(var(--the7-h1-font-size)*2);
+	line-height:calc(var(--the7-h1-font-size)*2); 
 }
 .h2-size .dt-fancy-title.bg-on {
-	min-height: @h2-font-size*2;
-	line-height: @h2-font-size*2;
+	min-height: calc(var(--the7-h2-font-size)*2);
+	line-height:calc(var(--the7-h2-font-size)*2);
 }
 .h3-size .dt-fancy-title.bg-on {
-	min-height: @h3-font-size*2;
-	line-height: @h3-font-size*2;
+	min-height: calc(var(--the7-h3-font-size)*2);
+	line-height:calc(var(--the7-h3-font-size)*2);
 }
 .h4-size .dt-fancy-title.bg-on {
-	min-height: @h4-font-size*2;
-	line-height: @h4-font-size*2;
+	min-height: calc(var(--the7-h4-font-size)*2);
+	line-height:calc(var(--the7-h4-font-size)*2);
 }
 .h5-size .dt-fancy-title.bg-on {
-	min-height: @h5-font-size*2;
-	line-height: @h5-font-size*2;
+	min-height: calc(var(--the7-h5-font-size)*2);
+	line-height:calc(var(--the7-h5-font-size)*2);
 }
 .h6-size .dt-fancy-title.bg-on {
-	min-height: @h6-font-size*2;
-	line-height: @h6-font-size*2;
+	min-height: calc(var(--the7-h6-font-size)*2);
+	line-height:calc(var(--the7-h6-font-size)*2);
 }

@@ -124,7 +124,7 @@ jQuery(function ($) {
         if ($elemntorEditorFooter === undefined) {
             var $elemntorLocationHeader = $(".elementor-location-header", iframe)[0];
             if (($elemntorLocationHeader !== undefined && $elemntorEditorHeader !== undefined) || (
-                    $elemntorLocationHeader === undefined && $elemntorEditorHeader === undefined)) {
+                $elemntorLocationHeader === undefined && $elemntorEditorHeader === undefined)) {
                 addControls($(".masthead, .page-title, #main-slideshow, #fancy-header", iframe), [
                     {
                         action: "edit",
@@ -175,7 +175,64 @@ jQuery(function ($) {
                         }
                     });
                 }, 300);
+            } else {
+                //handle kit reload
+                var page_name = elementor.getPanelView().getCurrentPageName();
+                if (page_name !== "kit_settings") {
+                    return
+                }
+                var name = Object.keys(settings.changed)[0];
+                if (name in settings.controls) {
+                    var control = settings.controls[name];
+                    if ('the7_reload_on_change' in control && control['the7_reload_on_change'] === true) {
+                        const activeTab = elementor.getPanelView().getCurrentPageView().content.currentView.activeTab;
+                        const activeSection = elementor.getPanelView().getCurrentPageView().content.currentView.activeSection;
+
+                        autoSaveTimeout = setTimeout(function () {
+                            $e.internal('panel/state-loading');
+                            jQuery('#elementor-preview-loading').show();
+                            $e.run('editor/documents/switch', {
+                                mode: 'autosave',
+                                id: elementor.config.initial_document.id,
+                                onClose: function onClose(document) {
+                                    $e.components.get('panel/global').close();
+                                    if (document.isDraft()) {
+                                        // Restore published style.
+                                        elementor.toggleDocumentCssFiles(document, true);
+                                        elementor.settings.page.destroyControlsCSS();
+                                    }
+                                }
+                            }).finally(function () {
+                                elementor.reloadPreview();
+                                elementor.once("document:loaded", function () {
+                                    $e.run('editor/documents/switch', {
+                                        id: elementor.config.kit_id,
+                                        mode: 'autosave',
+                                        onClose: function onClose(document) {
+                                            $e.routes.clearHistory("panel");
+                                        }
+                                    }).finally(function () {
+                                        $e.route('panel/global/' + activeTab);
+                                        elementor.getPanelView().currentPageView.content.currentView.activateSection(activeSection)._renderChildren();
+                                        $e.internal('panel/state-ready');
+                                    });
+                                });
+                            });
+                        }, 300);
+                    }
+                }
             }
         });
+        //change default values in order to fix settings saving
+        elementor.saver.on("save", function (args) {
+            const settings = args.document.container.settings;
+            jQuery.each(settings.changed, function (key){
+                if(settings !== 'undefined' && settings.controls !== 'undefined' && 'the7_save' in settings.controls[key] && settings.controls[key]['the7_save'] === true){
+                    if (key in elementor.settings.page.model.controls && key in settings.attributes) {
+                        elementor.settings.page.model.controls[key].default = settings.attributes[key];
+                    }
+                }
+            });
+        } );
     });
 });

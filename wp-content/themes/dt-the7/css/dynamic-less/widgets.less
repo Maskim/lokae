@@ -1,13 +1,23 @@
 /* #Widgets
 ================================================== */
-.widget-title {
-	font: @h5-font-style @h5-font-variant @h5-font-weight @h5-font-size~"/"@h5-line-height @h5-font-family;
-	text-transform: @h5-text-transform;
+.widget-title,
+div[class*='elementor-widget-wp-widget-'] h5,
+.elementor-widget .woocommerce h5{
+	font: var(--the7-widget-title-font);
+	text-transform: var(--the7-widget-title-text-transform);
+	letter-spacing: var(--the7-widget-title-letter-spacing);
+	text-decoration: var(--the7-widget-title-text-decoration);
 	.header-color;
 }
+
+.widget-title,
+body .elementor-widget .woocommerce h5{
+	margin-bottom: var(--the7-widget-gap);
+}
+
 .widgettitle {
-	font: @h4-font-style @h4-font-variant @h4-font-weight @h4-font-size~"/"@h4-line-height @h4-font-family;
-	text-transform: @h4-text-transform;
+	font: var(--the7-h4-font);
+	text-transform: var(--the7-h4-text-transform);
 	.header-color;
 }
 /* #Custom navigation
@@ -15,7 +25,7 @@
 
 
 .custom-nav > li li a:before {
-	background-color: @secondary-text-color;
+	background-color: var(--the7-secondary-text-color);
 	.footer & {
 		background-color: fade(@widget-footer-color, 50%);
 	}
@@ -29,7 +39,7 @@
 	color: @widget-sidebar-color;
 }
 .sidebar-content .widget .post-content .text-secondary {
-	color: @widget-sidebar-color;
+	color: fade(@widget-sidebar-color, 50%);
 }
 
 .custom-mixin-footer-with-accent-color (@customColor, @customColor-accent) when (iscolor(@customColor-accent)) {
@@ -39,6 +49,9 @@
 .footer .widget .post-content .text-secondary {
 	color: @widget-footer-color;
 	.custom-mixin-footer-with-accent-color (@widget-footer-color, @widget-footer-accent-color);
+}
+.footer .widget .post-content .text-secondary {
+	color: fade(@widget-footer-color, 50%);
 }
 .widget_categories li a,
 .widget_meta a,
@@ -58,9 +71,11 @@ a.rsswidget,
 .textwidget a {
 	.header-color;
 }
-
+.widget_categories li,
+.widget_archive li {
+	color: fade(@widget-sidebar-color, 50%);
+}
 .custom-categories a,
-.custom-categories a .item-name,
 .cat-item a,
 .widget_recent_comments a,
 .widget_tag_cloud a:hover {
@@ -88,13 +103,13 @@ a.rsswidget,
 	.widget_recent_comments a:hover {
 		.sidebar-content &,
 		.sidebar-content:not(.solid-bg) .widget:not(.widget_icl_lang_sel_widget) & {
-			color: @accent-bg-color;
+			color: var(--the7-accent-color);
 		}
 		.accent-gradient #page & {
 			.text-gradient (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
 		}
 		.footer & {
-			color: @accent-bg-color;
+			color: var(--the7-accent-color);
 			.custom-mixin-footer-color (@widget-footer-accent-color);
 			.accent-gradient #page & {
 				.text-gradient (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
@@ -104,21 +119,27 @@ a.rsswidget,
 	}
 
 /* !- Recent.. */
+.widget .menu li,
+.widget_pages li,
+.widget .custom-menu.dividers-on li,
+div[class*='elementor-widget-wp-widget-'] .custom-menu.dividers-on li,
+div[class*='elementor-widget-wp-widget-'] .menu li,
+.widget .blogroll li,
+.widget .qts-lang-menu li {
+	border-style: solid;
+	border-width: 1px;
+	border-color: var(--the7-divider-color);
+
+	border-left: none;
+	border-right: none;
+	border-bottom: none;
+}
 
 .sidebar-content .widget .menu li,
 .sidebar-content .widget .custom-menu.dividers-on li,
 .sidebar-content .widget_pages li,
 .sidebar-content .blogroll li,
 .sidebar-content .widget .qts-lang-menu li {
-	.divider-thin(@widget-sidebar-divider-bg-color);
-	border-bottom: none;
-}
-
-.widget .menu li,
-.widget_pages li,
-.widget .custom-menu.dividers-on li,
-.widget .blogroll li,
-.widget .qts-lang-menu li {
 	.divider-thin(@widget-sidebar-divider-bg-color);
 	border-bottom: none;
 }
@@ -141,28 +162,32 @@ a.rsswidget,
 .st-accordion > ul li > a:hover *,
 .widget .custom-categories a:hover span.item-name,
 .widget_categories li a:hover,
+.widget_categories li a:not(.class-1):hover,
 .widget_meta a:hover,
 .blogroll a:hover,
 .widget_archive li a:hover,
+.widget_archive li a:not(.class-1):hover,
 .widget_recent_entries a:hover,
+.widget_recent_entries a:not(.class-1):hover,
 .widget_links a:hover,
 .widget_pages a:hover,
 .recent-posts a:not(.post-rollover):hover,
 .items-grid .post-content > a:hover,
 #wp-calendar td a:hover,
 .tagcloud a:hover,
+.tagcloud a:not(.class-1):hover,
 .widget_nav_menu a:hover,
 a.rsswidget:hover {
-	color: @accent-bg-color;
+	color: var(--the7-accent-color);
 	.sidebar-content &,
 	.sidebar-content.solid-bg & {
-		color: @accent-bg-color;
+		color: var(--the7-accent-color);
 		.accent-gradient & {
 			.text-gradient (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
 		}
 	}
 	.footer & {
-		color: @accent-bg-color;
+		color: var(--the7-accent-color);
 		.custom-mixin-footer-color (@widget-footer-accent-color);
 		.accent-gradient & {
 			.text-gradient (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
@@ -171,13 +196,13 @@ a.rsswidget:hover {
 	}
 }
 .textwidget a:not(.dt-btn):hover{
-	color: @accent-bg-color;
+	color: var(--the7-accent-color);
 	.sidebar-content &,
 	.stripe .sidebar-content.solid-bg & {
-		color: @accent-bg-color;
+		color: var(--the7-accent-color);
 	}
 	.footer & {
-		color: @accent-bg-color;
+		color: var(--the7-accent-color);
 		.custom-mixin-footer-color (@widget-footer-accent-color);
 		.accent-gradient #page & {
 			.custom-mixin-footer-color (@widget-footer-accent-color);
@@ -201,7 +226,7 @@ a.rsswidget:hover {
 #wp-calendar,
 #wp-calendar caption,
 #wp-calendar td {
-	border-color: @divider-color;
+	border-color: var(--the7-divider-color);
 	.sidebar-content & {
 		border-color: @widget-sidebar-divider-bg-color;
 	}
@@ -238,25 +263,36 @@ a.rsswidget:hover {
 
 
 #page .widget .searchform .submit,
-.content .searchform .submit {
-	color: fade(@input-color, 50%);
+#page .content .searchform .submit {
+	color: var(--the7-input-color);
 }
-
+.wp-block-search.wp-block-search__button-inside .wp-block-search__inside-wrapper {
+	padding: 0;
+	border-color: var(--the7-input-border-color);
+	background-color: var(--the7-input-bg-color);
+	border-radius: var(--the7-input-border-radius);
+}
+.wp-block-search.wp-block-search__button-inside .wp-block-search__inside-wrapper .wp-block-search__input {
+	background: none;
+	margin: 0;
+}
+.wp-block-search .wp-block-search__button {
+	height: var(--the7-input-height);
+}
+.wp-block-search .wp-block-search__label {
+	display: block;
+	color: @h4-color;
+	margin-bottom: 8px;
+	font: @widget-title-font-style @widget-title-font-variant @widget-title-font-weight @widget-title-font-size-desktop~"/"@widget-title-line-height-desktop @widget-title-font-family;
+	text-transform: @widget-title-text-transform;
+	.text-normal;
+}
 /* !- Custom navigation and menu */
-
-.custom-nav > li > a,
-.custom-nav > li > ul a {
-	font-size: @text-normal;
-}
-
-.custom-nav > li > ul a {
-	font-size: @text-small;
-}
 
 
 //.custom-menu li.act > a,
 .widget_recent_comments a:hover {
-	color: @accent-bg-color !important;
+	color: var(--the7-accent-color) !important;
 	.footer & {
 		.custom-mixin-footer-color (@widget-footer-accent-color) !important;
 	}
@@ -265,7 +301,7 @@ a.rsswidget:hover {
 /* Custom navigation and menu: end */
 
 .custom-menu a:after {
-	color: fade(@secondary-text-color, 99.9%);
+	color: var(--the7-secondary-text-color);
 	.sidebar-content & {
 		color: fade(@widget-sidebar-color, 50%);
 	}
@@ -278,7 +314,7 @@ a.rsswidget:hover {
 }
 .custom-menu a:hover:after,
 .custom-menu .act > a:after {
-	color: fade(@secondary-text-color, 99.9%);
+	color: var(--the7-secondary-text-color);
 	.sidebar-content & {
 		color: fade(@accent-bg-color, 99.9%);
 	}
@@ -302,9 +338,7 @@ a.rsswidget:hover {
 .skill-value {
 	.accent-bg-mixin;
 }
-.skill-name {
-	.text-small;
-}
+
 /*elements with headers color*/
 .skill-name,
 .skill-name *,
@@ -320,32 +354,24 @@ a.rsswidget:hover {
 	.text-normal;
 }
 .custom-menu.show-arrow a:after {
-	top: (@text-big-line-height - 13)/2;
+	top: calc((var(--the7-text-big-line-height) - 13) / 2);
 	.footer & {
-		top: (@base-line-height - 13)/2;
+		top: calc((var(--the7-base-line-height) - 13) / 2);
 	}
 }
 .custom-menu a:not(:hover) {
-	.header-color;
-	.sidebar-content .widget:not(.widget_icl_lang_sel_widget) & {
-		.header-color;
+	color: var(--the7-base-color);
+	.dt-mega-menu .sidebar-content & {
+		color: @mega-menu-widget-color;
+	}
+	.sidebar-content & {
+		color: @widget-sidebar-color;
+	}
+	.footer & {
+		color: @widget-footer-color;
 	}
 }
-	.custom-menu a:before,
-	.widget_presscore-custom-menu-1 .custom-menu a:after {
 
-		top: (@text-big-line-height - 13)/2;
-		.footer & {
-			top: (@base-line-height - 13)/2;
-		}
-	}
-	.custom-nav > li li a:before {
-
-		top: (@text-big-line-height)/2;
-		.footer & {
-			top: (@base-line-height)/2;
-		}
-	}
 .st-accordion li > a:before,
 .custom-menu a:before {
 	.sidebar &,
@@ -365,29 +391,23 @@ a.rsswidget:hover {
 
 }
 .st-accordion li > a:hover:after {
-	color: @accent-bg-color;
+	color: var(--the7-accent-color);
 	.footer & {
 		color: @widget-footer-accent-color;
 	}
 }
 
-// .st-accordion li.st-open > a:after {
-// 	.sidebar & {
-// 		.tip-icon(fade(@widget-sidebar-color, 50%));
-// 	}
-// 	.footer & {
-// 		.tip-icon(fade(@widget-footer-color, 50%));
-// 	}
-
-// }
 .custom-mixin-footer-tip-arrow (@customColor) when (iscolor(@customColor)) {
 	@accent-footer-color-temp: escape(~"@{customColor}");
 	.tip-icon(@accent-footer-color-temp);
 }
-// .st-accordion li.st-open > a:hover:after {
-// 	.tip-icon(@accent-bg-color-temp);
-// 	.footer & {
-// 		.custom-mixin-footer-tip-arrow (@widget-footer-accent-color);
-// 	}
-// }
 
+// Default.
+@_wide-desktop-width: 1300px;
+
+// Global css grid wide columns implementation for widgets.
+@media screen and (min-width: @_wide-desktop-width + 1) {
+	.dt-css-grid.custom-wide-columns {
+		grid-template-columns: repeat(var(--wide-desktop-columns), minmax(0, 1fr)) !important;
+	}
+}

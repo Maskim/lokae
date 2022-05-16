@@ -2,9 +2,9 @@
 
 /**
  * lessphp v0.4.0
- * http://leafo.net/lessphp
+ * https://leafo.net/lessphp
  *
- * LESS css compiler, adapted from http://lesscss.org
+ * LESS css compiler, adapted from https://lesscss.org
  *
  * Copyright 2012, Leaf Corcoran <leafot@gmail.com>
  * Licensed under MIT or GPLv3, see LICENSE
@@ -632,7 +632,7 @@ class the7_lessc {
 
 		// check for a rest
 		$last = end($args);
-		if ($last[0] == "rest") {
+		if (isset($last[0]) && $last[0] == "rest") {
 			$rest = array_slice($orderedValues, count($args) - 1);
 			$this->set($last[1], $this->reduce(array("list", " ", $rest)));
 		}
@@ -673,8 +673,11 @@ class the7_lessc {
 			if ($name[0] == $this->vPrefix) {
 				$this->set($name, $value);
 			} else {
-				$out->lines[] = $this->formatter->property($name,
+				$ret_val = $this->formatter->property($name,
 						$this->compileValue($this->reduce($value)));
+				if ( !empty($ret_val) ) {
+					$out->lines[] = $ret_val;
+				}
 			}
 			break;
 		case 'block':
@@ -811,7 +814,7 @@ class the7_lessc {
 	 * The input is expected to be reduced. This function will not work on
 	 * things like expressions and variables.
 	 */
-	protected function compileValue($value) {
+	 public function compileValue($value) {
 		switch ($value[0]) {
 		case 'list':
 			// [1] - delimiter
@@ -1154,7 +1157,7 @@ class the7_lessc {
 
 	// mixes two colors by weight
 	// mix(@color1, @color2, [@weight: 50%]);
-	// http://sass-lang.com/docs/yardoc/Sass/Script/Functions.html#mix-instance_method
+	// https://sass-lang.com/docs/yardoc/Sass/Script/Functions.html#mix-instance_method
 	protected function lib_mix($args) {
 		if ($args[0] != "list" || count($args[2]) < 2)
 			$this->throwError("mix expects (color1, color2, weight)");
@@ -1379,7 +1382,7 @@ class the7_lessc {
 		return false;
 	}
 
-	protected function reduce($value, $forExpression = false) {
+	public function reduce($value, $forExpression = false) {
 		switch ($value[0]) {
 		case "interpolate":
 			$reduced = $this->reduce($value[1]);
@@ -1620,6 +1623,21 @@ class the7_lessc {
 		return $c;
 	}
 
+	protected function op_keyword_number($op, $lft, $rgt) {
+		$operations = array('*','%','/');
+
+		if (($lft[1] === '' ||  $rgt[1] === '') && in_array($op, $operations)) return self::$defaultValue;
+		return null;
+	}
+
+	protected function op_number_keyword($op, $lft, $rgt) {
+		return $this->op_keyword_number($op, $lft, $rgt);
+	}
+
+	protected function op_keyword_keyword($op, $lft, $rgt) {
+		return $this->op_keyword_number($op, $lft, $rgt);
+	}
+
 	protected function op_number_color($op, $lft, $rgt) {
 		if ($op == '+' || $op == '*') {
 			return $this->op_color_number($op, $rgt, $lft);
@@ -1787,7 +1805,7 @@ class the7_lessc {
 	}
 
 	// inject array of unparsed strings into environment as variables
-	protected function injectVariables($args) {
+	public function injectVariables($args) {
 		$this->pushEnv();
 		$parser = new the7_lessc_parser($this, __METHOD__);
 		foreach ($args as $name => $strValue) {
@@ -2525,7 +2543,7 @@ class the7_lessc_parser {
 
 	/**
 	 * Attempt to consume an expression.
-	 * @link http://en.wikipedia.org/wiki/Operator-precedence_parser#Pseudo-code
+	 * @link https://en.wikipedia.org/wiki/Operator-precedence_parser#Pseudo-code
 	 */
 	protected function expression(&$out) {
 		if ($this->value($lhs)) {
@@ -3611,6 +3629,10 @@ class the7_lessc_formatter_classic {
 	}
 
 	public function property($name, $value) {
+		if ($value === ''){
+			return $value;
+		}
+
 		return $name . $this->assignSeparator . $value . ";";
 	}
 

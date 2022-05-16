@@ -10,6 +10,7 @@ namespace Hummingbird\Core\Modules;
 
 use Hummingbird\Core\Module;
 use Hummingbird\Core\Settings;
+use Hummingbird\Core\Traits\Module as ModuleContract;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -21,22 +22,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package Hummingbird\Core\Modules
  */
 class Rss extends Module {
+
+	use ModuleContract;
+
 	/**
 	 * Initialize module.
 	 */
 	public function init() {
 		add_action( 'wp_feed_options', array( $this, 'rss_caching_status' ) );
 	}
-
-	/**
-	 * Execute module actions.
-	 */
-	public function run() {}
-
-	/**
-	 * Implement abstract parent method for clearing cache.
-	 */
-	public function clear_cache() {}
 
 	/**
 	 * Return true if the module is activated.

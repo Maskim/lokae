@@ -211,11 +211,8 @@
 	!-Stripe style 1
 ******************************************************/
 
-@strype-1-color-temp: escape(~"@{strype-1-color}");
 @strype-1-secondary-color: @accent-bg-color;
-@strype-1-divider-bg-color-temp: escape(~"@{strype-1-divider-bg-color}");
 @strype-1-backgrounds-bg-color: rgba(0,0,0,0.5); /* color of backgrounds for meta information, blockquotes, etc. */
-@strype-1-backgrounds-bg-color-ie: @strype-1-color;
 
 @strype-1-bg-position-x: ~"center"; /* Constant */
 
@@ -225,9 +222,7 @@
 	!-Stripe style 2
 ******************************************************/
 
-@strype-2-color-temp: escape(~"@{strype-2-color}");
 @strype-2-secondary-color: @accent-bg-color;
-@strype-2-divider-bg-color-temp: escape(~"@{strype-2-divider-bg-color}");
 @strype-2-backgrounds-bg-color: rgba(0,0,0,0.5); /* color of backgrounds for meta information, blockquotes, etc. */
 @strype-2-bg-position-x: ~"center"; /* Constant */
 
@@ -238,9 +233,7 @@
 	!-Stripe style 3
 ******************************************************/
 
-@strype-3-color-temp: escape(~"@{strype-3-color}");
 @strype-3-secondary-color: @accent-bg-color;
-@strype-3-divider-bg-color-temp: escape(~"@{strype-3-divider-bg-color}");
 @strype-3-backgrounds-bg-color: rgba(0,0,0,0.5); /* color of backgrounds for meta information, blockquotes, etc. */
 @strype-3-bg-position-x: ~"center"; /* Constant */
 
@@ -248,17 +241,13 @@
 /* !- Stripe style 4 */
 
 @strype-4-color: #ffffff; /* It's important to keep this value in quotes */
-@strype-4-color-temp: escape(~"@{strype-4-color}");
 @strype-4-header-color: #ffffff;
 
 @strype-4-divider-bg-color: fade(@strype-4-color, 15%); /* color of arrows and dividers */
-@strype-4-divider-bg-color-ie: @strype-4-color;
-@strype-4-divider-bg-color-temp: escape(~"@{strype-4-divider-bg-color}");
 
 @strype-4-backgrounds-bg-color: @strype-4-divider-bg-color; /* color of backgrounds for meta information, blockquotes, etc. */
 
 @strype-4-bg-color: rgba(46, 48, 49, 1); /* variable color and opacity */
-@strype-4-bg-color-ie: #2e3031; /* alternative variable color for ie */
 @strype-4-bg-image: ~"";
 @strype-4-bg-repeat: ~"";
 @strype-4-bg-attachment: ~"fixed";
@@ -271,18 +260,14 @@
 /* !- Stripe style 5 */
 
 @strype-5-color: #333333; /* It's important to keep this value in quotes */
-@strype-5-color-temp: escape(~"@{strype-5-color}");
 @strype-5-header-color: #333333;
 
 @strype-5-divider-bg-color: fade(@strype-5-color, 15%); /* color of arrows and dividers */
-@strype-5-divider-bg-color-ie: @strype-5-color;
-@strype-5-divider-bg-color-temp: escape(~"@{strype-5-divider-bg-color}");
 
 @strype-5-backgrounds-color: @strype-5-header-color;
 @strype-5-backgrounds-bg-color: @strype-5-divider-bg-color; /* color of backgrounds for meta information, blockquotes, etc. */
 
 @strype-5-bg-color: rgba(255, 255, 255, 1); /* variable color and opacity */
-@strype-5-bg-color-ie: #ffffff; /* alternative variable color for ie */
 @strype-5-bg-image: ~"";
 @strype-5-bg-repeat: ~"";
 @strype-5-bg-attachment: ~"fixed";
@@ -1198,7 +1183,7 @@ h3.entry-title,
 .btn-link:not(.custom-btn-color) {
 	.stripe &,
 	.stripe & * {
-		color: @dt-btn-color;
+		color: var(--the7-btn-color);
 	}
 	&.title-btn-color,
 	&.title-btn-color > span,

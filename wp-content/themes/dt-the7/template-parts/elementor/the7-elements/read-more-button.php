@@ -5,13 +5,25 @@
 
 defined( 'ABSPATH' ) || exit;
 
-! isset( $follow_link ) && $follow_link = '';
-! isset( $caption ) && $caption = '';
-! isset( $icon ) && $icon = '';
-! isset( $icon_position ) && $icon_position = 'after';
+/**
+ * @var string $follow_link
+ * @var string $target
+ * @var string $caption
+ * @var string $icon
+ * @var string $icon_position
+ * @var string $aria_label
+ */
+
+$atts = [
+	'class' => 'post-details details-type-btn dt-btn-s dt-btn',
+];
+
+$atts['href']       = esc_url( $follow_link );
+$atts['target']     = $target;
+$atts['aria-label'] = $aria_label;
 ?>
 
-<a class="post-details details-type-btn dt-btn-s dt-btn" href="<?php echo esc_url( $follow_link ) ?>"><?php
+<a <?php echo the7_get_html_attributes_string( $atts ) ?>><?php
 	if ( $icon_position === 'before' ) {
 		echo $icon;
 	}

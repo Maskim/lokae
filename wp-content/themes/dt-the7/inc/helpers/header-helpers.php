@@ -4,7 +4,7 @@ if ( ! function_exists( 'presscore_header_inline_style' ) ) :
 
 	/**
 	 * Output header inline css.
-	 * 
+	 *
 	 * @since 3.0.0
 	 */
 	function presscore_header_inline_style() {
@@ -32,7 +32,7 @@ if ( ! function_exists( 'presscore_top_bar_inline_style' ) ) :
 
 	/**
 	 * Output header inline css.
-	 * 
+	 *
 	 * @since 3.0.0
 	 */
 	function presscore_top_bar_inline_style() {
@@ -176,7 +176,7 @@ if ( ! function_exists( 'presscore_get_header_class' ) ) :
 				break;
 		}
 
-		$classes[] = presscore_array_value( $config->get( 'header.logo.position' ), array(
+		$classes[] = the7_array_match( $config->get( 'header.logo.position' ), array(
 			'center'       => 'logo-center',
 			'fully_inside' => 'fully-inside',
 		) );
@@ -185,7 +185,7 @@ if ( ! function_exists( 'presscore_get_header_class' ) ) :
 			$classes[] = 'widgets';
 		}
 
-		if ( 'none' !== $config->get( 'header.menu.decoration.style' ) && $config->get_bool( 'header.menu.decoration.style.other.links.is_justified' ) ) {
+		if ( $config->get_bool( 'header.menu.decoration.style.other.links.is_justified' ) ) {
 			$classes[] = 'full-height';
 		}
 
@@ -212,21 +212,21 @@ if ( ! function_exists( 'presscore_get_header_class' ) ) :
 		$classes[] = presscore_header_get_decoration_class( $config->get( 'header.decoration' ) );
 		$classes[] = presscore_mobile_header_get_decoration_class( $config->get( 'header.mobile.decoration' ) );
 		if ( in_array( $config->get( 'header.layout' ), array( 'side', 'top_line', 'side_line', 'menu_icon' ) ) ) {
-			$classes[] = presscore_array_value( $config->get( 'header.layout.side.menu.submenu.position' ), array(
+			$classes[] = the7_array_match( $config->get( 'header.layout.side.menu.submenu.position' ), array(
 				'side' => 'sub-sideways',
 				'down' => 'sub-downwards',
 			) );
 		}
 
 		if ( in_array( $config->get( 'header.layout' ), array( 'top_line', 'side_line', 'menu_icon' ) ) ) {
-			$classes[] = presscore_array_value( $config->get( 'header.mixed.menu_icon.size' ), array(
+			$classes[] = the7_array_match( $config->get( 'header.mixed.menu_icon.size' ), array(
 				'small' => 'small-menu-icon',
 				'medium' => 'medium-menu-icon',
 				'large' => 'large-menu-icon',
 				'type_1' => 'x-move-icon',
 				'type_2' => 'two-line-menu-icon',
 				'type_3' => 'animate-color-menu-icon',
-				
+
 				'type_4' => 'animate-position-menu-icon',
 				'type_5' => 'animate-position-2-menu-icon',
 				'type_6' => 'thin-lines-menu-icon',
@@ -236,40 +236,40 @@ if ( ! function_exists( 'presscore_get_header_class' ) ) :
 				'type_9' => 'type-9-menu-icon',
 				'type_10' => 'dot-menu-icon',
 			) );
-			
-			
-			$classes[] = presscore_array_value( $config->get( 'header.mixed.menu-close_icon.position' ), array(
+
+
+			$classes[] = the7_array_match( $config->get( 'header.mixed.menu-close_icon.position' ), array(
 				'left' => 'left-menu-close-icon',
 				'right' => 'right-menu-close-icon',
 				'center' => 'center-menu-close-icon',
 			) );
-			$classes[] = presscore_array_value( $config->get( 'header.hamburger.caption' ), array(
+			$classes[] = the7_array_match( $config->get( 'header.hamburger.caption' ), array(
 				'left' => 'left-caption',
 				'right' => 'right-caption',
 			) );
-			$classes[] = presscore_array_value( $config->get( 'header.close.hamburger.caption' ), array(
+			$classes[] = the7_array_match( $config->get( 'header.close.hamburger.caption' ), array(
 				'left' => 'menu-close-left-caption',
 				'right' => 'menu-close-right-caption',
 			) );
-			$classes[] = presscore_array_value( $config->get( 'header.hamburger.bg' ), array(
+			$classes[] = the7_array_match( $config->get( 'header.hamburger.bg' ), array(
 				'enabled' => 'hamburger-bg-enable',
 				'disabled' => 'hamburger-bg-disable',
 			) );
-			$classes[] = presscore_array_value( $config->get( 'header.hamburger.bg.hover' ), array(
+			$classes[] = the7_array_match( $config->get( 'header.hamburger.bg.hover' ), array(
 				'enabled' => 'hamburger-bg-hover-enable',
 				'disabled' => 'hamburger-bg-hover-disable',
 			) );
-			$classes[] = presscore_array_value( $config->get( 'header.hamburger.border' ), array(
+			$classes[] = the7_array_match( $config->get( 'header.hamburger.border' ), array(
 				'enabled' => 'hamburger-border-enable',
 				'disabled' => 'hamburger-border-disable',
 			) );
-			$classes[] = presscore_array_value( $config->get( 'header.hamburger.border.hover' ), array(
+			$classes[] = the7_array_match( $config->get( 'header.hamburger.border.hover' ), array(
 				'enabled' => 'hamburger-border-hover-enable',
 				'disabled' => 'hamburger-border-hover-disable',
 			) );
-			
+
 		}
-		$classes[] = presscore_array_value( $config->get( 'header.mobile.menu_icon.size' ), array(
+		$classes[] = the7_array_match( $config->get( 'header.mobile.menu_icon.size' ), array(
 			'medium' => 'medium-mobile-menu-icon',
 			'small' => 'small-mobile-menu-icon',
 			'large' => 'large-mobile-menu-icon',
@@ -285,7 +285,7 @@ if ( ! function_exists( 'presscore_get_header_class' ) ) :
 			'type_9' => 'type-9-mobile-menu-icon',
 			'type_10' => 'dot-mobile-menu-icon',
 		) );
-		$classes[] = presscore_array_value( $config->get( 'header.mobile.hamburger.caption' ), array(
+		$classes[] = the7_array_match( $config->get( 'header.mobile.hamburger.caption' ), array(
 			'left' => 'mobile-left-caption',
 			'right' => 'mobile-right-caption',
 		) );
@@ -295,15 +295,20 @@ if ( ! function_exists( 'presscore_get_header_class' ) ) :
 		if ( $config->get( 'header.mobile.menu_icon.hover.bg.enable' )) {
 			$classes[] = 'mobile-menu-icon-hover-bg-on';
 		}
-		$classes[] = presscore_array_value( $config->get( 'header.mobile.menu_icon.border.enable' ), array(
+		$classes[] = the7_array_match( $config->get( 'header.mobile.menu_icon.border.enable' ), array(
 			'enabled' => 'mobile-menu-icon-border-enable',
 		) );
-		$classes[] = presscore_array_value( $config->get( 'header.mobile.menu_icon.hover.border.enable' ), array(
+		$classes[] = the7_array_match( $config->get( 'header.mobile.menu_icon.hover.border.enable' ), array(
 			'enabled' => 'mobile-menu-icon-hover-border-enable',
 		) );
 
 		if ( $config->get( 'header.menu.submenu.parent_clickable' ) ) {
 			$classes[] = 'dt-parent-menu-clickable';
+		}
+		if ( $config->get( 'header.menu.submenu.display' ) === 'hover' || $config->get( 'header.menu.submenu.parent_clickable' )) {
+			$classes[] = 'show-sub-menu-on-hover';
+		}else{
+			$classes[] = 'show-sub-menu-on-click';
 		}
 
 		$classes = apply_filters( 'presscore_header_class', $classes, $class );
@@ -574,50 +579,47 @@ if ( ! function_exists( 'presscore_top_bar_contact_element' ) ) :
 	/**
 	 * Render contact information element.
 	 *
+	 * @param string $el Element to render.
+	 *
 	 * @since 1.0.0
 	 */
 	function presscore_top_bar_contact_element( $el ) {
 		$option_name = 'header-elements-contact-' . $el;
 
 		$icon = '';
-		if ( of_get_option( $option_name . '-icon' ) == 'custom' ) {
-			$icon = '<i class=" ' . of_get_option( $option_name . '-custom-icon' ) . '"></i>';
+		if ( of_get_option( $option_name . '-icon' ) === 'custom' ) {
+			$icon = '<i class="fa-fw ' . esc_attr( of_get_option( $option_name . '-custom-icon' ) ) . '"></i>';
 		}
 
-		$caption = (string) of_get_option( $option_name . '-caption' );
+		$caption = wp_kses_post( (string) of_get_option( $option_name . '-caption' ) );
+		$caption = $icon . $caption;
 
-		if ( ! $icon && ! $caption ) {
+		if ( ! $caption ) {
 			return;
 		}
 
-		$classes = array( 'mini-contacts ' . $el );
+		$classes = [ 'mini-contacts ' . $el ];
 
 		if ( ! of_get_option( $option_name . '-icon', true ) ) {
 			$classes[] = 'mini-icon-off';
 		}
 
 		$classes = presscore_get_mini_widget_class( $option_name, $classes );
-		$class = implode( ' ', $classes );
+		$class   = implode( ' ', $classes );
 
 		$href = of_get_option( $option_name . '-url' );
 		if ( $href ) {
-			$target = '';
-//			if ( of_get_option( $option_name . '-target' ) ) {
-//				$target = ' target="_blank"';
-//			}
-
 			printf(
-				'<a href="%s" class="%s" %s>%s</a>',
+				'<a href="%s" class="%s">%s</a>',
 				esc_attr( $href ),
 				esc_attr( $class ),
-				$target,
-				$icon . $caption
+				$caption // phpcs:ignore: WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above.
 			);
 		} else {
 			printf(
 				'<span class="%s">%s</span>',
 				esc_attr( $class ),
-				$icon . $caption
+				$caption // phpcs:ignore: WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above.
 			);
 		}
 	}
@@ -628,7 +630,7 @@ if ( ! function_exists( 'presscore_top_bar_text_element' ) ) :
 
 	/**
 	 * Render header text mini widget.
-	 * 
+	 *
 	 * @since 3.0.0
 	 *
 	 * @param string $opt_id
@@ -705,12 +707,12 @@ if ( ! function_exists( 'presscore_top_bar_button_element' ) ) :
 		if ( of_get_option( $opt_id . '-bg' ) === of_get_option( $opt_id . '-hover-bg' ) ) {
 			$classes[] = 'disable-animation-bg';
 		}
-		$classes[] = presscore_array_value( of_get_option( "{$opt_id}-border-color" ), array(
+		$classes[] = the7_array_match( of_get_option( "{$opt_id}-border-color" ), array(
 			'accent'   => 'border-on',
 			'color'    => 'border-on',
 			'disabled' => 'border-off',
 		) );
-		$classes[] = presscore_array_value( of_get_option( "{$opt_id}-hover-border-color" ), array(
+		$classes[] = the7_array_match( of_get_option( "{$opt_id}-hover-border-color" ), array(
 			'accent'   => 'hover-border-on',
 			'color'    => 'hover-border-on',
 			'disabled' => 'hover-border-off',
@@ -740,7 +742,7 @@ if ( ! function_exists( 'presscore_get_mini_widget_class' ) ) :
 
 	/**
 	 * Return common mini widgets classes.
-	 * 
+	 *
 	 * @param  string $opt_id
 	 * @param  array  $class
 	 * @return array
@@ -748,12 +750,12 @@ if ( ! function_exists( 'presscore_get_mini_widget_class' ) ) :
 	function presscore_get_mini_widget_class( $opt_id, $class = array() ) {
 		$classes = presscore_split_classes( $class );
 
-		$classes[] = presscore_array_value( of_get_option( $opt_id . '-on-desktops', 'show' ), array(
+		$classes[] = the7_array_match( of_get_option( $opt_id . '-on-desktops', 'show' ), array(
 			'show' => 'show-on-desktop',
 			'hide' => 'hide-on-desktop',
 		) );
 
-		$classes[] = presscore_array_value( of_get_option( $opt_id . '-first-header-switch', 'near_logo' ), array(
+		$classes[] = the7_array_match( of_get_option( $opt_id . '-first-header-switch', 'near_logo' ), array(
 			'in_menu'   => 'in-menu-first-switch',
 			'near_logo' => 'near-logo-first-switch',
 			'hidden'    => 'hide-on-first-switch',
@@ -761,7 +763,7 @@ if ( ! function_exists( 'presscore_get_mini_widget_class' ) ) :
 			'top_bar_right' => 'in-top-bar-right',
 		) );
 
-		$classes[] = presscore_array_value( of_get_option( $opt_id . '-second-header-switch', 'in_menu' ), array(
+		$classes[] = the7_array_match( of_get_option( $opt_id . '-second-header-switch', 'in_menu' ), array(
 			'in_menu'   => 'in-menu-second-switch',
 			'near_logo' => 'near-logo-second-switch',
 			'hidden'    => 'hide-on-second-switch',
@@ -818,20 +820,20 @@ if ( ! function_exists( 'presscore_get_topbar_social_icons' ) ) :
 
 		$classes = presscore_get_mini_widget_class( $opt_id, 'soc-ico' );
 
-		$classes[] = presscore_array_value( of_get_option( "{$opt_id}-bg" ), array(
+		$classes[] = the7_array_match( of_get_option( "{$opt_id}-bg" ), array(
 			'gradient' => 'gradient-bg',
 			//'outline'  => 'outline-style',
 			'accent'   => 'accent-bg',
 			'color'    => 'custom-bg',
 			'disabled' => 'disabled-bg',
 		) );
-		$classes[] = presscore_array_value( of_get_option( "{$opt_id}-border" ), array(
+		$classes[] = the7_array_match( of_get_option( "{$opt_id}-border" ), array(
 			'accent'   => 'accent-border border-on',
 			'color'    => 'custom-border border-on',
 			'disabled' => 'disabled-border border-off',
 		) );
 
-		$classes[] = presscore_array_value( of_get_option( "{$opt_id}-hover-bg" ), array(
+		$classes[] = the7_array_match( of_get_option( "{$opt_id}-hover-bg" ), array(
 			'gradient' => 'hover-gradient-bg',
 			//'outline'  => 'outline-style-hover',
 			'accent'   => 'hover-accent-bg',
@@ -839,7 +841,7 @@ if ( ! function_exists( 'presscore_get_topbar_social_icons' ) ) :
 			'disabled' => 'hover-disabled-bg',
 		) );
 
-		$classes[] = presscore_array_value( of_get_option( "{$opt_id}-hover-border" ), array(
+		$classes[] = the7_array_match( of_get_option( "{$opt_id}-hover-border" ), array(
 			'accent'   => 'hover-accent-border hover-border-on',
 			'color'    => 'hover-custom-border hover-border-on',
 			'disabled' => 'hover-disabled-border  hover-border-off',
@@ -919,7 +921,7 @@ if ( ! function_exists( 'presscore_get_mixed_header_class' ) ) :
 	 */
 	function presscore_get_mixed_header_class( $class = '' ) {
 		$classes = presscore_split_classes( $class );
-		
+
 		$config = presscore_config();
 		switch ( $config->get( 'header.layout' ) ) {
 			case 'side_line':
@@ -969,7 +971,7 @@ if ( ! function_exists( 'presscore_get_mixed_header_class' ) ) :
 		}
 
 		if ( in_array( $config->get( 'header.layout' ), array( 'top_line', 'side_line', 'menu_icon' ) ) ) {
-			$classes[] = presscore_array_value( $config->get( 'header.mixed.menu_icon.size' ), array(
+			$classes[] = the7_array_match( $config->get( 'header.mixed.menu_icon.size' ), array(
 				'small' => 'small-menu-icon',
 				'medium' => 'medium-menu-icon',
 				'large' => 'large-menu-icon',
@@ -987,12 +989,12 @@ if ( ! function_exists( 'presscore_get_mixed_header_class' ) ) :
 				'type_10' => 'dot-menu-icon',
 			) );
 
-			$classes[] = presscore_array_value( $config->get( 'header.mixed.menu-close_icon.position' ), array(
+			$classes[] = the7_array_match( $config->get( 'header.mixed.menu-close_icon.position' ), array(
 				'left' => 'left-menu-close-icon',
 				'right' => 'right-menu-close-icon',
 				'center' => 'center-menu-close-icon',
 			) );
-			// $classes[] = presscore_array_value( $config->get( 'header.mixed.menu-close_icon.size' ), array(
+			// $classes[] = the7_array_match( $config->get( 'header.mixed.menu-close_icon.size' ), array(
 
 			// 	'minus-medium' => 'medium-menu-close-icon',
 			// 	'fade_medium' => 'fade-medium-menu-close-icon',
@@ -1004,33 +1006,33 @@ if ( ! function_exists( 'presscore_get_mixed_header_class' ) ) :
 			// 	'h_dots' => 'h-dots-menu-close-icon',
 			// 	'scale_dot' => 'scale-dot-menu-close-icon',
 			// ) );
-			$classes[] = presscore_array_value( $config->get( 'header.hamburger.caption' ), array(
+			$classes[] = the7_array_match( $config->get( 'header.hamburger.caption' ), array(
 				'left' => 'left-caption',
 				'right' => 'right-caption',
 			) );
-			$classes[] = presscore_array_value( $config->get( 'header.close.hamburger.caption' ), array(
+			$classes[] = the7_array_match( $config->get( 'header.close.hamburger.caption' ), array(
 				'left' => 'menu-close-left-caption',
 				'right' => 'menu-close-right-caption',
 			) );
-			$classes[] = presscore_array_value( $config->get( 'header.hamburger.bg' ), array(
+			$classes[] = the7_array_match( $config->get( 'header.hamburger.bg' ), array(
 				'enabled' => 'hamburger-bg-enable',
 				'disabled' => 'hamburger-bg-disable',
 			) );
-			$classes[] = presscore_array_value( $config->get( 'header.hamburger.bg.hover' ), array(
+			$classes[] = the7_array_match( $config->get( 'header.hamburger.bg.hover' ), array(
 				'enabled' => 'hamburger-bg-hover-enable',
 				'disabled' => 'hamburger-bg-hover-disable',
 			) );
-			$classes[] = presscore_array_value( $config->get( 'header.hamburger.border' ), array(
+			$classes[] = the7_array_match( $config->get( 'header.hamburger.border' ), array(
 				'enabled' => 'hamburger-border-enable',
 				'disabled' => 'hamburger-border-disable',
 			) );
-			$classes[] = presscore_array_value( $config->get( 'header.hamburger.border.hover' ), array(
+			$classes[] = the7_array_match( $config->get( 'header.hamburger.border.hover' ), array(
 				'enabled' => 'hamburger-border-hover-enable',
 				'disabled' => 'hamburger-border-hover-disable',
 			) );
-		
+
 		}
-		$classes[] = presscore_array_value( $config->get( 'header.mobile.menu_icon.size' ), array(
+		$classes[] = the7_array_match( $config->get( 'header.mobile.menu_icon.size' ), array(
 			'medium' => 'medium-mobile-menu-icon',
 			'small' => 'small-mobile-menu-icon',
 			'large' => 'large-mobile-menu-icon',
@@ -1046,27 +1048,32 @@ if ( ! function_exists( 'presscore_get_mixed_header_class' ) ) :
 			'type_9' => 'type-9-mobile-menu-icon',
 			'type_10' => 'dot-mobile-menu-icon',
 		) );
-        $classes[] = presscore_array_value( $config->get( 'header.mobile.hamburger.caption' ), array(
+        $classes[] = the7_array_match( $config->get( 'header.mobile.hamburger.caption' ), array(
 			'left' => 'mobile-left-caption',
 			'right' => 'mobile-right-caption',
 		) );
-		
+
 		if ( $config->get( 'header.mobile.menu_icon.bg.enable' )) {
 			$classes[] = 'mobile-menu-icon-bg-on';
 		}
 		if ( $config->get( 'header.mobile.menu_icon.hover.bg.enable' )) {
 			$classes[] = 'mobile-menu-icon-hover-bg-on';
 		}
-		$classes[] = presscore_array_value( $config->get( 'header.mobile.menu_icon.border.enable' ), array(
+		$classes[] = the7_array_match( $config->get( 'header.mobile.menu_icon.border.enable' ), array(
 			'enabled' => 'mobile-menu-icon-border-enable',
 		) );
-		$classes[] = presscore_array_value( $config->get( 'header.mobile.menu_icon.hover.border.enable' ), array(
+		$classes[] = the7_array_match( $config->get( 'header.mobile.menu_icon.hover.border.enable' ), array(
 			'enabled' => 'mobile-menu-icon-hover-border-enable',
 		) );
-		
+
 
 		if ( $config->get( 'header.menu.submenu.parent_clickable' ) ) {
 			$classes[] = 'dt-parent-menu-clickable';
+		}
+		if ( $config->get( 'header.menu.submenu.display' ) === 'hover') {
+			$classes[] = 'show-sub-menu-on-hover';
+		}else{
+			$classes[] = 'show-sub-menu-on-click';
 		}
 
 		$classes[] = presscore_header_get_decoration_class( $config->get( 'header.mixed.decoration' ) );
@@ -1083,7 +1090,7 @@ if ( ! function_exists( 'presscore_header_add_mobile_logo_classe_filter' ) ) :
 
 	/**
 	 * Add mobile logo classes to $classes array.
-	 * 
+	 *
 	 * @since  3.0.0
 	 * @param  array  $classes
 	 * @return array
@@ -1113,7 +1120,7 @@ if ( ! function_exists( 'presscore_header_get_decoration_class' ) ) :
 
 	/**
 	 * Return decoration class based on $style.
-	 * 
+	 *
 	 * @param  string $style
 	 * @return string
 	 */
@@ -1134,7 +1141,7 @@ if ( ! function_exists( 'presscore_mobile_header_get_decoration_class' ) ) :
 
 	/**
 	 * Return decoration class based on $style.
-	 * 
+	 *
 	 * @param  string $style
 	 * @return string
 	 */
@@ -1161,16 +1168,16 @@ if ( ! function_exists( 'presscore_header_menu_icon' ) ) :
 	 */
 	function presscore_header_menu_icon() {
 			$caption_enable = presscore_config()->get( 'header.hamburger.caption' );
-		
+
 			$caption = presscore_config()->get( 'header.hamburger.caption.text' );
 			$caption_text = esc_html( $caption );
-		
+
 			echo '<div class="menu-toggle">';
 			if ( $caption_enable != 'disabled' ) {
 			echo '<a class="menu-toggle-caption" href="#">'. $caption .'</a>';
 			}
 			echo '</div>';
-		
+
 	}
 
 endif;
@@ -1261,7 +1268,7 @@ if ( ! function_exists( 'presscore_mixed_header_with_top_line' ) ) :
 
 	/**
 	 * Determine that header with the top_line.
-	 * 
+	 *
 	 * @since 3.0.0
 	 * @return boolean
 	 */
@@ -1275,7 +1282,7 @@ if ( ! function_exists( 'presscore_header_layout_is_mixed' ) ) :
 
 	/**
 	 * Determine that the header is mixed.
-	 * 
+	 *
 	 * @since 3.0.0
 	 * @return boolean
 	 */

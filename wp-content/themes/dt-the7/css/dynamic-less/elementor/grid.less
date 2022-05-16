@@ -3,8 +3,6 @@
 
 .dt-css-grid {
   .@{unique-shortcode-class-name}:not(.resize-by-browser-width) & {
-    grid-row-gap: @grid-posts-gap*2;
-    grid-column-gap: @grid-posts-gap*2;
     grid-template-columns: repeat(auto-fill, minmax(@grid-post-min-width, 1fr));
 
     & .double-width {
@@ -15,7 +13,6 @@
     .no-cssgridlegacy.no-cssgrid & {
       display: flex;
       flex-flow: row wrap;
-      margin: -@grid-posts-gap;
 
       & .wf-cell {
         flex: 1 0 @grid-post-min-width;
@@ -30,19 +27,15 @@
   .@{unique-shortcode-class-name}.resize-by-browser-width & {
     grid-template-columns: repeat(@desktop-columns, 1fr);
     grid-template-rows: auto;
-    grid-column-gap: @grid-posts-gap*2;
-    grid-row-gap: @grid-posts-gap*2;
 
     & .double-width {
       grid-column: span 2;
     }
 
     .cssgridlegacy.no-cssgrid & {
-      margin: -@grid-posts-gap;
 
       & .wf-cell {
         width: 100%/@desktop-columns;
-        padding: @grid-posts-gap;
 
         &.double-width {
           width: calc(100%/@desktop-columns) * 2;

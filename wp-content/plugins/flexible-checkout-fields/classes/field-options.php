@@ -12,26 +12,53 @@ class Flexible_Checkout_Fields_Field_Options {
 	/**
 	 * Options in string.
 	 *
-	 * @var strind
+	 * @var string
 	 */
 	private $options_string;
+
+	/**
+	 * Type of field.
+	 *
+	 * @var string
+	 */
+	private $field_type;
+
+	/**
+	 * Placeholder of field.
+	 *
+	 * @var string
+	 */
+	private $empty_option_label;
 
 	/**
 	 * Flexible_Checkout_Fields_Field_Options constructor.
 	 *
 	 * @param string $options_string Options in string.
+	 * @param string $empty_option_label Placeholder of field.
+	 * @param string $field_type Type of field.
 	 */
-	public function __construct( $options_string ) {
-		$this->options_string = $options_string;
+	public function __construct( $options_string, $empty_option_label = '', $field_type = '' ) {
+		$this->options_string     = $options_string;
+		$this->empty_option_label = $empty_option_label;
+		$this->field_type         = $field_type;
 	}
 
 	/**
 	 * Get options as array.
 	 *
+	 * @param bool $placeholder_status Status whether to add placeholder as first option.
+	 *
 	 * @return array
 	 */
-	public function get_options_as_array() {
-		$options           = array();
+	public function get_options_as_array( $placeholder_status = true ) {
+		$options = array();
+		if ( $placeholder_status && ( 'select' === $this->field_type ) ) {
+			$options[''] = ( ! empty( $this->empty_option_label ) )
+				? $this->empty_option_label
+				: __( 'Select option', 'flexible-checkout-fields' )
+			;
+		}
+
 		$tmp_options_array = explode( "\n", $this->options_string );
 		foreach ( $tmp_options_array as $option_row ) {
 			$option_array = explode( ':', $option_row, 2 );

@@ -7,8 +7,9 @@
         itemSelector: '.htbuilder-post-col',
         columnWidth: '.htbuilder-post-col'
     });
+    
     // layout Masonry after each image loads
-    $grid.imagesLoaded().progress( function() {
+    $('.htbuilder-post-area').imagesLoaded().progress( function() {
         $grid.masonry('layout');
     });
 

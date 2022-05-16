@@ -566,27 +566,36 @@ endif;
 if ( ! function_exists( 'presscore_get_blog_query' ) ) :
 
 	function presscore_get_blog_query() {
-		$config = presscore_get_config();
+		$config  = presscore_get_config();
 		$orderby = $config->get( 'orderby' );
 
-		$query_args = array(
-			'post_type'		    => 'post',
-			'paged'			    => the7_get_paged_var(),
-			'order'			    => $config->get( 'order' ),
-			'orderby'		    => 'name' == $orderby ? 'title' : $orderby,
-			'suppress_filters'  => false,
-		);
+		$post_status = [
+			'publish',
+		];
+
+		if ( current_user_can( 'read_private_pages' ) ) {
+			$post_status[] = 'private';
+		}
+
+		$query_args = [
+			'post_type'        => 'post',
+			'paged'            => the7_get_paged_var(),
+			'order'            => $config->get( 'order' ),
+			'orderby'          => 'name' === $orderby ? 'title' : $orderby,
+			'post_status'      => $post_status,
+			'suppress_filters' => false,
+		];
 
 		$ppp = $config->get( 'posts_per_page' );
 		if ( $ppp ) {
-			$query_args['posts_per_page'] = intval( $ppp );
+			$query_args['posts_per_page'] = (int) $ppp;
 		}
 
 		$display = $config->get( 'display' );
 		if ( ! empty( $display['terms_ids'] ) ) {
-			$terms_ids = array_values($display['terms_ids']);
+			$terms_ids = array_values( $display['terms_ids'] );
 
-			switch( $display['select'] ) {
+			switch ( $display['select'] ) {
 				case 'only':
 					$query_args['category__in'] = $terms_ids;
 					break;
@@ -598,45 +607,47 @@ if ( ! function_exists( 'presscore_get_blog_query' ) ) :
 		}
 
 		// get filter request
-		$request_display = $config->get('request_display');
+		$request_display = $config->get( 'request_display' );
 		if ( $request_display ) {
 
 			// get all category terms
-			$all_terms = get_categories( array(
-				'type'          => 'post',
-				'hide_empty'    => 1,
-				'hierarchical'  => 0,
-				'taxonomy'      => 'category',
-				'pad_counts'    => false
-			) );
+			$all_terms = get_categories(
+				[
+					'type'         => 'post',
+					'hide_empty'   => 1,
+					'hierarchical' => 0,
+					'taxonomy'     => 'category',
+					'pad_counts'   => false,
+				]
+			);
 
 			// populate $all_terms_array with terms names
-			$all_terms_array = array();
+			$all_terms_array = [];
 			foreach ( $all_terms as $term ) {
 				$all_terms_array[] = $term->term_id;
 			}
 
 			// except for empty term that appers when all filter category selcted, see it's url
-			if ( 0 == current($request_display['terms_ids']) ) {
+			if ( 0 === (int) current( $request_display['terms_ids'] ) ) {
 				$request_display['terms_ids'] = $all_terms_array;
 			}
 
 			// override base tax_query
-			$query_args['tax_query'] = array( array(
-				'taxonomy'	=> 'category',
-				'field'		=> 'id',
-				'terms'		=> array_values($request_display['terms_ids']),
-				'operator'	=> 'IN',
-			) );
+			$query_args['tax_query'] = [
+				[
+					'taxonomy' => 'category',
+					'field'    => 'id',
+					'terms'    => array_values( $request_display['terms_ids'] ),
+					'operator' => 'IN',
+				],
+			];
 
-			if ( 'except' == $request_display['select'] ) {
+			if ( 'except' === $request_display['select'] ) {
 				$query_args['tax_query'][0]['operator'] = 'NOT IN';
 			}
 		}
 
-		$query = new WP_Query( $query_args );
-
-		return $query;
+		return new WP_Query( $query_args );
 	}
 
 endif;

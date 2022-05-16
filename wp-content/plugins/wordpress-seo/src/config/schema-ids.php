@@ -1,16 +1,12 @@
 <?php
-/**
- * Yoast SEO Plugin File.
- *
- * @package Yoast\YoastSEO\Config
- */
 
 namespace Yoast\WP\SEO\Config;
 
 /**
- * Class Schema_IDs
+ * Class Schema_IDs.
  */
 class Schema_IDs {
+
 	/**
 	 * Hash used for the Author `@id`.
 	 */
@@ -44,12 +40,12 @@ class Schema_IDs {
 	/**
 	 * Hash used for the Organization `@id`.
 	 */
-	const ORGANIZATION_LOGO_HASH = '#logo';
+	const ORGANIZATION_LOGO_HASH = '#/schema/logo/image/';
 
 	/**
 	 * Hash used for the logo `@id`.
 	 */
-	const PERSON_LOGO_HASH = '#personlogo';
+	const PERSON_LOGO_HASH = '#/schema/person/image/';
 
 	/**
 	 * Hash used for an Article's primary image `@id`.

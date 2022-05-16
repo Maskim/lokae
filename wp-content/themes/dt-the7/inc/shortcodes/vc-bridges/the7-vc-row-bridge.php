@@ -30,7 +30,7 @@ vc_add_param( "vc_row", array(
 	"edit_field_class" => "dt_vc_row-param vc_col-xs-12 vc_column",
 ));
 
-$row_margin_support_link = 'http://support.dream-theme.com/knowledgebase/remove-gap-above-and-below-content-area/';
+$row_margin_support_link = 'https://support.dream-theme.com/knowledgebase/remove-gap-above-and-below-content-area/';
 
 // Top margin
 vc_add_param( "vc_row", array(

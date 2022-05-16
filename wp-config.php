@@ -38,6 +38,9 @@ define('DB_CHARSET', 'utf8');
   */
 define('DB_COLLATE', '');
 
+define('WP_HOME', 'https://vtt-loc-lamongie.fr');
+define('WP_SITEURL', 'https://vtt-loc-lamongie.fr');
+
 /**#@+
  * Clés uniques d’authentification et salage.
  *

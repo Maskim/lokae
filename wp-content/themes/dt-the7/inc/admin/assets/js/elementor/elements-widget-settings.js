@@ -92,6 +92,8 @@
                 var $taxonomySelect = panel.$el.find("[data-setting='taxonomy']");
                 var $termsSelect = panel.$el.find("[data-setting='terms']");
 
+                fillTermsTaxonomy(model, $termsSelect, $taxonomySelect);
+
                 // On post type change.
                 $postTypeSelect.on("change", function () {
                     var widgetType = model.attributes.widgetType;
@@ -114,8 +116,6 @@
                     appendOptionsTo($termsSelect, getTermsOptions(widgetType, $(this).val()), null);
                     model.setSetting("terms", []);
                 });
-
-                fillTermsTaxonomy(model, $termsSelect, $taxonomySelect);
             }, 350, this.model, this.panel);
         }
 
@@ -126,11 +126,11 @@
             var widgetType = model.attributes.widgetType;
 
             if (!getWidgetSettingsCache(widgetType, "taxonomies") || !getWidgetSettingsCache(widgetType, "terms")) {
-                var data = {
+                $.post(window.the7ElementsWidget.ajaxurl, {
                     action: "the7_elements_get_widget_taxonomies",
+                    post_types: $postTypeSelect.find("option").map(function() { return $(this).val(); }).get(),
                     _wpnonce: window.the7ElementsWidget._wpnonce
-                };
-                $.post(window.the7ElementsWidget.ajaxurl, data)
+                })
                     .done(function (response) {
                         if (!response) {
                             response = {};

@@ -1,5 +1,9 @@
 <?php
 
+use WPML\FP\Obj;
+use function WPML\Container\make;
+use WCML\MultiCurrency\Geolocation;
+
 /**
  * Class WCML_Multi_Currency
  *
@@ -8,6 +12,9 @@
  * User currency will be set in the woocommerce session as 'client_currency'
  */
 class WCML_Multi_Currency {
+
+	const CURRENCY_STORAGE_KEY = 'client_currency';
+	const CURRENCY_LANGUAGE_STORAGE_KEY = 'client_currency_language';
 
 	/** @var  array */
 	public $currencies = [];
@@ -73,6 +80,11 @@ class WCML_Multi_Currency {
 	public $woocommerce_wpml;
 
 	/**
+	 * @var woocommerce
+	 */
+	public $woocommerce;
+
+	/**
 	 * @var WCML_Exchange_Rate_Service
 	 */
 	public $exchange_rate_services;
@@ -92,14 +104,19 @@ class WCML_Multi_Currency {
 	 */
 	public $switching_currency_html;
 
+	/**
+	 * @var string
+	 */
+	private $rest_currency;
 
 	/**
 	 * WCML_Multi_Currency constructor.
 	 */
 	public function __construct() {
-		global $woocommerce_wpml, $sitepress, $wpdb, $wp_locale, $wp;
+		global $woocommerce_wpml, $woocommerce, $sitepress, $wpdb, $wp_locale, $wp;
 
 		$this->woocommerce_wpml = $woocommerce_wpml;
+		$this->woocommerce      = $woocommerce;
 
 		$this->install = new WCML_Multi_Currency_Install( $this, $woocommerce_wpml );
 
@@ -136,7 +153,7 @@ class WCML_Multi_Currency {
 		$this->exchange_rate_services->add_service( 'fixerio', new WCML_Exchange_Rates_Fixerio() );
 		$this->exchange_rate_services->add_service( 'currencylayer', new WCML_Exchange_Rates_Currencylayer() );
 
-		$this->currencies_payment_gateways = new WCML_Currencies_Payment_Gateways( $this->woocommerce_wpml, $sitepress->get_wp_api() );
+		$this->currencies_payment_gateways = make( WCML_Currencies_Payment_Gateways::class );
 		$this->currencies_payment_gateways->add_hooks();
 
 		if ( defined( 'W3TC' ) ) {
@@ -168,7 +185,6 @@ class WCML_Multi_Currency {
 					[
 						'woocommerce_get_refreshed_fragments',
 						'woocommerce_update_order_review',
-						'woocommerce-checkout',
 						'woocommerce_checkout',
 						'woocommerce_add_to_cart',
 						'woocommerce_update_shipping_method',
@@ -204,6 +220,9 @@ class WCML_Multi_Currency {
 		add_action( 'wp_footer', [ $this, 'maybe_show_switching_currency_prompt_dialog' ] );
 		add_action( 'wp_footer', [ $this, 'maybe_reset_cart_fragments' ] );
 
+		if( WCML\Rest\Functions::isRestApiRequest() ){
+			add_filter( 'rest_request_before_callbacks', [ $this, 'set_request_currency' ], 10, 3 );
+		}
 	}
 
 	public function enable() {
@@ -240,6 +259,8 @@ class WCML_Multi_Currency {
 			'rounding'           => 'disabled',
 			'rounding_increment' => 1,
 			'auto_subtract'      => 0,
+			'location_mode'      => 'all',
+			'countries'          => [],
 		];
 
 		foreach ( $this->currencies as $code => $currency ) {
@@ -275,7 +296,7 @@ class WCML_Multi_Currency {
 					unset( $this->woocommerce_wpml->settings['default_currencies'][ $language ] );
 					$save_to_db = true;
 				}
-				if ( ! empty( $value ) && ! in_array( $value, $this->currency_codes ) ) {
+				if ( ! empty( $value ) && ! in_array( $value, $this->currency_codes ) && $value !== 'location' ) {
 					$this->woocommerce_wpml->settings['default_currencies'][ $language ] = 0;
 					$save_to_db = true;
 				}
@@ -329,6 +350,15 @@ class WCML_Multi_Currency {
 
 	public function get_currency_codes() {
 		return $this->currency_codes;
+	}
+
+	/**
+	 * @param string $code
+	 *
+	 * @return bool
+	 */
+	public function is_currency_active( $code ) {
+		return in_array( $code, $this->get_currency_codes(), true );
 	}
 
 	/**
@@ -391,17 +421,16 @@ class WCML_Multi_Currency {
 	}
 
 	public function get_client_currency() {
-		global $woocommerce, $sitepress, $wpdb;
+		global $sitepress;
 
-		$WCML_REST_API = new WCML_REST_API();
-		if (
-			$WCML_REST_API->is_rest_api_request() ||
-			! empty( $_REQUEST['woocommerce_quick_edit'] )
-		) {
+		if( \WCML\Rest\Functions::isRestApiRequest() ){
+			return $this->get_rest_currency();
+		}
+
+		if ( ! empty( $_REQUEST['woocommerce_quick_edit'] )	) {
 			return wcml_get_woocommerce_currency_option();
 		}
 
-		$default_currencies = $this->woocommerce_wpml->settings['default_currencies'];
 		$current_language   = $sitepress->get_current_language();
 		$current_language   = ( $current_language !== 'all' && ! is_null( $current_language ) ) ? $current_language : $sitepress->get_default_language();
 
@@ -433,9 +462,19 @@ class WCML_Multi_Currency {
 		}
 
 		if ( isset( $_GET['pay_for_order'] ) && $_GET['pay_for_order'] == true && isset( $_GET['key'] ) ) {
-			$order_id = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_order_key' AND meta_value = %s", sanitize_text_field( $_GET['key'] ) ) );
-			if ( $order_id ) {
-				$this->client_currency = get_post_meta( $order_id, '_order_currency', true );
+
+			$cache_group    = 'wcml_client_currency';
+			$cache_key      = 'order' . sanitize_text_field( $_GET['key'] );
+			$order_currency = wp_cache_get( $cache_key, $cache_group );
+
+			if ( $order_currency ) {
+				$this->client_currency = $order_currency;
+			} else {
+				$order_id = wc_get_order_id_by_order_key( wc_clean( wp_unslash( $_GET['key'] ) ) );
+				if ( $order_id ) {
+					$this->client_currency = get_post_meta( $order_id, '_order_currency', true );
+					wp_cache_set( $cache_key, $this->client_currency, $cache_group );
+				}
 			}
 		}
 
@@ -445,19 +484,22 @@ class WCML_Multi_Currency {
 			$this->client_currency = $_COOKIE['_wcml_order_currency'];
 		}
 
-		if ( is_null( $this->client_currency ) &&
-			 isset( $default_currencies[ $current_language ] ) &&
-			 $default_currencies[ $current_language ] &&
-			 ! empty( $woocommerce->session ) &&
-			 $current_language != $woocommerce->session->get( 'client_currency_language' ) ) {
+		$this->client_currency = $this->maybe_get_currency_by_geolocation( $this->client_currency );
 
-			$current_currency  = $woocommerce->session->get( 'client_currency' );
-			$client_currency   = $default_currencies[ $current_language ];
-			$prevent_switching = apply_filters( 'wcml_switch_currency_exception', false, $current_currency, $client_currency, true );
+		$client_currency_language = wcml_user_store_get( self::CURRENCY_LANGUAGE_STORAGE_KEY );
+		if ( is_null( $this->client_currency ) && $current_language !== $client_currency_language ) {
 
-			$this->client_currency = $client_currency;
-			if ( ! array_key_exists( 'force_switch', $_POST ) && $prevent_switching ) {
-				$this->switching_currency_html = $prevent_switching['prevent_switching'];
+			$language_default_currency = $this->get_language_default_currency( $current_language );
+
+			if ( $language_default_currency ) {
+
+				$current_currency  = wcml_user_store_get( self::CURRENCY_STORAGE_KEY );
+				$prevent_switching = apply_filters( 'wcml_switch_currency_exception', false, $current_currency, $language_default_currency, true );
+
+				$this->client_currency = $language_default_currency;
+				if ( ! array_key_exists( 'force_switch', $_POST ) && $prevent_switching ) {
+					$this->switching_currency_html = $prevent_switching['prevent_switching'];
+				}
 			}
 		}
 
@@ -473,11 +515,11 @@ class WCML_Multi_Currency {
 		}
 
 		// client currency in general / if enabled for this language.
-		if ( is_null( $this->client_currency ) && ! empty( $woocommerce->session ) ) {
-			$session_currency = $woocommerce->session->get( 'client_currency' );
-			if ( $session_currency && ! empty( $this->currencies[ $session_currency ]['languages'][ $current_language ] ) ) {
+		if ( is_null( $this->client_currency ) ) {
+			$storage_currency = wcml_user_store_get( self::CURRENCY_STORAGE_KEY );
+			if ( $storage_currency && ! empty( $this->currencies[ $storage_currency ]['languages'][ $current_language ] ) ) {
 
-				$this->client_currency = $woocommerce->session->get( 'client_currency' );
+				$this->client_currency = $storage_currency;
 			}
 		}
 
@@ -500,12 +542,65 @@ class WCML_Multi_Currency {
 
 		$this->client_currency = apply_filters( 'wcml_client_currency', $this->client_currency );
 
-		if ( ! empty( $woocommerce->session ) && $this->client_currency ) {
-			$woocommerce->session->set( 'client_currency', $this->client_currency );
-			$woocommerce->session->set( 'client_currency_language', $current_language );
+		if ( $this->client_currency ) {
+			wcml_user_store_set( self::CURRENCY_STORAGE_KEY, $this->client_currency );
+			wcml_user_store_set( self::CURRENCY_LANGUAGE_STORAGE_KEY, $current_language );
 		}
 
 		return $this->client_currency;
+	}
+
+	/**
+	 * @param null|string $client_currency
+	 *
+	 * @return null|string
+	 */
+	public function maybe_get_currency_by_geolocation( $client_currency ) {
+
+	    if( Geolocation::MODE_BY_LOCATION !== $this->woocommerce_wpml->get_setting( 'currency_mode' ) ){
+		    return $client_currency;
+        }
+
+		$currency_not_in_storage = is_null( $client_currency ) && ! wcml_user_store_get( self::CURRENCY_STORAGE_KEY );
+		$is_checkout_ajax        = is_ajax() && isset( $_GET['wc-ajax'] ) && 'update_order_review' === $_GET['wc-ajax'];
+
+		if ( $currency_not_in_storage || $is_checkout_ajax ) {
+			$location_currency = $this->get_currency_by_geolocation();
+			if ( $location_currency ) {
+				return $location_currency;
+			}
+		}
+
+		return $client_currency;
+	}
+
+	/**
+	 * @return bool|string
+	 */
+	private function get_currency_by_geolocation() {
+
+		$cache_group = 'WCML_Multi_Currency';
+		$wpml_cache  = new WPML_WP_Cache( $cache_group );
+		wp_cache_add_non_persistent_groups( $cache_group );
+
+		$cache_key         = 'location_currency';
+		$found             = false;
+		$location_currency = $wpml_cache->get( $cache_key, $found );
+
+		if ( ! $found ) {
+			$location_currency = Geolocation::getCurrencyCodeByUserCountry();
+
+			if (
+				! $this->is_currency_active( $location_currency ) ||
+				! Geolocation::isCurrencyAvailableForCountry( $this->woocommerce_wpml->settings['currency_options'][ $location_currency ] )
+			) {
+				$location_currency = Geolocation::getFirstAvailableCountryCurrencyFromSettings( $this->woocommerce_wpml->settings['currency_options'] );
+			}
+
+			$wpml_cache->set( $cache_key, $location_currency );
+		}
+
+		return $location_currency;
 	}
 
 	public function maybe_show_switching_currency_prompt_dialog() {
@@ -520,7 +615,7 @@ class WCML_Multi_Currency {
 		if ( ! empty( $woocommerce->session ) && $woocommerce->session->get( 'client_currency_switched' ) ) {
 			?>
 			<script type="text/javascript">
-				jQuery(document).ready(function () {
+				jQuery(function () {
 					wcml_reset_cart_fragments();
 				});
 			</script>
@@ -531,18 +626,23 @@ class WCML_Multi_Currency {
 	}
 
 	public function set_client_currency( $currency ) {
-		global $woocommerce, $sitepress;
+		global $sitepress;
 
 		$this->client_currency = $currency;
 
-		$woocommerce->session->set( 'client_currency', $currency );
-		$woocommerce->session->set( 'client_currency_language', $sitepress->get_current_language() );
+		wcml_user_store_set( self::CURRENCY_STORAGE_KEY, $currency );
+		wcml_user_store_set( self::CURRENCY_LANGUAGE_STORAGE_KEY, $sitepress->get_current_language() );
 
 		do_action( 'wcml_set_client_currency', $currency );
 
 	}
 
 	public function switch_currency() {
+        /**
+         * @global SitePress $GLOBALS['sitepress']
+         * @name $sitepress
+         */
+	    global $sitepress;
 
 		$currency     = filter_input( INPUT_POST, 'currency', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$force_switch = filter_input( INPUT_POST, 'force_switch', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
@@ -555,7 +655,13 @@ class WCML_Multi_Currency {
 			die();
 		}
 
-		$this->set_client_currency( $currency, $force_switch );
+		$lang = Obj::prop( 'lang', $params );
+
+		if ( $lang ) {
+		    $sitepress->switch_lang( $lang );
+		}
+
+		$this->set_client_currency( $currency );
 
 		// force set user cookie when user is not logged in.
 		global $woocommerce, $current_user;
@@ -577,5 +683,53 @@ class WCML_Multi_Currency {
 		return apply_filters( 'wcml_currencies_without_cents', $this->currencies_without_cents );
 	}
 
-}
+	/**
+	 * @param string $language
+	 *
+	 * @return string|bool
+	 */
+	public function get_language_default_currency( $language ) {
 
+		$default_currencies = $this->woocommerce_wpml->settings['default_currencies'];
+
+		if ( isset( $default_currencies[ $language ] ) ) {
+			if ( 'location' === $default_currencies[ $language ] ) {
+				$location_currency = $this->get_currency_by_geolocation();
+				if ( $location_currency ) {
+					return $location_currency;
+				}
+			} else {
+				return $default_currencies[ $language ];
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Set reports currency for REST request.
+	 *
+	 * @param WP_REST_Response|WP_HTTP_Response|WP_Error|mixed $response Result to send to the client. Usually a WP_REST_Response or WP_Error.
+	 * @param array                                            $handler  Route handler used for the request.
+	 * @param WP_REST_Request                                  $request  Request used to generate the response.
+	 *
+	 * @return WP_REST_Response|WP_HTTP_Response|WP_Error|mixed
+	 */
+	public function set_request_currency( $response, $handler, $request ) {
+
+		$this->rest_currency = Obj::prop( 'currency', $request->get_params() );
+
+		return $response;
+	}
+
+	/**
+	 * Get REST currency
+	 *
+	 * @return string
+	 */
+	public function get_rest_currency() {
+
+		return $this->rest_currency ? $this->rest_currency : wcml_get_woocommerce_currency_option();
+	}
+
+}

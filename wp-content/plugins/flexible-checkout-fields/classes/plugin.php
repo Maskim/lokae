@@ -1,5 +1,7 @@
 <?php
 
+use WPDesk\FCF\Free\Plugin as PluginFree;
+
 /**
  * Class Plugin
  *
@@ -50,6 +52,13 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 	 */
 	public $plugin_namespace = 'inspire_checkout_fields';
 
+	/**
+	 * Instance of new version main class of plugin.
+	 *
+	 * @var PluginFree
+	 */
+	private $plugin_free;
+
 
 	/**
 	 * Plugin constructor.
@@ -59,6 +68,7 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 	public function __construct( \FcfVendor\WPDesk_Plugin_Info $plugin_info ) {
 		parent::__construct( $plugin_info );
 		$this->plugin_info = $plugin_info;
+		$this->plugin_free = new PluginFree( $plugin_info, $this );
 	}
 
 	/**
@@ -78,6 +88,7 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 	 * Init.
 	 */
 	public function init() {
+		$this->plugin_free->init();
 		$this->init_base_variables();
 		$this->load_dependencies();
 		$this->hooks();
@@ -87,6 +98,7 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 	 * Load dependencies.
 	 */
 	private function load_dependencies() {
+		new WPDesk_Flexible_Checkout_Fields_Tracker();
 		require_once __DIR__ . '/settings.php';
 		require_once __DIR__ . '/field-options.php';
 	}
@@ -95,6 +107,7 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 	 * Hooks.
 	 */
 	public function hooks() {
+		$this->plugin_free->hooks();
 		parent::hooks();
 
 		$this->settings = new Flexible_Checkout_Fields_Settings( $this, self::FIELDS_REQUIREMENT_CONTROLLED_BY_WOOCOMMERCE );
@@ -102,7 +115,7 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 100 );
 
 		add_action( 'woocommerce_checkout_fields', array( $this, 'changeCheckoutFields' ), 9999 );
-		add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'updateCheckoutFields' ), 9 );
+		add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'updateCheckoutFields' ), 9, 2 );
 
 		add_action( 'woocommerce_admin_order_data_after_billing_address', array(
 			$this,
@@ -133,18 +146,6 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 		), 10 );
 
 		add_filter( 'flexible_chekout_fields_fields', array( $this, 'getCheckoutFields' ), 10, 2 );
-
-		add_filter( 'flexible_checkout_fields_field_tabs', array( $this, 'flexible_checkout_fields_field_tabs' ), 10 );
-
-		add_action( 'flexible_checkout_fields_field_tabs_content', array(
-			$this,
-			'flexible_checkout_fields_field_tabs_content'
-		), 10, 4 );
-
-		add_action( 'flexible_checkout_fields_field_tabs_content_js', array(
-			$this,
-			'flexible_checkout_fields_field_tabs_content_js'
-		), 10 );
 
 		add_action( 'woocommerce_default_address_fields', array( $this, 'woocommerce_default_address_fields' ), 9999 );
 		add_filter( 'woocommerce_get_country_locale', array( $this, 'woocommerce_get_country_locale' ), 9999 );
@@ -230,6 +231,9 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 		foreach ( $base as $key => $field ) {
 			unset( $base[ $key ]['placeholder'] );
 			unset( $base[ $key ]['label'] );
+			if ( version_compare( WC()->version, '4.4.1', '>=' ) ) {
+				unset( $base[ $key ]['class'] );
+			}
 
 			// field is force-required for given locale when FCF have shipping or billing field required
 			$shipping_key = 'shipping_' . $key;
@@ -290,20 +294,23 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 				'section'        => 'billing',
 				'tab'            => 'fields_billing',
 				'tab_title'      => __( 'Billing', 'flexible-checkout-fields' ),
-				'custom_section' => false
+				'custom_section' => false,
+				'user_meta'      => true,
 			),
 			'shipping' => array(
 				'section'        => 'shipping',
 				'tab'            => 'fields_shipping',
 				'tab_title'      => __( 'Shipping', 'flexible-checkout-fields' ),
-				'custom_section' => false
+				'custom_section' => false,
+				'user_meta'      => true,
 			),
 			'order'    => array(
 				'section'        => 'order',
 				'tab'            => 'fields_order',
 				'tab_title'      => __( 'Order', 'flexible-checkout-fields' ),
-				'custom_section' => false
-			)
+				'custom_section' => false,
+				'user_meta'      => false,
+			),
 		);
 
 		$all_sections = unserialize( serialize( $sections ) );
@@ -547,6 +554,11 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 								}
 								if ( isset( $field['label'] ) ) {
 									$new[ $key ][ $field['name'] ]['label'] = stripcslashes( wpdesk__( $field['label'], 'flexible-checkout-fields' ) );
+
+									// Support for fields rendered by WooCommerce
+									if ( isset( $field['type'] ) && in_array( $field['type'], array( 'text', 'textarea', 'select' ), true ) ) {
+										$new[ $key ][ $field['name'] ]['label'] = wp_kses_post( $new[ $key ][ $field['name'] ]['label'] );
+									}
 								}
 								if ( isset( $field['placeholder'] ) ) {
 									$new[ $key ][ $field['name'] ]['placeholder'] = wpdesk__( $field['placeholder'], 'flexible-checkout-fields' );
@@ -578,10 +590,10 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 								}
 
 								if ( $custom_field ) {
-									$new[ $key ][ $field['name'] ]['type'] = $field['type'];
+									$new[ $key ][ $field['name'] ]['type'] = $field['type'] ?? '';
 
-									if ( isset( $checkout_field_type[ $field['type'] ]['has_options'] ) ) {
-										$field_options                            = new Flexible_Checkout_Fields_Field_Options( $field['option'] );
+									if ( isset( $checkout_field_type[ $field['type'] ?? '' ]['has_options'] ) && isset( $field['option'] ) ) {
+										$field_options                            = new Flexible_Checkout_Fields_Field_Options( $field['option'], $new[ $key ][ $field['name'] ]['placeholder'], $field['type'] );
 										$new[ $key ][ $field['name'] ]['options'] = $field_options->get_options_as_array();
 									}
 								}
@@ -706,15 +718,15 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 
 					if ( isset( $field['class'] ) ) {
 						if ( is_array( $field['class'] ) ) {
-							$new[ $key ]['class'][0] = esc_attr(implode( ' ', $field['class'] ));
+							$new[ $key ]['class'] = explode( ' ', esc_attr( implode( ' ', $field['class'] ) ) );
 						} else {
-							$new[ $key ]['class'][0] = esc_attr($field['class']);
+							$new[ $key ]['class'] = explode( ' ', esc_attr( $field['class'] ) );
 						}
 					}
 
 					if ( ! empty( $field['name'] ) ) {
 						if ( ( $field['name'] === 'billing_country' || $field['name'] === 'shipping_country' ) && $field['visible'] == 1 ) {
-							$new[ $key ]['class'][1] = "inspire_checkout_fields_hide";
+							$new[ $key ]['class'][] = "inspire_checkout_fields_hide";
 						}
 					}
 
@@ -722,8 +734,8 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 						$new[ $key ]['type'] = $field['type'];
 					}
 
-					if ( isset( $field['type'] ) && ( ! empty( $checkout_field_type[ $field['type'] ]['has_options'] ) ) ) {
-						$field_options          = new Flexible_Checkout_Fields_Field_Options( $field['option'] );
+					if ( isset( $field['type'] ) && ( ! empty( $checkout_field_type[ $field['type'] ]['has_options'] ) ) && isset( $field['option'] ) ) {
+						$field_options          = new Flexible_Checkout_Fields_Field_Options( $field['option'], $new[ $key ]['placeholder'], $field['type'] );
 						$new[ $key ]['options'] = $field_options->get_options_as_array();
 					}
 				}
@@ -791,69 +803,6 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 		}
 	}
 
-	public function changeAdminLabelsCheckoutFields( $labels, $request_type ) {
-		$settings = $this->get_settings();
-		if ( ! empty( $settings ) && ( $request_type == null || ! empty( $settings[ $request_type ] ) ) ) {
-			$new = array();
-			foreach ( $settings as $key => $type ) {
-				if ( $request_type == null || $request_type == $key ) {
-					foreach ( $type as $field ) {
-						if ( $field['visible'] == 0 && ( $request_type == null || strpos( $field['name'], $request_type ) === 0 )
-						     && ( ( empty( $field['type'] ) || ( $field['type'] !== 'heading' && $field['type'] !== 'info' && $field['type'] !== 'file' ) ) )
-						) {
-							$field_name = $this->replace_only_first( $request_type . '_', '', $field['name'] );
-
-							if ( isset( $labels[ $field_name ] ) ) {
-
-								$new[ $field_name ] = $labels[ $field_name ];
-
-								if ( ! empty( $field['label'] ) ) {
-									$new[ $field_name ]['label'] = $field['label'];
-								}
-
-								if ( empty( $new[ $field_name ]['label'] ) ) {
-									$new[ $field_name ]['label'] = $field['name'];
-								}
-
-								$new[ $field_name ]['type'] = 'text';
-								if ( isset( $field['type'] ) ) {
-									$new[ $field_name ]['type'] = $field['type'];
-								}
-
-								$new[ $field_name ] = apply_filters( 'flexible_checkout_fields_admin_labels', $new[ $field_name ], $field, $field_name );
-
-								if ( $field_name === 'country' ) {
-									$new[ $field_name ]['type'] = 'select';
-								}
-
-								if ( isset( $field['show'] ) ) {
-									$new[ $field_name ]['show'] = $field['show'];
-								}
-
-								//$new[ $field_name ]['wrapper_class'] = 'form-field-wide';
-
-							}
-						}
-					}
-				}
-			}
-
-			foreach ( $labels as $key => $value ) {
-				if ( $request_type == null || $request_type == $key ) {
-					if ( empty( $new[ $key ] ) ) {
-						$new[ $key ] = $value;
-					}
-				}
-			}
-
-			return $new;
-		} else {
-			return $labels;
-		}
-
-	}
-
-
 	public function changeCheckoutFields( $fields ) {
 		return $this->getCheckoutFields( $fields );
 	}
@@ -868,18 +817,6 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 
 	public function changeOrderFields( $fields ) {
 		return $this->getCheckoutFields( $fields, 'order' );
-	}
-
-	public function changeAdminBillingFields( $labels ) {
-		return $this->changeAdminLabelsCheckoutFields( $labels, 'billing' );
-	}
-
-	public function changeAdminShippingFields( $labels ) {
-		return $this->changeAdminLabelsCheckoutFields( $labels, 'shipping' );
-	}
-
-	public function changeAdminOrderFields( $labels ) {
-		return $this->changeAdminLabelsCheckoutFields( $labels, 'order' );
 	}
 
 	public function addCustomBillingFieldsToAdmin( $order ) {
@@ -909,9 +846,10 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 	/**
 	 * Update fields on checkout.
 	 *
-	 * @param $order_id
+	 * @param int   $order_id Order id.
+	 * @param array $data Posted data.
 	 */
-	function updateCheckoutFields( $order_id ) {
+	function updateCheckoutFields( $order_id, $data ) {
 		$settings = $this->get_settings();
 		if ( ! empty( $settings ) ) {
 			$fields = array_merge(
@@ -920,7 +858,7 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 				isset( $settings['order'] ) ? $settings['order'] : array()
 			);
 
-			foreach ( $_POST as $key => $value ) {
+			foreach ( $data as $key => $value ) {
 				if ( isset( $fields[ $key ] ) ) {
 					$fcf_field = new Flexible_Checkout_Fields_Field( $fields[ $key ], $this );
 					if ( $fcf_field->is_custom_field() ) {
@@ -930,28 +868,11 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 			}
 		}
 
-		do_action( 'flexible_checkout_fields_checkout_update_order_meta', $order_id );
+		do_action( 'flexible_checkout_fields_checkout_update_order_meta', $order_id, $data );
 	}
 
 	public static function flexible_checkout_fields_section_settings( $key, $settings ) {
 		echo 1;
-	}
-
-	public function flexible_checkout_fields_field_tabs( $tabs ) {
-		$tabs[] = array(
-			'hash'  => 'advanced',
-			'title' => __( 'Advanced', 'flexible-checkout-fields' )
-		);
-
-		return $tabs;
-	}
-
-	public function flexible_checkout_fields_field_tabs_content( $key, $name, $field, $settings ) {
-		include $this->plugin_path . '/views/settings-field-advanced.php';
-	}
-
-	public function flexible_checkout_fields_field_tabs_content_js() {
-		include $this->plugin_path . '/views/settings-field-advanced-js.php';
 	}
 
 	public function woocommerce_get_country_locale_default( $address_fields ) {
@@ -980,12 +901,6 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 			$current_screen = get_current_screen();
 		}
 
-		if ( isset( $current_screen ) && 'woocommerce_page_inspire_checkout_fields_settings' === $current_screen->id ) {
-			wp_enqueue_style( 'jquery-ui-style', trailingslashit( $this->get_plugin_assets_url() ) . 'css/jquery-ui' . $suffix . '.css', array(), $this->scripts_version );
-			wp_enqueue_script( 'jquery-tiptip' );
-		}
-
-		wp_enqueue_style( 'inspire_checkout_fields_admin_style', trailingslashit( $this->get_plugin_assets_url() ) . 'css/admin' . $suffix . '.css', array(), $this->scripts_version );
 		$deps = array(
 			'jquery',
 			'jquery-ui-sortable',
@@ -1088,24 +1003,14 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 	 * @return array
 	 */
 	public function links_filter( $links ) {
-		$docs_link = 'https://www.wpdesk.net/docs/flexible-checkout-fields-pro-woocommerce-docs/';
-		if ( get_locale() === 'pl_PL' ) {
-			$docs_link = 'https://www.wpdesk.pl/docs/woocommerce-checkout-fields-docs/';
-		}
-		$docs_link .= '?utm_source=wp-admin-plugins&utm_medium=quick-link&utm_campaign=flexible-checkout-fields-docs-link';
-
-		$plugin_links = array();
-		if ( defined( 'WC_VERSION' ) ) {
-			$plugin_links[] = '<a href="' . admin_url( 'admin.php?page=inspire_checkout_fields_settings' ) . '">' . __( 'Settings', 'flexible-checkout-fields' ) . '</a>';
-		}
-		$plugin_links[] = '<a target="_blank" href="' . $docs_link . '">' . __( 'Docs', 'flexible-checkout-fields' ) . '</a>';
-		$plugin_links[] = '<a target="_blank" href="https://wordpress.org/support/plugin/flexible-checkout-fields/">' . __( 'Support', 'flexible-checkout-fields' ) . '</a>';
-
-		$pro_link = get_locale() === 'pl_PL' ? 'https://www.wpdesk.pl/sklep/woocommerce-checkout-fields/' : 'https://www.wpdesk.net/products/flexible-checkout-fields-pro-woocommerce/';
-		$utm      = '?utm_source=wp-admin-plugins&utm_medium=link&utm_campaign=flexible-checkout-fields-plugins-upgrade-link';
+		$plugin_links = array(
+			'<a href="' . admin_url( 'admin.php?page=inspire_checkout_fields_settings' ) . '">' . __( 'Settings', 'flexible-checkout-fields' ) . '</a>',
+			'<a href="' . esc_url( apply_filters( 'flexible_checkout_fields/short_url', '#', 'fcf-settings-row-action-docs' ) ) . '" target="_blank">' . __( 'Docs', 'flexible-checkout-fields' ) . '</a>',
+			'<a href="' . esc_url( apply_filters( 'flexible_checkout_fields/short_url', '#', 'fcf-settings-row-action-support' ) ) . '" target="_blank">' . __( 'Support', 'flexible-checkout-fields' ) . '</a>',
+		);
 
 		if ( ! wpdesk_is_plugin_active( 'flexible-checkout-fields-pro/flexible-checkout-fields-pro.php' ) ) {
-			$plugin_links[] = '<a href="' . $pro_link . $utm . '" target="_blank" style="color:#d64e07;font-weight:bold;">' . __( 'Upgrade', 'flexible-checkout-fields' ) . '</a>';
+			$plugin_links[] = '<a href="' . esc_url( apply_filters( 'flexible_checkout_fields/short_url', '#', 'fcf-settings-row-action-upgrade' ) ) . '" target="_blank" style="color:#d64e07;font-weight:bold;">' . __( 'Upgrade', 'flexible-checkout-fields' ) . '</a>';
 		}
 
 		return array_merge( $plugin_links, $links );

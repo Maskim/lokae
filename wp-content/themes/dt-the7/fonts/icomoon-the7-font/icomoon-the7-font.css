@@ -23,12 +23,8 @@
 #page .links-container .icon-portfolio,
 [class^="icon-im-"] span,
 [class*="icon-im-"] span,
-[class^="icon-ar"],
-[class*=" icon-ar"],
-.owl-carousel [class^="icon-"]:not(.icon-with-text-shortcode),
-.owl-carousel [class*=" icon-"]:not(.icon-with-text-shortcode),
-.owl-carousel [class^="icon-"]:not(.icon-with-text-shortcode):before,
-.owl-carousel [class*=" icon-"]:not(.icon-with-text-shortcode):before {
+[class^="icon-ar-"],
+[class*=" icon-ar-"] {
   font-family: 'icomoon-the7-font' !important;
   speak: none;
   font-style: normal;

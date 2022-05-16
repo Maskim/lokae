@@ -3,7 +3,7 @@
  * @package The7
  */
 
-namespace The7\Adapters\Elementor\Page_Settings;
+namespace The7\Mods\Compatibility\Elementor\Page_Settings;
 
 use Elementor\Controls_Manager;
 use Elementor\Modules\PageTemplates\Module as PageTemplatesModule;
@@ -15,7 +15,7 @@ $template_option_name = The7_Elementor_Compatibility::instance()->page_settings-
 $template_condition = [ PageTemplatesModule::TEMPLATE_CANVAS, PageTemplatesModule::TEMPLATE_HEADER_FOOTER ];
 return [
 	'args'     => [
-		'label' => __( 'Sidebar settings', 'the7mk2' ),
+		'label' => __( 'Sidebar Settings', 'the7mk2' ),
 		'tab'   => Controls_Manager::TAB_SETTINGS,
 		'conditions' => [
 			'relation' => 'or',
@@ -77,6 +77,22 @@ return [
 				'options'   => 'presscore_get_widgetareas_options',
 				'separator' => 'none',
 				'condition' => [
+					'the7_document_sidebar_position' => [ 'left', 'right' ],
+				],
+			],
+		],
+		'the7_document_hide_sidear_on_mobile' => [
+			'meta' => '_dt_sidebar_hide_on_mobile',
+			'args' => [
+				'label'        => __( 'Hide on mobile layout', 'the7mk2' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'default'      => '0',
+				'label_on'     => __( 'Yes', 'the7mk2' ),
+				'label_off'    => __( 'No', 'the7mk2' ),
+				'return_value' => '1',
+				'empty_value'  => '0',
+				'separator'    => 'none',
+				'condition'    => [
 					'the7_document_sidebar_position' => [ 'left', 'right' ],
 				],
 			],

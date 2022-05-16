@@ -1,21 +1,21 @@
+/* global wphb */
+
 /**
  * Strings internationalization
  *
- * @param str
- *
- * @returns {*|string}
+ * @param {string} str
+ * @return {*|string} String
  */
-export const __  = ( str ) => {
-    return wphb.strings[ str ] || '';
+export const getString = ( str ) => {
+	return wphb.strings[ str ] || '';
 };
 
 /**
  * Get a link to a HB screen
  *
  * @param {string} screen Screen slug
- * @returns {string}
+ * @return {string} URL
  */
 export const getLink = ( screen ) => {
-    return wphb.links[ screen ] || '';
+	return wphb.links[ screen ] || '';
 };
-

@@ -78,8 +78,9 @@ class Presscore_Mod_Portfolio_Public {
 			return $page_id;
 		}
 
-		if ( is_tax( 'dt_portfolio_category' ) || is_post_type_archive( 'dt_portfolio' ) ) {
+		if ( is_tax( 'dt_portfolio_category' ) || is_tax( 'dt_portfolio_tags' ) || is_post_type_archive( 'dt_portfolio' ) ) {
 			$page_id = of_get_option( 'template_page_id_portfolio_category', null );
+			$page_id = apply_filters( 'the7_template_page_id_portfolio_category', $page_id );
 		}
 
 		return $page_id;

@@ -1,6 +1,9 @@
 <?php
-
 namespace Elementor;
+
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -417,10 +420,6 @@ class HTMega_Elementor_Widget_Section_Title extends Widget_Base {
                 [
                     'label' => __( 'Before And After Border Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#412e51',
                     'selectors' => [
                         '{{WRAPPER}} .title-style-two .section-title-txt::before' => 'background-color: {{VALUE}};',
@@ -437,16 +436,13 @@ class HTMega_Elementor_Widget_Section_Title extends Widget_Base {
                 [
                     'label' => __( 'Title Separator Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#412e51',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-section-title span.htmega-title-sperator' => 'background-color: {{VALUE}};',
+                        '{{WRAPPER}} .htmega-section-title span.htmega-title-sperator::before' => 'background-color: {{VALUE}};',
                     ],
                     'condition' => [
-                        'titlestyle' => 'four',
+                        'titlestyle' => array('three', 'four'),
                     ],
                     'separator'=>'before',
                 ]
@@ -494,10 +490,6 @@ class HTMega_Elementor_Widget_Section_Title extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#23252a',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-section-title .section-title-txt' => 'color: {{VALUE}};',
@@ -610,10 +602,6 @@ class HTMega_Elementor_Widget_Section_Title extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#23252a',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-section-title .section-subtitle-txt' => 'color: {{VALUE}};',
@@ -725,10 +713,6 @@ class HTMega_Elementor_Widget_Section_Title extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#f1f1f1',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-section-title .section-advancetitle-txt' => 'color: {{VALUE}};',
@@ -879,16 +863,19 @@ class HTMega_Elementor_Widget_Section_Title extends Widget_Base {
             $subtitle = sprintf( '<a %1$s>%2$s</a>', $this->get_render_attribute_string( 'suburl' ), $subtitle );
         }
 
+        $title_tag = htmega_validate_html_tag( $settings['section_title_tag'] );
+        $sub_title_tag = htmega_validate_html_tag( $settings['section_subtitle_tag'] );
+
         ?>
             <div <?php echo $this->get_render_attribute_string( 'section_area_attr' ); ?>>
                 <?php
                     if( $titlestyle == 'one' ){
 
                         if( !empty($title) ){
-                            echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $settings['section_title_tag'], $this->get_render_attribute_string( 'section_title_text' ), $title );
+                            echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $title_tag, $this->get_render_attribute_string( 'section_title_text' ), $title );
                         }
                         if( !empty( $subtitle ) ){
-                            echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $settings['section_subtitle_tag'], $this->get_render_attribute_string( 'section_subtitle_attr' ), $subtitle );
+                            echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $sub_title_tag, $this->get_render_attribute_string( 'section_subtitle_attr' ), $subtitle );
                         }
 
                         if( !empty( $settings['titleimage'] ) ){
@@ -902,13 +889,13 @@ class HTMega_Elementor_Widget_Section_Title extends Widget_Base {
                     }else{
 
                         if( !empty( $title ) ){
-                            echo sprintf( '<%1$s %2$s>%3$s</%1$s>%4$s', $settings['section_title_tag'], $this->get_render_attribute_string( 'section_title_text' ), $title, '<div class=htmega-title-sperator-sec><span class="htmega-title-sperator">&nbsp;</span></div>' );
+                            echo sprintf( '<%1$s %2$s>%3$s</%1$s>%4$s', $title_tag, $this->get_render_attribute_string( 'section_title_text' ), $title, '<div class=htmega-title-sperator-sec><span class="htmega-title-sperator">&nbsp;</span></div>' );
                         }
                         if( !empty($settings['section_advancetitle_text']) && $titlestyle == 'five' ){
                             echo sprintf( '<div %1$s>%2$s</div>', $this->get_render_attribute_string( 'section_advancetitle_attr' ), $settings['section_advancetitle_text'] );
                         }
                         if( !empty( $subtitle ) ){
-                            echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $settings['section_subtitle_tag'], $this->get_render_attribute_string( 'section_subtitle_attr' ), $subtitle );
+                            echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $sub_title_tag, $this->get_render_attribute_string( 'section_subtitle_attr' ), $subtitle );
                         }
                         if( !empty( $settings['titleimage'] ) ){
                             echo Group_Control_Image_Size::get_attachment_image_html( $settings, 'iconimagesize', 'titleimage' );

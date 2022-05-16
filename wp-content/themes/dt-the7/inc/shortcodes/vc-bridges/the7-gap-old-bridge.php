@@ -6,6 +6,7 @@ return array(
 	"weight" => -1,
 	"name" => __("Gap (old) ", 'the7mk2'),
 	"base" => "dt_gap",
+	'description' => '',
 	"icon" => "dt_vc_ico_gap",
 	"class" => "dt_vc_sc_gap",
 	"category" => __('The7 Old', 'the7mk2'),

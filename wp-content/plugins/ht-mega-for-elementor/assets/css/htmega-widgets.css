@@ -838,10 +838,11 @@ ul.accordion--4 li .bgDescription {
 .accordion--5 .single_accordion .va-title {
   text-transform: uppercase;
   font-size: 40px;
-  margin-left: 20px;
+  margin-left: 5px;
   color: #ffffff;
   display: inline-block;
-  margin-top: 0;
+  margin-top: 15px;
+  margin-right: 5px;
 }
 
 .accordion--5 .single_accordion .va-title div {
@@ -2862,6 +2863,9 @@ ul.brand-list li a{
 }
 
 /*Testimonial Style One*/
+.htmega-testimonial-activation {
+  z-index: 1;
+}
 .htmega-testimonial-style-1 .testimonal {
     text-align: center;
 }
@@ -2921,6 +2925,7 @@ ul.brand-list li a{
     transform: translate(-50%, -50%);
     border: 1px solid #6e6e6e;
     border-radius: 100%;
+    max-width: 100%;
 }
 
 .htmega-testimonial-style-2 .testimonal .content {
@@ -4210,6 +4215,9 @@ textarea {
   text-decoration: none;
 }
 
+.htmega-service .thumb{
+  display: inline-block;
+}
 .htmega-service .thumb a {
   display: block;
 }
@@ -6012,7 +6020,7 @@ a.instagram_follow_btn:hover {
 a.instagram_follow_btn i {
     background: #e4405f;
     width: 42px;
-    height: 42px;
+    height: 43px;
     line-height: 42px;
     font-size: 16px;
     text-align: center;
@@ -6044,6 +6052,8 @@ a.instagram_follow_btn.possition-center span {
 .htmega-instragram ul.htmega-instagram-list {
     margin: 0 -5px;
     overflow: hidden;
+    display: flex;
+    flex-flow: row wrap;
 }
 
 .htmega-instragram ul.htmega-instagram-list li > a {
@@ -6078,13 +6088,9 @@ a.instagram_follow_btn.possition-center span {
     padding: 30px 0;
 }
 
-.htmega-instragram ul.htmega-instagram-list li .instagram-clip .htmega-content .instagram-like-comment span {
+.htmega-instragram ul.htmega-instagram-list li .instagram-clip .htmega-content .instagram-like-comment p {
     color: #fff;
     margin: 0 15px;
-}
-
-.htmega-instragram ul.htmega-instagram-list li .instagram-clip .htmega-content .instagram-like-comment span i {
-    padding-right: 10px;
 }
 
 .htmega-instragram ul.htmega-instagram-list li .instagram-clip .htmega-content .instagram-btn {
@@ -6245,12 +6251,8 @@ a.instagram_follow_btn.possition-center span {
     padding: 0 !important;
 }
 
-.htmega-instragram-style-3 ul li .instagram-clip .instagram-like-comment span {
+.htmega-instragram-style-3 ul li .instagram-clip .instagram-like-comment p {
     margin: 0 15px;
-}
-
-.htmega-instragram-style-3 ul li .instagram-clip .instagram-like-comment span i {
-    padding-right: 7px;
 }
 
 .htmega-instragram-style-3 ul li:hover .instagram-clip {
@@ -6262,6 +6264,20 @@ a.instagram_follow_btn.possition-center span {
     opacity: .7;
     -webkit-transform: scale(1.15) translate3d(0, 0, 0);
     transform: scale(1.15) translate3d(0, 0, 0);
+}
+
+.htmega-instragram-style-3 ul.htmega-instagram-list li .instagram-clip .htmega-content{
+  display: flex;
+  align-items: center;
+}
+
+.htmega-instragram-style-3 ul.htmega-instagram-list li .instagram-clip .htmega-content .instagram-btn{
+  position: static;
+  transform: translateY(0);
+  display: flex;
+}
+.htmega-instragram-style-3 ul.htmega-instagram-list li .instagram-clip .htmega-content .zoom_icon {
+    display: flex;
 }
 
 
@@ -8041,12 +8057,12 @@ button.htmega-notify-button {
 }
 
 .htmega-marker-style-2 .htmega_image_pointer::before {
-    content: "\f067";
+    content: "\f129";
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
-    font-family: FontAwesome;
+    font-family: "FontAwesome";
     color: #ed552d;
     font-size: 18px;
     width: 100%;
@@ -9073,11 +9089,8 @@ button.htmega-notify-button {
 
 .htmega-error-style-3 .content a.page-back-btn {
     background: #fd5c5e;
-    width: 80px;
     display: inline-block;
-    height: 80px;
-    border-radius: 100%;
-    line-height: 80px;
+    border-radius: 31px;
     color: #d5cff2;
     font-size: 36px;
     transition: 0.5s ease-in-out;
@@ -9092,7 +9105,6 @@ button.htmega-notify-button {
     transform: scale(1.2);
     background: #18012c;
     color: #ffffff;
-    border-radius: 100%;
 }
 
 /*404 Styly 04*/
@@ -9152,6 +9164,9 @@ button.htmega-notify-button {
 }
 .htmega-counter-icon svg {
   width: 20px;
+}
+.htmega-counter-area .htmega-counter-img{
+  display: inline-block;
 }
 
 /*Counterup Style 1*/
@@ -10618,7 +10633,7 @@ button.htmega-notify-button {
   position: relative;
 }
 
-.htmega-thumbgallery-for button {
+.htmega-thumbgallery-for button.slick-arrow {
     position: absolute;
     top: 50%;
     left: 30px;
@@ -10638,14 +10653,14 @@ button.htmega-notify-button {
     line-height: 1;
 }
 
-.htmega-thumbgallery-for button:hover {
+.htmega-thumbgallery-for button.slick-arrow:hover {
     background: #0056ff;
     color: #fff;
 }
 .htmega-thumbgallery-nav{
   text-align: center;
 }
-.htmega-thumbgallery-nav button {
+.htmega-thumbgallery-nav button.slick-arrow {
   border-radius: 100%;
   display: inline-block;
   height: 50px;
@@ -10660,9 +10675,26 @@ button.htmega-notify-button {
 .htmega-thumbgallery-for .slick-dots,.htmega-thumbgallery-nav .slick-dots {
   bottom: 10px;
   position: absolute;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  text-align: center;
+}
+.htmega-thumbgallery-nav .slick-arrow + .slick-dots {
+  bottom: 50px;
+}
+.htmega-thumbgallery-for .slick-dots li,.htmega-thumbgallery-nav .slick-dots li{
+  display: inline-block;
 }
 .htmega-thumbgallery-for .slick-dots li button,.htmega-thumbgallery-nav .slick-dots li button{
   background: #ddd;
+  text-indent: -99999px;
+  padding: 0;
+  margin-right: 8px;
+  border-radius: 100%;
+  width: 12px;
+  height: 12px;
 }
 
 .htmega-thumbgallery-for .slick-dots li.slick-active button,.htmega-thumbgallery-nav .slick-dots li.slick-active button{
@@ -13239,6 +13271,10 @@ a.htmega-downloadbtn {
   padding: 0;
 }
 
+.post-carousel-wrapper .content .post-inner h2 {
+    word-break: break-word;
+}
+
 .post-carousel-wrapper .htmega-postslider-layout-5 .content .post-inner ul {
     justify-content: flex-start;
 }
@@ -14622,6 +14658,7 @@ a.htmega-downloadbtn {
     /* Activate hardware acceleration for smoother animations */
     -webkit-transform: translate3d(0, 0, 0);
     -webkit-backface-visibility: hidden;
+   background-color: #007bff; 
 }
 
 

@@ -1,6 +1,8 @@
 <?php
 
 namespace HTMega_Builder\Elementor\Widget;
+
+// Elementor Classes
 use Elementor\Plugin as Elementor;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
@@ -8,8 +10,9 @@ use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
-use Elementor\Scheme_Typography;
 use Elementor\Group_Control_Background;
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -517,7 +520,7 @@ class Bl_Nav_Menu_ELement extends Widget_Base {
 
         $menu_args = [
             'echo'          => false,
-            'menu'          => $settings['nav_menu_id'],
+            'menu'          => ( isset( $settings['nav_menu_id'] ) ? $settings['nav_menu_id'] : '' ),
             'menu_class'    => 'htbuilder-mainmenu',
             'menu_id'       => 'menu-'. $id,
             'fallback_cb'   => '__return_empty_string',

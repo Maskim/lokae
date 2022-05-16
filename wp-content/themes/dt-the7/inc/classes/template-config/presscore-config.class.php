@@ -25,13 +25,7 @@ class Presscore_Config implements Presscore_Config_Interface{
 		return self::$instance;
 	}
 
-	protected function __construct() {}
-
-	private function __clone() {}
-
-	private function __wakeup() {}
-
-	private static $instance = null;
+	public static $instance = null;
 
 	private $meta_prefix = '';
 

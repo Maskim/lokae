@@ -1,6 +1,9 @@
 <?php
-
 namespace Elementor;
+
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -54,7 +57,7 @@ class HTMega_Elementor_Widget_Progress_Bar extends Widget_Base {
             $this->add_control(
                 'htmega_progress_bar_type',
                 [
-                    'label' => __( 'Tyle', 'htmega-addons' ),
+                    'label' => __( 'Style', 'htmega-addons' ),
                     'type' => Controls_Manager::SELECT,
                     'default' => 'normal',
                     'options' => [
@@ -70,7 +73,7 @@ class HTMega_Elementor_Widget_Progress_Bar extends Widget_Base {
             $this->add_control(
                 'striped_animated',
                 [
-                    'label' => __( 'Striped Animated', 'plugin-domain' ),
+                    'label' => __( 'Striped Animated', 'htmega-addons' ),
                     'type' => Controls_Manager::SWITCHER,
                     'return_value' => 'yes',
                     'default' => 'no',
@@ -81,267 +84,307 @@ class HTMega_Elementor_Widget_Progress_Bar extends Widget_Base {
             );
 
             // Accordion One Repeater
-            $this->add_control(
-                'htmega_progressbar_list',
+
+            $repeater = new Repeater();
+
+            $repeater->add_control(
+                'htmega_progressbar_title', 
                 [
-                    'label' => __( 'Progress Bar', 'htmega-addons' ),
-                    'type' => Controls_Manager::REPEATER,
-                    'condition' =>[
-                        'htmega_progress_bar_style!' =>'circle',
-                    ],
-                    'default' => [
-                        [
-                            'htmega_progressbar_title'         => __('WordPress','htmega-addons'),
-                            'htmega_progressbar_color'         => '#18012c',
-                            'htmega_progressbar_value_color'   => '#000000',
-                        ],
-                        [
-                            'htmega_progressbar_title'         => __('Joomla','htmega-addons'),
-                            'htmega_progressbar_color'         => '#18012c',
-                            'htmega_progressbar_value_color'   => '#000000',
-                        ],
-                        [
-                            'htmega_progressbar_title'         => __('Photoshop','htmega-addons'),
-                            'htmega_progressbar_color'         => '#18012c',
-                            'htmega_progressbar_value_color'   => '#000000',
-                        ],
-                    ],
-
-                    'fields' => [
-                        [
-                            'name'        => 'htmega_progressbar_title',
-                            'label'       => __( 'Title', 'htmega-addons' ),
-                            'type'        => Controls_Manager::TEXT,
-                            'default'     => __( 'WordPress' , 'htmega-addons' ),
-                        ],
-
-                        [
-                            'name'        => 'htmega_progressbar_value',
-                            'label' => __( 'Progress Bar Value', 'htmega-addons' ),
-                            'type' => Controls_Manager::SLIDER,
-                            'range' => [
-                                'px' => [
-                                    'min' => 0,
-                                    'max' => 1000,
-                                ],
-                            ],
-                            'default' => [
-                                'unit' => '%',
-                                'size' => 50,
-                            ]
-                        ],
-
-                        [
-                            'name' =>'htmega_progressbar_color',
-                            'label'     => __( 'Progress bar color', 'htmega-addons' ),
-                            'type'      => Controls_Manager::COLOR,
-                            'selectors' => [
-                                '{{WRAPPER}} {{CURRENT_ITEM}} .htb-progress-bar' => 'background-color: {{VALUE}};',
-                            ],
-                        ],
-                            
-                        [
-                            'name'      =>'htmega_progressbar_value_color',
-                            'label'     => __( 'Progress bar value color', 'htmega-addons' ),
-                            'type'      => Controls_Manager::COLOR,
-                            'selectors' => [
-                                '{{WRAPPER}} {{CURRENT_ITEM}} .percent-label' => 'color: {{VALUE}};',
-                            ],
-                        ],
-
-                        [
-                            'name'      =>'htmega_progressbar_value_bg_color',
-                            'label'     => __( 'Progress bar value background color', 'htmega-addons' ),
-                            'type'      => Controls_Manager::COLOR,
-                            'selectors' => [
-                                '{{WRAPPER}} {{CURRENT_ITEM}} .percent-label' => 'background-color: {{VALUE}};',
-                            ],
-                        ],
-
-                        [
-                            'name' =>'progressbar_before_after',
-                            'label' => __( 'Value Indicator', 'htmega-addons' ),
-                            'type' => Controls_Manager::SWITCHER,
-                            'return_value' => 'yes',
-                            'default' => 'no',
-                        ],
-
-                        [
-                            'name' =>'progressbar_value_before_after_color',
-                            'label'     => __( 'Indicator color', 'htmega-addons' ),
-                            'type'      => Controls_Manager::COLOR,
-                            'selectors' => [
-                                '{{WRAPPER}} {{CURRENT_ITEM}}.htmega-progressbar-value-bottom .htb-progress span.percent-label::after' => 'border-top: 5px solid {{VALUE}};',
-                            ],
-                            'condition' => [
-                                'progressbar_before_after' =>'yes',
-                            ],
-                            'separator' => 'before',
-                        ]
-
-                    ],
-                    'title_field' => '{{{ htmega_progressbar_title }}}',
+                    'label'       => __( 'Title', 'htmega-addons' ),
+                    'type'        => Controls_Manager::TEXT,
+                    'default'     => __( 'WordPress' , 'htmega-addons' ),
                 ]
             );
+
+            $repeater->add_control(
+                'htmega_progressbar_value', 
+                [
+                    'label' => __( 'Progress Bar Value', 'htmega-addons' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => '%',
+                        'size' => 50,
+                    ]
+                ]
+            );
+
+            $repeater->add_control(
+                'htmega_progressbar_color', 
+                [
+                    'label'     => __( 'Progress bar color', 'htmega-addons' ),
+                    'type'      => Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} {{CURRENT_ITEM}} .htb-progress-bar' => 'background-color: {{VALUE}};',
+                    ],
+                ]
+            );
+
+            $repeater->add_control(
+                'htmega_progressbar_value_color', 
+                [
+                    'label'     => __( 'Progress bar value color', 'htmega-addons' ),
+                    'type'      => Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} {{CURRENT_ITEM}} .percent-label' => 'color: {{VALUE}};',
+                    ],
+                ]
+            );
+            $repeater->add_control(
+                'htmega_progressbar_value_bg_color', 
+                [
+                    'label'     => __( 'Progress bar value background color', 'htmega-addons' ),
+                    'type'      => Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} {{CURRENT_ITEM}} .percent-label' => 'background-color: {{VALUE}};',
+                    ],
+                ]
+            );
+            $repeater->add_control(
+                'progressbar_before_after', 
+                [
+                    'label'         => __( 'Value Indicator', 'htmega-addons' ),
+                    'type'          => Controls_Manager::SWITCHER,
+                    'return_value'  => 'yes',
+                    'default'       => 'no',
+                ]
+            );
+            $repeater->add_control(
+                'progressbar_value_before_after_color', 
+                [
+                    'label'     => __( 'Indicator color', 'htmega-addons' ),
+                    'type'      => Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} {{CURRENT_ITEM}}.htmega-progressbar-value-bottom .htb-progress span.percent-label::after' => 'border-top: 5px solid {{VALUE}};',
+                    ],
+                    'condition' => [
+                        'progressbar_before_after' =>'yes',
+                    ],
+                    'separator' => 'before',
+                ]
+            );
+
+
+            $this->add_control(
+            'htmega_progressbar_list',
+            [
+                'label'     => __( 'Progress Bar', 'htmega-addons' ),
+                'type'      => Controls_Manager::REPEATER,
+                'fields'    => $repeater->get_controls(),
+                'condition' => [
+                    'htmega_progress_bar_style!' =>'circle',
+                ],
+                'default' => [
+                    [
+                        'htmega_progressbar_title'         => __('WordPress','htmega-addons'),
+                        'htmega_progressbar_color'         => '#18012c',
+                        'htmega_progressbar_value_color'   => '#000000',
+                        
+                    ],
+                    [
+                        'htmega_progressbar_title'         => __('Joomla','htmega-addons'),
+                        'htmega_progressbar_color'         => '#18012c',
+                        'htmega_progressbar_value_color'   => '#000000',
+                    ],
+                    [
+                        'htmega_progressbar_title'         => __('Photoshop','htmega-addons'),
+                        'htmega_progressbar_color'         => '#18012c',
+                        'htmega_progressbar_value_color'   => '#000000',
+                    ],
+                ],
+                'title_field' => '{{{ htmega_progressbar_title }}}',
+            ]
+        );
+
 
             // Accordion Two Repeater
-            $this->add_control(
-                'htmega_progressbar_list_two',
+
+            $repeater_two = new Repeater();
+
+            $repeater_two->add_control(
+                'htmega_progressbar_title', 
                 [
-                    'label' => __( 'Progress Bar', 'htmega-addons' ),
-                    'type' => Controls_Manager::REPEATER,
-                    'condition' =>[
-                        'htmega_progress_bar_style' =>'circle',
-                    ],
-                    'default' => [
-                        [
-                            'htmega_progressbar_title'         => __('WordPress','htmega-addons'),
-                        ],
-                    ],
-
-                    'fields' => [
-                        [
-                            'name'        => 'htmega_progressbar_title',
-                            'label'       => __( 'Title', 'htmega-addons' ),
-                            'type'        => Controls_Manager::TEXT,
-                            'default'     => __( 'WordPress' , 'htmega-addons' ),
-                        ],
-
-                        [
-                            'name'        => 'htmega_progressbar_value',
-                            'label' => __( 'Progress Bar Value', 'htmega-addons' ),
-                            'type' => Controls_Manager::SLIDER,
-                            'range' => [
-                                'px' => [
-                                    'min' => 0,
-                                    'max' => 1000,
-                                ],
-                            ],
-                            'default' => [
-                                'unit' => '%',
-                                'size' => 50,
-                            ]
-                        ],
-
-                        [
-                            'name'        => 'htmega_progressbar_lineweight',
-                            'label' => __( 'Progress Bar Width', 'htmega-addons' ),
-                            'type' => Controls_Manager::SLIDER,
-                            'range' => [
-                                'px' => [
-                                    'min' => 0,
-                                    'max' => 1000,
-                                    'step' => 1,
-                                ],
-                                '%' => [
-                                    'min' => 0,
-                                    'max' => 100,
-                                ],
-                            ],
-                            'default' => [
-                                'unit' => 'px',
-                                'size' => 10,
-                            ],
-                        ],
-
-                        [
-                            'name'        => 'htmega_progressbar_size',
-                            'label' => __( 'Progress Bar Size', 'htmega-addons' ),
-                            'type' => Controls_Manager::SLIDER,
-                            'range' => [
-                                'px' => [
-                                    'min' => 0,
-                                    'max' => 1000,
-                                    'step' => 1,
-                                ],
-                                '%' => [
-                                    'min' => 0,
-                                    'max' => 100,
-                                ],
-                            ],
-                            'default' => [
-                                'unit' => 'px',
-                                'size' => 130,
-                            ],
-                        ],
-
-                        [
-                            'name'      =>'htmega_progressbar_two_color',
-                            'label'     => __( 'Progress bar color', 'htmega-addons' ),
-                            'type'      => Controls_Manager::COLOR,
-                            'default'   =>'#1cb9da',
-                        ],
-
-                        [
-                            'name'      =>'htmega_progressbar_track_color',
-                            'label'     => __( 'Progress bar track color', 'htmega-addons' ),
-                            'type'      => Controls_Manager::COLOR,
-                            'default'   =>'#dcd9d9',
-                        ],
-
-                        [
-                            'name'      =>'htmega_progressbar_two_value_color',
-                            'label'     => __( 'Progress bar value color', 'htmega-addons' ),
-                            'type'      => Controls_Manager::COLOR,
-                            'selectors' => [
-                                '{{WRAPPER}} {{CURRENT_ITEM}} .radial-progress span' => 'color: {{VALUE}};',
-                            ],
-                        ],
-
-                        [
-                            'name'      =>'htmega_progressbar_two_value_bg_color',
-                            'label'     => __( 'Progress bar value background color', 'htmega-addons' ),
-                            'type'      => Controls_Manager::COLOR,
-                            'selectors' => [
-                                '{{WRAPPER}} {{CURRENT_ITEM}} .radial-progress span' => 'background-color: {{VALUE}};',
-                            ],
-                        ],
-                            
-                        [
-                            'name' => 'progressbar_single_items_padding',
-                            'label' => __( 'Padding', 'htmega-addons' ),
-                            'type' => Controls_Manager::DIMENSIONS,
-                            'size_units' => [ 'px', '%', 'em' ],
-                            'selectors' => [
-                                '{{WRAPPER}} {{CURRENT_ITEM}} .radial-progressbg' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                            ],
-                            'separator' => 'before',
-                        ],
-
-                        [
-                            'name' => 'progressbar_single_items_border',
-                            'label' => __( 'Border', 'htmega-addons' ),
-                            'type' => Controls_Manager::DIMENSIONS,
-                            'size_units' => [ 'px', '%', 'em' ],
-                            'selectors' => [
-                                '{{WRAPPER}} {{CURRENT_ITEM}} .radial-progressbg' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};border-style:solid;',
-                            ],
-                            'separator' => 'before',
-                        ],
-
-                        [
-                            'name'      =>'progressbar_single_items_border_color',
-                            'label'     => __( 'Border color', 'htmega-addons' ),
-                            'type'      => Controls_Manager::COLOR,
-                            'selectors' => [
-                                '{{WRAPPER}} {{CURRENT_ITEM}} .radial-progressbg' => 'border-color: {{VALUE}};',
-                            ],
-                        ],
-                            
-                        [
-                            'name' =>'progressbar_single_items_border_radius',
-                            'label' => esc_html__( 'Border Radius', 'htmega-addons' ),
-                            'type' => Controls_Manager::DIMENSIONS,
-                            'selectors' => [
-                                '{{WRAPPER}} {{CURRENT_ITEM}} .radial-progressbg' => 'border-radius: {{TOP}}px {{RIGHT}}px {{BOTTOM}}px {{LEFT}}px;',
-                            ],
-                            'separator' => 'before',
-                        ]
-
-                    ],
-                    'title_field' => '{{{ htmega_progressbar_title }}}',
+                    'label'       => __( 'Title', 'htmega-addons' ),
+                    'type'        => Controls_Manager::TEXT,
+                    'default'     => __( 'WordPress' , 'htmega-addons' ),
                 ]
             );
+
+            $repeater_two->add_control(
+                'htmega_progressbar_value', 
+                [
+                    'label' => __( 'Progress Bar Value', 'htmega-addons' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => '%',
+                        'size' => 50,
+                    ]
+                ]
+            );
+
+            $repeater_two->add_control(
+                'htmega_progressbar_lineweight', 
+                [
+                    'label'     => __( 'Progress Bar Width', 'htmega-addons' ),
+                    'type'      => Controls_Manager::SLIDER,
+                    'range'     => [
+                        'px'    => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 10,
+                    ],
+                ]
+            );
+
+            $repeater_two->add_control(
+                'htmega_progressbar_size', 
+                [
+                'label' => __( 'Progress Bar Size', 'htmega-addons' ),
+                'type'  => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1000,
+                        'step' => 1,
+                    ],
+                    '%' => [
+                        'min' => 0,
+                        'max' => 100,
+                    ],
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 130,
+                ],
+                ]
+            );
+
+            $repeater_two->add_control(
+                'htmega_progressbar_two_color', 
+                [
+                'label'     => __( 'Progress bar color', 'htmega-addons' ),
+                'type'      => Controls_Manager::COLOR,
+                'default'   =>'#1cb9da',
+                ]
+            );
+            $repeater_two->add_control(
+                'htmega_progressbar_track_color', 
+                [
+                'label'     => __( 'Progress bar track color', 'htmega-addons' ),
+                'type'      => Controls_Manager::COLOR,
+                'default'   =>'#dcd9d9',
+                ]
+            );
+
+
+            $repeater_two->add_control(
+                'htmega_progressbar_two_value_color', 
+                [
+                    'label'     => __( 'Progress bar value color', 'htmega-addons' ),
+                    'type'      => Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} {{CURRENT_ITEM}} .radial-progress span' => 'color: {{VALUE}};',
+                    ]
+                ]
+            );
+            $repeater_two->add_control(
+                'htmega_progressbar_two_value_bg_color', 
+                [
+                    'label'     => __( 'Progress bar value background color', 'htmega-addons' ),
+                    'type'      => Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} {{CURRENT_ITEM}} .radial-progress span' => 'background-color: {{VALUE}};',
+                    ],
+                ]
+            );
+
+            $repeater_two->add_control(
+                'progressbar_single_items_padding', 
+                [
+                    'label'      => __( 'Padding', 'htmega-addons' ),
+                    'type'       => Controls_Manager::DIMENSIONS,
+                    'size_units' => [ 'px', '%', 'em' ],
+                    'selectors'  => [
+                        '{{WRAPPER}} {{CURRENT_ITEM}} .radial-progressbg' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'separator' => 'before',
+                ]
+            );
+
+            $repeater_two->add_control(
+                'progressbar_single_items_border', 
+                [
+                    'label'      => __( 'Border', 'htmega-addons' ),
+                    'type'       => Controls_Manager::DIMENSIONS,
+                    'size_units' => [ 'px', '%', 'em' ],
+                    'selectors'  => [
+                        '{{WRAPPER}} {{CURRENT_ITEM}} .radial-progressbg' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};border-style:solid;',
+                    ],
+                    'separator' => 'before',
+                ]
+            );
+            $repeater_two->add_control(
+                'progressbar_single_items_border_color', 
+                [
+                    
+                'label'     => __( 'Border color', 'htmega-addons' ),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} {{CURRENT_ITEM}} .radial-progressbg' => 'border-color: {{VALUE}};',
+                ],
+                ]
+            );
+
+            $repeater_two->add_control(
+                'progressbar_single_items_border_radius', 
+                [
+                    'label' => esc_html__( 'Border Radius', 'htmega-addons' ),
+                    'type' => Controls_Manager::DIMENSIONS,
+                    'selectors' => [
+                        '{{WRAPPER}} {{CURRENT_ITEM}} .radial-progressbg' => 'border-radius: {{TOP}}px {{RIGHT}}px {{BOTTOM}}px {{LEFT}}px;',
+                    ],
+                    'separator' => 'before',
+                ]
+            );
+
+            $this->add_control(
+            'htmega_progressbar_list_two',
+            [
+                'label'     => __( 'Progress Bar', 'htmega-addons' ),
+                'type'      => Controls_Manager::REPEATER,
+                'fields'    => $repeater_two->get_controls(),
+                'condition' => [
+                    'htmega_progress_bar_style' =>'circle',
+                ],
+                'default' => [
+                    [
+                        'htmega_progressbar_title'         => __('WordPress','htmega-addons'),
+                        
+                    ],
+                ],
+                'title_field' => '{{{ htmega_progressbar_title }}}',
+            ]
+        );
 
         $this->end_controls_section();
 
@@ -523,7 +566,7 @@ class HTMega_Elementor_Widget_Progress_Bar extends Widget_Base {
                     'name' => 'progressbar_value_typography',
                     'label' => __( 'Typography', 'htmega-addons' ),
                     'scheme' => Scheme_Typography::TYPOGRAPHY_1,
-                    'selector' => '{{WRAPPER}} .htmega-single-skill .htb-progress span.percent-label',
+                    'selector' => '{{WRAPPER}} .htmega-single-skill .htb-progress span.percent-label,{{WRAPPER}} .radial-progress-single .radial-progressbg .radial-progress span',
                     'separator' => 'before',
                 ]
             );

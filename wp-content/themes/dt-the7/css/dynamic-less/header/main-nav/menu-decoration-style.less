@@ -1,4 +1,3 @@
-@menu-hover-color-temp: escape(~"@{menu-hover-color}");
 
 
 /* #Background & outline decoration style
@@ -33,41 +32,41 @@
 }
  > li > a {
  	.hover-outline-decoration &,
- 	.active-outline-decoration,
- 	.active-bg-decoration,
- 	.hover-bg-decoration {
+ 	.active-outline-decoration &,
+ 	.active-bg-decoration &,
+ 	.hover-bg-decoration &{
 		.border-radius(@menu-decor-border-radius);
 	}
 }
 
-	.bg-outline-decoration > li > a,
-	.main-nav > li > a .animate-wrap,
-	.hover-line-decoration > li:not(.act) > a:hover .decoration-line,
-	.hover-line-decoration > li.dt-hovered:not(.act) > a .decoration-line,
-	.active-line-decoration > li > a .decoration-line {
-		border-radius: @menu-decor-border-radius;
+.bg-outline-decoration > li > a,
+.main-nav > li > a .animate-wrap,
+.hover-line-decoration > li:not(.act) > a:hover .decoration-line,
+.hover-line-decoration > li.dt-hovered:not(.act) > a .decoration-line,
+.active-line-decoration > li > a .decoration-line {
+	border-radius: @menu-decor-border-radius;
+}
+.active-line-decoration > li.act > a:after {
+	.top-header & {
+		background-color: @menu-active-line-decor-color;
+		.background-gradient (@startColor: @menu-active-line-decor-color, @endColor: @menu-active-line-decor-color-2);
 	}
-	.active-line-decoration > li.act > a:after {
-		.top-header & {
-			background-color: @menu-active-line-decor-color;
-			.background-gradient (@startColor: @menu-active-line-decor-color, @endColor: @menu-active-line-decor-color-2);
-		}
+}
+.hover-line-decoration > li > a:hover .decoration-line,
+.hover-line-decoration > li.dt-hovered > a .decoration-line {
+	.top-header & {
+		height: @menu-decoration-line-size;
+		background-color: @menu-line-decor-color;
+		.background-gradient (@startColor: @menu-line-decor-color, @endColor: @menu-line-decor-color-2);
 	}
-	.hover-line-decoration > li > a:hover .decoration-line,
-	.hover-line-decoration > li.dt-hovered > a .decoration-line {
-		.top-header & {
-			height: @menu-decoration-line-size;
-			background-color: @menu-line-decor-color;
-			.background-gradient (@startColor: @menu-line-decor-color, @endColor: @menu-line-decor-color-2);
-		}
+}
+.active-line-decoration > li.act > a .decoration-line {
+	.top-header & {
+		height: @menu-decoration-line-size;
+		background-color: @menu-active-line-decor-color;
+		.background-gradient (@startColor: @menu-active-line-decor-color, @endColor: @menu-active-line-decor-color-2);
 	}
-	.active-line-decoration > li.act > a .decoration-line {
-		.top-header & {
-			height: @menu-decoration-line-size;
-			background-color: @menu-active-line-decor-color;
-			.background-gradient (@startColor: @menu-active-line-decor-color, @endColor: @menu-active-line-decor-color-2);
-		}
-	}
+}
 
 /* #Left to right decoration style
 ================================================== */

@@ -175,6 +175,7 @@ html:not(.touchevents) .dt-mobile-header::-webkit-scrollbar-thumb
 				.align-self(@align: center);
 				.align-items(@align: center);
 				.justify-content(@justify: center);
+				 -webkit-tap-highlight-color: transparent;
 				min-width: 30px;
 				&:before {
 					content: "\ef02";
@@ -210,7 +211,7 @@ html:not(.touchevents) .dt-mobile-header::-webkit-scrollbar-thumb
 			.header-side-right .mobile-main-nav .mega-auto-width > .sub-nav {
 				right: 0;
 			}
-				#page #mobile-menu .sub-nav li,
+				#page #mobile-menu .sub-nav > li,
 				#page .mobile-main-nav .dt-mega-menu.mega-auto-width .sub-nav .dt-mega-parent {
 					padding: 0;
 					width: 100%;

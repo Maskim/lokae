@@ -4,7 +4,7 @@
  * contain much of the same data.
  *
  * @version 3.0.0
- * @package WooCommerce/Classes
+ * @package WooCommerce\Classes
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -83,7 +83,7 @@ class WC_Order_Refund extends WC_Abstract_Order {
 	 *
 	 * @since 2.2
 	 * @param  string $context What the value is for. Valid values are view and edit.
-	 * @return int|float
+	 * @return string
 	 */
 	public function get_reason( $context = 'view' ) {
 		return $this->get_prop( 'reason', $context );
@@ -219,7 +219,7 @@ class WC_Order_Refund extends WC_Abstract_Order {
 	 * Get refund reason.
 	 *
 	 * @deprecated 3.0
-	 * @return int|float
+	 * @return string
 	 */
 	public function get_refund_reason() {
 		wc_deprecated_function( 'get_refund_reason', '3.0', 'get_reason' );

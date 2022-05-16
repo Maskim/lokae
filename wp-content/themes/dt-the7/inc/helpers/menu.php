@@ -13,7 +13,7 @@ if ( ! function_exists( 'presscore_get_primary_menu_class' ) ) :
 
 	/**
 	 * Primary menu wrap classes.
-	 * 
+	 *
 	 * @param  string|array $class
 	 * @return array
 	 */
@@ -25,7 +25,7 @@ if ( ! function_exists( 'presscore_get_primary_menu_class' ) ) :
 			case 'underline':
 				$classes[] = 'underline-decoration';
 
-				$classes[] = presscore_array_value( $config->get( 'header.menu.decoration.style.underline.direction' ), array(
+				$classes[] = the7_array_match( $config->get( 'header.menu.decoration.style.underline.direction' ), array(
 					'left_to_right'      => 'l-to-r-line',
 					'from_center'        => 'from-centre-line',
 					'upwards'            => 'upwards-line',
@@ -35,7 +35,7 @@ if ( ! function_exists( 'presscore_get_primary_menu_class' ) ) :
 			case 'other':
 				$classes[] = 'bg-outline-decoration';
 
-				$classes[] = presscore_array_value( $config->get( 'header.menu.decoration.style.other.hover.style' ), array(
+				$classes[] = the7_array_match( $config->get( 'header.menu.decoration.style.other.hover.style' ), array(
 					'outline'    => 'hover-outline-decoration',
 					'background' => 'hover-bg-decoration',
 				) );
@@ -44,7 +44,7 @@ if ( ! function_exists( 'presscore_get_primary_menu_class' ) ) :
 					$classes[] = 'hover-line-decoration';
 				}
 
-				$classes[] = presscore_array_value( $config->get( 'header.menu.decoration.style.other.active.style' ), array(
+				$classes[] = the7_array_match( $config->get( 'header.menu.decoration.style.other.active.style' ), array(
 					'outline'    => 'active-outline-decoration',
 					'background' => 'active-bg-decoration',
 				) );
@@ -63,7 +63,7 @@ if ( ! function_exists( 'presscore_get_primary_menu_class' ) ) :
 			$classes[] = 'level-arrows-on';
 		}
 
-		$classes[] = presscore_array_value( $config->get( 'header.menu.items.margins.style' ), array(
+		$classes[] = the7_array_match( $config->get( 'header.menu.items.margins.style' ), array(
 			'double'   => 'outside-item-double-margin',
 			'custom'   => 'outside-item-custom-margin',
 			'disabled' => 'outside-item-remove-margin',
@@ -80,7 +80,7 @@ if ( ! function_exists( 'presscore_get_primary_submenu_class' ) ) :
 
 	/**
 	 * Primary menu submenu classes.
-	 * 
+	 *
 	 * @param  string|array $class
 	 * @return array
 	 */
@@ -93,7 +93,7 @@ if ( ! function_exists( 'presscore_get_primary_submenu_class' ) ) :
 			$classes[] = 'gradient-hover';
 		}
 
-		$classes[] = presscore_array_value( $config->get( 'header.menu.submenu.background.hover.style' ), array(
+		$classes[] = the7_array_match( $config->get( 'header.menu.submenu.background.hover.style' ), array(
 			'background'          => 'hover-style-bg',
 		) );
 
@@ -148,7 +148,7 @@ if ( ! function_exists( 'presscore_nav_menu_list' ) ) :
 		presscore_nav_menu(
 			array(
 				'theme_location'      => $location,
-				'items_wrap'          => '<ul id="' . esc_attr( "{$location}-menu" ) . '">%3$s</ul>',
+				'items_wrap'          => '<ul id="' . esc_attr( "{$location}-menu" ) . '" role="menubar">%3$s</ul>',
 				'submenu_class'       => $args['submenu_class'],
 				'parent_is_clickable' => true,
 				'fallback_cb'         => '',

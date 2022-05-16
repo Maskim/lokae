@@ -9,7 +9,9 @@
 
 namespace Hummingbird\Core\Api;
 
+use Hummingbird\Core\Configs;
 use Hummingbird\Core\Modules\Performance;
+use Hummingbird\Core\Pro\Modules\Reports;
 use Hummingbird\Core\Settings;
 use Hummingbird\Core\Utils;
 use Hummingbird\WP_Hummingbird;
@@ -40,6 +42,8 @@ class Hub {
 		'get_timezone',
 		'recipients',
 		'purge_all_cache',
+		'import_settings',
+		'export_settings',
 	);
 
 	/**
@@ -63,7 +67,7 @@ class Hub {
 	 */
 	public function add_endpoints( $actions ) {
 		foreach ( $this->endpoints as $endpoint ) {
-			$actions[ "wphb-{$endpoint}" ] = array( $this, 'action_' . $endpoint );
+			$actions[ "wphb-$endpoint" ] = array( $this, 'action_' . $endpoint );
 		}
 
 		return $actions;
@@ -74,8 +78,6 @@ class Hub {
 	 *
 	 * @param array  $params  Parameters.
 	 * @param string $action  Action.
-	 *
-	 * @return void|WP_Error
 	 */
 	public function action_get( $params, $action ) {
 		$result = array();
@@ -94,6 +96,7 @@ class Hub {
 			foreach ( $status as $status_name => $status_value ) {
 				$result['gzip']['status'][ strtolower( $status_name ) ] = $status_value;
 			}
+			$result['gzip']['server'] = $module::get_server_type( false );
 		}
 
 		/**
@@ -106,6 +109,11 @@ class Hub {
 		if ( ! is_array( $status ) ) {
 			$result['browser-caching'] = new WP_Error( 'browser-caching-status-not-found', 'There is not Browser Caching data yet' );
 		} else {
+			// We have a Cloudflare connection.
+			if ( Utils::get_module( 'cloudflare' )->is_connected() && Utils::get_module( 'cloudflare' )->is_zone_selected() ) {
+				$status = array_fill_keys( array_keys( $status ), Utils::get_module( 'cloudflare' )->get_caching_expiration() );
+			}
+
 			$result['browser-caching'] = array();
 			foreach ( $status as $status_name => $status_value ) {
 				$result['browser-caching']['status'][ strtolower( $status_name ) ] = $status_value;
@@ -131,6 +139,18 @@ class Hub {
 		} elseif ( ! $module->is_active() ) {
 			$result['minify'] = new WP_Error( 'minify-disabled', 'Asset Optimization module not activated' );
 		} else {
+			// Remove those assets that we don't want to display.
+			foreach ( $collection['styles'] as $key => $item ) {
+				if ( ! apply_filters( 'wphb_minification_display_enqueued_file', true, $item, 'styles' ) || ! isset( $item['original_size'], $item['compressed_size'] ) ) {
+					unset( $collection['styles'][ $key ] );
+				}
+			}
+			foreach ( $collection['scripts'] as $key => $item ) {
+				if ( ! apply_filters( 'wphb_minification_display_enqueued_file', true, $item, 'scripts' ) || ! isset( $item['original_size'], $item['compressed_size'] ) ) {
+					unset( $collection['scripts'][ $key ] );
+				}
+			}
+
 			$original_size_styles  = Utils::calculate_sum( wp_list_pluck( $collection['styles'], 'original_size' ) );
 			$original_size_scripts = Utils::calculate_sum( wp_list_pluck( $collection['scripts'], 'original_size' ) );
 			$original_size         = $original_size_scripts + $original_size_styles;
@@ -145,8 +165,8 @@ class Hub {
 				$percentage = 100 - (int) $compressed_size * 100 / (int) $original_size;
 			}
 
-			$compressed_size_scripts = number_format( $original_size_scripts - $compressed_size_scripts, 0 );
-			$compressed_size_styles  = number_format( $original_size_styles - $compressed_size_styles, 0 );
+			$compressed_size_scripts = number_format( $original_size_scripts - $compressed_size_scripts );
+			$compressed_size_styles  = number_format( $original_size_styles - $compressed_size_styles );
 
 			$result['minify']['status']['files']      = count( $collection['scripts'] ) + count( $collection['styles'] );
 			$result['minify']['status']['original']   = number_format( $original_size, 1 );
@@ -175,13 +195,32 @@ class Hub {
 		$result['rss-caching']['duration'] = $options['duration'];
 
 		/**
+		 * Database cleanup.
+		 *
+		 * @since 2.5.1
+		 */
+		$options = Settings::get_setting( 'notifications', 'database' );
+
+		$result['db-cleanup']['status']    = isset( $options['enabled'] ) ? $options['enabled'] : false;
+		$result['db-cleanup']['frequency'] = isset( $options['frequency'] ) ? $options['frequency'] : 7;
+
+		/**
+		 * Advanced tools.
+		 *
+		 * @since 2.5.1
+		 */
+		$options = Settings::get_settings( 'advanced' );
+
+		$result['advanced']['query_string']   = $options['query_string'];
+		$result['advanced']['emoji']          = $options['emoji'];
+		$result['advanced']['cart_fragments'] = $options['cart_fragments'];
+
+		/**
 		 * Reports
 		 */
 		$performance_module    = Utils::get_module( 'performance' );
 		$options               = $performance_module->get_options();
-		$performance_is_active = $options['reports']['enabled'];
-
-		$result['performance'] = $options['hub'];
+		$performance_is_active = isset( $options['reports']['enabled'] ) ? $options['reports']['enabled'] : false;
 
 		$uptime_is_active     = Utils::get_module( 'uptime' )->is_active();
 		$uptime_reporting     = Settings::get_setting( 'reports', 'uptime' );
@@ -236,8 +275,6 @@ class Hub {
 	 * @since 1.9.1
 	 * @param array|object $params  Parameters.
 	 * @param string       $action  Action.
-	 *
-	 * @return void|WP_Error
 	 */
 	public function action_enable( $params, $action ) {
 		$module = Utils::get_module( $params->module );
@@ -258,6 +295,7 @@ class Hub {
 			);
 		}
 
+		define( 'WPHB_IS_NETWORK_ADMIN', true );
 		call_user_func( array( $module, 'enable' ) );
 		wp_send_json_success();
 	}
@@ -268,8 +306,6 @@ class Hub {
 	 * @since 1.9.1
 	 * @param array|object $params  Parameters.
 	 * @param string       $action  Action.
-	 *
-	 * @return void|WP_Error
 	 */
 	public function action_disable( $params, $action ) {
 		$module = Utils::get_module( $params->module );
@@ -290,6 +326,7 @@ class Hub {
 			);
 		}
 
+		define( 'WPHB_IS_NETWORK_ADMIN', true );
 		call_user_func( array( $module, 'disable' ) );
 		wp_send_json_success();
 	}
@@ -331,19 +368,19 @@ class Hub {
 		$reports = Utils::get_module( $available_modules[ $module ] );
 		$options = $reports->get_options();
 
-		// Randomize the minutes, so we don't spam the API.
-		$email_time    = explode( ':', sanitize_text_field( $params->time ) );
-		$email_time[1] = sprintf( '%02d', wp_rand( 0, 59 ) );
-
 		if ( 'performance' === $module || 'reports' === $module ) {
+			// Randomize the minutes, so we don't spam the API.
+			$email_time    = explode( ':', sanitize_text_field( $params->time ) );
+			$email_time[1] = sprintf( '%02d', wp_rand( 0, 59 ) );
+
 			$options['reports']['enabled']   = true;
-			$options['reports']['frequency'] = intval( $params->frequency );
+			$options['reports']['frequency'] = (int) $params->frequency;
 			$options['reports']['day']       = sanitize_text_field( $params->day );
 			$options['reports']['time']      = implode( ':', $email_time );
 			$options['reports']['last_sent'] = '';
 		} elseif ( 'notifications' === $module ) {
 			$options[ $module ]['enabled']   = true;
-			$options[ $module ]['threshold'] = isset( $params->threshold ) ? intval( $params->threshold ) : 0;
+			$options[ $module ]['threshold'] = isset( $params->threshold ) ? (int) $params->threshold : 0;
 		}
 
 		$reports->update_options( $options );
@@ -356,7 +393,7 @@ class Hub {
 			wp_clear_scheduled_hook( "wphb_{$module}_report" );
 
 			// Reschedule.
-			$next_scan_time = \Hummingbird\Core\Pro\Modules\Reports::get_scheduled_time( $module, false );
+			$next_scan_time = Reports::get_scheduled_time( $module, false );
 			wp_schedule_single_event( $next_scan_time, "wphb_{$module}_report" );
 		}
 
@@ -419,8 +456,6 @@ class Hub {
 	 * @since 1.9.3
 	 * @param array|object $params  Parameters.
 	 * @param string       $action  Action.
-	 *
-	 * @return void|WP_Error
 	 */
 	public function action_clear_cache( $params, $action ) {
 		$module = $params->module;
@@ -482,8 +517,6 @@ class Hub {
 	 * @since 1.9.3
 	 * @param array  $params  Parameters.
 	 * @param string $action  Action.
-	 *
-	 * @return void|WP_Error
 	 */
 	public function action_get_timezone( $params, $action ) {
 		$result = array(
@@ -546,6 +579,8 @@ class Hub {
 				);
 			}
 
+			$recipients = $this->format_recipients( $recipients, $options, $module );
+
 			if ( 'notifications' === $module || 'reports' === $module ) {
 				$options[ $module ]['recipients'] = $recipients;
 			} else {
@@ -576,17 +611,123 @@ class Hub {
 	}
 
 	/**
+	 * Format recipients array from Hub to Hummingbird format. See below link for format details.
+	 *
+	 * @see https://bitbucket.org/incsub/wpmu-dev/src/production/wp-content/plugins/wpmudev-uptime/uptime.php#lines-989
+	 *
+	 * @since 3.1.1
+	 *
+	 * @param array  $recipients  Array of recipients.
+	 * @param array  $options     Current plugin settings.
+	 * @param string $module      Module ID.
+	 *
+	 * @return array
+	 */
+	private function format_recipients( $recipients, $options, $module ) {
+		if ( 'notifications' === $module || 'reports' === $module ) {
+			$current_recipients = $options[ $module ]['recipients'];
+		} else {
+			$current_recipients = $options['reports']['recipients'];
+		}
+
+		$new_recipients = array();
+		foreach ( $recipients as $recipient ) {
+			$key = array_search( $recipient['email'], array_column( $current_recipients, 'email' ), true );
+			if ( false === $key ) {
+				$new_recipient['name']  = $recipient['name'];
+				$new_recipient['email'] = $recipient['email'];
+
+				$user = get_user_by( 'email', $recipient['email'] );
+
+				$new_recipient['id']   = false === $user ? 0 : $user->ID;
+				$new_recipient['role'] = false === $user || empty( $user->roles ) ? '' : ucfirst( $user->roles[0] );
+
+				if ( 'notifications' === $module ) {
+					if ( isset( $recipient['is_pending'] ) ) {
+						$new_recipient['is_pending'] = filter_var( $recipient['is_pending'], FILTER_VALIDATE_BOOLEAN );
+					}
+
+					if ( isset( $recipient['is_subscribed'] ) ) {
+						$new_recipient['is_subscribed'] = filter_var( $recipient['is_subscribed'], FILTER_VALIDATE_BOOLEAN );
+					}
+
+					if ( isset( $recipient['is_can_resend_confirmation'] ) ) {
+						$new_recipient['is_can_resend_confirmation'] = filter_var( $recipient['is_can_resend_confirmation'], FILTER_VALIDATE_BOOLEAN );
+					}
+				}
+
+				$new_recipients[] = $new_recipient;
+			} else {
+				if ( isset( $current_recipients[ $key ]['is_pending'] ) ) {
+					if ( isset( $recipient['is_pending'] ) ) {
+						$current_recipients[ $key ]['is_pending'] = filter_var( $recipient['is_pending'], FILTER_VALIDATE_BOOLEAN );
+					}
+
+					if ( isset( $recipient['is_subscribed'] ) ) {
+						$current_recipients[ $key ]['is_subscribed'] = filter_var( $recipient['is_subscribed'], FILTER_VALIDATE_BOOLEAN );
+					}
+
+					if ( isset( $recipient['is_can_resend_confirmation'] ) ) {
+						$current_recipients[ $key ]['is_can_resend_confirmation'] = filter_var( $recipient['is_can_resend_confirmation'], FILTER_VALIDATE_BOOLEAN );
+					}
+				}
+
+				$new_recipients[] = $current_recipients[ $key ];
+				unset( $current_recipients[ $key ] );
+				$current_recipients = array_values( $current_recipients ); // We need to reset keys, otherwise array_column() in array_search() messes with the keys.
+			}
+		}
+
+		return $new_recipients;
+	}
+
+	/**
 	 * Purge all caches.
 	 *
 	 * @since 2.1.0
 	 * @param array|object $params  Parameters.
 	 * @param string       $action  Action.
-	 *
-	 * @return void|WP_Error
 	 */
 	public function action_purge_all_cache( $params, $action ) {
-		WP_Hummingbird::flush_cache( true, false, false );
+		WP_Hummingbird::flush_cache( false, false );
 		wp_send_json_success();
+	}
+
+	/**
+	 * Applies the given config sent by the Hub via the Dashboard plugin.
+	 *
+	 * @since 3.0.1
+	 *
+	 * @param object $params  The config sent by the Hub.
+	 */
+	public function action_import_settings( $params ) {
+		if ( empty( $params->configs ) ) {
+			wp_send_json_error(
+				array(
+					'message' => __( 'Missing config data', 'wphb' ),
+				)
+			);
+		}
+
+		// The Hub returns an object, we use an array.
+		$config_array = json_decode( wp_json_encode( $params->configs ), true );
+
+		$configs = new Configs();
+		$configs->apply_config( $config_array );
+
+		wp_send_json_success();
+	}
+
+	/**
+	 * Exports the current settings as a config for the Hub.
+	 *
+	 * @since 3.0.1
+	 */
+	public function action_export_settings() {
+		$configs = new Configs();
+		$config  = $configs->get_config_from_current();
+
+		wp_send_json_success( $config['config'] );
 	}
 
 }

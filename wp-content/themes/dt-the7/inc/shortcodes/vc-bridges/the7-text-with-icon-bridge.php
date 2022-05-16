@@ -6,6 +6,7 @@ return array(
 	'weight'   => -1,
 	'name'     => __( 'Icon with text', 'the7mk2' ),
 	'base'     => 'dt_icon_text',
+	'description' => '',
 	'icon'     => 'dt_vc_text_with_icon',
 	'class'    => 'dt_vc_icon',
 	'category' => __( 'by Dream-Theme', 'the7mk2' ),
@@ -372,7 +373,7 @@ return array(
 			'param_name'       => 'icon',
 			'type'             => 'textarea_raw_html',
 			'value'            => '',
-			'description'      => 'f.e. <code>&lt;i class="fa fa-arrow-circle-right"&gt;&lt;/i&gt;</code> <a href="http://fontawesome.io/icons/" target="_blank">http://fontawesome.io/icons/</a>.',
+			'description'      => 'f.e. <code>&lt;i class="fa fa-arrow-circle-right"&gt;&lt;/i&gt;</code> <a href="https://fontawesome.io/icons/" target="_blank">https://fontawesome.io/icons/</a>.',
 			'edit_field_class' => 'custom-textarea-height vc_col-xs-12  vc_column',
 			'dependency'       => array(
 				'element' => 'icon_type',
@@ -397,7 +398,7 @@ return array(
 			'value'      => '8px',
 			'units'      => 'px',
 			'group'      => __( 'Button', 'the7mk2' ),
-			
+
 			'dependency' => array(
 				'element' => 'icon_type',
 				'value'   => array( 'picker', 'html' ),
@@ -665,7 +666,7 @@ return array(
 				'value'   => 'link',
 			),
 		),
-		
+
 		array(
 			'heading'    => __( 'Normal', 'the7mk2' ),
 			'param_name' => 'link_normal_settings',
@@ -681,7 +682,7 @@ return array(
 			'param_name'  => 'link_text_color',
 			'type'        => 'colorpicker',
 			'value'       => '',
-			'description' => __( 'Live empty to use accent color. ', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color. ', 'the7mk2' ),
 			'group'       => __( 'Button', 'the7mk2' ),
 			'dependency' => array(
 				'element' => 'btn_size',
@@ -718,7 +719,7 @@ return array(
 			'param_name'  => 'link_text_hover_color',
 			'type'        => 'colorpicker',
 			'value'       => '',
-			'description' => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'dependency'  => array(
 				'element' => 'link_hover',
 				'value'   => 'y',
@@ -772,7 +773,7 @@ return array(
 			'param_name'  => 'link_border_color',
 			'type'        => 'colorpicker',
 			'value'       => '',
-			'description' => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'dependency' => array(
 				'element' => 'link_decoration',
 				'value'   => array( 'left_to_right', 'from_center', 'upwards', 'downwards' ),
@@ -988,7 +989,7 @@ return array(
 		array(
 			'group'            => __( 'Icon', 'the7mk2' ),
 			'heading'          => __( 'Icon color', 'the7mk2' ),
-			'description'      => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description'      => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'param_name'       => 'dt_text_icon_color',
 			'type'             => 'colorpicker',
 			'value'            => 'rgba(255,255,255,1)',
@@ -1016,7 +1017,7 @@ return array(
 		array(
 			'group'            => __( 'Icon', 'the7mk2' ),
 			'heading'          => __( 'Border color', 'the7mk2' ),
-			'description'      => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description'      => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'param_name'       => 'dt_text_icon_border_color',
 			'type'             => 'colorpicker',
 			'value'            => '',
@@ -1051,7 +1052,7 @@ return array(
 				'element' => 'dt_icon_bg',
 				'value'   => 'y',
 			),
-			'description'      => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description'      => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'edit_field_class' => 'the7-icons-dependent vc_col-xs-12',
 		),
 		array(
@@ -1082,7 +1083,7 @@ return array(
 		array(
 			'group'       => __( 'Icon', 'the7mk2' ),
 			'heading'     => __( 'Icon color', 'the7mk2' ),
-			'description' => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'param_name'  => 'dt_icon_color_hover',
 			'type'        => 'colorpicker',
 			'value'       => 'rgba(255,255,255,1)',
@@ -1109,7 +1110,7 @@ return array(
 		array(
 			'group'       => __( 'Icon', 'the7mk2' ),
 			'heading'     => __( 'Icon border color  ', 'the7mk2' ),
-			'description' => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'param_name'  => 'dt_icon_border_color_hover',
 			'type'        => 'colorpicker',
 			'value'       => '',
@@ -1143,7 +1144,7 @@ return array(
 				'element' => 'dt_icon_bg_hover',
 				'value'   => 'y',
 			),
-			'description' => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color.', 'the7mk2' ),
 		),
 		array(
 			'group'            => __( 'Icon', 'the7mk2' ),

@@ -303,7 +303,8 @@
 }
 
 .rollover img,
-.post-thumbnail-rollover img {
+.post-thumbnail-rollover img,
+.trigger-img-hover .img-wrap img {
 	.quick-scale-img & {
 		transition: transform 0.25s ease-out, opacity 0.25s;
 		-webkit-backface-visibility: hidden;
@@ -316,7 +317,8 @@
 		
 }
 .rollover img,
-.post-thumbnail-rollover img {
+.post-thumbnail-rollover img,
+.trigger-img-hover .img-wrap img {
 	.scale-img & {
 		transition: transform 0.3s ease-out, opacity 0.35s;
 		-webkit-backface-visibility: hidden;
@@ -331,16 +333,18 @@
 .mobile-false .scale-img figure:hover .rollover img,
 .mobile-false .scale-img article:hover .rollover img,
 .mobile-false .scale-img .post-thumbnail:not(.overlay-placeholder):hover > .post-thumbnail-rollover img,
+.mobile-false .scale-img .trigger-img-hover:hover .img-wrap img,
 .scale-img .on-hover .post-thumbnail > .post-thumbnail-rollover img {
       transform: scale(1.2);
-      transition: transform 4s ease-out;
+      transition: transform 4s ease-out, opacity 0.25s ease-out;
 }
 .mobile-false .quick-scale-img figure:hover .rollover img,
 .mobile-false .quick-scale-img article:hover .rollover img,
 .mobile-false .quick-scale-img .post-thumbnail:not(.overlay-placeholder):hover > .post-thumbnail-rollover img,
+.mobile-false .quick-scale-img .trigger-img-hover:hover .img-wrap img,
 .quick-scale-img .on-hover .post-thumbnail > .post-thumbnail-rollover img {
       transform: scale(1.2);
-      transition: transform 0.25s ease-out;
+      transition: transform 0.25s ease-out, opacity 0.25s ease-out;
 }
 
 /* #Scale In

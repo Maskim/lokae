@@ -195,6 +195,18 @@ $options['header-mobile-floating_navigation'] = array(
 	'class'   => 'small',
 );
 
+$options['header-mobile-floating-bg-color'] = array(
+	'id'         => 'header-mobile-floating-bg-color',
+	'name'       => _x( 'Choose color', 'theme-options', 'the7mk2' ),
+	'type'       => 'alpha_color',
+	'std'        => '#fff',
+	'dependency' => array(
+		'field'    => 'header-mobile-floating_navigation',
+		'operator' => '==',
+		'value'    => 'sticky',
+	),
+);
+
 
 $options[] = array(
 	'name' => _x( '"Open menu" button', 'theme-options', 'the7mk2' ),

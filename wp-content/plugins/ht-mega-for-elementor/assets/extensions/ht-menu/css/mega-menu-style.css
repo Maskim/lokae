@@ -355,7 +355,7 @@
   padding: 0;
   width: 250px;
 }
-.htmega-verticle-menu ul > li:hover .htmegamenu-content-wrapper, .htmega-verticle-menu ul > li:hover .sub-menu {
+.htmega-verticle-menu ul > li:hover > .htmegamenu-content-wrapper, .htmega-verticle-menu ul > li:hover > .sub-menu {
   opacity: 1;
   visibility: visible;
 }

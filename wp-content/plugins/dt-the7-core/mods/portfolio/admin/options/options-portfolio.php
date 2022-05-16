@@ -370,20 +370,30 @@ $new_options['portfolio-rel_projects_columns'] = array(
 
 $new_options[] = array( 'name' => _x( 'Breadcrumbs', 'theme-options', 'dt-the7-core' ), 'type' => 'block' );
 
-$breadcrumbs_placeholder = '';
-$post_type_object        = get_post_type_object( 'dt_portfolio' );
-if ( isset( $post_type_object->labels->singular_name ) ) {
-	$breadcrumbs_placeholder = $post_type_object->labels->singular_name;
+if ( The7PT_Admin::theme_is_compatible() ) {
+	$new_options[] = [
+		'desc' => sprintf(
+			esc_html_x( 'Breadcrumbs text setting was moved to %s', 'theme-options', 'dt-the7-core' ),
+			'<a href="' . admin_url( '/admin.php?page=the7-dashboard' ) . '">My The7 > The7 Post Types and Elements</a>'
+		),
+		'type' => 'info',
+	];
+} else {
+	$breadcrumbs_placeholder = '';
+	$post_type_object        = get_post_type_object( 'dt_portfolio' );
+	if ( isset( $post_type_object->labels->singular_name ) ) {
+		$breadcrumbs_placeholder = $post_type_object->labels->singular_name;
+	}
+	$new_options['portfolio-breadcrumbs-text'] = array(
+		'name'        => _x( 'Breadcrumbs text', 'theme-options', 'dt-the7-core' ),
+		'desc'        => _x( 'Leave empty to use post type singular name.', 'theme-options', 'dt-the7-core' ),
+		'id'          => 'portfolio-breadcrumbs-text',
+		'type'        => 'text',
+		'std'         => '',
+		'placeholder' => $breadcrumbs_placeholder,
+		'class'       => 'wide',
+	);
 }
-$new_options['portfolio-breadcrumbs-text'] = array(
-	'name'        => _x( 'Breadcrumbs text', 'theme-options', 'dt-the7-core' ),
-	'desc'        => _x( 'Leave empty to use post type singular name.', 'theme-options', 'dt-the7-core' ),
-	'id'          => 'portfolio-breadcrumbs-text',
-	'type'        => 'text',
-	'std'         => '',
-	'placeholder' => $breadcrumbs_placeholder,
-	'class'       => 'wide',
-);
 
 if ( isset( $options ) ) {
 	$options = dt_array_push_after( $options, $new_options, 'blog_and_portfolio_placeholder' );

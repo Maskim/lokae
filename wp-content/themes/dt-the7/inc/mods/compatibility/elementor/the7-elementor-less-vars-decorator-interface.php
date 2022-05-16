@@ -3,7 +3,7 @@
  * @package The7
  */
 
-namespace The7\Adapters\Elementor;
+namespace The7\Mods\Compatibility\Elementor;
 
 use The7_Less_Vars_Manager_Interface;
 

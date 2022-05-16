@@ -32,7 +32,7 @@
 }
 .mini-wpml .wpml-ls-current-language > a,
 .mini-wpml .wpml-ls-legacy-list-horizontal a,
-.mini-wpml .wpml-ls-legacy-list-vertical a, {
+.mini-wpml .wpml-ls-legacy-list-vertical a {
 	text-decoration: none;
 	&:hover {
 		opacity: 0.7;
@@ -140,7 +140,7 @@ a.wpml-ls-item-toggle:after {
 	.widget .wpml-ls-item:focus &,
 	.widget .wpml-ls-current-language & {
 		#page & {
-			color: @accent-bg-color;
+			color: var(--the7-accent-color);
 		}
 		.accent-gradient #page & {
 			.text-gradient (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
@@ -321,15 +321,18 @@ a.wpml-ls-item-toggle:after {
 		.sidebar .widget &,
 		.sidebar-content .widget & {
 			color: @widget-sidebar-color;
-			font-size: @base-font-size;
-			line-height: @base-line-height;
 		}
 		.footer .widget & {
 			color: @widget-footer-color;
-			font-size: @base-font-size;
-			line-height: @base-line-height;
 		}
-
+		.footer .widget &,
+		.sidebar .widget &,
+		.sidebar-content .widget & {
+			font: var(--the7-widget-content-font);
+			text-transform: var(--the7-widget-content-text-transform);
+			letter-spacing: var(--the7-widget-content-letter-spacing);
+			text-decoration: var(--the7-widget-content-text-decoration);
+		}
 	}
 	.mini-wpml .wpml-ls-legacy-list-horizontal a:hover,
 	.mini-wpml .wpml-ls-legacy-list-vertical a:hover {

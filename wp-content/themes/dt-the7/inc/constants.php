@@ -11,14 +11,14 @@ define( 'THE7_VERSION', wp_get_theme( get_template() )->get( 'Version' ) );
 define( 'PRESSCORE_THEME_NAME', 'the7' );
 
 if ( ! defined( 'PRESSCORE_DB_VERSION' ) ) {
-	define( 'PRESSCORE_DB_VERSION', '8.9.0' );
+	define( 'PRESSCORE_DB_VERSION', '10.7.0' );
 }
 
 if ( ! defined( 'PRESSCORE_STYLESHEETS_VERSION' ) ) {
-	define( 'PRESSCORE_STYLESHEETS_VERSION', '9.0.1' );
+	define( 'PRESSCORE_STYLESHEETS_VERSION', '10.7.1' );
 }
 
-define( 'THE7_CORE_COMPATIBLE_VERSION', '2.5.0' );
+define( 'THE7_CORE_COMPATIBLE_VERSION', '2.5.8' );
 
 /**
  * Important! Remember to remove trailing slash.
@@ -140,6 +140,18 @@ if ( ! defined( 'PRESSCORE_SHORTCODES_INCLUDES_DIR' ) ) {
 
 if ( ! defined( 'PRESSCORE_SHORTCODES_INCLUDES_URI' ) ) {
 	define( 'PRESSCORE_SHORTCODES_INCLUDES_URI', trailingslashit( PRESSCORE_SHORTCODES_URI ) . 'includes' );
+}
+
+if ( ! defined( 'THE7_ELEMENTOR_CSS_URI' ) ) {
+	define( 'THE7_ELEMENTOR_CSS_URI', trailingslashit( PRESSCORE_THEME_URI ) . 'css/compatibility/elementor' );
+}
+
+if ( ! defined( 'THE7_ELEMENTOR_JS_URI' ) ) {
+	define( 'THE7_ELEMENTOR_JS_URI', trailingslashit( PRESSCORE_THEME_URI ) . 'js/compatibility/elementor' );
+}
+
+if ( ! defined( 'THE7_ELEMENTOR_ADMIN_JS_URI' ) ) {
+	define( 'THE7_ELEMENTOR_ADMIN_JS_URI', trailingslashit( PRESSCORE_ADMIN_URI ) . 'assets/js/elementor' );
 }
 
 if ( ! defined( 'OPTIONS_FRAMEWORK_PRESETS_DIR' ) ) {

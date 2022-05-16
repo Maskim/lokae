@@ -1,6 +1,10 @@
 <?php
 namespace Elementor;
 
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class HTMega_Elementor_Widget_Call_To_Action extends Widget_Base {
@@ -223,10 +227,6 @@ class HTMega_Elementor_Widget_Call_To_Action extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#f7ca18',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-call-to-action .htmega-content .htmega-callto-action-title' => 'color: {{VALUE}};',
@@ -287,10 +287,6 @@ class HTMega_Elementor_Widget_Call_To_Action extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#5D532BE6',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-call-to-action .htmega-content .htmega-callto-action-description' => 'color: {{VALUE}};',
@@ -535,7 +531,20 @@ class HTMega_Elementor_Widget_Call_To_Action extends Widget_Base {
                 $this->add_render_attribute( 'url', 'rel', 'nofollow' );
             }
         }
-       
+
+        $title_tag = htmega_validate_html_tag( $settings['callto_action_title_tag'] );
+        $description_tag = htmega_validate_html_tag( $settings['callto_action_description_tag'] );
+
+        $allow_html = array(
+            'a' => array(
+                'href' => array(),
+                'title' => array()
+            ),
+            'br' => array(),
+            'em' => array(),
+            'strong' => array(),
+        );
+
         ?>
             <div <?php echo $this->get_render_attribute_string( 'htmega_callto_action_attr' ); ?>>
                 <div class="htmega-content">
@@ -547,10 +556,10 @@ class HTMega_Elementor_Widget_Call_To_Action extends Widget_Base {
                                     <div class="content">
                                         <?php
                                             if( !empty( $settings['callto_action_title'] ) ){
-                                                echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $settings['callto_action_title_tag'], $this->get_render_attribute_string( 'callto_title_attr' ), $settings['callto_action_title'] );
+                                                echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $title_tag, $this->get_render_attribute_string( 'callto_title_attr' ), wp_kses( $settings['callto_action_title'], $allow_html ) );
                                             }
                                             if( !empty( $settings['callto_action_description'] ) ){
-                                                echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $settings['callto_action_description_tag'], $this->get_render_attribute_string( 'callto_description_attr' ), $settings['callto_action_description'] );
+                                                echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $description_tag, $this->get_render_attribute_string( 'callto_description_attr' ), wp_kses( $settings['callto_action_description'], $allow_html ) );
                                             }
                                         ?>
                                     </div>
@@ -560,7 +569,7 @@ class HTMega_Elementor_Widget_Call_To_Action extends Widget_Base {
                                 <div class="text-right">
                                     <?php
                                         if( !empty( $settings['callto_action_buttontxt'] ) ){
-                                            echo sprintf('<a %1$s>%2$s</a>', $this->get_render_attribute_string( 'url' ), $settings['callto_action_buttontxt'] );
+                                            echo sprintf('<a %1$s>%2$s</a>', $this->get_render_attribute_string( 'url' ), wp_kses( $settings['callto_action_buttontxt'], $allow_html ) );
                                         }
                                     ?>
                                 </div>
@@ -571,17 +580,17 @@ class HTMega_Elementor_Widget_Call_To_Action extends Widget_Base {
                         <div class="content">
                             <?php
                                 if( !empty( $settings['callto_action_description'] ) ){
-                                    echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $settings['callto_action_description_tag'], $this->get_render_attribute_string( 'callto_description_attr' ), $settings['callto_action_description'] );
+                                    echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $description_tag, $this->get_render_attribute_string( 'callto_description_attr' ), wp_kses( $settings['callto_action_description'], $allow_html ) );
                                 }
                                 if( !empty( $settings['callto_action_title'] ) ){
-                                    echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $settings['callto_action_title_tag'], $this->get_render_attribute_string( 'callto_title_attr' ), $settings['callto_action_title'] );
+                                    echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $title_tag, $this->get_render_attribute_string( 'callto_title_attr' ), wp_kses( $settings['callto_action_title'], $allow_html ) );
                                 }
                             ?>
                         </div>
                         <div class="action-btn">
                             <?php
                                 if( !empty( $settings['callto_action_buttontxt'] ) ){
-                                    echo sprintf('<a %1$s>%2$s</a>', $this->get_render_attribute_string( 'url' ), $settings['callto_action_buttontxt'] );
+                                    echo sprintf('<a %1$s>%2$s</a>', $this->get_render_attribute_string( 'url' ), wp_kses( $settings['callto_action_buttontxt'], $allow_html ) );
                                 }
                             ?>
                         </div>
@@ -590,17 +599,17 @@ class HTMega_Elementor_Widget_Call_To_Action extends Widget_Base {
                         <div class="content">
                             <?php
                                 if( !empty( $settings['callto_action_title'] ) ){
-                                    echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $settings['callto_action_title_tag'], $this->get_render_attribute_string( 'callto_title_attr' ), $settings['callto_action_title'] );
+                                    echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $title_tag, $this->get_render_attribute_string( 'callto_title_attr' ), wp_kses( $settings['callto_action_title'], $allow_html ) );
                                 }
                                 if( !empty( $settings['callto_action_description'] ) ){
-                                    echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $settings['callto_action_description_tag'], $this->get_render_attribute_string( 'callto_description_attr' ), $settings['callto_action_description'] );
+                                    echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $description_tag, $this->get_render_attribute_string( 'callto_description_attr' ), wp_kses( $settings['callto_action_description'], $allow_html ) );
                                 }
                             ?>
                         </div>
                         <div class="action-btn">
                             <?php
                                 if( !empty( $settings['callto_action_buttontxt'] ) ){
-                                    echo sprintf('<a %1$s>%2$s</a>', $this->get_render_attribute_string( 'url' ), $settings['callto_action_buttontxt'] );
+                                    echo sprintf('<a %1$s>%2$s</a>', $this->get_render_attribute_string( 'url' ), wp_kses( $settings['callto_action_buttontxt'], $allow_html ) );
                                 }
                             ?>
                         </div>
@@ -610,17 +619,17 @@ class HTMega_Elementor_Widget_Call_To_Action extends Widget_Base {
                             <div class="content">
                                 <?php
                                     if( !empty( $settings['callto_action_title'] ) ){
-                                        echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $settings['callto_action_title_tag'], $this->get_render_attribute_string( 'callto_title_attr' ), $settings['callto_action_title'] );
+                                        echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $title_tag, $this->get_render_attribute_string( 'callto_title_attr' ), wp_kses( $settings['callto_action_title'], $allow_html ) );
                                     }
                                     if( !empty( $settings['callto_action_description'] ) ){
-                                        echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $settings['callto_action_description_tag'], $this->get_render_attribute_string( 'callto_description_attr' ), $settings['callto_action_description'] );
+                                        echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $description_tag, $this->get_render_attribute_string( 'callto_description_attr' ), wp_kses( $settings['callto_action_description'], $allow_html ) );
                                     }
                                 ?>
                             </div>
                             <div class="action-btn">
                                 <?php
                                     if( !empty( $settings['callto_action_buttontxt'] ) ){
-                                        echo sprintf('<a %1$s>%2$s</a>', $this->get_render_attribute_string( 'url' ), $settings['callto_action_buttontxt'] );
+                                        echo sprintf('<a %1$s>%2$s</a>', $this->get_render_attribute_string( 'url' ), wp_kses( $settings['callto_action_buttontxt'], $allow_html ) );
                                     }
                                 ?>
                             </div>
@@ -629,13 +638,13 @@ class HTMega_Elementor_Widget_Call_To_Action extends Widget_Base {
                     <?php else:?>
                         <?php
                             if( !empty( $settings['callto_action_description'] ) ){
-                                echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $settings['callto_action_description_tag'], $this->get_render_attribute_string( 'callto_description_attr' ), $settings['callto_action_description'] );
+                                echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $description_tag, $this->get_render_attribute_string( 'callto_description_attr' ), wp_kses( $settings['callto_action_description'], $allow_html ) );
                             }
                             if( !empty( $settings['callto_action_title'] ) ){
-                                echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $settings['callto_action_title_tag'], $this->get_render_attribute_string( 'callto_title_attr' ), $settings['callto_action_title'] );
+                                echo sprintf( '<%1$s %2$s>%3$s</%1$s>', $title_tag, $this->get_render_attribute_string( 'callto_title_attr' ), wp_kses( $settings['callto_action_title'], $allow_html ) );
                             }
                             if( !empty( $settings['callto_action_buttontxt'] ) ){
-                                echo sprintf('<a %1$s>%2$s</a>', $this->get_render_attribute_string( 'url' ), $settings['callto_action_buttontxt'] );
+                                echo sprintf('<a %1$s>%2$s</a>', $this->get_render_attribute_string( 'url' ), wp_kses( $settings['callto_action_buttontxt'], $allow_html ) );
                             }
                         ?>
                     <?php endif;?>

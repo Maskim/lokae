@@ -10,8 +10,8 @@
  * Requires: 1.2.2+
  */
 
-(function($) {
-
+;(function($) {
+"use strict";
 var types = ['DOMMouseScroll', 'mousewheel'];
 
 $.event.special.mousewheel = {

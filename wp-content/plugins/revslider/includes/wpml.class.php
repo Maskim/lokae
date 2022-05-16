@@ -214,12 +214,13 @@ class RevSliderWpml extends RevSliderFunctions {
 				'image'	=> $this->getFlagUrl($code)
 			);
 		}
-		echo '<script type="text/javascript">';
-		echo 'var RS_WPML_LANGS = jQuery.parseJSON(\''.json_encode($use_langs).'\');';
+		echo '<script>';
+		echo 'var RS_WPML_LANGS = JSON.parse(\''.json_encode($use_langs).'\');';
 		echo '</script>';
 	}
 }
 
+global $rs_wmpl;
 $rs_wmpl = new RevSliderWpml();
 
 /**
@@ -227,4 +228,3 @@ $rs_wmpl = new RevSliderWpml();
  * @since: 5.0
  **/
 class UniteWpmlRev extends RevSliderWpml {}
-?>

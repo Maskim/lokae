@@ -10,9 +10,6 @@
 @hover-icon-margin: 0px;
 @hover-icon-color: #fff;
 @read-more-icon-spacing: 5px;
-@pagination-item-padding: 5px 10px;
-@pagination-item-marign: 0 5px;
-@pagination-load-more-icon-spacing: 5px;
 
 .bottom-overlap-layout-list article:not(.no-img) {
   .project-links-container {
@@ -38,7 +35,7 @@
   width: 100%;
 }
 
-.entry-title {
+.ele-entry-title {
   margin-bottom: @title-spacing;
 }
 
@@ -64,20 +61,26 @@
 
 .project-links-container a {
   width: @hover-icon-bg-size;
+  height: @hover-icon-bg-size;
   line-height: @hover-icon-bg-size;
   margin: @hover-icon-margin;
+  box-sizing: border-box;
 
-  &:before,
-  &:after {
     border-width: @hover-icon-border-width;
     border-color: var(--the7-accent-color);
     background-color: var(--the7-accent-color);
-    background-image: linear-gradient(var(--the7-accent-gradient));
     box-shadow: none;
-  }
+    &:before,
+    &:after {
+      display: none;
+    }
 
-  &:not(:hover) > span {
+  & > span {
     color: @hover-icon-color;
+  }
+  &:hover > svg,
+  & > svg {
+    fill: @hover-icon-color;
   }
 
   > span {
@@ -88,11 +91,15 @@
       line-height: @hover-icon-bg-size;
     }
   }
+  & > svg {
+    width: @hover-icon-size;
+    height: auto;
+  }
 }
-
+.portfolio-shortcode .project-links-container a:not(:hover) span {
+    color: @hover-icon-color;
+}
 .post-details {
-  line-height: 1;
-
   i:first-child {
     margin-right: @read-more-icon-spacing;
   }
@@ -133,15 +140,8 @@
   }
 
   .accent-gradient & {
-    &.filter-underline-decoration .filter-categories {
-      --filter-pointer-bg-color-hover: linear-gradient(var(--the7-accent-gradient));
-      --filter-pointer-bg-color-active: linear-gradient(var(--the7-accent-gradient));
-    }
 
     &.filter-bg-decoration .filter-categories {
-      --filter-pointer-bg-color-hover: linear-gradient(var(--the7-accent-gradient));
-      --filter-pointer-bg-color-active: linear-gradient(var(--the7-accent-gradient));
-
       a:not(.act):hover {
         --filter-title-color-hover: transparent;
         background: var(--filter-pointer-bg-color-hover);
@@ -150,11 +150,6 @@
     }
 
     &.filter-without-decoration .filter-categories {
-      --filter-pointer-bg-color-hover: linear-gradient(var(--the7-accent-gradient));
-      --filter-pointer-bg-color-active: linear-gradient(var(--the7-accent-gradient));
-      --filter-title-color-hover: transparent;
-      --filter-title-color-active: transparent;
-
       a:hover {
         background: var(--filter-pointer-bg-color-hover);
         -webkit-background-clip: text;
@@ -167,6 +162,10 @@
     }
   }
 }
+
+@pagination-item-padding: 5px 10px;
+@pagination-item-marign: 0 5px;
+@pagination-load-more-icon-spacing: 5px;
 
 .paginator {
   --filter-title-color-normal: var(--the7-title-color);
@@ -202,9 +201,5 @@
     margin: @pagination-item-marign;
     padding: @pagination-item-padding;
   }
-
-  .accent-gradient & {
-    --filter-pointer-bg-color-hover: linear-gradient(var(--the7-accent-gradient));
-    --filter-pointer-bg-color-active: linear-gradient(var(--the7-accent-gradient));
-  }
 }
+

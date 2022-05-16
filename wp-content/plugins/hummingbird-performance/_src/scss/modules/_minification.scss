@@ -6,6 +6,27 @@
 @import "../common/mixins";
 
 .wrap-wphb-minification {
+    /**
+     * Summary metabox
+     * @since 2.6.0
+     */
+    .box-minification-summary-meta-box {
+        .sui-summary .sui-summary-details .sui-icon-check-tick {
+            top: 0;
+            left: 0;
+            height: 0;
+            margin: 0;
+        }
+
+        .sui-list-detail { display: flex; }
+
+        .sui-icon-check-tick {
+            margin-left: 10px;
+            &:before { color: #1ABC9C; }
+        }
+    }
+
+
     /* Asset Optimization - changed file */
     @keyframes pop{
         50%  {
@@ -24,22 +45,129 @@
         margin-bottom: 0;
     }
 
-    /* Modal window */
-    .sui-modal .checkbox-group {
-        justify-content: flex-start;
-        width: 100%;
-        height: 52px;
+    /**
+     * Auto to manual modal
+     * @since 2.6.0
+     */
+    #wphb-upgrade-minification-modal .sui-box-body a,
+    #wphb-advanced-minification-modal .sui-box-body a {
+        display: block;
+        font-size: 12px;
+        text-transform: uppercase;
+        margin-top: 15px;
+        color: #888;
+    }
+    #wphb-upgrade-minification-modal .sui-box-body a {
+        text-transform: initial;
+        color: #17A8E3;
+    }
 
-        input[type="checkbox"] + label {
-            padding: 10px 10px;
-            width: 70px;
-            height: 50px;
+    /**
+     * How to modals.
+     * @since 2.6.0
+     */
+    #manual-ao-hdiw-modal #manual-ao-hdiw-modal-expand,
+    #automatic-ao-hdiw-modal #automatic-ao-hdiw-modal-expand {
+        display: none;
+    }
+
+    #manual-ao-hdiw-modal.sui-modal-sm,
+    #automatic-ao-hdiw-modal.sui-modal-sm {
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translate3d(150px, 0, 0);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @keyframes fadeOutRight {
+            from {
+                opacity: 1;
+                transform: none;
+            }
+            to {
+                opacity: 0;
+                transform: translate3d(150px, 0, 0);
+            }
+        }
+
+        .sui-content-fade-in {
+            animation-duration: 0.1s !important;
+            animation-name: fadeInRight !important;
+        }
+
+        .sui-content-fade-out {
+            animation-duration: 0.1s !important;
+            animation-name: fadeOutRight !important;
+        }
+
+        #manual-ao-hdiw-modal-content,
+        #automatic-ao-hdiw-modal-content {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0;
+
+            & > .sui-box {
+                border-radius: 0;
+            }
+        }
+
+        #manual-ao-hdiw-modal-collapse,
+        #automatic-ao-hdiw-modal-collapse {
+            display: none;
+        }
+
+        #manual-ao-hdiw-modal-expand,
+        #automatic-ao-hdiw-modal-expand {
+            display: inline-flex;
+        }
+
+        h3, h4 {
+            margin-top: 20px;
         }
     }
 
+    #manual-ao-hdiw-modal-header-wrap {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        margin: 0;
+
+        &.sui-box {
+            &.sui-box-sticky {
+                margin: 0;
+                padding: 0;
+                display: inherit;
+                top: -30px !important;
+
+                @media only screen and (max-width: 480px) {
+                    top: -10px;
+                }
+
+                @media only screen and (max-width: 782px) {
+                    top: -10px !important;
+                    position: sticky !important;
+                }
+            }
+
+            &.video-playing #manual-ao-hdiw-modal-video-desc {
+                visibility: hidden;
+            }
+        }
+    }
+
+    #manual-ao-hdiw-modal-body-wrap {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+    /* END How to modals. */
+
     /* Tour modal */
-    #wphb-advanced-minification-modal .sui-box-banner > img,
-    #wphb-minification-tour .sui-box-banner > img {
+    #wphb-tour-minification-modal .sui-box-banner > img {
         padding: 70px 50px 65px !important;
         background-color: #F2F2F2;
     }
@@ -96,7 +224,7 @@
             margin-left: 5px;
 
             & > span:not(.toggle),
-            & > i {
+            & > [class*="sui-icon-"] {
                 color: #888888;
                 padding: 0;
                 font-size: 16px;
@@ -118,19 +246,25 @@
             }
         }
 
-        input[type="checkbox"]:checked + label {
+        input[type="checkbox"]:checked:not(:disabled) + label {
             & > span:not(.toggle),
-            & > i {
+            & > [class*="sui-icon-"]:not(.sui-icon-eye-hide) {
                 color: #17A8E3;
+            }
+
+            & > [class*="sui-icon-"]:not(.sui-icon-eye-hide) {
+                &:before {
+                    color: #17A8E3;
+                }
             }
         }
 
         input[type="checkbox"]:disabled + label {
-            background-color: #F8F8F8;
+            background-color: #F5F5F5;
             border-color: #F8F8F8;
 
-            & > span:not(.toggle),
-            & > i {
+            & > span:not(.toggle):before,
+            & > [class*="sui-icon-"] {
                 color: #DDD;
             }
         }
@@ -139,7 +273,7 @@
     /* Exclude file checkbox overrides */
     .wphb-minification-exclude {
         margin-left: 10px;
-        i {
+        [class*="sui-icon-"] {
             &:before {
                 font-size: 14px;
                 line-height: 40px;
@@ -152,7 +286,7 @@
             &:hover {
                 background-color: #FFE5E9;
 
-                i {
+                [class*="sui-icon-"] {
                     &:before {
                         color: #FF6D6D;
                     }
@@ -165,18 +299,11 @@
     .wphb-minification-files {
         background-color: #F8F8F8;
         padding-bottom: 1px;
-    }
 
-    /* Switch type button in meta box header */
-    .box-minification-enqueued-files .wphb-heading-divider {
-        border-left: 1px solid #E6E6E6;
-        height: 30px;
-        margin-top: -21px;
-        margin-bottom: -22px;
-        margin-left: 10px;
-    }
-    .box-minification-enqueued-files .sui-box-header .sui-button:last-child {
-        margin-right: 10px;
+        .sui-notice {
+            margin-left: 30px;
+            margin-right: 30px;
+        }
     }
 
     .wphb-minification-files-header {
@@ -184,6 +311,10 @@
         border-bottom: 1px solid #E6E6E6;
         margin-bottom: 30px;
         padding: 30px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
 
     .wphb-border-row {
@@ -200,13 +331,16 @@
         position: relative;
     }
 
-    .wphb-minification-files-basic .wphb-border-row,
     .wphb-minification-files-advanced .wphb-border-row,
     .wphb-minification-files-advanced .wphb-minification-row-details {
         padding: 10px 30px;
         -webkit-box-pack: justify;
         -ms-flex-pack: justify;
         justify-content: space-between;
+
+        & .sui-tooltip:after {
+            z-index: 101; // Prevents sticky box from overflowing the tooltip.
+        }
     }
 
     .sui-box-sticky,
@@ -215,10 +349,6 @@
         display: flex;
         align-content: center;
         align-items: center;
-    }
-
-    .wphb-minification-files-basic .wphb-border-row {
-        border-bottom: 1px solid #E6E6E6;
     }
 
     .wphb-minification-files-advanced .wphb-border-row {
@@ -230,9 +360,15 @@
         margin-bottom: 10px;
     }
 
-    .wphb-minification-files-basic .wphb-border-row:last-child,
     .wphb-minification-files-advanced .wphb-border-row:last-child {
         border-bottom: 0;
+    }
+
+    .wphb-minification-files .sui-box-sticky {
+        box-shadow: none;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom: 1px solid #E6E6E6;
     }
 
     .sui-box-sticky {
@@ -257,6 +393,11 @@
                 width: 100%;
             }
 
+            .sui-actions-right {
+                padding: 10px 10px 10px 0;
+                #wphb-minification-filter-button { margin-left: 10px; }
+            }
+
             .sui-actions-left {
                 border-bottom: 1px solid #E6E6E6;
                 margin-left: 0;
@@ -266,14 +407,11 @@
     }
 
     .sui-box-sticky,
-    .wphb-minification-files-table.wphb-minification-files-basic,
     .wphb-minification-files-table.wphb-minification-files-advanced {
         background-color: #F8F8F8;
         margin: 0 30px 30px;
     }
-
-    .sui-box-sticky,
-    .wphb-minification-files-table.wphb-minification-files-basic {
+    .sui-box-sticky {
         background-color: #FFFFFF;
         border-radius: 4px;
         box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.05);
@@ -290,7 +428,7 @@
         margin: 10px 30px;
     }
 
-    /* Styles, common for basic and advanced views */
+    /* Styles for advanced views */
     .fileinfo-group:not(.wphb-compressed) {
         .sui-tooltip:not(.wphb-row-status-queued):before,
         .sui-tooltip:not(.wphb-row-status-queued):after {
@@ -336,7 +474,16 @@
                 font-size: 13px;
                 line-height: 13px;
             }
-            a {
+            .wphb-minification-font-url {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: inline-block;
+                width: auto;
+                max-width: 700px;
+                @include bp(desktop-very-large) { width: 550px; }
+                @include bp(desktop-wide) { width: 380px; }
+            }
+            a:not(.wphb-minification-font-url) {
                 max-width: 200px;
                 overflow: hidden;
                 display: inline-flex;
@@ -369,12 +516,6 @@
         top: 0;
         width: 40px;
     }
-    .wphb-minification-files-basic .wphb-border-row .wphb-row-status {
-        &.wphb-row-status-queued,
-        &.wphb-row-status-success {
-            top: 20px;
-        }
-    }
     .wphb-border-row {
         .wphb-row-status {
             position: absolute;
@@ -386,7 +527,7 @@
             left: -9px;
             animation: pop 0.3s linear 1;
             z-index: 1;
-            i {
+            span {
                 position: absolute;
                 height: 12px;
                 width: 12px;
@@ -397,27 +538,32 @@
                     color: #17A8E3;
                 }
             }
+            &.wphb-row-status-compressed {
+                span:before {
+                    color: $color--success;
+                }
+            }
             &.wphb-row-status-already-compressed {
-                i:before {
+                span:before {
                     color: $color--warning;
                 }
             }
             &.wphb-row-status-other {
-                i:before {
+                span:before {
                     color: #AAAAAA;
                 }
             }
             &.wphb-row-status-queued {
                 top: 24px;
-                z-index: 0;
-                i:before {
+                z-index: 100;
+                span:before {
                     color: #AAAAAA;
                 }
             }
             &.wphb-row-status-success {
                 top: 24px;
                 z-index: 0;
-                i:before {
+                span:before {
                     color: $color--success;
                 }
             }
@@ -453,37 +599,23 @@
 
     /* Filter */
     .wphb-minification-filter {
-        background-color: #FFFFFF;
-        padding: 0 30px;
-        margin: 10px 30px;
+        margin: -30px 30px 30px;
 
         @include bp(phone) {
-            margin: 0 0 20px;
+            margin: -20px 0 20px;
             border-radius: 0;
-            padding: 0 10px;
         }
     }
 
-    .wphb-minification-filter > div {
+    .wphb-minification-filter > div.sui-row {
         height: 78px;
         display: flex;
         align-items: center;
         align-content: center;
-    }
 
-    /* Overwrite for wpmudev styles */
-    .wphb-minification-filter > div > input {
-        margin: 0 10px !important;
-        width: 40% !important;
-        background-color: #F8F8F8 !important;
-    }
-
-    .wphb-minification-filter > div .wphb-block-title {
-        color: #333333;
-        font: 500 13px/30px $font;
-        text-transform: none;
-        margin-right: 21px;
-        margin-left: 0;
+        @include bp(phone) {
+            display: block;
+        }
     }
 
     /* Disabled/hidden row start */
@@ -494,12 +626,12 @@
     .wphb-border-row.disabled .checkbox-group {
         pointer-events: none;
         input[type="checkbox"] + label {
-            background-color: #F8F8F8;
-            border-color: #F8F8F8;
+            background-color: #F5F5F5;
+            border-color: #F5F5F5;
 
-            & > span:not(.toggle),
-            & > i {
-                color: #DDD;
+            & > span:not(.toggle):before,
+            & > [class*="sui-icon-"] {
+                color: #DDD !important;
             }
         }
     }
@@ -513,6 +645,7 @@
         box-shadow: none;
     }
 
+    .wphb-border-row.disabled .wphb-filename-extension-font,
     .wphb-border-row.disabled .wphb-filename-extension-other,
     .wphb-border-row.disabled .wphb-filename-extension-css,
     .wphb-border-row.disabled .wphb-filename-extension-javascript,
@@ -534,24 +667,12 @@
         margin: 0;
     }
 
-    .box-minification-settings .sui-notice-warning {
-        margin-bottom: 15px;
-
-        p {
-            font-size: 13px;
-
-            &:first-of-type:before {
-                font-size: 16px;
-            }
-        }
-    }
-
     /* Network settings */
     .box-minification-network-settings {
         .sui-border-frame div {
             margin-bottom: 30px;
 
-            &:nth-child(3) {
+            &:nth-child(4) {
                 margin-bottom: 0;
             }
 
@@ -572,6 +693,10 @@
                 margin-bottom: -30px !important;
                 margin-top: 30px;
             }
+
+            .sui-notice.sui-notice-warning {
+                margin-bottom: 10px;
+            }
         }
 
         .sui-side-tabs {
@@ -581,7 +706,7 @@
 
     // Responsive
     @include bp(desktop-large) {
-        .wphb-minification-files-advanced .wphb-minification-file-info {
+        .wphb-minification-files-advanced .wphb-minification-file-info:not(.wphb-minification-font-info) {
             width: 185px;
             > a {
                 max-width: 100px;
@@ -595,7 +720,7 @@
             margin-right: -5px !important;
         }
 
-        .wphb-minification-files-advanced .wphb-minification-file-info {
+        .wphb-minification-files-advanced .wphb-minification-file-info:not(.wphb-minification-font-info) {
             width: 130px;
             > a {
                 max-width: 180px;
@@ -638,13 +763,13 @@
             overflow: hidden;
         }
 
-        .wphb-minification-file-info {
+        .wphb-minification-file-info:not(.wphb-minification-font-info) {
             width: 55%;
             min-width: 200px;
-        }
 
-        .wphb-minification-file-info > a {
-            max-width: 200px;
+            > a {
+                max-width: 200px;
+            }
         }
 
         .wphb-minification-files-advanced .wphb-minification-row-details {
@@ -684,7 +809,6 @@
     }
 
     @include bp(phone) {
-        .wphb-minification-files-table.wphb-minification-files-basic,
         .wphb-minification-files-table.wphb-minification-files-advanced {
             margin: 0 10px 30px;
         }
@@ -705,7 +829,6 @@
             margin: 10px;
         }
 
-        .wphb-minification-files-basic .wphb-border-row,
         .wphb-minification-files-advanced .wphb-border-row {
             padding: 10px;
         }

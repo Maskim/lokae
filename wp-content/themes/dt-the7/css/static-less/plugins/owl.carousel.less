@@ -26,6 +26,13 @@
     visibility: hidden;
     line-height: 0;
     height: 0; }
+  .owl-carousel {
+    --stage-top-gap: 0px;
+    --stage-right-gap: 0;
+    --stage-left-gap: 0;
+    --box-padding-top: 0px;
+    --top: 0px;
+    }
   .owl-carousel .owl-stage-outer {
     position: relative;
     overflow: hidden;
@@ -46,7 +53,9 @@
     -webkit-backface-visibility: hidden;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none; }
+  
   .owl-carousel .owl-nav.disabled,
+  .owl-nav.disabled,
   .owl-carousel .owl-dots.disabled {
     display: none; }
   .owl-carousel .owl-nav .owl-prev,
@@ -65,7 +74,8 @@
     color: inherit;
     border: none;
     padding: 0 !important;
-    font: inherit; }
+    font: inherit;
+    outline: none; }
   .owl-carousel.owl-loaded {
     display: block;
     display: grid; }

@@ -6,6 +6,7 @@ return array(
 	"weight" => -1,
 	"name" => __("Blog Mini", 'the7mk2'),
 	"base" => "dt_blog_posts_small",
+	'description' => '',
 	"icon" => "dt_vc_ico_blog_posts_small",
 	"class" => "dt_vc_sc_blog_posts_small",
 	"category" => __('by Dream-Theme', 'the7mk2'),

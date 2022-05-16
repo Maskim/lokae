@@ -26,24 +26,26 @@
 
 
 /*Footer layout -> Footer top & bottom paddings */
-	#footer .wf-container-footer {
-		padding-top: @footer-top-padding;
-		padding-bottom: @footer-bottom-padding;
-	}
-		#footer .wf-container {
-			margin: 0 -@widget-footer-padding;
-		}
+#footer .wf-container-footer {
+	padding-top: @footer-top-padding;
+	padding-bottom: @footer-bottom-padding;
+}
+#footer .wf-container {
+	margin: 0 -@widget-footer-padding;
+}
 
-		/*Footer layout -> Paddings between footer columns, Footer font color */
-			.footer .widget {
-				color: @widget-footer-color;
-				padding: 0 @widget-footer-padding;
-			}
-			.footer .widget,
-			.footer .tp_recent_tweets li {
-				font-size: @base-font-size;
-				line-height: @base-line-height;
-			}
+/*Footer layout -> Paddings between footer columns, Footer font color */
+.footer .widget {
+	color: @widget-footer-color;
+	padding: 0 @widget-footer-padding;
+}
+.footer .widget,
+.footer .tp_recent_tweets li {
+	font: var(--the7-widget-content-font);
+	text-transform: var(--the7-widget-content-text-transform);
+	letter-spacing: var(--the7-widget-content-letter-spacing);
+	text-decoration: var(--the7-widget-content-text-decoration);
+}
 
 #footer {
 	&.full-width {
@@ -86,7 +88,7 @@
 	.footer-sub-nav > li:not(.act):hover > a .menu-text,
 	.footer-sub-nav > li.act > a .subtitle-text,
 	.footer-sub-nav > li:not(.act):hover > a .subtitle-text {
-		color: @accent-bg-color;
+		color: var(--the7-accent-color);
 		.custom-mixin-footer-color (@widget-footer-accent-color);
 	}
 	#bottom-bar a,

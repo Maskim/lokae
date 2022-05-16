@@ -78,6 +78,7 @@
 	& .owl-dot {
     position: relative;
 		display: inline-block;
+    vertical-align: middle;
     & span {
       :not(.bullets-etefu)& {
         position: absolute;
@@ -200,24 +201,3 @@
 .bullets-etefu .owl-dot.active span:before {
   transform: translate3d(0,0,0);
 }
-
-
-
-.carousel-shortcode [class^="icon-"]:not(.icon-with-text-shortcode),
-.carousel-shortcode [class*=" icon-"]:not(.icon-with-text-shortcode),
-.carousel-shortcode [class^="icon-"]:not(.icon-with-text-shortcode):before,
-.carousel-shortcode [class*=" icon-"]:not(.icon-with-text-shortcode):before {
-   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icomoon-arrows-carousel-32x32' !important;
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-

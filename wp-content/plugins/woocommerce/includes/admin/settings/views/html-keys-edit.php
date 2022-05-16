@@ -2,7 +2,7 @@
 /**
  * Admin view: Edit API keys
  *
- * @package WooCommerce/Admin/Settings
+ * @package WooCommerce\Admin\Settings
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
 					</label>
 				</th>
 				<td class="forminp">
-					<input id="key_description" type="text" class="input-text regular-input" value="<?php echo esc_attr( $key_data['description'] ); ?>" />
+					<input maxlength="200" id="key_description" type="text" class="input-text regular-input" value="<?php echo esc_attr( $key_data['description'] ); ?>" />
 				</td>
 			</tr>
 			<tr valign="top">

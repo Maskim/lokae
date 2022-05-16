@@ -14,11 +14,12 @@ if ( isset( $_GET['tab'] ) ) {
 ?>
 <nav class="nav-tab-wrapper">
 	<?php
-	$dev_tabs = array(
-		'tools'   => 'Tools',
-		'beta'    => 'Beta',
-		'install' => 'Installation',
-	);
+	$dev_tabs = [
+		'tools'          => 'Tools',
+		'install'        => 'Installation',
+		'activation-log' => 'Activation Log',
+		'import-log'     => 'Import Log',
+	];
 	foreach ( $dev_tabs as $tab_id => $tab_title ) {
 		printf(
 			'<a href="%1$s" class="nav-tab %2$s">%3$s</a>',
@@ -29,6 +30,6 @@ if ( isset( $_GET['tab'] ) ) {
 	}
 	?>
 </nav>
-<div id="the7-dashboard" class="wrap">
+<div class="wrap">
 	<?php get_template_part( 'inc/mods/dev-mode/views/tab', $dev_tab ); ?>
 </div>

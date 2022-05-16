@@ -1,5 +1,9 @@
 <?php
 
+use WPML\FP\Fns;
+use WPML\FP\Maybe;
+use WPML\FP\Obj;
+
 class WCML_Orders {
 
 	const DASHBOARD_COOKIE_NAME = '_wcml_dashboard_order_language';
@@ -53,32 +57,55 @@ class WCML_Orders {
 		}
 	}
 
+	/**
+	 * This method will try to convert the comments in the current language
+	 * if the user is identified (i.e. he has an ID).
+	 *
+	 * Note: I was not able to find the place where the strings are
+	 * registered and maybe this code is not used anymore. This should
+	 * be investigated in the future.
+	 *
+	 * @param \WP_Comment[] $comments
+	 *
+	 * @return \WP_Comment[]
+	 */
 	public function get_filtered_comments( $comments ) {
+		// $ifIdentifiedUser :: void -> bool
+		$ifIdentifiedUser = function () { return (bool) get_current_user_id(); };
 
-		$user_id = get_current_user_id();
+		// $translateInWoocommerce :: string -> string
+		$translateInWoocommerce = \WPML\FP\partialRight( 'translate', 'woocommerce' );
 
-		if ( $user_id ) {
-			$user_language = get_user_meta( $user_id, 'icl_admin_language', true );
+		// $translateComment :: WP_Comment -> WP_Comment
+		$translateComment = Obj::over( Obj::lensProp( 'comment_content' ), $translateInWoocommerce );
 
-			foreach ( $comments as $key => $comment ) {
-				$comment_string_id = icl_get_string_id( $comment->comment_content, 'woocommerce' );
-
-				if ( $comment_string_id ) {
-					$comment_strings = icl_get_string_translations_by_id( $comment_string_id );
-
-					if ( $comment_strings && isset( $comment_strings[ $user_language ] ) ) {
-						$comments[ $key ]->comment_content = $comment_strings[ $user_language ]['value'];
-					}
-				}
-			}
-		}
-
-		return $comments;
+		return Maybe::of( $comments )
+		            ->filter( $ifIdentifiedUser )
+		            ->map( Fns::map( $translateComment ) )
+		            ->getOrElse( $comments );
 	}
 
+	/**
+	 * @param WC_Order_Item[] $items
+	 * @param WC_Order $order
+	 *
+	 * @return WC_Order_Item[]
+	 */
 	public function woocommerce_order_get_items( $items, $order ) {
 
-		if ( $items && ( is_admin() || is_view_order_page() ) ) {
+		$translate_order_items = is_admin() || is_view_order_page() || is_order_received_page() || \WCML\Rest\Functions::isRestApiRequest();
+		/**
+		 * This filter hook allows to override if we need to translate order items.
+		 *
+		 * @since 4.11.0
+		 *
+		 * @param bool True if we should to translate order items.
+		 * @param $items WC_Order_Item[] Order items.
+		 * @param $order WC_Order WC Order.
+		 */
+		$translate_order_items = apply_filters( 'wcml_should_translate_order_items', $translate_order_items, $items, $order );
+
+		if ( $items && $translate_order_items ) {
 
 			$language_to_filter = $this->get_order_items_language_to_filter( $order );
 
@@ -99,10 +126,26 @@ class WCML_Orders {
 		}
 
 		foreach ( $items as $index => $item ) {
+
+			/**
+			 * This filter hook allows to override if we need to save adjusted order item.
+			 *
+			 * @since 4.11.0
+			 *
+			 * @param bool True if we should save adjusted order item.
+			 * @param $item WC_Order_Item
+			 * @param $language_to_filter string Language to filter.
+			 */
+			$save_adjusted_item = apply_filters( 'wcml_should_save_adjusted_order_item_in_language', true, $item, $language_to_filter );
+
 			if ( $item instanceof WC_Order_Item_Product ) {
 				if ( 'line_item' === $item->get_type() ) {
 					$this->adjust_product_item_if_translated( $item, $language_to_filter );
 					$this->adjust_variation_item_if_translated( $item, $language_to_filter );
+
+					if ( $save_adjusted_item ) {
+						$item->save();
+					}
 				}
 			} elseif ( $item instanceof WC_Order_Item_Shipping ) {
 				$shipping_id = $item->get_method_id();
@@ -119,9 +162,13 @@ class WCML_Orders {
 							$language_to_filter
 						)
 					);
+
+					if ( $save_adjusted_item ) {
+						$item->save();
+					}
 				}
 			}
-			$item->save();
+
 		}
 	}
 
@@ -171,17 +218,26 @@ class WCML_Orders {
 	 * @return string
 	 */
 	private function get_order_items_language_to_filter( $order ) {
-		if ( $this->is_on_order_edit_page() ) {
-			return $this->sitepress->get_user_admin_language( get_current_user_id(), true );
-		}
 
-		if ( $this->is_order_action_triggered_for_customer() ) {
+		if ( $this->is_on_order_edit_page() ) {
+			$language = $this->sitepress->get_user_admin_language( get_current_user_id(), true );
+		} elseif ( $this->is_order_action_triggered_for_customer() ) {
 			$order_language = get_post_meta( $order->get_id(), 'wpml_language', true );
 
-			return $order_language ? $order_language : $this->sitepress->get_default_language();
+			$language = $order_language ? $order_language : $this->sitepress->get_default_language();
+		} else {
+			$language = $this->sitepress->get_current_language();
 		}
 
-		return $this->sitepress->get_current_language();
+		/**
+		 * This filter hook allows to override item language to filter.
+		 *
+		 * @since 4.11.0
+		 *
+		 * @param $language string Order item language to filter.
+		 * @param $order WC_Order
+		 */
+		return apply_filters( 'wcml_get_order_items_language', $language, $order );
 	}
 
 	/**
@@ -400,7 +456,6 @@ class WCML_Orders {
 		if ( isset( $_POST['wcml_shop_order_language'] ) ) {
 			update_post_meta( $post_id, 'wpml_language', filter_input( INPUT_POST, 'wcml_shop_order_language', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 		}
-
 	}
 
 	public function filter_downloadable_product_items( $files, $item, $object ) {
@@ -419,7 +474,7 @@ class WCML_Orders {
 			}
 		}
 
-		remove_filter( 'woocommerce_get_item_downloads', [ $this, 'filter_downloadable_product_items' ], 10, 3 );
+		remove_filter( 'woocommerce_get_item_downloads', [ $this, 'filter_downloadable_product_items' ], 10 );
 
 		$files = $item->get_item_downloads();
 

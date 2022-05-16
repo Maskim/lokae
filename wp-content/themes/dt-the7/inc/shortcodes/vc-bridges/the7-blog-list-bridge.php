@@ -6,6 +6,7 @@ return array(
 	'weight' => -1,
 	'name' => __( 'Blog List', 'the7mk2' ),
 	'base' => 'dt_blog_list',
+	'description' => '',
 	'class' => 'dt_vc_sc_blog_list',
 	'icon' => 'dt_vc_ico_blog_posts',
 	'category' => __( 'by Dream-Theme', 'the7mk2' ),
@@ -816,7 +817,7 @@ return array(
 		array(
 			'group'            => __( 'Hover Icon', 'the7mk2' ),
 			'heading'          => __( 'Icon color', 'the7mk2' ),
-			'description'      => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description'      => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'param_name'       => 'project_icon_color',
 			'type'             => 'colorpicker',
 			'value'            => 'rgba(255,255,255,1)',
@@ -866,7 +867,7 @@ return array(
 				'element' => 'project_icon_bg',
 				'value'   => 'y',
 			),
-			'description'      => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description'      => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'edit_field_class' => 'the7-icons-dependent vc_col-xs-12',
 		),
 		array(
@@ -898,7 +899,7 @@ return array(
 		array(
 			'group'            => __( 'Hover Icon', 'the7mk2' ),
 			'heading'          => __( 'Border color', 'the7mk2' ),
-			'description'      => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description'      => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'param_name'       => 'project_icon_border_color',
 			'type'             => 'colorpicker',
 			'value'            => '',

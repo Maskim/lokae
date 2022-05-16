@@ -1,5 +1,5 @@
 /*!
- * Dialogs Manager v4.7.6
+ * Dialogs Manager v4.9.0
  * https://github.com/kobizz/dialogs-manager
  *
  * Copyright Kobi Zaltzberg
@@ -289,7 +289,17 @@
 			}
 
 			if (settings.closeButton) {
-				self.addElement('closeButton', '<div><i class="' + settings.closeButtonClass + '"></i></div>');
+				if ( settings.closeButtonClass ) {
+					//  Backwards compatibility
+					settings.closeButtonOptions.iconClass = settings.closeButtonClass;
+				}
+
+				const $button = $('<div>', settings.closeButtonOptions.attributes),
+					$buttonIcon = $(settings.closeButtonOptions.iconElement).addClass(settings.closeButtonOptions.iconClass);
+
+				$button.append($buttonIcon);
+
+				self.addElement('closeButton', $button);
 			}
 
 			var id = self.getSettings('id');
@@ -329,7 +339,11 @@
 				preventScroll: false,
 				iframe: null,
 				closeButton: false,
-				closeButtonClass: parentSettings.classPrefix + '-close-button-icon',
+				closeButtonOptions: {
+					iconClass: parentSettings.classPrefix + '-close-button-icon',
+					attributes: {},
+					iconElement: '<i>',
+				},
 				position: {
 					element: 'widget',
 					my: 'center',
@@ -772,7 +786,7 @@
 
 			classes += settings.classes.globalPrefix + '-button';
 
-			var $button = self.addElement(options.name, $('<' + buttonSettings.tag + '>').text(options.text), classes);
+			var $button = self.addElement(options.name, $('<' + buttonSettings.tag + '>').html(options.text), classes);
 
 			self.buttons.push($button);
 
@@ -987,5 +1001,5 @@
 	global.DialogsManager = DialogsManager;
 })(
 	typeof jQuery !== 'undefined' ? jQuery : typeof require === 'function' && require('jquery'),
-	typeof module !== 'undefined' ? module.exports : window
+	(typeof module !== 'undefined' && typeof module.exports !== 'undefined') ? module.exports : window
 );

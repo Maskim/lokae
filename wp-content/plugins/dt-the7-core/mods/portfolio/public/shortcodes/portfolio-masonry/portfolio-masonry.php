@@ -318,7 +318,7 @@ if ( ! class_exists( 'DT_Shortcode_PortfolioMasonry', false ) ):
 						// Custom lazy loading classes.
 						$thumb_args['lazy_loading'] = true;
 						$thumb_args['img_class'] = 'lazy-load';
-						$thumb_args['class'] .= ' layzr-bg';
+						//$thumb_args['class'] .= ' layzr-bg';
 					}
 
 					$post_media = dt_get_thumb_img( $thumb_args );

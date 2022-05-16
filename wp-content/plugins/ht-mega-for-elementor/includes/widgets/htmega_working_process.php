@@ -1,6 +1,10 @@
 <?php
 namespace Elementor;
 
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class HTMega_Elementor_Widget_Working_Process extends Widget_Base {
@@ -155,7 +159,7 @@ class HTMega_Elementor_Widget_Working_Process extends Widget_Base {
                 'htmega_process_list',
                 [
                     'type'    => Controls_Manager::REPEATER,
-                    'fields'  => array_values( $repeater->get_controls() ),
+                    'fields'  => $repeater->get_controls(),
                     'default' => [
                         [
                             'process_title' => esc_html__( 'Process #1', 'htmega-addons' ),
@@ -323,10 +327,6 @@ class HTMega_Elementor_Widget_Working_Process extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#555555',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-process-area .htmega-content h4' => 'color: {{VALUE}}',
@@ -407,10 +407,6 @@ class HTMega_Elementor_Widget_Working_Process extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#494849',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-process-area .htmega-content p' => 'color: {{VALUE}}',
@@ -520,10 +516,6 @@ class HTMega_Elementor_Widget_Working_Process extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#5a5a5a',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-process-area .htmega-number span' => 'color: {{VALUE}}',
@@ -604,10 +596,6 @@ class HTMega_Elementor_Widget_Working_Process extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#555555',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-process-area .htmega-single-process .icon' => 'color: {{VALUE}}',

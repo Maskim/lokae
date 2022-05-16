@@ -1,6 +1,7 @@
 <?php
-
 namespace HTMega_Builder\Elementor\Widget;
+
+// Elementor Classes
 use Elementor\Plugin as Elementor;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
@@ -8,8 +9,8 @@ use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
-use Elementor\Scheme_Typography;
-use Elementor\Scheme_Color;
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -225,10 +226,6 @@ class Bl_Post_Author_Info_ELement extends Widget_Base {
                 [
                     'label' => __( 'Color', 'ht-builder' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_2,
-                    ],
                     'selectors' => [
                         '{{WRAPPER}} .htauthor-info .htauthor-name' => 'color: {{VALUE}}',
                     ],
@@ -270,10 +267,6 @@ class Bl_Post_Author_Info_ELement extends Widget_Base {
                 [
                     'label' => __( 'Color', 'ht-builder' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_2,
-                    ],
                     'selectors' => [
                         '{{WRAPPER}} .htauthor-info .htbuilder-bio' => 'color: {{VALUE}}',
                     ],
@@ -335,6 +328,8 @@ class Bl_Post_Author_Info_ELement extends Widget_Base {
             $author_link = $author_link;
         }
 
+        $name_tag = htmega_validate_html_tag( $settings['name_html_tag'] );
+
         ?>
             <div class="htbuilder-author-box htavaterpos-<?php echo $settings['avater_image_position']; ?>">
                 <?php if ( $settings['show_avater_image'] == 'yes' ): ?>
@@ -352,9 +347,9 @@ class Bl_Post_Author_Info_ELement extends Widget_Base {
                     <?php
                         if( $settings['show_name'] == 'yes' ){
                             if( !empty( $author_link ) ){
-                                echo sprintf( '<a href="%1$s" target="_blank"><%2$s class="htauthor-name">%3$s</%2$s></a>', $author_link, $settings['name_html_tag'], $author_info['display_name'] );
+                                echo sprintf( '<a href="%1$s" target="_blank"><%2$s class="htauthor-name">%3$s</%2$s></a>', $author_link, $name_tag, $author_info['display_name'] );
                             }else{
-                                echo sprintf( '<%1$s class="htauthor-name">%2$s</%1$s>', $settings['name_html_tag'], $author_info['display_name'] );
+                                echo sprintf( '<%1$s class="htauthor-name">%2$s</%1$s>', $name_tag, $author_info['display_name'] );
                             }
                         }
                         if( $settings['show_biography'] == 'yes' ){

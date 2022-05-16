@@ -62,6 +62,22 @@ $options['header-menu-submenu-parent_is_clickable'] = array(
 	'type' => 'checkbox',
 	'std'  => 1,
 );
+$options['header-menu-submenu-display'] = array(
+	'id'      => 'header-menu-submenu-display',
+	'name'    => _x( 'Show submenu on', 'theme-options', 'the7mk2' ),
+	'type'    => 'radio',
+	'class'   => 'small',
+	'std'     => 'hover',
+	'options' => array(
+		'hover'   => _x( 'Hover', 'theme-options', 'the7mk2' ),
+		'click'    => _x( 'Click', 'theme-options', 'the7mk2' ),
+	),
+	'dependency' => array(
+		'field'    => 'header-menu-submenu-parent_is_clickable',
+		'operator' => '!=',
+		'value'    => '1',
+	),
+);
 
 $options[] = array( 'type' => 'divider' );
 

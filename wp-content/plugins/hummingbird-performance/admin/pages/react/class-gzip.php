@@ -59,7 +59,7 @@ class Gzip extends Page {
 		wp_enqueue_script(
 			'wphb-react-gzip',
 			WPHB_DIR_URL . 'admin/assets/js/wphb-react-gzip.min.js',
-			array( 'wp-i18n' ),
+			array( 'wp-i18n', 'lodash' ),
 			WPHB_VERSION,
 			true
 		);
@@ -82,6 +82,8 @@ class Gzip extends Page {
 					'HBFetchNonce' => wp_create_nonce( 'wphb-fetch' ),
 				),
 				'module'   => array(
+					'is_wpmu_hosting'   => isset( $_SERVER['WPMUDEV_HOSTED'] ),
+					'is_white_labeled'  => apply_filters( 'wpmudev_branding_hide_branding', false ),
 					'htaccess_error'    => isset( $_GET['htaccess-error'] ), // Input data ok.
 					'htaccess_writable' => Module_Server::is_htaccess_writable(),
 					'htaccess_written'  => Module_Server::is_htaccess_written( 'gzip' ),
@@ -94,6 +96,12 @@ class Gzip extends Page {
 					),
 				),
 			)
+		);
+
+		wp_add_inline_script(
+			'wphb-react-gzip',
+			'wp.i18n.setLocaleData( ' . wp_json_encode( Utils::get_locale_data() ) . ', "wphb" );',
+			'before'
 		);
 	}
 

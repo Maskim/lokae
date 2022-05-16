@@ -179,26 +179,6 @@ add_action( 'enqueue_block_editor_assets', 'presscore_editor_frame_styles' );
  */
 add_action( 'after_switch_theme', 'flush_rewrite_rules' );
 
-if ( ! function_exists( 'presscore_turn_off_custom_fields_meta' ) ) :
-
-	/**
-	 * Removes support of custom-fields for pages and posts.
-	 *
-	 * @since 3.0.0
-	 */
-	function presscore_turn_off_custom_fields_meta() {
-
-		/**
-		 * Custom fields significantly increases db load because of theme heavily uses meta fields. It's a simplest way to reduce db load.
-		 */
-		remove_post_type_support( 'post', 'custom-fields' );
-		remove_post_type_support( 'page', 'custom-fields' );
-	}
-
-	add_action( 'init', 'presscore_turn_off_custom_fields_meta' );
-
-endif;
-
 if ( ! function_exists( 'presscore_enable_theme_modules' ) ) :
 
 	/**

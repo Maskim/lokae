@@ -18,11 +18,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 </p>
 
 <?php if ( $is_active ) : ?>
-	<div class="sui-notice sui-notice-success">
-		<p><?php esc_html_e( 'Page caching is currently active.', 'wphb' ); ?></p>
-	</div>
+	<?php $this->admin_notices->show_inline( esc_html__( 'Page caching is currently active.', 'wphb' ) ); ?>
 <?php else : ?>
-	<a href="<?php echo esc_url( $activate_url ); ?>" class="sui-button sui-button-blue" id="activate-page-caching">
+	<a href="<?php echo esc_url( $activate_url ); ?>" class="sui-button sui-button-blue" id="activate-page-caching" onclick="wphbMixPanel.enableFeature( 'Page Caching' )">
 		<?php esc_html_e( 'Activate', 'wphb' ); ?>
 	</a>
 <?php endif; ?>

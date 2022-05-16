@@ -64,6 +64,7 @@ class Core {
 	private function init() {
 		// Register private policy text.
 		add_action( 'admin_init', array( $this, 'privacy_policy_content' ) );
+		add_action( 'admin_init', array( $this, 'upsell_notice' ) );
 
 		// Init the API.
 		$this->api = new Api\API();
@@ -83,8 +84,9 @@ class Core {
 		new Integration\Gutenberg();
 		new Integration\WPH();
 		new Integration\SiteGround();
-		new Integration\Opcache();
+		Integration\Opcache::get_instance();
 		new Integration\Wpengine();
+		new Integration\WPMUDev();
 	}
 
 	/**
@@ -96,7 +98,7 @@ class Core {
 		 */
 		$modules = apply_filters(
 			'wp_hummingbird_modules',
-			array( 'minify', 'gzip', 'caching', 'performance', 'uptime', 'cloudflare', 'gravatar', 'page_cache', 'advanced', 'rss' )
+			array( 'minify', 'gzip', 'caching', 'performance', 'uptime', 'cloudflare', 'gravatar', 'page_cache', 'advanced', 'rss', 'redis' )
 		);
 
 		array_walk( $modules, array( $this, 'load_module' ) );
@@ -155,22 +157,50 @@ class Core {
 	}
 
 	/**
-	 * Add a HB menu to the admin bar
+	 * Add HB menu to the admin bar
 	 *
 	 * @param WP_Admin_Bar $admin_bar  Admin bar.
 	 */
 	public function admin_bar_menu( $admin_bar ) {
 		$menu = array();
 
-		$pc_module = Utils::get_module( 'page_cache' );
-		$options   = $pc_module->get_options();
-		if ( $pc_module->is_active() && $options['control'] ) {
-			$menu['wphb-clear-cache'] = array( 'title' => __( 'Clear page cache', 'wphb' ) );
+		$cache_control = Settings::get_setting( 'control', 'settings' );
+		if ( $cache_control && ( ! is_multisite() || ! is_network_admin() ) ) {
+			if ( true === $cache_control ) {
+				$menu['wphb-clear-all-cache'] = array( 'title' => __( 'Clear all cache', 'wphb' ) );
+			} else {
+				$active_cache_modules = Utils::get_active_cache_modules();
+				foreach ( $active_cache_modules as $module => $name ) {
+					if ( ! in_array( $module, $cache_control, true ) ) {
+						continue;
+					}
+
+					if ( 'cloudflare' === $module ) {
+						if ( Utils::get_module( 'cloudflare' )->is_connected() && Utils::get_module( 'cloudflare' )->is_zone_selected() ) {
+							$menu['wphb-clear-cloudflare'] = array( 'title' => __( 'Clear Cloudflare cache', 'wphb' ) );
+						}
+
+						continue;
+					}
+
+					$menu[ 'wphb-clear-cache-' . $module ] = array(
+						'title' => __( 'Clear', 'wphb' ) . ' ' . strtolower( $name ),
+						'meta'  => array(
+							'onclick' => "WPHBGlobal.clearCache(\"$module\");",
+						),
+					);
+				}
+			}
+		}
+
+		if ( is_multisite() && is_network_admin() ) {
+			$menu['wphb-clear-cache-network-wide'] = array( 'title' => __( 'Clear page cache on all subsites', 'wphb' ) );
 		}
 
 		if ( ! is_admin() ) {
-			$avoid_minify = filter_input( INPUT_GET, 'avoid-minify', FILTER_VALIDATE_BOOLEAN );
 			if ( Utils::get_module( 'minify' )->is_active() ) {
+				$avoid_minify = filter_input( INPUT_GET, 'avoid-minify', FILTER_VALIDATE_BOOLEAN );
+
 				$menu['wphb-page-minify'] = array(
 					'title' => $avoid_minify ? __( 'See this page minified', 'wphb' ) : __( 'See this page unminified', 'wphb' ),
 					'href'  => $avoid_minify ? remove_query_arg( 'avoid-minify' ) : add_query_arg( 'avoid-minify', 'true' ),
@@ -202,6 +232,7 @@ class Core {
 					'parent' => $menu_args['id'],
 					'title'  => $tab['title'],
 					'href'   => isset( $tab['href'] ) ? $tab['href'] : '#',
+					'meta'   => isset( $tab['meta'] ) ? $tab['meta'] : '',
 				)
 			);
 		}
@@ -226,6 +257,7 @@ class Core {
 			'wphbGlobal',
 			array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'wphb-fetch' ),
 			)
 		);
 	}
@@ -238,7 +270,7 @@ class Core {
 	 * @param string $tag     HTML element tag.
 	 * @param string $handle  Script handle.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function add_defer_attribute( $tag, $handle ) {
 		if ( 'wphb-global' !== $handle ) {
@@ -269,6 +301,52 @@ class Core {
 		wp_add_privacy_policy_content(
 			__( 'Hummingbird', 'wphb' ),
 			wp_kses_post( wpautop( $content, false ) )
+		);
+	}
+
+	/**
+	 * Show upsell notice for the newsletter.
+	 *
+	 * @since 2.5.0
+	 */
+	public function upsell_notice() {
+		if ( ! defined( 'WPHB_WPORG' ) || ! WPHB_WPORG ) {
+			return;
+		}
+
+		if ( ! file_exists( WPHB_DIR_PATH . 'core/externals/free-dashboard/module.php' ) ) {
+			return;
+		}
+
+		/* @noinspection PhpIncludeInspection */
+		require_once WPHB_DIR_PATH . 'core/externals/free-dashboard/module.php';
+
+		// Add the Mailchimp group value.
+		add_action(
+			'frash_subscribe_form_fields',
+			function ( $mc_list_id ) {
+				if ( '4b14b58816' === $mc_list_id ) {
+					echo '<input type="hidden" id="mce-group[53]-53-1" name="group[53][4]" value="4" />';
+				}
+			}
+		);
+
+		// Register the current plugin.
+		do_action(
+			'wdev_register_plugin',
+			/* 1             Plugin ID */ WPHB_BASENAME,
+			/* 2          Plugin Title */ 'Hummingbird',
+			/* 3 https://wordpress.org */ '/plugins/hummingbird-performance/',
+			/* 4      Email Button CTA */ __( 'Get Fast!', 'wphb' ),
+			/* 5  Mailchimp List id for the plugin - e.g. 4b14b58816 is list id for Smush */ '4b14b58816'
+		);
+
+		// The email message contains 1 variable: plugin-name.
+		add_filter(
+			'wdev_email_message_' . WPHB_BASENAME,
+			function () {
+				return "You're awesome for installing %s! Make sure you get the most out of it, boost your Google PageSpeed score with these tips and tricks - just for users of Hummingbird!";
+			}
 		);
 	}
 

@@ -25,10 +25,10 @@ class The7_Icon_Manager {
 	 */
 	public static function add_hooks() {
 		add_action( 'admin_menu', array( __CLASS__, 'add_admin_menu' ) );
-		add_action( 'wp_ajax_the7_icons_manager_add_zipped_font', array( __CLASS__, 'add_zipped_font' ) );
-		add_action( 'wp_ajax_the7_icons_manager_remove_zipped_font', array( __CLASS__, 'remove_zipped_font' ) );
-		add_action( 'wp_ajax_the7_icons_manager_add_font_awesome', array( __CLASS__, 'add_font_awesome' ) );
-		add_action( 'wp_ajax_the7_icons_manager_add_ua_default_icons', array( __CLASS__, 'add_ua_default_icons' ) );
+		add_action( 'wp_ajax_the7_icons_manager_add_zipped_font', array( __CLASS__, 'ajax_add_zipped_font' ) );
+		add_action( 'wp_ajax_the7_icons_manager_remove_zipped_font', array( __CLASS__, 'ajax_remove_zipped_font' ) );
+		add_action( 'wp_ajax_the7_icons_manager_add_font_awesome', array( __CLASS__, 'ajax_add_font_awesome' ) );
+		add_action( 'wp_ajax_the7_icons_manager_add_ua_default_icons', array( __CLASS__, 'ajax_add_ua_default_icons' ) );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_icon_fonts' ) );
 	}
 
@@ -245,7 +245,7 @@ class The7_Icon_Manager {
 	/**
 	 * Ajax action to add icons.
 	 */
-	public static function add_zipped_font() {
+	public static function ajax_add_zipped_font() {
 		global $wp_filesystem;
 
 		try {
@@ -296,7 +296,7 @@ class The7_Icon_Manager {
 	/**
 	 * Ajax action to remove icons.
 	 */
-	public static function remove_zipped_font() {
+	public static function ajax_remove_zipped_font() {
 		global $wp_filesystem;
 
 		try {
@@ -349,7 +349,7 @@ class The7_Icon_Manager {
 	 *
 	 * @throws Exception
 	 */
-	public static function add_font_awesome() {
+	public static function ajax_add_font_awesome() {
 		try {
 			check_ajax_referer( 'the7-add-font-awesome-nonce', 'security' );
 
@@ -373,9 +373,30 @@ class The7_Icon_Manager {
 	}
 
 	/**
-	 * Add UA default icons.
+	 * @return bool
 	 */
-	public function add_ua_default_icons() {
+	public static function add_ua_default_icons() {
+		if ( class_exists( 'AIO_Icon_Manager' ) ) {
+			$ua_icons_manager = new AIO_Icon_Manager();
+		} elseif ( class_exists( 'Ultimate_VC_Addons_Icon_Manager' ) ) {
+			$ua_icons_manager = new Ultimate_VC_Addons_Icon_Manager();
+		} else {
+			return false;
+		}
+
+		if ( ! method_exists( $ua_icons_manager, 'AIO_move_fonts' ) ) {
+			return false;
+		}
+
+		$ua_icons_manager->AIO_move_fonts();
+
+		return true;
+	}
+
+	/**
+	 * Add UA default icons via AJAX.
+	 */
+	public static function ajax_add_ua_default_icons() {
 		try {
 			check_ajax_referer( 'the7-add-ua-default-icons-nonce', 'security' );
 
@@ -389,12 +410,11 @@ class The7_Icon_Manager {
 				);
 			}
 
-			if ( class_exists( 'AIO_Icon_Manager' ) ) {
-				$ua_icons_manager = new AIO_Icon_Manager();
-				$ua_icons_manager->AIO_move_fonts();
-				die( 'the7_icon_font_added: Defaults' );
+			if ( ! static::add_ua_default_icons() ) {
+				die( _x( 'Seems that Ultimate VC Addons plugin is inactive. Please, activate it and try again.', 'admin', 'the7mk2' ) );
 			}
-			die( _x( 'Seems that Ultimate VC Addons plugin is inactive. Please, activate it and try again.', 'admin', 'the7mk2' ) );
+
+			die( 'the7_icon_font_added: Defaults' );
 		} catch ( Exception $e ) {
 			echo $e->getMessage();
 			die();

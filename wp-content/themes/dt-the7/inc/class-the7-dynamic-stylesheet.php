@@ -86,7 +86,9 @@ class The7_Dynamic_Stylesheet {
 	}
 
 	public static function get_theme_css_dir() {
-		return trailingslashit( get_template_directory() ) . self::THEME_CSS_DIR;
+		$css_dir = self::THEME_CSS_DIR;
+
+		return trailingslashit( get_template_directory() ) . $css_dir;
 	}
 
 	/**

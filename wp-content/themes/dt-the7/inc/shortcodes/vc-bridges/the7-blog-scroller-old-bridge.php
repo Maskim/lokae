@@ -6,6 +6,7 @@ return array(
 	"weight" => -1,
 	"name" => __("Blog Scroller (old)", 'the7mk2'),
 	"base" => "dt_blog_scroller",
+	'description' => '',
 	"icon" => "dt_vc_ico_blog_posts",
 	"class" => "dt_vc_sc_blog_posts",
 	"category" => __('The7 Old', 'the7mk2'),

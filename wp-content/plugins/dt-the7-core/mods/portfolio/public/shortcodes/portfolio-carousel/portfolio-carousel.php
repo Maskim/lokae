@@ -638,7 +638,7 @@ if ( ! class_exists( 'DT_Shortcode_Portfolio_Carousel', false ) ) :
 					) );
 			}
 			$less_vars->add_keyword( 'portfolio-img-shadow', $shadow_style );
-			$less_vars->add_pixel_number( 'shadow-v-length',abs($this->get_att('shadow_v_length' )));
+			$less_vars->add_pixel_number( 'shadow-v-length',abs( (int) $this->get_att('shadow_v_length' )));
 			$less_vars->add_pixel_number( 'item-gap',$this->get_att('item_space' ));
 
 			//Post tab

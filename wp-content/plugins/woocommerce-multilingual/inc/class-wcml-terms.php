@@ -29,7 +29,7 @@ class WCML_Terms {
 
 	public function add_hooks() {
 
-		add_action( 'updated_woocommerce_term_meta', [ $this, 'sync_term_order' ], 100, 4 );
+		add_action( 'update_term_meta', [ $this, 'sync_term_order' ], 100, 4 );
 
 		add_filter( 'wp_get_object_terms', [ $this->sitepress, 'get_terms_filter' ] );
 		add_action( 'created_term', [ $this, 'translated_terms_status_update' ], 10, 3 );
@@ -81,7 +81,7 @@ class WCML_Terms {
 		}
 
 		$page = isset( $_GET['page'] ) ? $_GET['page'] : '';
-		if ( $page === ICL_PLUGIN_FOLDER . '/menu/taxonomy-translation.php' ) {
+		if ( $page === WPML_PLUGIN_FOLDER . '/menu/taxonomy-translation.php' ) {
 			WCML_Resources::load_management_css();
 			WCML_Resources::load_taxonomy_translation_scripts();
 		}
@@ -172,10 +172,12 @@ class WCML_Terms {
 
 	public function sync_term_order( $meta_id, $object_id, $meta_key, $meta_value ) {
 
+		remove_action( 'update_term_meta', [ $this, 'sync_term_order' ], 100 );
+
 		// WooCommerce before termmeta table migration.
 		$wc_before_term_meta = get_option( 'db_version' ) < 34370;
 
-		if ( ! isset( $_POST['thetaxonomy'] ) || ! taxonomy_exists( $_POST['thetaxonomy'] ) || substr( $meta_key, 0, 5 ) !== 'order' ) {
+		if ( ! isset( $_POST['thetaxonomy'] ) || ! taxonomy_exists( $_POST['thetaxonomy'] ) || ! $this->is_wc_taxonomy( $_POST['thetaxonomy'] ) || substr( $meta_key, 0, 5 ) !== 'order' ) {
 			return;
 		}
 
@@ -205,6 +207,8 @@ class WCML_Terms {
 				}
 			}
 		}
+
+		add_action( 'update_term_meta', [ $this, 'sync_term_order' ], 100, 4 );
 
 	}
 
@@ -448,10 +452,11 @@ class WCML_Terms {
 			)
 		);
 
+		$variations_processed = 0;
+		$posts_processed      = 0;
+
 		if ( $post_ids ) {
 
-			$variations_processed = 0;
-			$posts_processed      = 0;
 			foreach ( $post_ids as $post_id ) {
 				$terms       = wp_get_post_terms( $post_id, $taxonomy );
 				$terms_count = count( $terms );
@@ -763,7 +768,7 @@ class WCML_Terms {
 
 			if ( $on_wc_settings_page && $on_shipping_tab && ! $on_classes_section ) {
 				remove_filter( 'get_terms', [ $this, 'filter_shipping_classes_terms' ] );
-				remove_filter( 'get_terms', [ 'WPML_Terms_Translations', 'get_terms_filter' ], 10, 2 );
+				remove_filter( 'get_terms', [ 'WPML_Terms_Translations', 'get_terms_filter' ], 10 );
 				$this->sitepress->switch_lang( $this->sitepress->get_default_language() );
 				$terms = get_terms( $args );
 				add_filter( 'get_terms', [ 'WPML_Terms_Translations', 'get_terms_filter' ], 10, 2 );
@@ -787,6 +792,14 @@ class WCML_Terms {
 
 	}
 
+	/**
+	 * @param array  $terms
+	 * @param int    $product_id
+	 * @param string $taxonomy
+	 * @param array  $args
+	 *
+	 * @return array
+	 */
 	public function get_product_terms_filter( $terms, $product_id, $taxonomy, $args ) {
 
 		$language = $this->sitepress->get_language_for_element( $product_id, 'post_' . get_post_type( $product_id ) );
@@ -800,7 +813,7 @@ class WCML_Terms {
 			if ( ! $is_objects_array ) {
 				$term_obj = get_term_by( 'name', $term, $taxonomy );
 
-				$is_wc_filtering_by_slug = isset( $args['fields'] ) && 'id=>slug' === $args['fields'];
+				$is_wc_filtering_by_slug = isset( $args['fields'] ) && in_array( $args['fields'], [ 'id=>slug', 'slugs' ] );
 				if ( $is_wc_filtering_by_slug || ! $term_obj ) {
 					$term_obj = get_term_by( 'slug', $term, $taxonomy );
 					$is_slug  = true;
@@ -924,7 +937,7 @@ class WCML_Terms {
 		foreach ( $translations as $translation ) {
 
 			$count = $this->wpdb->get_var( $this->wpdb->prepare( "SELECT count( object_id ) FROM {$this->wpdb->term_relationships} WHERE term_taxonomy_id = %d ", $translation->element_id ) );
-			if ( $original_count != $count ) {
+			if ( isset( $original_count ) && $original_count != $count ) {
 
 				if ( in_array( $taxonomy, [ 'product_cat', 'product_tag', self::PRODUCT_SHIPPING_CLASS ] ) ) {
 					$wcml_settings[ 'sync_'.$taxonomy ] = 1;
@@ -932,7 +945,7 @@ class WCML_Terms {
                     return true;
                 }
 
-				if ( isset( $attribute_taxonomies_arr ) && in_array( $taxonomy, $attribute_taxonomies_arr ) ) {
+				if ( in_array( $taxonomy, $attribute_taxonomies_arr ) ) {
 					$wcml_settings['sync_variations'] = 1;
 					$this->woocommerce_wpml->update_settings( $wcml_settings );
 					return true;
@@ -1051,6 +1064,10 @@ class WCML_Terms {
 		return true;
 	}
 
+	private function is_wc_taxonomy( $taxonomy ) {
+		return 'product_cat' === $taxonomy || substr( $taxonomy, 0, 3 ) === 'pa_';
+	}
+
 	public function pre_option_default_product_cat() {
 
 		$lang = $this->sitepress->get_current_language();
@@ -1089,7 +1106,7 @@ class WCML_Terms {
 	public function update_category_count_meta( $meta_id, $object_id, $meta_key, $meta_value ) {
 
 		if ( 'product_count_product_cat' === $meta_key ) {
-			remove_action( 'update_term_meta', [ $this, 'update_category_count_meta' ], 10, 4 );
+			remove_action( 'update_term_meta', [ $this, 'update_category_count_meta' ], 10 );
 
 			$trid         = $this->sitepress->get_element_trid( $object_id, 'tax_product_cat' );
 			$translations = $this->sitepress->get_element_translations( $trid, 'tax_product_cat' );

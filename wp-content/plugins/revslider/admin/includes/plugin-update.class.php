@@ -73,57 +73,19 @@ class RevSliderPluginUpdate extends RevSliderFunctions {
 				$this->update['620']['ease_adv_to'][]	= $a_t.'.'.$a_m_t;
 			}
 		}
-	
+	}
+
+	public function init_animations(){
+		if(empty($this->upd_animations)){
+			$this->upd_animations = $this->get_layer_animations();
+		}
+	}
+
+	public function init_googlefonts(){
 		if(empty($this->googlefonts)){
 			//direct inclusion for direct searching of google font
 			include(RS_PLUGIN_PATH.'includes/googlefonts.php');
 			$this->googlefonts = $googlefonts;
-		}
-		if(empty($this->upd_animations)){
-			$this->upd_animations = $this->get_layer_animations();
-			/**
-			 * this will push defaults into the missing values
-			 * was tested for the layer frame update, and seems not to be needed
-			$da = array(
-				'x'			=> 0,
-				'y'			=> 0,
-				'z'			=> 0,
-				'scaleX'	=> 1,
-				'scaleY'	=> 1,
-				'rotationX' => 0,
-				'rotationY' => 0,
-				'rotationZ' => 0,
-				'skewX' 	=> 0,
-				'skewY' 	=> 0
-			);
-			$fr = array('frame_0', 'frame_1', 'frame_999');
-			$ft = array('transform', 'chars', 'words', 'lines');
-			
-			if(!empty($this->upd_animations)){
-				foreach($this->upd_animations['in'] as $k => $v){
-					if(!empty($v)){
-						foreach($v as $vk => $vv){
-							if(isset($vv['transitions'])){
-								foreach($vv['transitions'] as $tk => $tv){
-									foreach($fr as $fv){
-										if(!isset($tv[$fv])) continue;
-										foreach($ft as $ftv){
-											if(!isset($tv[$fv][$ftv])) continue;
-											
-											foreach($da as $dak => $dav){
-												if(isset($tv[$fv][$ftv][$dak])) continue;
-												
-												$this->upd_animations['in'][$k][$vk]['transitions'][$tk][$tv][$fv][$ftv][$dak] = $dav;
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			*/
 		}
 	}
 
@@ -227,6 +189,17 @@ class RevSliderPluginUpdate extends RevSliderFunctions {
 			$upd->change_global_settings_to_6_2_0();
 			$upd->set_version($version);
 		}
+		
+		//add this so that sliders will be updated if under 6.4.0
+		if(version_compare($version, '6.4.0', '<')){
+			$upd->set_version('6.4.0');
+		}
+
+		//add this so that sliders will be updated if under 6.4.10
+		if(version_compare($version, '6.4.10', '<')){
+			$upd->change_navigation_settings_to_6_4_10();
+			$upd->set_version('6.4.10');
+		}
 	}
 	
 	/**
@@ -235,7 +208,8 @@ class RevSliderPluginUpdate extends RevSliderFunctions {
 	 **/
 	public static function upgrade_slider_to_latest($slider){
 		$upd = new RevSliderPluginUpdate();
-		if(version_compare($slider->get_setting('version', '1.0.0'), '6.0.0', '<')){
+		$version = $slider->get_setting('version', '1.0.0');
+		if(version_compare($version, '6.0.0', '<')){
 			//$upd->update_css_styles(); //set to version 5
 			$upd->add_animation_settings_to_layer($slider); //set to version 5
 			$upd->add_style_settings_to_layer($slider); //set to version 5
@@ -247,17 +221,26 @@ class RevSliderPluginUpdate extends RevSliderFunctions {
 			$upd->upgrade_slider_to_6_0($slider);
 		}
 		
-		if(version_compare($slider->get_setting('version', '1.0.0'), '6.1.4', '<')){
+		if(version_compare($version, '6.1.4', '<')){
 			$upd->upgrade_slider_to_6_1_4($slider);
 		}
 		
-		if(version_compare($slider->get_setting('version', '1.0.0'), '6.1.6', '<')){
+		if(version_compare($version, '6.1.6', '<')){
 			$upd->upgrade_slider_to_6_1_6($slider);
 		}
 		
-		if(version_compare($slider->get_setting('version', '1.0.0'), '6.2.0', '<')){
+		if(version_compare($version, '6.2.0', '<')){
 			$upd->change_animations_settings_to_6_2_0(); //check if new navigations are added through import
 			$upd->upgrade_slider_to_6_2_0($slider);
+		}
+		
+		if(version_compare($version, '6.4.0', '<')){
+			$upd->upgrade_slider_to_6_4_0($slider);
+		}
+		
+		if(version_compare($version, '6.4.10', '<')){
+			$upd->change_navigation_settings_to_6_4_10();
+			$upd->upgrade_slider_to_6_4_10($slider);
 		}
 	}
 	
@@ -267,7 +250,7 @@ class RevSliderPluginUpdate extends RevSliderFunctions {
 	 **/
 	public function get_css_navigations(){
 		if(empty($this->css_navigations)){
-			$css_parser = new RevSliderCssParser();
+			$css_parser = RevSliderGlobals::instance()->get('RevSliderCssParser');
 			$this->css_navigations = $css_parser->get_database_classes(true);
 		}
 		return $this->css_navigations;
@@ -279,7 +262,7 @@ class RevSliderPluginUpdate extends RevSliderFunctions {
 	 **/
 	public function slider_need_update_checks(){
 		$finished = get_option('revslider_update_revision_current', '1.0.0');
-
+		
 		return (version_compare($finished, $this->revision, '<')) ? true : false;
 	}
 
@@ -517,6 +500,142 @@ class RevSliderPluginUpdate extends RevSliderFunctions {
 	}
 	
 	
+	/** check to convert the given Slider to latest versions
+	 * @since: 6.4.0
+	 * check in all layers, if we have an gradient in idle and if we need to push it to the hover animation
+	 **/
+	public function upgrade_slider_to_6_4_0($sliders = false){
+		$sr = new RevSliderSlider();
+		$sl = new RevSliderSlide();
+		
+		$sliders = ($sliders === false) ? $sr->get_sliders() : array($sliders); //do it on all Sliders if false
+		
+		if(!empty($sliders) && is_array($sliders)){
+			foreach($sliders as $slider){
+				if(version_compare($slider->get_setting('version', '1.0.0'), '6.4.0', '<')){
+					$params = $slider->get_params();
+					$params['version'] = '6.4.0';
+					
+					if($this->get_val($params, array('layout', 'bg'), false) !== false){
+						$do = strtolower($this->get_val($params, array('layout', 'bg', 'dottedOverlay'), ''));
+						if(strpos($do, 'white') !== false)		 $this->set_val($params, array('layout', 'bg', 'dottedColorB'), '#FFFFFF');
+						if(strpos($do, 'twoxtwo') !== false)	 $this->set_val($params, array('layout', 'bg', 'dottedOverlay'), '1');
+						if(strpos($do, 'threexthree') !== false) $this->set_val($params, array('layout', 'bg', 'dottedOverlay'), '2');
+					}
+					
+					$slider->update_params($params, true);
+				}
+				
+				$slides = $slider->get_slides(false, true);
+				$static_id = $sl->get_static_slide_id($slider->get_id());
+				if($static_id !== false){
+					$msl = new RevSliderSlide();
+					if(strpos($static_id, 'static_') === false){
+						$static_id = 'static_'. $static_id;
+					}
+					$msl->init_by_id($static_id);
+					if($msl->get_id() !== ''){
+						$slides = array_merge($slides, array($msl));
+					}
+				}
+				
+				if(!empty($slides) && is_array($slides)){
+					foreach($slides as $slide){
+						$settings = $slide->get_settings();
+						//on slides
+						if(version_compare($this->get_val($settings, 'version', '1.0.0'), '6.4.0', '<')){
+							$params			= $slide->get_params();
+							$params['version'] = '6.4.0';
+							
+							$do	= $this->get_val($params, array('bg', 'video', 'dottedOverlay'), 'none');
+							if(strpos($do, 'white') !== false)		 $this->set_val($params, array('bg', 'video', 'dottedColorB'), '#FFFFFF');
+							if(strpos($do, 'twoxtwo') !== false)	 $this->set_val($params, array('bg', 'video', 'dottedOverlay'), '1');
+							if(strpos($do, 'threexthree') !== false) $this->set_val($params, array('bg', 'video', 'dottedOverlay'), '2');
+							
+							$slide->set_params($params);
+							$slide->save_params();
+							
+							$slide->settings['version'] = '6.4.0';
+							$slide->save_settings();
+						}
+						
+						//on layers
+						$layers = $slide->get_layers();
+						
+						if(!empty($layers) && is_array($layers)){
+							$save = false;
+							foreach($layers as $lk => $layer){
+								$version = $this->get_val($layer, 'version', '1.0.0');
+								
+								if(version_compare($version, '6.4.0', '<')){
+									$save		 = true;
+									$layers[$lk]['version'] = '6.4.0';
+									
+									if($this->get_val($layer, 'type', 'text') === 'video'){
+										$do = $this->get_val($layer, array('media', 'dotted'));
+										if(strpos($do, 'white') !== false)		 $this->set_val($layers, array($lk, 'media', 'dottedColorB'), '#FFFFFF');
+										if(strpos($do, 'twoxtwo') !== false)	 $this->set_val($layers, array($lk, 'media', 'dotted'), '1');
+										if(strpos($do, 'threexthree') !== false) $this->set_val($layers, array($lk, 'media', 'dotted'), '2');
+									}
+									
+									if($this->get_val($layer, 'type', 'text') === 'shape') continue;
+									$idle_bg = $this->get_val($layer, array('idle', 'backgroundColor'), '');
+									if(
+										strpos($idle_bg, 'gradient') === false &&
+										strpos($idle_bg, 'radial') === false && 
+										strpos($idle_bg, 'linear') === false && 
+										strpos($idle_bg, '&type') === false
+									) continue;
+									if($this->get_val($layer, array('hover', 'usehover'), false) === false) continue;
+									
+									$hover_bg = $this->get_val($layer, array('hover', 'backgroundColor'), '');
+									if(
+										strpos($hover_bg, 'gradient') !== false ||
+										strpos($hover_bg, 'radial') !== false || 
+										strpos($hover_bg, 'linear') !== false || 
+										strpos($hover_bg, '&type') !== false
+									) continue;
+									
+									$layers[$lk]['hover']['backgroundColor'] = $idle_bg;
+								}
+							}
+							
+							if($save){
+								$slide->set_layers_raw($layers);
+								$slide->save_layers();
+							}
+						}
+					}
+				}
+				
+				$slider->update_settings(array('version' => '6.4.0'));
+			}
+		}
+	}
+	
+	/** check to convert the given Slider to latest versions
+	 * @since: 6.4.10
+	 **/
+	public function upgrade_slider_to_6_4_10($sliders = false){
+		$sr = new RevSliderSlider();
+		
+		$sliders = ($sliders === false) ? $sr->get_sliders() : array($sliders); //do it on all Sliders if false
+		
+		if(!empty($sliders) && is_array($sliders)){
+			foreach($sliders as $slider){
+				if(version_compare($slider->get_setting('version', '1.0.0'), '6.4.10', '<')){
+					$params = $slider->get_params();
+					$params['version'] = '6.4.10';
+					
+					$slider->update_params($params, true);
+					
+					$slider->update_settings(array('version' => '6.4.10'));
+				}
+			}
+		}
+	}
+	
+	
 	/**
 	 * translates removed settings from Slider Settings from version <= 4.x to 5.0
 	 * before: RevSliderBase::translate_settings_to_v5()
@@ -712,7 +831,7 @@ class RevSliderPluginUpdate extends RevSliderFunctions {
 	public function update_css_styles(){
 		global $wpdb;
 
-		$css = new RevSliderCssParser();
+		$css = RevSliderGlobals::instance()->get('RevSliderCssParser');
 		$styles = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . RevSliderFront::TABLE_CSS, ARRAY_A);
 		$default_classes = $css->default_css_classes();
 
@@ -881,7 +1000,6 @@ class RevSliderPluginUpdate extends RevSliderFunctions {
 							$static_id = $sl->get_static_slide_id($template_id);
 							if($static_id !== false){
 								$record = $wpdb->get_row($wpdb->prepare("SELECT * FROM " . $wpdb->prefix . RevSliderFront::TABLE_STATIC_SLIDES . " WHERE id = %d", $static_id), ARRAY_A);
-
 								unset($record['id']);
 								$record['slider_id'] = $slider_id;
 
@@ -1829,7 +1947,6 @@ class RevSliderPluginUpdate extends RevSliderFunctions {
 								'appId' => $slider->get_param('facebook-app-id', ''),
 								'appSecret' => $slider->get_param('facebook-app-secret', ''),
 								'count' => $slider->get_param('facebook-count', ''),
-								'pageURL' => $slider->get_param('facebook-page-url', ''),
 								'transient' => $slider->get_param('facebook-transient', 1200),
 								'typeSource' => $slider->get_param('facebook-type-source', 'album'),
 							),
@@ -2615,8 +2732,7 @@ class RevSliderPluginUpdate extends RevSliderFunctions {
 				'argsVimeo'		 => $slide->get_param('video_arguments_vim', ''),
 				'dottedOverlay'	 => $slide->get_param('video_dotted_overlay', 'none'),
 				'startAt'		 => $slide->get_param('video_start_at', ''),
-				'endAt'			 => $slide->get_param('video_end_at', ''),
-				'forceCover'	 => ($streamonlyvideo == true && $streamcover == true || $streamboth == true && $streambothcover == true) ? true : $this->_truefalse($slide->get_param('video_force_cover', true)),
+				'endAt'			 => $slide->get_param('video_end_at', ''),				
 				'forceRewind'	 => $this->_truefalse($slide->get_param('video_force_rewind', true)),
 				'loop'			 => $slide->get_param('video_loop', 'none'),
 				'mute'			 => $this->_truefalse($slide->get_param('video_mute', true)),
@@ -2973,7 +3089,9 @@ class RevSliderPluginUpdate extends RevSliderFunctions {
 	 * Migrates a Layer to version 6.0.0
 	 * @since: 6.0.0
 	 **/
-	public function migrate_layer_to_6_0($layer, $blank = false, $slide, $slider){
+	public function migrate_layer_to_6_0($layer, $blank, $slide, $slider){ //blank default should be false!
+
+		$this->init_googlefonts();
 		$color_picker		= new RSColorpicker();
 		
 		$video_data			= $this->get_val($layer, 'video_data', array());
@@ -3443,88 +3561,6 @@ class RevSliderPluginUpdate extends RevSliderFunctions {
 		$endsplit = ($this->get_val($layer, 'frames', false) === false) ? $this->get_val($layer, 'endsplit', 'none') : $this->get_val($frame_999, 'split', 'none');
 
 		//Define an Empty Timeline Object First.
-		
-		/**
-		 * check if we are a default animation
-		 * if yes, we need to take the values and push these instead of the one set
-		 **/
-		/*
-		$_f = array(
-			'0' => array(),
-			'1' => array(),
-			'999' => array()
-		);
-		
-		if(!empty($this->upd_animations) && !empty($this->upd_animations['in'])){
-			$startanimation = $this->get_val($frame_0, 'animation', $this->get_val($layer, 'animation', $this->get_val($layer, 'animation', false)));
-			foreach($this->upd_animations['in'] as $a_k => $animations){
-				if($a_k === 'custom') continue;
-				$anim = $this->get_val($animations, array('transitions', $startanimation), array());
-				if(empty($anim)) continue;
-				
-				$_f['0'] = $this->get_val($anim, 'frame_0', array());
-				$_f['1'] = $this->get_val($anim, 'frame_1', array());
-				break;
-			}
-		}
-		if(!empty($this->upd_animations) && !empty($this->upd_animations['out'])){
-			$endanimation = $this->get_val($frame_999, 'animation', $this->get_val($layer, 'endanimation', $this->get_val($layer, 'endAnimation', false)));
-			foreach($this->upd_animations['out'] as $a_k => $animations){
-				if($a_k === 'custom') continue;
-				$anim = $this->get_val($animations, array('transitions', $endanimation), array());
-				if(empty($anim)) continue;
-				
-				$_f['999'] = $this->get_val($anim, 'frame_999', array());
-				break;
-			}
-		}
-		
-		
-		$_t = array('chars', 'lines', 'words');
-		$_s = array();
-		if($split !== 'none'){
-			$_s['0'] = $split;
-			$_s['1'] = $split;
-		}
-		if($endsplit !== 'none'){
-			$_s['999'] = $endsplit;
-		}
-		if(!empty($_s)){
-			foreach($_s as $_n => $_v){
-				//if found, we dont need to change anything
-				if(empty($this->get_val($_f, array($_n, $_v), array()))){
-					$found = false;
-					//check the other two $_t
-					foreach($_t as $_c_type){
-						$vvvv = $this->get_val($_f, array($_n, $_c_type), array());
-						if(!empty($vvvv)){
-							$found = $_c_type;
-							$nv = $this->get_val($_f, array($_n, $_c_type), array());
-							$this->set_val($_s, array($_f, $_n, $_v), $nv);
-							break;
-						}
-					}
-					
-					if($found === false){
-						//completely not found
-						//so take the transform values
-						//push them into the chars/lines/words
-						//set the transform opacity to 0
-						 
-						$transform = $this->get_val($_f, array($_n, 'transform'), array());
-						$this->set_val($_f, array($_n, $_v), $transform);
-						if(!empty($transform) || (!is_array($transform) && !is_object($transform))){
-							$this->set_val($_f, array($_n, 'transform'), array());
-						}
-						if(!isset($_f[$_n]['transform'])) $_f[$_n]['transform'] = array();
-
-						$this->set_val($_f, array($_n, 'transform', 'opacity'), '1');
-					}
-				}
-			}
-		}
-		*/
-		
 		
 		/**
 		 * old fix for slider under version 530
@@ -4755,8 +4791,8 @@ class RevSliderPluginUpdate extends RevSliderFunctions {
 				//'include' => $this->_truefalse($this->get_val($global, 'includes_globally', true)),
 				'includeids' => $this->get_val($global, 'pages_for_includes', ''),
 				'script' => array(
-					'footer' => $this->_truefalse($this->get_val($global, 'js_to_footer', false)),
-					'defer' => $this->_truefalse($this->get_val($global, 'js_defer', false)),
+					'footer' => $this->_truefalse($this->get_val($global, 'js_to_footer', true)),
+					'defer' => $this->_truefalse($this->get_val($global, 'js_defer', true)),
 					'full' => $this->_truefalse($this->get_val($global, 'load_all_javascript', false))
 				),
 				'fonturl' => $this->get_val($global, 'change_font_loading', ''),
@@ -4817,6 +4853,73 @@ class RevSliderPluginUpdate extends RevSliderFunctions {
 		return $new_navs;
 	}
 
+	/**
+	 * Change navigation css that needs to be used since 6.4.9
+	 * @since: 6.4.9
+	 **/
+	public function change_navigation_settings_to_6_4_10($navs = false, $return = false){
+		global $wpdb;
+		
+		/**
+		 * some customers had an version inbetween, where $find was wrongly translated into this here
+		 * so we need to replace $find2 also with $replace and this has to happen first!
+		 **/
+		$find2 = array(
+			'.tp-bullets:hover.rs.touchhover',
+			'.tp-bullet.rs.touchhover',
+			'.tp-tab.rs.touchhover',
+			'.tp-tabs.rs.touchhover',
+			'.tp-thumb.rs.touchhover',
+			'.tp-thumbs.rs.touchhover',
+			'.tparrows.rs-touchhover',
+			'.tp-rightarrow.rs.touchhover',
+			'.tp-leftarrow.rs.touchhover'
+		);
+		$find = array(
+			'.tp-bullets:hover',
+			'.tp-bullet:hover',
+			'.tp-tab:hover',
+			'.tp-tabs:hover',
+			'.tp-thumb:hover',
+			'.tp-thumbs:hover',
+			'.tparrows:hover',
+			'.tp-rightarrow:hover',
+			'.tp-leftarrow:hover'
+		);
+		$replace = array(
+			'.tp-bullets.rs-touchhover',
+			'.tp-bullet.rs-touchhover',
+			'.tp-tab.rs-touchhover',
+			'.tp-tabs.rs-touchhover',
+			'.tp-thumb.rs-touchhover',
+			'.tp-thumbs.rs-touchhover',
+			'.tparrows.rs-touchhover',
+			'.tp-rightarrow.rs-touchhover',
+			'.tp-leftarrow.rs-touchhover'
+		);
+		
+		$rs_nav = new RevSliderNavigation();
+		//do on all navigations ?
+		$navs = ($navs === false) ? $rs_nav->get_all_navigations(false, false, true) : (array) $navs;
+		
+		if(!empty($navs)){
+			//now push all again back in with new IDs
+			foreach($navs as $id => $nav){
+				$css = $this->get_val($nav, 'css');
+				$css = str_replace($find2, $replace, $css);
+				$css = str_replace($find, $replace, $css);
+				if($css !== $this->get_val($nav, 'css')){
+					//update the css
+					$response = $wpdb->update(
+						$wpdb->prefix.RevSliderFront::TABLE_NAVIGATIONS,
+						array('css' => $css),
+						array('id' => $this->get_val($nav, 'id'))
+					);
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Go through all Slider and change the navigations handle to id
 	 **/
@@ -5586,8 +5689,7 @@ class RevSliderPluginUpdate extends RevSliderFunctions {
 						'argsVimeo' => $_->get_param('video_arguments_vim_beforeafter', 'title=0&byline=0&portrait=0&api=1'),
 						'dottedOverlay' => $_->get_param('video_dotted_overlay_beforeafter', 'none'),
 						'startAt' => $_->get_param('video_start_at_beforeafter', ''),
-						'endAt' => $_->get_param('video_end_at_beforeafter', ''),
-						'forceCover' => $this->_truefalse($_->get_param('video_force_cover_beforeafter', true)),
+						'endAt' => $_->get_param('video_end_at_beforeafter', ''),						
 						'forceRewind' => $this->_truefalse($_->get_param('video_force_rewind_beforeafter', true)),
 						'loop' => $_->get_param('video_loop_beforeafter', 'none'),
 						'mute' => $this->_truefalse($_->get_param('video_mute_beforeafter', true)),
@@ -6610,5 +6712,3 @@ class RevSliderPluginUpdate extends RevSliderFunctions {
 		return '#'.implode('', $rgb);
 	}
 }
-
-?>

@@ -2,52 +2,64 @@
  * External dependencies
  */
 import { __, sprintf, _n } from '@wordpress/i18n';
-import { Fragment, useState, useCallback } from '@wordpress/element';
-import { InspectorControls, BlockControls } from '@wordpress/block-editor';
+import { useState } from '@wordpress/element';
+import {
+	InspectorControls,
+	BlockControls,
+	useBlockProps,
+} from '@wordpress/block-editor';
+import { Icon, category, external } from '@wordpress/icons';
+import { SearchListControl } from '@woocommerce/editor-components/search-list-control';
+import { mapValues, toArray, sortBy } from 'lodash';
+import { getAdminLink, getSetting } from '@woocommerce/settings';
+import HeadingToolbar from '@woocommerce/editor-components/heading-toolbar';
+import BlockTitle from '@woocommerce/editor-components/block-title';
+import classnames from 'classnames';
 import {
 	Placeholder,
 	Disabled,
 	PanelBody,
 	ToggleControl,
 	Button,
-	Toolbar,
+	ToolbarGroup,
 	withSpokenMessages,
+	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
+	__experimentalToggleGroupControl as ToggleGroupControl,
+	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
+	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
-import Gridicon from 'gridicons';
-import { SearchListControl } from '@woocommerce/components';
-import { mapValues, toArray, sortBy, find } from 'lodash';
-import { ATTRIBUTES } from '@woocommerce/block-settings';
-import { getAdminLink } from '@woocommerce/settings';
-import HeadingToolbar from '@woocommerce/block-components/heading-toolbar';
-import BlockTitle from '@woocommerce/block-components/block-title';
 
 /**
  * Internal dependencies
  */
 import Block from './block.js';
 import './editor.scss';
-import { IconExternal } from '../../components/icons';
-import ToggleButtonControl from '../../components/toggle-button-control';
+
+const ATTRIBUTES = getSetting( 'attributes', [] );
 
 const Edit = ( { attributes, setAttributes, debouncedSpeak } ) => {
 	const {
 		attributeId,
 		className,
+		displayStyle,
 		heading,
 		headingLevel,
 		isPreview,
 		queryType,
 		showCounts,
+		showFilterButton,
 	} = attributes;
 
 	const [ isEditing, setIsEditing ] = useState(
 		! attributeId && ! isPreview
 	);
 
+	const blockProps = useBlockProps();
+
 	const getBlockControls = () => {
 		return (
 			<BlockControls>
-				<Toolbar
+				<ToolbarGroup
 					controls={ [
 						{
 							icon: 'edit',
@@ -75,11 +87,11 @@ const Edit = ( { attributes, setAttributes, debouncedSpeak } ) => {
 						help={
 							showCounts
 								? __(
-										'Product counts are visible.',
+										'Product count is visible.',
 										'woocommerce'
 								  )
 								: __(
-										'Product counts are hidden.',
+										'Product count is hidden.',
 										'woocommerce'
 								  )
 						}
@@ -112,7 +124,7 @@ const Edit = ( { attributes, setAttributes, debouncedSpeak } ) => {
 						'woocommerce'
 					) }
 				>
-					<ToggleButtonControl
+					<ToggleGroupControl
 						label={ __(
 							'Query Type',
 							'woocommerce'
@@ -129,25 +141,71 @@ const Edit = ( { attributes, setAttributes, debouncedSpeak } ) => {
 								  )
 						}
 						value={ queryType }
-						options={ [
-							{
-								label: __(
-									'And',
-									'woocommerce'
-								),
-								value: 'and',
-							},
-							{
-								label: __(
-									'Or',
-									'woocommerce'
-								),
-								value: 'or',
-							},
-						] }
 						onChange={ ( value ) =>
 							setAttributes( {
 								queryType: value,
+							} )
+						}
+					>
+						<ToggleGroupControlOption
+							value="and"
+							label={ __(
+								'And',
+								'woocommerce'
+							) }
+						/>
+						<ToggleGroupControlOption
+							value="or"
+							label={ __( 'Or', 'woocommerce' ) }
+						/>
+					</ToggleGroupControl>
+					<ToggleGroupControl
+						label={ __(
+							'Display Style',
+							'woocommerce'
+						) }
+						value={ displayStyle }
+						onChange={ ( value ) =>
+							setAttributes( {
+								displayStyle: value,
+							} )
+						}
+					>
+						<ToggleGroupControlOption
+							value="list"
+							label={ __(
+								'List',
+								'woocommerce'
+							) }
+						/>
+						<ToggleGroupControlOption
+							value="dropdown"
+							label={ __(
+								'Dropdown',
+								'woocommerce'
+							) }
+						/>
+					</ToggleGroupControl>
+					<ToggleControl
+						label={ __(
+							'Filter button',
+							'woocommerce'
+						) }
+						help={
+							showFilterButton
+								? __(
+										'Products will only update when the button is pressed.',
+										'woocommerce'
+								  )
+								: __(
+										'Products will update as options are selected.',
+										'woocommerce'
+								  )
+						}
+						checked={ showFilterButton }
+						onChange={ ( value ) =>
+							setAttributes( {
+								showFilterButton: value,
 							} )
 						}
 					/>
@@ -159,7 +217,7 @@ const Edit = ( { attributes, setAttributes, debouncedSpeak } ) => {
 					) }
 					initialOpen={ false }
 				>
-					{ renderAttributeControl() }
+					{ renderAttributeControl( { isCompact: true } ) }
 				</PanelBody>
 			</InspectorControls>
 		);
@@ -168,7 +226,7 @@ const Edit = ( { attributes, setAttributes, debouncedSpeak } ) => {
 	const noAttributesPlaceholder = () => (
 		<Placeholder
 			className="wc-block-attribute-filter"
-			icon={ <Gridicon icon="menus" /> }
+			icon={ <Icon icon={ category } /> }
 			label={ __(
 				'Filter Products by Attribute',
 				'woocommerce'
@@ -185,16 +243,15 @@ const Edit = ( { attributes, setAttributes, debouncedSpeak } ) => {
 				) }
 			</p>
 			<Button
-				className="wc-block-attribute-filter__add_attribute_button"
-				isDefault
-				isLarge
+				className="wc-block-attribute-filter__add-attribute-button"
+				isSecondary
 				href={ getAdminLink(
 					'edit.php?post_type=product&page=product_attributes'
 				) }
 			>
 				{ __( 'Add new attribute', 'woocommerce' ) +
 					' ' }
-				<IconExternal />
+				<Icon icon={ external } />
 			</Button>
 			<Button
 				className="wc-block-attribute-filter__read_more_button"
@@ -206,47 +263,43 @@ const Edit = ( { attributes, setAttributes, debouncedSpeak } ) => {
 		</Placeholder>
 	);
 
-	const onDone = useCallback( () => {
+	const onDone = () => {
 		setIsEditing( false );
 		debouncedSpeak(
 			__(
-				'Showing attribute filter block preview.',
+				'Showing Filter Products by Attribute block preview.',
 				'woocommerce'
 			)
 		);
-	}, [] );
+	};
 
-	const onChange = useCallback(
-		( selected ) => {
-			if ( ! selected || ! selected.length ) {
-				return;
-			}
+	const onChange = ( selected ) => {
+		if ( ! selected || ! selected.length ) {
+			return;
+		}
 
-			const selectedId = selected[ 0 ].id;
-			const productAttribute = find( ATTRIBUTES, [
-				'attribute_id',
-				selectedId.toString(),
-			] );
+		const selectedId = selected[ 0 ].id;
+		const productAttribute = ATTRIBUTES.find(
+			( attribute ) => attribute.attribute_id === selectedId.toString()
+		);
 
-			if ( ! productAttribute || attributeId === selectedId ) {
-				return;
-			}
+		if ( ! productAttribute || attributeId === selectedId ) {
+			return;
+		}
 
-			const attributeName = productAttribute.attribute_label;
+		const attributeName = productAttribute.attribute_label;
 
-			setAttributes( {
-				attributeId: selectedId,
-				heading: sprintf(
-					// Translators: %s attribute name.
-					__( 'Filter by %s', 'woocommerce' ),
-					attributeName
-				),
-			} );
-		},
-		[ attributeId ]
-	);
+		setAttributes( {
+			attributeId: selectedId,
+			heading: sprintf(
+				/* translators: %s attribute name. */
+				__( 'Filter by %s', 'woocommerce' ),
+				attributeName
+			),
+		} );
+	};
 
-	const renderAttributeControl = () => {
+	const renderAttributeControl = ( { isCompact } ) => {
 		const messages = {
 			clear: __(
 				'Clear selected attribute',
@@ -263,6 +316,7 @@ const Edit = ( { attributes, setAttributes, debouncedSpeak } ) => {
 			),
 			selected: ( n ) =>
 				sprintf(
+					/* translators: %d is the number of attributes selected. */
 					_n(
 						'%d attribute selected',
 						'%d attributes selected',
@@ -297,6 +351,7 @@ const Edit = ( { attributes, setAttributes, debouncedSpeak } ) => {
 				onChange={ onChange }
 				messages={ messages }
 				isSingle
+				isCompact={ isCompact }
 			/>
 		);
 	};
@@ -305,7 +360,7 @@ const Edit = ( { attributes, setAttributes, debouncedSpeak } ) => {
 		return (
 			<Placeholder
 				className="wc-block-attribute-filter"
-				icon={ <Gridicon icon="menus" /> }
+				icon={ <Icon icon={ category } /> }
 				label={ __(
 					'Filter Products by Attribute',
 					'woocommerce'
@@ -316,8 +371,8 @@ const Edit = ( { attributes, setAttributes, debouncedSpeak } ) => {
 				) }
 			>
 				<div className="wc-block-attribute-filter__selection">
-					{ renderAttributeControl() }
-					<Button isDefault onClick={ onDone }>
+					{ renderAttributeControl( { isCompact: false } ) }
+					<Button isPrimary onClick={ onDone }>
 						{ __( 'Done', 'woocommerce' ) }
 					</Button>
 				</div>
@@ -328,14 +383,20 @@ const Edit = ( { attributes, setAttributes, debouncedSpeak } ) => {
 	return Object.keys( ATTRIBUTES ).length === 0 ? (
 		noAttributesPlaceholder()
 	) : (
-		<Fragment>
+		<div { ...blockProps }>
 			{ getBlockControls() }
 			{ getInspectorControls() }
 			{ isEditing ? (
 				renderEditMode()
 			) : (
-				<div className={ className }>
+				<div
+					className={ classnames(
+						className,
+						'wc-block-attribute-filter'
+					) }
+				>
 					<BlockTitle
+						className="wc-block-attribute-filter__title"
 						headingLevel={ headingLevel }
 						heading={ heading }
 						onChange={ ( value ) =>
@@ -347,7 +408,7 @@ const Edit = ( { attributes, setAttributes, debouncedSpeak } ) => {
 					</Disabled>
 				</div>
 			) }
-		</Fragment>
+		</div>
 	);
 };
 

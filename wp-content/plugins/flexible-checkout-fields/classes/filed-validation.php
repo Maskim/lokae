@@ -43,7 +43,10 @@ class Flexible_Checkout_Fields_Field_Validation {
 		foreach ( $settings as $section => $fields ) {
 			foreach ( $fields as $field_key => $field ) {
 				if ( isset( $_POST[$field_key] ) && !empty( $field['validation'] ) && array_key_exists( $field['validation'], $custom_validations ) ) {
-					call_user_func( $custom_validations[$field['validation']]['callback'], $field['label'], sanitize_textarea_field($_POST[$field_key]) );
+					call_user_func( $custom_validations[$field['validation']]['callback'], $field['label'], sanitize_textarea_field($_POST[$field_key]), $field );
+				}
+				if ( isset( $field['custom_field'] ) && $field['custom_field'] && isset( $_POST[ $field_key ] ) && ! empty( $_POST[ $field_key ] ) ) {
+					do_action( 'flexible_checkout_fields_validate_' . $field['type'], sanitize_textarea_field( $_POST[ $field_key ] ), $field );
 				}
 			}
 		}
@@ -73,7 +76,7 @@ class Flexible_Checkout_Fields_Field_Validation {
 			'phone' => __( 'Phone', 'flexible-checkout-fields' ),
 		);
 		if ( in_array( $section, array( 'billing', 'shipping' ), true ) ) {
-			$validation_options['postcode'] = __( 'Post code', 'flexible-checkout-fields' );
+			$validation_options['postcode'] = __( 'Postcode', 'flexible-checkout-fields' );
 		}
 		$custom_validations = $this->get_custom_validations( $section );
 		foreach ( $custom_validations as $custom_validation_key => $custom_validation ) {

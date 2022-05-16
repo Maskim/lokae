@@ -19,7 +19,7 @@
 	.align-items(@align: center);
 }
 .transparent:not(.photo-scroller-album):not(.phantom-sticky) .masthead.sticky-top-line,
-.sticky-top-line {
+.sticky-top-line:not(.masthead-mobile-header) {
 	position: fixed;
 	top: 0;
 	width: 100%;
@@ -738,7 +738,7 @@
 	.justify-content(@justify: center);
 	position: absolute;
 	top: 0;
-	z-index: 9999;
+	z-index: -1;
 	opacity: 0;
 	transition: opacity 0.5s ease;
 	min-width: 12px;
@@ -772,6 +772,7 @@
 	}
 	&.active {
 		opacity: 1;
+		z-index: 9999;
 	}
 	&:hover {
 		cursor: pointer;

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Uptime service.
+ *
+ * @package Hummingbird
+ */
 
 namespace Hummingbird\Core\Api\Service;
 
@@ -67,7 +72,7 @@ class Uptime extends Service {
 	/**
 	 * Check if Uptime is enabled remotely
 	 *
-	 * @return mixed|WP_Error
+	 * @return bool
 	 */
 	public function is_enabled() {
 		$this->request->set_timeout( 30 );
@@ -117,7 +122,7 @@ class Uptime extends Service {
 	/**
 	 * Disable Uptime remotely
 	 *
-	 * @return mixed|WP_Error
+	 * @return bool|WP_Error
 	 */
 	public function disable() {
 		$this->request->set_timeout( 30 );
@@ -146,7 +151,7 @@ class Uptime extends Service {
 	 *
 	 * @return array|WP_Error
 	 */
-	public function update_recipients( array $recipients = [] ) {
+	public function update_recipients( array $recipients = array() ) {
 		$this->request->set_timeout( 30 );
 
 		$results = $this->request->post(

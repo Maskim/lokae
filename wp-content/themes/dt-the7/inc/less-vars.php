@@ -1,28 +1,34 @@
 <?php
 /**
- * Description here.
+ * Less vars definition.
+ *
+ * @package The7
  */
 
-// File Security Check
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined( 'ABSPATH' ) || exit;
 
 /**
- * @param The7_Less_Vars_Manager_Interface $less_vars
+ * Define less vars based on theme options.
+ *
+ * @param The7_Less_Vars_Manager_Interface $less_vars Less vars manager.
  */
 function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_vars ) {
+
 	/**
+	 * Accent colors.
+	 *
 	 * @var string             $first_accent_color
 	 * @var The7_Less_Gradient $accent_gradient_obj
 	 */
 	list( $first_accent_color, $accent_gradient_obj ) = the7_less_get_accent_colors( $less_vars );
-	$last_accent_color = $accent_gradient_obj->get_last_color_stop()->get_color();
-
-	$less_vars->add_keyword( 'accent-bg-filter-switch', $accent_gradient_obj->with_opacity( 20 )->get_string() );
-	$less_vars->add_keyword( 'accent-bg-scroller-arrow', $accent_gradient_obj->with_opacity( 90 )->get_string() );
-	$less_vars->add_keyword( 'accent-text-color-2', $accent_gradient_obj->with_angle( 'left' )->get_string() );
-	$less_vars->add_rgba_color( 'accent-bg-2', $last_accent_color );
+	$last_accent_color = false;
+	if (!the7_is_elementor_theme_style_enabled()){
+		$last_accent_color = $accent_gradient_obj->get_last_color_stop()->get_color();
+		$less_vars->add_keyword( 'accent-bg-filter-switch', $accent_gradient_obj->with_opacity( 20 )->get_string() );
+		$less_vars->add_keyword( 'accent-bg-scroller-arrow', $accent_gradient_obj->with_opacity( 90 )->get_string() );
+		$less_vars->add_keyword( 'accent-text-color-2', $accent_gradient_obj->with_angle( 'left' )->get_string() );
+		$less_vars->add_rgba_color( 'accent-bg-2', $last_accent_color );
+	}
 	$less_vars->add_rgba_color( 'accent-color', $first_accent_color );
 	$less_vars->add_keyword( 'accent-gradient', $accent_gradient_obj->get_string() );
 
@@ -71,7 +77,11 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 				$less_vars->add_rgba_color( $v, $last_accent_color ? $last_accent_color : $first_accent_color );
 				break;
 			case 'gradient':
-				$less_vars->add_rgba_color( $v, the7_less_create_gradient_obj( of_get_option( $opt['gradient'] ) )->get_last_color_stop()->get_color() );
+				$the7_less_gradient = the7_less_create_gradient_obj( of_get_option( $opt['gradient'] ) );
+				$less_vars->add_rgba_color(
+					$v,
+					$the7_less_gradient->get_last_color_stop()->get_color()
+				);
 				break;
 			default:
 				$color = false;
@@ -233,22 +243,6 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 			),
 			'gradient_angle' => 'left',
 		),
-		// array(
-		// 	'vars'      => array( 'floating-microwidgets-color' ),
-		// 	'test_args' => array(
-		// 		'header-floating_microwidgets-font',
-		// 		'header-floating_microwidgets-font-color',
-		// 		null,
-		// 	),
-		// ),
-		// array(
-		// 	'vars'      => array( 'floating-microwidgets-icon-color' ),
-		// 	'test_args' => array(
-		// 		'header-floating_microwidgets-icon',
-		// 		'header-floating_microwidgets-icon-color',
-		// 		null,
-		// 	),
-		// ),
 		array(
 			'vars'      => array( 'menu-click-decor-bg-color', 'menu-click-decor-bg-color-2' ),
 			'test_args' => array(
@@ -500,11 +494,17 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 		),
 	);
 
-	if (of_get_option('header-floating_microwidgets-icon') === 'color') {
-		$less_vars->add_rgba_color('floating-microwidgets-icon-color', of_get_option('header-floating_microwidgets-icon-color'));
+	if ( of_get_option( 'header-floating_microwidgets-icon' ) === 'color' ) {
+		$less_vars->add_rgba_color(
+			'floating-microwidgets-icon-color',
+			of_get_option( 'header-floating_microwidgets-icon-color' )
+		);
 	}
-	if (of_get_option('header-floating_microwidgets-font') === 'color') {
-		$less_vars->add_rgba_color('floating-microwidgets-color', of_get_option('header-floating_microwidgets-font-color'));
+	if ( of_get_option( 'header-floating_microwidgets-font' ) === 'color' ) {
+		$less_vars->add_rgba_color(
+			'floating-microwidgets-color',
+			of_get_option( 'header-floating_microwidgets-font-color' )
+		);
 	}
 
 	$decor_vars = array( 'menu-decor-color', 'menu-decor-color-2' );
@@ -520,8 +520,11 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 			'gradient_angle' => 'left',
 		);
 
-		$less_vars->add_pixel_number( 'menu-decoration-line-size', of_get_option( 'header-menu-decoration-underline-line_size' ) );
-	} else if ( 'other' === $decoration ) {
+		$less_vars->add_pixel_number(
+			'menu-decoration-line-size',
+			of_get_option( 'header-menu-decoration-underline-line_size' )
+		);
+	} elseif ( 'other' === $decoration ) {
 		$conditional_color_map[] = array(
 			'vars'      => $decor_vars,
 			'test_args' => array(
@@ -532,7 +535,10 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 			'opacity'   => 'header-menu-decoration-other-opacity',
 		);
 
-		$less_vars->add_pixel_number( 'menu-decoration-line-size', of_get_option( 'header-menu-decoration-other-line_size' ) );
+		$less_vars->add_pixel_number(
+			'menu-decoration-line-size',
+			of_get_option( 'header-menu-decoration-other-line_size' )
+		);
 	}
 	unset( $decor_vars, $decoration );
 
@@ -541,6 +547,9 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 		$custom_gradient_angle = isset( $color_map['gradient_angle'] ) ? $color_map['gradient_angle'] : null;
 
 		switch ( of_get_option( $test_opt ) ) {
+			case 'disabled':
+				$less_vars->add_rgba_color( $color_map['vars'], array( of_get_option( $color_opt ), null ), 0 );
+				break;
 			case 'outline':
 			case 'background':
 			case 'color':
@@ -548,7 +557,9 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 				break;
 			case 'gradient':
 				$gradient_obj = the7_less_create_gradient_obj( of_get_option( $gradient_opt ) );
-				list( $first_color, $gradient ) = the7_less_prepare_gradient_var( $gradient_obj->with_angle( $custom_gradient_angle ) );
+				list( $first_color, $gradient ) = the7_less_prepare_gradient_var(
+					$gradient_obj->with_angle( $custom_gradient_angle )
+				);
 				$less_vars->add_rgba_color( $color_map['vars'][0], $first_color );
 				if ( isset( $color_map['vars'][1] ) ) {
 					$less_vars->add_keyword( $color_map['vars'][1], $gradient );
@@ -559,12 +570,19 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 				$opacity = isset( $color_map['opacity'] ) ? of_get_option( $color_map['opacity'] ) : null;
 				$less_vars->add_rgba_color( $color_map['vars'][0], $first_accent_color, $opacity );
 				if ( isset( $color_map['vars'][1] ) ) {
-					$less_vars->add_keyword( $color_map['vars'][1], $accent_gradient_obj->with_angle( $custom_gradient_angle )->with_opacity( $opacity )->get_string() );
+					$less_vars->add_keyword(
+						$color_map['vars'][1],
+						$accent_gradient_obj->with_angle( $custom_gradient_angle )->with_opacity(
+							$opacity
+						)->get_string()
+					);
 				}
 		}
 	}
 	unset( $conditional_color_map, $first_color, $gradient, $opacity, $test_opt, $color_opt, $gradient_opt );
 
+	the7_less_add_shadow($less_vars, 'button-shadow', 'button-shadow');
+	the7_less_add_shadow($less_vars, 'button-shadow-hover', 'button-shadow-hover');
 	// Microwidget search.
 	$search_typography = The7_Option_Field_Typography::sanitize( of_get_option( 'microwidgets-search-typography' ) );
 	$less_vars->add_font(
@@ -576,30 +594,57 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 		$search_typography['font_family']
 	);
 	$less_vars->add_pixel_number( 'mw-search-font-size', $search_typography['font_size'] );
-
-	$less_vars->add_rgba_color( 'mw-search-color', of_get_option( 'microwidgets-search_font-color' ) );
-
 	$less_vars->add_pixel_number( 'mw-search-bg-height', of_get_option( 'microwidgets-search-height', '34' ) );
 	$less_vars->add_pixel_number( 'mw-search-bg-width', of_get_option( 'microwidgets-search-width', '200' ) );
 	$less_vars->add_pixel_number( 'mw-search-bg-active-width', of_get_option( 'microwidgets-search-active-width' ) );
-	$less_vars->add_rgba_color( 'mw-search-bg-color', of_get_option( 'microwidgets-search_bg-color' ) );
-	$less_vars->add_pixel_number( 'mw-search-border-radius', of_get_option( 'microwidgets-search_bg_border_radius', '0' ) );
-	$less_vars->add_pixel_number( 'mw-search-border-width', of_get_option( 'microwidgets-search_bg_border_width', '0' ) );
-	$less_vars->add_rgba_color( 'mw-search-border-color', of_get_option( 'microwidgets-search_bg-border-color' ) );
+	$less_vars->add_pixel_number(
+		'mw-search-border-radius',
+		of_get_option( 'microwidgets-search_bg_border_radius', '0' )
+	);
+	$less_vars->add_pixel_number(
+		'mw-search-border-width',
+		of_get_option( 'microwidgets-search_bg_border_width', '0' )
+	);
 	$less_vars->add_pixel_number( 'mw-search-icon-size', of_get_option( 'microwidgets-search_icon-size', '16' ) );
+	$less_vars->add_paddings(
+		array(
+			'mw-search-right-padding',
+			'mw-search-left-padding',
+		),
+		of_get_option( 'microwidgets-search_input-padding' )
+	);
+	$less_vars->add_rgba_color( 'mw-search-border-color', of_get_option( 'microwidgets-search_bg-border-color' ) );
+	$less_vars->add_rgba_color( 'mw-search-color', of_get_option( 'microwidgets-search_font-color' ) );
+	$less_vars->add_rgba_color( 'mw-search-bg-color', of_get_option( 'microwidgets-search_bg-color' ) );
 
-	$less_vars->add_paddings( array(
-		'mw-search-right-padding',
-		'mw-search-left-padding',
-	), of_get_option( 'microwidgets-search_input-padding' ) );
-
-	$less_vars->add_pixel_number( 'mw-phone-icon-size', of_get_option( 'header-elements-contact-phone-custom-icon-size', '16' ) );
-	$less_vars->add_pixel_number( 'mw-address-icon-size', of_get_option( 'header-elements-contact-address-custom-icon-size', '16' ) );
-	$less_vars->add_pixel_number( 'mw-email-icon-size', of_get_option( 'header-elements-contact-email-custom-icon-size', '16' ) );
-	$less_vars->add_pixel_number( 'mw-skype-icon-size', of_get_option( 'header-elements-contact-skype-custom-icon-size', '16' ) );
-	$less_vars->add_pixel_number( 'mw-clock-icon-size', of_get_option( 'header-elements-contact-clock-custom-icon-size', '16' ) );
-	$less_vars->add_pixel_number( 'mw-login-icon-size', of_get_option( 'header-elements-login-custom-icon-size', '16' ) );
-	$less_vars->add_pixel_number( 'mw-woocommerce_cart-icon-size', of_get_option( 'header-elements-woocommerce_cart-custom-icon-size', '16' ) );
+	$less_vars->add_pixel_number(
+		'mw-phone-icon-size',
+		of_get_option( 'header-elements-contact-phone-custom-icon-size', '16' )
+	);
+	$less_vars->add_pixel_number(
+		'mw-address-icon-size',
+		of_get_option( 'header-elements-contact-address-custom-icon-size', '16' )
+	);
+	$less_vars->add_pixel_number(
+		'mw-email-icon-size',
+		of_get_option( 'header-elements-contact-email-custom-icon-size', '16' )
+	);
+	$less_vars->add_pixel_number(
+		'mw-skype-icon-size',
+		of_get_option( 'header-elements-contact-skype-custom-icon-size', '16' )
+	);
+	$less_vars->add_pixel_number(
+		'mw-clock-icon-size',
+		of_get_option( 'header-elements-contact-clock-custom-icon-size', '16' )
+	);
+	$less_vars->add_pixel_number(
+		'mw-login-icon-size',
+		of_get_option( 'header-elements-login-custom-icon-size', '16' )
+	);
+	$less_vars->add_pixel_number(
+		'mw-woocommerce_cart-icon-size',
+		of_get_option( 'header-elements-woocommerce_cart-custom-icon-size', '16' )
+	);
 
 	/**
 	 * Header & Top Bar -> Top bar
@@ -656,12 +701,15 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 	$less_vars->add_pixel_number( 'top-bar-line-size', of_get_option( 'top_bar-line_size' ) );
 	$less_vars->add_keyword( 'top-bar-line-style', ( of_get_option( 'top_bar-line_style' ) ) );
 
-	$less_vars->add_image( array(
-		'top-bg-image',
-		'top-bg-repeat',
-		'top-bg-position-x',
-		'top-bg-position-y',
-	), of_get_option( 'top_bar-bg-image' ) );
+	$less_vars->add_image(
+		array(
+			'top-bg-image',
+			'top-bg-repeat',
+			'top-bg-position-x',
+			'top-bg-position-y',
+		),
+		of_get_option( 'top_bar-bg-image' )
+	);
 
 	/**
 	 * Header & Top Bar -> Header
@@ -672,16 +720,19 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 
 	$less_vars->add_rgba_color( 'header-bg-color', of_get_option( 'header-bg-color' ) );
 
-	$less_vars->add_image( array(
-		'header-bg-image',
-		'header-bg-repeat',
-		'header-bg-position-x',
-		'header-bg-position-y',
-	), of_get_option( 'header-bg-image' ) );
+	$less_vars->add_image(
+		array(
+			'header-bg-image',
+			'header-bg-repeat',
+			'header-bg-position-x',
+			'header-bg-position-y',
+		),
+		of_get_option( 'header-bg-image' )
+	);
 
 	$less_vars->add_keyword( 'header-bg-size', ( of_get_option( 'header-bg-is_fullscreen' ) ? 'cover' : 'auto' ) );
 
-	// fix bg repeat
+	// Fix bg repeat.
 	if ( 'cover' === $less_vars->get_var( 'header-bg-size' ) ) {
 		$less_vars->add_keyword( 'header-bg-repeat', 'no-repeat' );
 	}
@@ -689,64 +740,95 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 	$less_vars->add_keyword( 'header-bg-attachment', ( of_get_option( 'header-bg-is_fixed' ) ? 'fixed' : '~""' ) );
 
 	$less_vars->add_rgba_color( 'navigation-line-decoration-color', of_get_option( 'header-mixed-decoration-color' ) );
-	
-	$less_vars->add_pixel_number( 'navigation-line-decoration-line-size', of_get_option( 'header-mixed-decoration_size' ) );
+
+	$less_vars->add_pixel_number(
+		'navigation-line-decoration-line-size',
+		of_get_option( 'header-mixed-decoration_size' )
+	);
 
 	$less_vars->add_rgba_color( 'navigation-line-bg', of_get_option( 'header-mixed-bg-color' ) );
-	
+
 	$less_vars->add_rgba_color( 'navigation-line-sticky-bg', of_get_option( 'header-mixed-sticky-bg-color' ) );
 
-	$less_vars->add_hex_color( 'toggle-menu-color', of_get_option( "header-menu_icon-color" ) );
+	$less_vars->add_hex_color( 'toggle-menu-color', of_get_option( 'header-menu_icon-color' ) );
 
 	$less_vars->add_rgba_color( 'toggle-menu-bg-color', of_get_option( 'header-menu_icon-bg-color' ) );
 	$less_vars->add_rgba_color( 'toggle-menu-border-color', of_get_option( 'header-menu_icon-border-color' ) );
-	$less_vars->add_rgba_color( 'toggle-menu-border-hover-color', of_get_option( 'header-menu_icon-border-hover-color' ) );
+	$less_vars->add_rgba_color(
+		'toggle-menu-border-hover-color',
+		of_get_option( 'header-menu_icon-border-hover-color' )
+	);
 
-	$less_vars->add_hex_color( 'toggle-menu-color-hover', of_get_option( "header-menu_icon-color-hover" ) );
+	$less_vars->add_hex_color( 'toggle-menu-color-hover', of_get_option( 'header-menu_icon-color-hover' ) );
 	$less_vars->add_rgba_color( 'toggle-menu-bg-color-hover', of_get_option( 'header-menu_icon-bg-color-hover' ) );
 
-	$less_vars->add_hex_color( 'toggle-menu-close-color', of_get_option( "header-menu_close_icon-color" ) );
-	$less_vars->add_hex_color( 'toggle-menu-hover-color', of_get_option( "header-menu_close_icon-hover-color" ) );
+	$less_vars->add_hex_color( 'toggle-menu-close-color', of_get_option( 'header-menu_close_icon-color' ) );
+	$less_vars->add_hex_color( 'toggle-menu-hover-color', of_get_option( 'header-menu_close_icon-hover-color' ) );
 	$less_vars->add_rgba_color( 'toggle-menu-close-bg-color', of_get_option( 'header-menu_close_icon-bg-color' ) );
 	$less_vars->add_rgba_color( 'toggle-menu-hover-bg-color', of_get_option( 'header-menu_icon-hover-bg-color' ) );
-	$less_vars->add_rgba_color( 'toggle-menu-close-border-color', of_get_option( 'header-menu_close_icon-border-color' ) );
-	$less_vars->add_rgba_color( 'toggle-menu-close-border-color-hover', of_get_option( 'header-menu_close_icon-border-color-hover' ) );
+	$less_vars->add_rgba_color(
+		'toggle-menu-close-border-color',
+		of_get_option( 'header-menu_close_icon-border-color' )
+	);
+	$less_vars->add_rgba_color(
+		'toggle-menu-close-border-color-hover',
+		of_get_option( 'header-menu_close_icon-border-color-hover' )
+	);
 
 	$less_vars->add_rgba_color( 'navigation-bg-color', of_get_option( 'header-classic-menu-bg-color' ) );
 	$less_vars->add_pixel_number( 'header-classic-menu-line-size', of_get_option( 'header-classic-menu-line_size' ) );
 
+	$less_vars->add_paddings(
+		array(
+			'toggle-menu-top-margin',
+			'toggle-menu-right-margin',
+			'toggle-menu-bottom-margin',
+			'toggle-menu-left-margin',
+		),
+		of_get_option( 'header-menu_icon-margin' )
+	);
 
-	$less_vars->add_paddings( array(
-		'toggle-menu-top-margin',
-		'toggle-menu-right-margin',
-		'toggle-menu-bottom-margin',
-		'toggle-menu-left-margin',
-	), of_get_option( 'header-menu_icon-margin' ) );
-
-
-	$less_vars->add_pixel_number( 'toggle-menu-border-radius', of_get_option( 'header-menu_icon-bg-border-radius', '0' ) );
+	$less_vars->add_pixel_number(
+		'toggle-menu-border-radius',
+		of_get_option( 'header-menu_icon-bg-border-radius', '0' )
+	);
 
 	$less_vars->add_pixel_number( 'hamburger-border-width', of_get_option( 'header-menu_icon-bg-border-width' ) );
 
-	$less_vars->add_pixel_number( 'hamburger-close-border-radius', of_get_option( 'header-menu_close_icon-bg-border-radius' ) );
-	$less_vars->add_pixel_number( 'hamburger-close-border-width', of_get_option( 'header-menu_close_icon-bg-border-width' ) );
-	$less_vars->add_paddings( array(
-		'toggle-menu-close-padding-top',
-		'toggle-menu-close-padding-right',
-		'toggle-menu-close-padding-bottom',
-		'toggle-menu-close-padding-left',
-	), of_get_option( 'header-menu_close_icon-padding' ) );
+	$less_vars->add_pixel_number(
+		'hamburger-close-border-radius',
+		of_get_option( 'header-menu_close_icon-bg-border-radius' )
+	);
+	$less_vars->add_pixel_number(
+		'hamburger-close-border-width',
+		of_get_option( 'header-menu_close_icon-bg-border-width' )
+	);
+	$less_vars->add_paddings(
+		array(
+			'toggle-menu-close-padding-top',
+			'toggle-menu-close-padding-right',
+			'toggle-menu-close-padding-bottom',
+			'toggle-menu-close-padding-left',
+		),
+		of_get_option( 'header-menu_close_icon-padding' )
+	);
 
-	$less_vars->add_paddings( array(
-		'toggle-menu-close-top-margin',
-		'toggle-menu-close-right-margin',
-		'toggle-menu-close-bottom-margin',
-		'toggle-menu-close-left-margin',
-	), of_get_option( 'header-menu_close_icon-margin' ) );
+	$less_vars->add_paddings(
+		array(
+			'toggle-menu-close-top-margin',
+			'toggle-menu-close-right-margin',
+			'toggle-menu-close-bottom-margin',
+			'toggle-menu-close-left-margin',
+		),
+		of_get_option( 'header-menu_close_icon-margin' )
+	);
 
-	//Hamburger caption
-	$less_vars->add_hex_color( 'toggle-menu-caption-color', of_get_option( "header-menu_icon-caption_color" ) );
-	$less_vars->add_hex_color( 'toggle-menu-caption-color-hover', of_get_option( "header-menu_icon-caption_color-hover" ) );
+	// Hamburger caption.
+	$less_vars->add_hex_color( 'toggle-menu-caption-color', of_get_option( 'header-menu_icon-caption_color' ) );
+	$less_vars->add_hex_color(
+		'toggle-menu-caption-color-hover',
+		of_get_option( 'header-menu_icon-caption_color-hover' )
+	);
 	$menu_caption_typography = The7_Option_Field_Typography::sanitize(
 		of_get_option( 'header-menu_icon-caption-typography' )
 	);
@@ -760,18 +842,24 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 	);
 	$less_vars->add_pixel_number( 'menu-caption-font-size', $menu_caption_typography['font_size'] );
 	$less_vars->add_keyword( 'menu-caption-text-transform', $menu_caption_typography['text_transform'] );
-	$less_vars->add_paddings( array(
-		'toggle-menu-caption-padding-top',
-		'toggle-menu-caption-padding-right',
-		'toggle-menu-caption-padding-bottom',
-		'toggle-menu-caption-padding-left',
-	), of_get_option( 'header-menu_icon-caption-padding' ) );
+	$less_vars->add_paddings(
+		array(
+			'toggle-menu-caption-padding-top',
+			'toggle-menu-caption-padding-right',
+			'toggle-menu-caption-padding-bottom',
+			'toggle-menu-caption-padding-left',
+		),
+		of_get_option( 'header-menu_icon-caption-padding' )
+	);
 	$less_vars->add_pixel_number( 'menu-caption-gap', of_get_option( 'header-menu_icon-caption_gap' ) );
 
 	/*Close menu caption*/
 
-	$less_vars->add_hex_color( 'close-menu-caption-color', of_get_option( "header-menu_close_icon-caption_color" ) );
-	$less_vars->add_hex_color( 'close-menu-caption-color-hover', of_get_option( "header-menu_close_icon-caption_color-hover" ) );
+	$less_vars->add_hex_color( 'close-menu-caption-color', of_get_option( 'header-menu_close_icon-caption_color' ) );
+	$less_vars->add_hex_color(
+		'close-menu-caption-color-hover',
+		of_get_option( 'header-menu_close_icon-caption_color-hover' )
+	);
 	$menu_caption_typography = The7_Option_Field_Typography::sanitize(
 		of_get_option( 'header-menu-close_icon-caption-typography' )
 	);
@@ -794,24 +882,34 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 	$less_vars->add_pixel_number( 'float-menu-height', of_get_option( 'header-floating_navigation-height', '100' ) );
 
 	$less_vars->add_rgba_color( 'float-menu-bg', of_get_option( 'header-floating_navigation-bg-color' ) );
-	$less_vars->add_image( array(
-		'floating-header-bg-image',
-		'floating-header-bg-repeat',
-		'floating-header-bg-position-x',
-		'floating-header-bg-position-y',
-	), of_get_option( 'header-floating_navigation-bg-image' ) );
+	$less_vars->add_image(
+		array(
+			'floating-header-bg-image',
+			'floating-header-bg-repeat',
+			'floating-header-bg-position-x',
+			'floating-header-bg-position-y',
+		),
+		of_get_option( 'header-floating_navigation-bg-image' )
+	);
 
-	$less_vars->add_keyword( 'floating-header-bg-size', ( of_get_option( 'header-floating_navigation-bg-is_fullscreen' ) ? 'cover' : 'auto' ) );
+	$less_vars->add_keyword(
+		'floating-header-bg-size',
+		( of_get_option( 'header-floating_navigation-bg-is_fullscreen' ) ? 'cover' : 'auto' )
+	);
 
-	// fix bg repeat
+	// Fix bg repeat.
 	if ( 'cover' === $less_vars->get_var( 'floating-header-bg-size' ) ) {
 		$less_vars->add_keyword( 'header-floating_navigation-bg-repeat', 'no-repeat' );
 	}
 
-	// $less_vars->add_keyword( 'floating-header-bg-attachment', ( of_get_option( 'header-floating_navigation-bg-is_fixed' ) ? 'fixed' : '~""' ) );
-
-	$less_vars->add_rgba_color( 'float-menu-line-decoration-color', of_get_option( 'header-floating_navigation-decoration-color' ) );
-	$less_vars->add_pixel_number( 'float-menu-line-decoration-size', of_get_option('header-floating_navigation-decoration-line_size' ));
+	$less_vars->add_rgba_color(
+		'float-menu-line-decoration-color',
+		of_get_option( 'header-floating_navigation-decoration-color' )
+	);
+	$less_vars->add_pixel_number(
+		'float-menu-line-decoration-size',
+		of_get_option( 'header-floating_navigation-decoration-line_size' )
+	);
 
 	/**
 	 * Header & Top Bar -> Main menu
@@ -829,7 +927,10 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 	$less_vars->add_pixel_number( 'menu-font-size', $menu_typography['font_size'] );
 	$less_vars->add_keyword( 'menu-text-transform', $menu_typography['text_transform'] );
 
-	$less_vars->add_pixel_number( 'outside-item-custom-margin', of_get_option( 'header-menu-item-surround_margins-custom-margin' ) );
+	$less_vars->add_pixel_number(
+		'outside-item-custom-margin',
+		of_get_option( 'header-menu-item-surround_margins-custom-margin' )
+	);
 
 	$menu_subtitle_typography = The7_Option_Field_Typography::sanitize(
 		of_get_option( 'header-menu-subtitle-typography' )
@@ -848,20 +949,26 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 
 	$less_vars->add_pixel_number( 'main-menu-icon-size', of_get_option( 'header-menu-icon-size', '16' ) );
 
-	$less_vars->add_paddings( array(
-		'menu-item-padding-top',
-		'menu-item-padding-right',
-		'menu-item-padding-bottom',
-		'menu-item-padding-left',
-	), of_get_option( 'header-menu-item-padding' ) );
+	$less_vars->add_paddings(
+		array(
+			'menu-item-padding-top',
+			'menu-item-padding-right',
+			'menu-item-padding-bottom',
+			'menu-item-padding-left',
+		),
+		of_get_option( 'header-menu-item-padding' )
+	);
 
-	$less_vars->add_paddings( array(
-		'menu-item-margin-top',
-		'menu-item-margin-right',
-		'menu-item-margin-bottom',
-		'menu-item-margin-left',
-	), of_get_option( 'header-menu-item-margin' ) );
-	$less_vars->add_pixel_number( 'menu-item-divider-width', of_get_option( 'header-menu-dividers-width') );
+	$less_vars->add_paddings(
+		array(
+			'menu-item-margin-top',
+			'menu-item-margin-right',
+			'menu-item-margin-bottom',
+			'menu-item-margin-left',
+		),
+		of_get_option( 'header-menu-item-margin' )
+	);
+	$less_vars->add_pixel_number( 'menu-item-divider-width', of_get_option( 'header-menu-dividers-width' ) );
 
 	if ( 'custom' === of_get_option( 'header-menu-dividers-height-style' ) ) {
 
@@ -875,7 +982,10 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 
 	$less_vars->add_rgba_color( 'menu-tem-divider-color', of_get_option( 'header-menu-dividers-color' ) );
 
-	$less_vars->add_pixel_number( 'menu-decor-border-radius', of_get_option( 'header-menu-decoration-other-border-radius' ) );
+	$less_vars->add_pixel_number(
+		'menu-decor-border-radius',
+		of_get_option( 'header-menu-decoration-other-border-radius' )
+	);
 
 	// Floating menu default font colors.
 	$floating_menu_default_colors = array(
@@ -904,7 +1014,7 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 		),
 	);
 	foreach ( $floating_menu_default_colors as $fm_def_color ) {
-		if ( in_array( of_get_option( $fm_def_color['test_opt'] ), array( false, 'default' ) ) ) {
+		if ( in_array( of_get_option( $fm_def_color['test_opt'] ), array( false, 'default' ), true ) ) {
 			$less_vars->copy_var( $fm_def_color['default_vars'][0], $fm_def_color['var'][0] );
 			if ( isset( $fm_def_color['default_vars'][1] ) ) {
 				$less_vars->copy_var( $fm_def_color['default_vars'][1], $fm_def_color['var'][1] );
@@ -947,34 +1057,61 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 
 	$less_vars->add_hex_color( 'submenu-color', of_get_option( 'header-menu-submenu-font-color' ) );
 
-
 	$less_vars->add_pixel_number( 'sub-menu-icon-size', of_get_option( 'header-menu-submenu-icon-size' ) );
 
-	$less_vars->add_paddings( array(
-		'submenu-item-padding-top',
-		'submenu-item-padding-right',
-		'submenu-item-padding-bottom',
-		'submenu-item-padding-left',
-	), of_get_option( 'header-menu-submenu-item-padding' ) );
+	$less_vars->add_paddings(
+		array(
+			'submenu-item-padding-top',
+			'submenu-item-padding-right',
+			'submenu-item-padding-bottom',
+			'submenu-item-padding-left',
+		),
+		of_get_option( 'header-menu-submenu-item-padding' )
+	);
 
-	$less_vars->add_paddings( array(
-		'submenu-item-margin-top',
-		'submenu-item-margin-right',
-		'submenu-item-margin-bottom',
-		'submenu-item-margin-left',
-	), of_get_option( 'header-menu-submenu-item-margin' ) );
+	$less_vars->add_paddings(
+		array(
+			'submenu-item-margin-top',
+			'submenu-item-margin-right',
+			'submenu-item-margin-bottom',
+			'submenu-item-margin-left',
+		),
+		of_get_option( 'header-menu-submenu-item-margin' )
+	);
 
 	$less_vars->add_rgba_color( 'submenu-bg-color', of_get_option( 'header-menu-submenu-bg-color' ) );
 
 	$less_vars->add_pixel_number( 'submenu-width', of_get_option( 'header-menu-submenu-bg-width' ) );
-	$less_vars->add_paddings( array(
-		'submenu-padding-top',
-		'submenu-padding-right',
-		'submenu-padding-bottom',
-		'submenu-padding-left',
-	), of_get_option( 'header-menu-submenu-bg-padding' ) );
+	$less_vars->add_paddings(
+		array(
+			'submenu-padding-top',
+			'submenu-padding-right',
+			'submenu-padding-bottom',
+			'submenu-padding-left',
+		),
+		of_get_option( 'header-menu-submenu-bg-padding' )
+	);
 
-	//Mega menu
+	// Temporary fix. Bug was intoduced in 21c6b9c0bd7f0ee943ddf9cd79997e42e0a98b96 commit.
+	$less_vars->add_hex_color(
+		'mega-menu-title-color',
+		of_get_option( 'header-mega-menu-title-font-color', '#333333' )
+	);
+	$less_vars->add_hex_color( 'mega-menu-desc-color', of_get_option( 'header-mega-menu-desc-font-color', '#333333' ) );
+	$less_vars->add_hex_color(
+		'mega-menu-widget-title-color',
+		of_get_option( 'header-mega-menu-widget-title-color', '#333333' )
+	);
+	$less_vars->add_hex_color(
+		'mega-menu-widget-color',
+		of_get_option( 'header-mega-menu-widget-font-color', '#333333' )
+	);
+	$less_vars->add_hex_color(
+		'mega-menu-widget-accent-color',
+		of_get_option( 'header-mega-menu-widget-accent-color', '#333333' )
+	);
+
+	// Mega menu.
 	if ( The7_Admin_Dashboard_Settings::get( 'mega-menu' ) ) {
 		$megamenu_typography = The7_Option_Field_Typography::sanitize(
 			of_get_option( 'header-mega-menu-title-typography' )
@@ -989,7 +1126,6 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 		);
 		$less_vars->add_pixel_number( 'mega-menu-title-font-size', $megamenu_typography['font_size'] );
 		$less_vars->add_keyword( 'mega-menu-title-text-transform', $megamenu_typography['text_transform'] );
-		$less_vars->add_hex_color( 'mega-menu-title-color', of_get_option( 'header-mega-menu-title-font-color' ) );
 		$less_vars->add_pixel_number(
 			'mega-menu-title-icon-size',
 			of_get_option( 'header-mega-menu-title-icon-size', '26' )
@@ -1007,16 +1143,7 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 			$megamenu_desc_typography['font_family']
 		);
 		$less_vars->add_pixel_number( 'mega-menu-desc-font-size', $megamenu_desc_typography['font_size'] );
-		$less_vars->add_hex_color( 'mega-menu-desc-color', of_get_option( 'header-mega-menu-desc-font-color' ) );
-		$less_vars->add_hex_color(
-			'mega-menu-widget-title-color',
-			of_get_option( 'header-mega-menu-widget-title-color' )
-		);
-		$less_vars->add_hex_color( 'mega-menu-widget-color', of_get_option( 'header-mega-menu-widget-font-color' ) );
-		$less_vars->add_hex_color(
-			'mega-menu-widget-accent-color',
-			of_get_option( 'header-mega-menu-widget-accent-color' )
-		);
+
 		$less_vars->add_paddings(
 			array(
 				'mega-col-padding-top',
@@ -1048,21 +1175,31 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 			'mega-submenu-col-width',
 			of_get_option( 'header-mega-menu-submenu-column-width' )
 		);
+
+		$less_vars->add_pixel_number(
+			'mega-submenu-item-2-level-spacing',
+			of_get_option( 'header-mega-menu-submenu-2-level-spacing' )
+		);
 	}
 
 	$less_vars->add_pixel_number( 'soc-icons-bg-size', of_get_option( 'header-elements-soc_icons-bg-size', '26' ) );
 
 	$less_vars->add_pixel_number( 'soc-icons-size', of_get_option( 'header-elements-soc_icons-size', '16' ) );
 
-	$less_vars->add_pixel_number( 'soc-icons-border-width', of_get_option( 'header-elements-soc_icons_border_width', '1' ) );
+	$less_vars->add_pixel_number(
+		'soc-icons-border-width',
+		of_get_option( 'header-elements-soc_icons_border_width', '1' )
+	);
 
-	$less_vars->add_pixel_number( 'soc-icons-border-radius', of_get_option( 'header-elements-soc_icons_border_radius', '100' ) );
+	$less_vars->add_pixel_number(
+		'soc-icons-border-radius',
+		of_get_option( 'header-elements-soc_icons_border_radius', '100' )
+	);
 	$less_vars->add_pixel_number( 'soc-icons-gap', of_get_option( 'header-elements-soc_icons_gap', '4px' ) );
 
 	$less_vars->add_rgba_color( 'top-icons-color', of_get_option( 'header-elements-soc_icons-color' ) );
 
 	$less_vars->add_rgba_color( 'soc-ico-hover-color', of_get_option( 'header-elements-soc_icons-hover-color' ) );
-
 
 	/**
 	 * Header & Top Bar -> Layout
@@ -1126,12 +1263,15 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 		$header_navigation = 'header-' . of_get_option( 'header_navigation' ) . '-';
 	}
 
-	$less_vars->add_paddings( array(
-		'top-content-padding',
-		'right-content-padding',
-		'bottom-content-padding',
-		'left-content-padding',
-	), of_get_option( "{$header_navigation}content-padding" ) );
+	$less_vars->add_paddings(
+		array(
+			'top-content-padding',
+			'right-content-padding',
+			'bottom-content-padding',
+			'left-content-padding',
+		),
+		of_get_option( "{$header_navigation}content-padding" )
+	);
 
 	$less_vars->add_paddings(
 		array(
@@ -1151,17 +1291,23 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 		'px|%'
 	);
 
-	$less_vars->add_paddings( array(
-		'classic-menu-top-margin',
-		'classic-menu-bottom-margin',
-	), of_get_option( "{$header}menu-margin" ) );
+	$less_vars->add_paddings(
+		array(
+			'classic-menu-top-margin',
+			'classic-menu-bottom-margin',
+		),
+		of_get_option( "{$header}menu-margin" )
+	);
 
-	$less_vars->add_paddings( array(
-		'top-overlay-content-padding',
-		'right-overlay-content-padding',
-		'bottom-overlay-content-padding',
-		'left-overlay-content-padding',
-	), of_get_option( 'header-overlay-content-padding' ) );
+	$less_vars->add_paddings(
+		array(
+			'top-overlay-content-padding',
+			'right-overlay-content-padding',
+			'bottom-overlay-content-padding',
+			'left-overlay-content-padding',
+		),
+		of_get_option( 'header-overlay-content-padding' )
+	);
 
 	/**
 	 * Header & Top Bar -> Additional elements
@@ -1182,7 +1328,10 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 
 	$near_menu_font_color = of_get_option( "{$header}elements-near_menu-font_color" );
 	$less_vars->add_hex_color( 'additional-menu-elements-color', $near_menu_font_color );
-	$less_vars->add_pixel_number( 'additional-menu-elements-icon-size', of_get_option( "{$header}elements-near_menu-custom-icon-size" ) );
+	$less_vars->add_pixel_number(
+		'additional-menu-elements-icon-size',
+		of_get_option( "{$header}elements-near_menu-custom-icon-size" )
+	);
 	$near_menu_icon_color = of_get_option( "{$header}elements-near_menu-custom-icon-color" );
 	if ( ! $near_menu_icon_color ) {
 		$near_menu_icon_color = $near_menu_font_color;
@@ -1202,7 +1351,10 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 	);
 	$less_vars->add_pixel_number( 'additional-logo-elements-font-size', $near_logo_typography['font_size'] );
 
-	$less_vars->add_pixel_number( 'additional-logo-elements-icon-size', of_get_option( "{$header}elements-near_logo-custom-icon-size" ) );
+	$less_vars->add_pixel_number(
+		'additional-logo-elements-icon-size',
+		of_get_option( "{$header}elements-near_logo-custom-icon-size" )
+	);
 	$near_logo_font_color = of_get_option( "{$header}elements-near_logo-font_color" );
 	$less_vars->add_hex_color( 'additional-logo-elements-color', $near_logo_font_color );
 	$near_logo_icon_color = of_get_option( "{$header}elements-near_logo-custom-icon-color" );
@@ -1224,7 +1376,10 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 	);
 	$less_vars->add_pixel_number( 'microwidgets-in-top-line-font-size', $in_top_line_typography['font_size'] );
 
-	$less_vars->add_pixel_number( 'microwidgets-in-top-line-icon-size', of_get_option( 'header-top_line-elements-in_top_line-custom-icon-size' ) );
+	$less_vars->add_pixel_number(
+		'microwidgets-in-top-line-icon-size',
+		of_get_option( 'header-top_line-elements-in_top_line-custom-icon-size' )
+	);
 
 	$in_top_line_font_color = of_get_option( 'header-top_line-elements-in_top_line-font_color' );
 	$less_vars->add_hex_color( 'microwidgets-in-top-line-color', $in_top_line_font_color );
@@ -1236,12 +1391,12 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 
 	$less_vars->add_pixel_number( 'header-height', of_get_option( "{$header}height", '140' ) );
 
-	$less_vars->add_pixel_number( 'side-header-h-stroke-height', of_get_option( "layout-top_line-height", '130' ) );
+	$less_vars->add_pixel_number( 'side-header-h-stroke-height', of_get_option( 'layout-top_line-height', '130' ) );
 
-	$less_vars->add_pixel_number( 'side-header-v-stroke-width', of_get_option( "header-side_line-width", '60' ) );
+	$less_vars->add_pixel_number( 'side-header-v-stroke-width', of_get_option( 'header-side_line-width', '60' ) );
 	$less_vars->add_number( 'header-side-width', of_get_option( 'header-side-width', '300px' ) );
 	$less_vars->add_number( 'header-slide-out-width', of_get_option( 'header-slide_out-width', '300px' ) );
-	$less_vars->add_number( 'header-side-content-width', of_get_option( "header-overlay-content-width", '220px' ) );
+	$less_vars->add_number( 'header-side-content-width', of_get_option( 'header-overlay-content-width', '220px' ) );
 
 	$button_typography = The7_Option_Field_Typography::sanitize(
 		of_get_option( 'header-elements-button-1-typography' )
@@ -1256,16 +1411,28 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 	);
 	$less_vars->add_pixel_number( 'microwidget-button-font-size', $button_typography['font_size'] );
 
-	$less_vars->add_pixel_number( 'microwidget-button-icon-size', of_get_option( 'header-elements-button-1-icon-size' ) );
+	$less_vars->add_pixel_number(
+		'microwidget-button-icon-size',
+		of_get_option( 'header-elements-button-1-icon-size' )
+	);
 	$less_vars->add_pixel_number( 'microwidget-button-icon-gap', of_get_option( 'header-elements-button-1-icon_gap' ) );
-	$less_vars->add_pixel_number( 'microwidget-button-border-radius', of_get_option( 'header-elements-button-1-border_radius' ) );
-	$less_vars->add_pixel_number( 'microwidget-button-border-width', of_get_option( 'header-elements-button-1-border_width' ) );
-	$less_vars->add_paddings( array(
-		'microwidget-button-top-padding',
-		'microwidget-button-right-padding',
-		'microwidget-button-bottom-padding',
-		'microwidget-button-left-padding',
-	), of_get_option( 'header-elements-button-1-padding' ) );
+	$less_vars->add_pixel_number(
+		'microwidget-button-border-radius',
+		of_get_option( 'header-elements-button-1-border_radius' )
+	);
+	$less_vars->add_pixel_number(
+		'microwidget-button-border-width',
+		of_get_option( 'header-elements-button-1-border_width' )
+	);
+	$less_vars->add_paddings(
+		array(
+			'microwidget-button-top-padding',
+			'microwidget-button-right-padding',
+			'microwidget-button-bottom-padding',
+			'microwidget-button-left-padding',
+		),
+		of_get_option( 'header-elements-button-1-padding' )
+	);
 
 	$button_typography = The7_Option_Field_Typography::sanitize(
 		of_get_option( 'header-elements-button-2-typography' )
@@ -1280,16 +1447,31 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 	);
 	$less_vars->add_pixel_number( 'microwidget-button-2-font-size', $button_typography['font_size'] );
 
-	$less_vars->add_pixel_number( 'microwidget-button-2-icon-gap', of_get_option( 'header-elements-button-2-icon_gap' ) );
-	$less_vars->add_pixel_number( 'microwidget-button-2-icon-size', of_get_option( 'header-elements-button-2-icon-size' ) );
-	$less_vars->add_pixel_number( 'microwidget-button-2-border-radius', of_get_option( 'header-elements-button-2-border_radius' ) );
-	$less_vars->add_pixel_number( 'microwidget-button-2-border-width', of_get_option( 'header-elements-button-2-border_width' ) );
-	$less_vars->add_paddings( array(
-		'microwidget-button-2-top-padding',
-		'microwidget-button-2-right-padding',
-		'microwidget-button-2-bottom-padding',
-		'microwidget-button-2-left-padding',
-	), of_get_option( 'header-elements-button-2-padding' ) );
+	$less_vars->add_pixel_number(
+		'microwidget-button-2-icon-gap',
+		of_get_option( 'header-elements-button-2-icon_gap' )
+	);
+	$less_vars->add_pixel_number(
+		'microwidget-button-2-icon-size',
+		of_get_option( 'header-elements-button-2-icon-size' )
+	);
+	$less_vars->add_pixel_number(
+		'microwidget-button-2-border-radius',
+		of_get_option( 'header-elements-button-2-border_radius' )
+	);
+	$less_vars->add_pixel_number(
+		'microwidget-button-2-border-width',
+		of_get_option( 'header-elements-button-2-border_width' )
+	);
+	$less_vars->add_paddings(
+		array(
+			'microwidget-button-2-top-padding',
+			'microwidget-button-2-right-padding',
+			'microwidget-button-2-bottom-padding',
+			'microwidget-button-2-left-padding',
+		),
+		of_get_option( 'header-elements-button-2-padding' )
+	);
 
 	unset( $header );
 
@@ -1304,18 +1486,23 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 		'floating'           => 'header-style-floating',
 		'mobile'             => 'header-style-mobile',
 		'transparent-mobile' => 'header-style-transparent-mobile',
+		'floating-mobile'    => 'header-style-floating-mobile',
 		'bottom'             => 'bottom_bar',
 		'mixed'              => 'header-style-mixed',
-		'floating-top'       => 'header-style-mixed-top_line-floating',
+		'floating-mixed'     => 'header-style-mixed-top_line-floating',
+		'transparent-mixed'  => 'header-style-mixed-transparent-top_line',
 	);
 
 	foreach ( $indention as $var_prefix => $opt_prefix ) {
-		$less_vars->add_paddings( array(
-			"{$var_prefix}-logo-top-padding",
-			"{$var_prefix}-logo-right-padding",
-			"{$var_prefix}-logo-bottom-padding",
-			"{$var_prefix}-logo-left-padding",
-		), of_get_option( "{$opt_prefix}-logo-padding" ) );
+		$less_vars->add_paddings(
+			array(
+				"{$var_prefix}-logo-top-padding",
+				"{$var_prefix}-logo-right-padding",
+				"{$var_prefix}-logo-bottom-padding",
+				"{$var_prefix}-logo-left-padding",
+			),
+			of_get_option( "{$opt_prefix}-logo-padding" )
+		);
 	}
 	unset( $indention, $var_prefix );
 
@@ -1327,35 +1514,43 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 	$less_vars->add_pixel_number( 'bottom_bar-line-size', of_get_option( 'bottom_bar-line_size' ) );
 	$less_vars->add_rgba_color( 'bottom-bg-color', of_get_option( 'bottom_bar-bg_color' ) );
 
-	$less_vars->add_image( array(
-		'bottom-bg-image',
-		'bottom-bg-repeat',
-		'bottom-bg-position-x',
-		'bottom-bg-position-y',
-	), of_get_option( 'bottom_bar-bg_image' ) );
+	$less_vars->add_image(
+		array(
+			'bottom-bg-image',
+			'bottom-bg-repeat',
+			'bottom-bg-position-x',
+			'bottom-bg-position-y',
+		),
+		of_get_option( 'bottom_bar-bg_image' )
+	);
 
 	/**
 	 * Fonts.
 	 */
+	$less_vars->add_font(
+		array(
+			'base-font-family',
+			'base-font-weight',
+			'base-font-style',
+		),
+		of_get_option( 'fonts-font_family' )
+	);
 
-	$less_vars->add_font( array(
-		'base-font-family',
-		'base-font-weight',
-		'base-font-style',
-	), of_get_option( 'fonts-font_family' ) );
+	$font = The7_Option_Field_Font_Sizes::sanitize( of_get_option( 'fonts-normal_size' ) );
+	$less_vars->add_number( 'base-font-size', $font['font_size'] );
+	$less_vars->add_number( 'base-line-height', $font['line_height'] );
 
-	$less_vars->add_pixel_number( 'base-line-height', of_get_option( 'fonts-normal_size_line_height', '20' ) );
+	$font = The7_Option_Field_Font_Sizes::sanitize( of_get_option( 'fonts-big_size' ) );
+	$less_vars->add_number( 'text-big-font-size', $font['font_size'] );
+	$less_vars->add_number( 'text-big-line-height', $font['line_height'] );
 
-	$less_vars->add_pixel_number( 'text-small-line-height', of_get_option( 'fonts-small_size_line_height', '20' ) );
+	$font = The7_Option_Field_Font_Sizes::sanitize( of_get_option( 'fonts-small_size' ) );
+	$less_vars->add_number( 'text-small-font-size', $font['font_size'] );
+	$less_vars->add_number( 'text-small-line-height', $font['line_height'] );
 
-	$less_vars->add_pixel_number( 'text-big-line-height', of_get_option( 'fonts-big_size_line_height', '20' ) );
-
-	$less_vars->add_pixel_number( 'base-font-size', of_get_option( 'fonts-normal_size', '13' ) );
-
-	$less_vars->add_pixel_number( 'text-small', of_get_option( 'fonts-small_size', '11' ) );
-
-	$less_vars->add_pixel_number( 'text-big', of_get_option( 'fonts-big_size', '15' ) );
-
+	the7_less_add_responsive_font( $less_vars, 'fonts-widget-content', 'widget-content' );
+	the7_less_add_responsive_font( $less_vars, 'fonts-widget-title', 'widget-title' );
+	$less_vars->add_pixel_number( 'widget-gap', of_get_option( 'widget_gap' ) );
 	/**
 	 * Sidebar.
 	 */
@@ -1370,12 +1565,15 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 
 	$less_vars->add_rgba_color( 'sidebar-outline-color', of_get_option( 'sidebar-decoration_outline_color' ) );
 
-	$less_vars->add_image( array(
-		'widget-sidebar-bg-image',
-		'widget-sidebar-bg-repeat',
-		'widget-sidebar-bg-position-x',
-		'widget-sidebar-bg-position-y',
-	), of_get_option( 'sidebar-bg_image' ) );
+	$less_vars->add_image(
+		array(
+			'widget-sidebar-bg-image',
+			'widget-sidebar-bg-repeat',
+			'widget-sidebar-bg-position-x',
+			'widget-sidebar-bg-position-y',
+		),
+		of_get_option( 'sidebar-bg_image' )
+	);
 
 	$less_vars->add_hex_color( 'widget-sidebar-color', of_get_option( 'sidebar-primary_text_color', '#686868' ) );
 
@@ -1391,12 +1589,15 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 
 	$less_vars->add_pixel_number( 'footer-decoration-line-size', of_get_option( 'footer-decoration-line_size' ) );
 
-	$less_vars->add_image( array(
-		'footer-bg-image',
-		'footer-bg-repeat',
-		'footer-bg-position-x',
-		'footer-bg-position-y',
-	), of_get_option( 'footer-bg_image' ) );
+	$less_vars->add_image(
+		array(
+			'footer-bg-image',
+			'footer-bg-repeat',
+			'footer-bg-position-x',
+			'footer-bg-position-y',
+		),
+		of_get_option( 'footer-bg_image' )
+	);
 
 	$less_vars->add_hex_color( 'widget-footer-color', of_get_option( 'footer-primary_text_color', '#828282' ) );
 
@@ -1432,10 +1633,13 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 	$less_vars->add_pixel_number( 'bottom-bar-switch', of_get_option( 'bottom_bar-collapse_after', '990' ) );
 	$less_vars->add_pixel_number( 'bottom-bar-menu-switch', of_get_option( 'bottom_bar-menu-collapse_after', '778' ) );
 	$less_vars->add_pixel_number( 'bottom-bar-height', of_get_option( 'bottom_bar-height', '60' ) );
-	$less_vars->add_paddings( array(
-		'bottom-bar-top-padding',
-		'bottom-bar-bottom-padding',
-	), of_get_option( 'bottom_bar-padding' ) );
+	$less_vars->add_paddings(
+		array(
+			'bottom-bar-top-padding',
+			'bottom-bar-bottom-padding',
+		),
+		of_get_option( 'bottom_bar-padding' )
+	);
 
 	/**
 	 * Page titles.
@@ -1446,17 +1650,36 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 
 	$less_vars->add_pixel_number( 'page-title-height', of_get_option( 'general-title_height', '170' ) );
 
-	$less_vars->add_paddings( array(
-		'page-title-top-padding',
-		'page-title-bottom-padding',
-	), of_get_option( 'page_title-padding' ), 'px|%' );
+	$less_vars->add_paddings(
+		array(
+			'page-title-top-padding',
+			'page-title-bottom-padding',
+		),
+		of_get_option( 'page_title-padding' ),
+		'px|%'
+	);
 
-	$less_vars->add_keyword( 'page-title-bg-size', ( of_get_option( 'general-title_bg_fullscreen' ) ? '~"cover"' : '~"auto auto"' ) );
+	$less_vars->add_keyword(
+		'page-title-bg-size',
+		( of_get_option( 'general-title_bg_fullscreen' ) ? '~"cover"' : '~"auto auto"' )
+	);
 
-	$less_vars->add_pixel_number( 'general-title-responsiveness', of_get_option( 'general-titles-responsiveness-switch', '990' ) );
-	$less_vars->add_pixel_number( 'page-responsive-title-height', of_get_option( 'general-responsive_title_height', '150' ) );
-	$less_vars->add_pixel_number( 'title-responsive-font-size', of_get_option( 'general-responsive_title_size', '20' ) );
-	$less_vars->add_pixel_number( 'page-responsive-title-line-height', of_get_option( 'general-responsive_title_line_height', '30' ) );
+	$less_vars->add_pixel_number(
+		'general-title-responsiveness',
+		of_get_option( 'general-titles-responsiveness-switch', '990' )
+	);
+	$less_vars->add_pixel_number(
+		'page-responsive-title-height',
+		of_get_option( 'general-responsive_title_height', '150' )
+	);
+	$less_vars->add_pixel_number(
+		'title-responsive-font-size',
+		of_get_option( 'general-responsive_title_size', '20' )
+	);
+	$less_vars->add_pixel_number(
+		'page-responsive-title-line-height',
+		of_get_option( 'general-responsive_title_line_height', '30' )
+	);
 
 	/**
 	 * General.
@@ -1470,12 +1693,15 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 
 	$less_vars->add_rgba_color( 'beautiful-spinner-color', of_get_option( 'general-spinner_color' ) );
 
-	$less_vars->add_image( array(
-		'page-bg-image',
-		'page-bg-repeat',
-		'page-bg-position-x',
-		'page-bg-position-y',
-	), of_get_option( 'general-bg_image' ) );
+	$less_vars->add_image(
+		array(
+			'page-bg-image',
+			'page-bg-repeat',
+			'page-bg-position-x',
+			'page-bg-position-y',
+		),
+		of_get_option( 'general-bg_image' )
+	);
 
 	$less_vars->add_keyword( 'page-bg-size', ( of_get_option( 'general-bg_fullscreen' ) ? 'cover' : 'auto' ) );
 
@@ -1487,12 +1713,15 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 
 	$less_vars->add_hex_color( 'body-bg-color', of_get_option( 'general-boxed_bg_color', '#252525' ) );
 
-	$less_vars->add_image( array(
-		'body-bg-image',
-		'body-bg-repeat',
-		'body-bg-position-x',
-		'body-bg-position-y',
-	), of_get_option( 'general-boxed_bg_image' ) );
+	$less_vars->add_image(
+		array(
+			'body-bg-image',
+			'body-bg-repeat',
+			'body-bg-position-x',
+			'body-bg-position-y',
+		),
+		of_get_option( 'general-boxed_bg_image' )
+	);
 
 	$less_vars->add_keyword( 'body-bg-size', ( of_get_option( 'general-boxed_bg_fullscreen' ) ? 'cover' : 'auto' ) );
 
@@ -1510,34 +1739,49 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 
 	$less_vars->add_pixel_number( 'border-radius-size', of_get_option( 'general-border_radius', '8' ) );
 
-	$less_vars->add_pixel_number( 'filter-border-radius', of_get_option( 'general-filter_style-minimal-border_radius', '100' ) );
+	$less_vars->add_pixel_number(
+		'filter-border-radius',
+		of_get_option( 'general-filter_style-minimal-border_radius', '100' )
+	);
 
-	$less_vars->add_pixel_number( 'filter-decoration-line-size', of_get_option( 'general-filter_style-material-line_size', '2' ) );
+	$less_vars->add_pixel_number(
+		'filter-decoration-line-size',
+		of_get_option( 'general-filter_style-material-line_size', '2' )
+	);
 
 	$filter_typography = The7_Option_Field_Typography::sanitize( of_get_option( 'filter-typography' ) );
-	$less_vars->add_font( array(
-		'filter-font-family',
-		'filter-font-weight',
-		'filter-font-style',
-	), $filter_typography['font_family'] );
+	$less_vars->add_font(
+		array(
+			'filter-font-family',
+			'filter-font-weight',
+			'filter-font-style',
+		),
+		$filter_typography['font_family']
+	);
 	$less_vars->add_pixel_number( 'filter-font-size', $filter_typography['font_size'] );
 	$less_vars->add_keyword( 'filter-text-transform', $filter_typography['text_transform'] );
 
 	$less_vars->add_pixel_number( 'navigation-margin', of_get_option( 'general-navigation_margin' ) );
 
-	$less_vars->add_paddings( array(
-		'filter-item-padding-top',
-		'filter-item-padding-right',
-		'filter-item-padding-bottom',
-		'filter-item-padding-left',
-	), of_get_option( 'general-filter-padding' ) );
+	$less_vars->add_paddings(
+		array(
+			'filter-item-padding-top',
+			'filter-item-padding-right',
+			'filter-item-padding-bottom',
+			'filter-item-padding-left',
+		),
+		of_get_option( 'general-filter-padding' )
+	);
 
-	$less_vars->add_paddings( array(
-		'filter-item-margin-top',
-		'filter-item-margin-right',
-		'filter-item-margin-bottom',
-		'filter-item-margin-left',
-	), of_get_option( 'general-filter-margin' ) );
+	$less_vars->add_paddings(
+		array(
+			'filter-item-margin-top',
+			'filter-item-margin-right',
+			'filter-item-margin-bottom',
+			'filter-item-margin-left',
+		),
+		of_get_option( 'general-filter-margin' )
+	);
 
 	$less_vars->add_paddings(
 		array(
@@ -1568,24 +1812,18 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 	 * Fonts.
 	 */
 
+	$less_vars->add_hex_color( 'links-color', of_get_option( 'content-links_color' ) );
+
 	$less_vars->add_hex_color( 'base-color', of_get_option( 'content-primary_text_color' ) );
 	$less_vars->add_hex_color( 'secondary-text-color', of_get_option( 'content-secondary_text_color' ) );
-	$less_vars->add_hex_color( 'links-color', of_get_option( 'content-links_color' ) );
 	$less_vars->add_hex_color( 'title-color', of_get_option( 'content-headers_color' ) );
 
 	for ( $id = 1; $id <= 6; $id++ ) {
-		$header_typography = The7_Option_Field_Typography::sanitize( of_get_option( "fonts-h{$id}-typography" ) );
-		$less_vars->add_font( array(
-			"h{$id}-font-family",
-			"h{$id}-font-weight",
-			"h{$id}-font-style",
-		), $header_typography['font_family'] );
-		$less_vars->add_pixel_number( "h{$id}-font-size", $header_typography['font_size'] );
-		$less_vars->add_pixel_number( "h{$id}-line-height", $header_typography['line_height'] );
-		$less_vars->add_keyword( "h{$id}-text-transform", $header_typography['text_transform'] );
+		the7_less_add_responsive_font( $less_vars, "fonts-h{$id}-typography", "h{$id}" );
+		$less_vars->storage()->start_excluding_css_vars();
 		$less_vars->add_hex_color( "h{$id}-color", of_get_option( 'content-headers_color' ) );
+		 $less_vars->storage()->end_excluding_css_vars();
 	}
-
 	/**
 	 * Mobile.
 	 */
@@ -1609,20 +1847,32 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 		'px|%'
 	);
 	$less_vars->add_rgba_color( 'mobile-header-bg-color', of_get_option( 'header-mobile-header-bg-color' ) );
+	$less_vars->add_rgba_color( 'mobile-floating-header-bg-color', of_get_option( 'header-mobile-floating-bg-color' ) );
 	$less_vars->add_rgba_color( 'mobile-header-decoration-color', of_get_option( 'header-mobile-decoration-color' ) );
-	$less_vars->add_pixel_number( 'mobile-header-decoration-size', of_get_option( 'header-mobile-decoration-line_size' ) );
-	
+	$less_vars->add_pixel_number(
+		'mobile-header-decoration-size',
+		of_get_option( 'header-mobile-decoration-line_size' )
+	);
+
 	$less_vars->add_pixel_number( 'mobile-menu-divider-height', of_get_option( 'header-mobile-menu-dividers-height' ) );
 	$less_vars->add_rgba_color( 'mobile-menu-divider-color', of_get_option( 'header-mobile-menu-dividers-color' ) );
 
-	$mobile_microwidgets_typography = The7_Option_Field_Typography::sanitize( of_get_option( 'header-mobile-microwidgets-typography' ) );
-	$less_vars->add_font( array(
-		'mobile-microwidgets-font-family',
-		'mobile-microwidgets-font-weight',
-		'mobile-microwidgets-font-style',
-	), $mobile_microwidgets_typography['font_family'] );
+	$mobile_microwidgets_typography = The7_Option_Field_Typography::sanitize(
+		of_get_option( 'header-mobile-microwidgets-typography' )
+	);
+	$less_vars->add_font(
+		array(
+			'mobile-microwidgets-font-family',
+			'mobile-microwidgets-font-weight',
+			'mobile-microwidgets-font-style',
+		),
+		$mobile_microwidgets_typography['font_family']
+	);
 	$less_vars->add_pixel_number( 'mobile-microwidgets-font-size', $mobile_microwidgets_typography['font_size'] );
-	$less_vars->add_pixel_number( 'mobile-microwidgets-icon-size', of_get_option( 'header-mobile-microwidgets-custom-icon-size' ) );
+	$less_vars->add_pixel_number(
+		'mobile-microwidgets-icon-size',
+		of_get_option( 'header-mobile-microwidgets-custom-icon-size' )
+	);
 
 	$header_mobile_micro_widgets_font_color = of_get_option( 'header-mobile-microwidgets-font-color' );
 	$less_vars->add_hex_color( 'mobile-microwidgets-color', $header_mobile_micro_widgets_font_color );
@@ -1648,7 +1898,10 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 		$menu_mobile_microwidgets_typography['font_size']
 	);
 
-	$less_vars->add_pixel_number( 'mobile-menu-microwidgets-icon-size', of_get_option( 'menu-mobile-microwidgets-custom-icon-size' ) );
+	$less_vars->add_pixel_number(
+		'mobile-menu-microwidgets-icon-size',
+		of_get_option( 'menu-mobile-microwidgets-custom-icon-size' )
+	);
 
 	$menu_mobile_micro_widgets_font_color = of_get_option( 'menu-mobile-microwidgets-font-color' );
 	$less_vars->add_hex_color( 'mobile-menu-microwidgets-color', $menu_mobile_micro_widgets_font_color );
@@ -1658,34 +1911,64 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 	}
 	$less_vars->add_rgba_color( 'mobile-menu-microwidgets-icon-color', $menu_mobile_micro_widgets_icon_color );
 
-	//hamburger
-	$less_vars->add_pixel_number( 'mobile-toggle-menu-border-radius', of_get_option( 'header-mobile-menu_icon-bg-border-radius', '0' ) );
+	// Hamburger.
+	$less_vars->add_pixel_number(
+		'mobile-toggle-menu-border-radius',
+		of_get_option( 'header-mobile-menu_icon-bg-border-radius', '0' )
+	);
 
-	$less_vars->add_pixel_number( 'mobile-hamburger-border-width', of_get_option( 'header-mobile-menu_icon-bg-border-width' ) );
-	
-	$less_vars->add_paddings( array(
-		'toggle-mobile-padding-top',
-		'toggle-mobile-padding-right',
-		'toggle-mobile-padding-bottom',
-		'toggle-mobile-padding-left',
-	), of_get_option( 'header-mobile-menu_icon-caption-padding' ) );
-	$less_vars->add_paddings( array(
-		'toggle-mobile-margin-top',
-		'toggle-mobile-margin-right',
-		'toggle-mobile-margin-bottom',
-		'toggle-mobile-margin-left',
-	), of_get_option( 'header-mobile-menu_icon-margin' ) );
-	$less_vars->add_rgba_color( 'mobile-toggle-menu-color', of_get_option( "header-mobile-menu_icon-color" ) );
-	$less_vars->add_rgba_color( 'mobile-toggle-menu-hover-color', of_get_option( "header-mobile-menu_icon-color-hover" ) );
+	$less_vars->add_pixel_number(
+		'mobile-hamburger-border-width',
+		of_get_option( 'header-mobile-menu_icon-bg-border-width' )
+	);
+
+	$less_vars->add_paddings(
+		array(
+			'toggle-mobile-padding-top',
+			'toggle-mobile-padding-right',
+			'toggle-mobile-padding-bottom',
+			'toggle-mobile-padding-left',
+		),
+		of_get_option( 'header-mobile-menu_icon-caption-padding' )
+	);
+	$less_vars->add_paddings(
+		array(
+			'toggle-mobile-margin-top',
+			'toggle-mobile-margin-right',
+			'toggle-mobile-margin-bottom',
+			'toggle-mobile-margin-left',
+		),
+		of_get_option( 'header-mobile-menu_icon-margin' )
+	);
+	$less_vars->add_rgba_color( 'mobile-toggle-menu-color', of_get_option( 'header-mobile-menu_icon-color' ) );
+	$less_vars->add_rgba_color(
+		'mobile-toggle-menu-hover-color',
+		of_get_option( 'header-mobile-menu_icon-color-hover' )
+	);
 
 	$less_vars->add_rgba_color( 'mobile-toggle-menu-bg-color', of_get_option( 'header-mobile-menu_icon-bg-color' ) );
-	$less_vars->add_rgba_color( 'mobile-toggle-menu-bg-hover-color', of_get_option( 'header-mobile-menu_icon-bg-color-hover' ) );
-	$less_vars->add_rgba_color( 'mobile-toggle-menu-border-color', of_get_option( 'header-mobile-menu_icon-border-color' ) );
-	$less_vars->add_rgba_color( 'mobile-toggle-menu-border-hover-color', of_get_option( 'header-mobile-menu_icon-border-hover-color' ) );
+	$less_vars->add_rgba_color(
+		'mobile-toggle-menu-bg-hover-color',
+		of_get_option( 'header-mobile-menu_icon-bg-color-hover' )
+	);
+	$less_vars->add_rgba_color(
+		'mobile-toggle-menu-border-color',
+		of_get_option( 'header-mobile-menu_icon-border-color' )
+	);
+	$less_vars->add_rgba_color(
+		'mobile-toggle-menu-border-hover-color',
+		of_get_option( 'header-mobile-menu_icon-border-hover-color' )
+	);
 
-	//Hamburger caption
-	$less_vars->add_hex_color( 'toggle-mobile-menu-caption-color', of_get_option( "header-mobile-menu_icon-caption_color" ) );
-	$less_vars->add_hex_color( 'toggle-mobile-menu-caption-color-hover', of_get_option( "header-mobile-menu_icon-caption_color-hover" ) );
+	// Hamburger caption.
+	$less_vars->add_hex_color(
+		'toggle-mobile-menu-caption-color',
+		of_get_option( 'header-mobile-menu_icon-caption_color' )
+	);
+	$less_vars->add_hex_color(
+		'toggle-mobile-menu-caption-color-hover',
+		of_get_option( 'header-mobile-menu_icon-caption_color-hover' )
+	);
 	$menu_caption_typography = The7_Option_Field_Typography::sanitize(
 		of_get_option( 'header-mobile-menu_icon-caption-typography' )
 	);
@@ -1702,9 +1985,15 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 
 	$less_vars->add_pixel_number( 'mobile-menu-caption-gap', of_get_option( 'header-mobile-menu_icon-caption_gap' ) );
 
-	//Mobile close hamburger
-	$less_vars->add_hex_color( 'close-mobile-menu-caption-color', of_get_option( "header-mobile-menu_close-caption_color" ) );
-	$less_vars->add_hex_color( 'close-mobile-menu-caption-color-hover', of_get_option( "header-mobile-menu_close-caption_color-hover" ) );
+	// Mobile close hamburger.
+	$less_vars->add_hex_color(
+		'close-mobile-menu-caption-color',
+		of_get_option( 'header-mobile-menu_close-caption_color' )
+	);
+	$less_vars->add_hex_color(
+		'close-mobile-menu-caption-color-hover',
+		of_get_option( 'header-mobile-menu_close-caption_color-hover' )
+	);
 	$menu_caption_typography = The7_Option_Field_Typography::sanitize(
 		of_get_option( 'header-mobile-menu-close_icon-caption-typography' )
 	);
@@ -1719,30 +2008,63 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 	$less_vars->add_pixel_number( 'close-mobile-menu-caption-font-size', $menu_caption_typography['font_size'] );
 	$less_vars->add_keyword( 'close-mobile-menu-caption-text-transform', $menu_caption_typography['text_transform'] );
 
-	$less_vars->add_pixel_number( 'close-mobile-menu-caption-gap', of_get_option( 'header-mobile-menu-close_icon-caption_gap' ) );
+	$less_vars->add_pixel_number(
+		'close-mobile-menu-caption-gap',
+		of_get_option( 'header-mobile-menu-close_icon-caption_gap' )
+	);
 
-	$less_vars->add_pixel_number( 'hamburger-mobile-close-border-radius', of_get_option( 'header-mobile-menu_close_icon-bg-border-radius' ) );
-	$less_vars->add_pixel_number( 'hamburger-mobile-close-border-width', of_get_option( 'header-mobile-menu_close_icon-bg-border-width' ) );
-	$less_vars->add_paddings( array(
-		'toggle-mobile-menu-close-padding-top',
-		'toggle-mobile-menu-close-padding-right',
-		'toggle-mobile-menu-close-padding-bottom',
-		'toggle-mobile-menu-close-padding-left',
-	), of_get_option( 'header-mobile-menu_close_icon-padding' ) );
+	$less_vars->add_pixel_number(
+		'hamburger-mobile-close-border-radius',
+		of_get_option( 'header-mobile-menu_close_icon-bg-border-radius' )
+	);
+	$less_vars->add_pixel_number(
+		'hamburger-mobile-close-border-width',
+		of_get_option( 'header-mobile-menu_close_icon-bg-border-width' )
+	);
+	$less_vars->add_paddings(
+		array(
+			'toggle-mobile-menu-close-padding-top',
+			'toggle-mobile-menu-close-padding-right',
+			'toggle-mobile-menu-close-padding-bottom',
+			'toggle-mobile-menu-close-padding-left',
+		),
+		of_get_option( 'header-mobile-menu_close_icon-padding' )
+	);
 
-	$less_vars->add_paddings( array(
-		'toggle-mobile-menu-close-top-margin',
-		'toggle-mobile-menu-close-right-margin',
-		'toggle-mobile-menu-close-bottom-margin',
-		'toggle-mobile-menu-close-left-margin',
-	), of_get_option( 'header-mobile-menu_close_icon-margin' ) );
+	$less_vars->add_paddings(
+		array(
+			'toggle-mobile-menu-close-top-margin',
+			'toggle-mobile-menu-close-right-margin',
+			'toggle-mobile-menu-close-bottom-margin',
+			'toggle-mobile-menu-close-left-margin',
+		),
+		of_get_option( 'header-mobile-menu_close_icon-margin' )
+	);
 
-	$less_vars->add_hex_color( 'toggle-mobile-menu-close-color', of_get_option( "header-mobile-menu_close_icon-color" ) );
-	$less_vars->add_hex_color( 'toggle-mobile-menu-close-hover-color', of_get_option( "header-mobile-menu_close_icon-hover-color" ) );
-	$less_vars->add_rgba_color( 'toggle-mobile-menu-close-bg-color', of_get_option( 'header-mobile-menu_close_icon-bg-color' ) );
-	$less_vars->add_rgba_color( 'toggle-mobile-menu-hover-bg-color', of_get_option( 'header-mobile-menu_icon-hover-bg-color' ) );
-	$less_vars->add_rgba_color( 'toggle-mobile-menu-close-border-color', of_get_option( 'header-mobile-menu_close_icon-border-color' ) );
-	$less_vars->add_rgba_color( 'toggle-mobile-menu-close-border-color-hover', of_get_option( 'header-mobile-menu_close_icon-border-color-hover' ) );
+	$less_vars->add_hex_color(
+		'toggle-mobile-menu-close-color',
+		of_get_option( 'header-mobile-menu_close_icon-color' )
+	);
+	$less_vars->add_hex_color(
+		'toggle-mobile-menu-close-hover-color',
+		of_get_option( 'header-mobile-menu_close_icon-hover-color' )
+	);
+	$less_vars->add_rgba_color(
+		'toggle-mobile-menu-close-bg-color',
+		of_get_option( 'header-mobile-menu_close_icon-bg-color' )
+	);
+	$less_vars->add_rgba_color(
+		'toggle-mobile-menu-hover-bg-color',
+		of_get_option( 'header-mobile-menu_icon-hover-bg-color' )
+	);
+	$less_vars->add_rgba_color(
+		'toggle-mobile-menu-close-border-color',
+		of_get_option( 'header-mobile-menu_close_icon-border-color' )
+	);
+	$less_vars->add_rgba_color(
+		'toggle-mobile-menu-close-border-color-hover',
+		of_get_option( 'header-mobile-menu_close_icon-border-color-hover' )
+	);
 
 	$mobile_menu_typography = The7_Option_Field_Typography::sanitize(
 		of_get_option( 'header-mobile-menu-typography' )
@@ -1772,25 +2094,32 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 	$less_vars->add_pixel_number( 'mobile-sub-menu-font-size', $mobile_submenu_typography['font_size'] );
 	$less_vars->add_keyword( 'mobile-sub-menu-text-transform', $mobile_submenu_typography['text_transform'] );
 
-	// color
 	$less_vars->add_hex_color( 'mobile-menu-color', of_get_option( 'header-mobile-menu-font-color' ) );
 
-
 	$less_vars->add_rgba_color( 'mobile-menu-bg-color', of_get_option( 'header-mobile-menu-bg-color' ) );
-	$less_vars->add_paddings( array(
-		'header-mobile-menu-top-padding',
-		'header-mobile-menu-right-padding',
-		'header-mobile-menu-bottom-padding',
-		'header-mobile-menu-left-padding',
-	), of_get_option( 'header-mobile-content-padding' ) );
+	$less_vars->add_paddings(
+		array(
+			'header-mobile-menu-top-padding',
+			'header-mobile-menu-right-padding',
+			'header-mobile-menu-bottom-padding',
+			'header-mobile-menu-left-padding',
+		),
+		of_get_option( 'header-mobile-content-padding' )
+	);
 
 	$less_vars->add_rgba_color( 'mobile-overlay-bg-color', of_get_option( 'header-mobile-overlay-bg-color' ) );
 
 	$less_vars->add_pixel_number( 'mobile-menu-width', of_get_option( 'header-mobile-menu-bg-width' ) );
 
-	$less_vars->add_pixel_number( 'first-switch-mobile-header-height', of_get_option( 'header-mobile-first_switch-height' ) );
+	$less_vars->add_pixel_number(
+		'first-switch-mobile-header-height',
+		of_get_option( 'header-mobile-first_switch-height' )
+	);
 
-	$less_vars->add_pixel_number( 'second-switch-mobile-header-height', of_get_option( 'header-mobile-second_switch-height' ) );
+	$less_vars->add_pixel_number(
+		'second-switch-mobile-header-height',
+		of_get_option( 'header-mobile-second_switch-height' )
+	);
 
 	/**
 	 * Page titles.
@@ -1799,170 +2128,99 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 	$less_vars->add_hex_color( 'page-title-breadcrumbs-color', of_get_option( 'general-breadcrumbs_color' ) );
 
 	$breadcrumbs_typography = The7_Option_Field_Typography::sanitize( of_get_option( 'breadcrumbs-typography' ) );
-	$less_vars->add_font( array(
-		'breadcrumbs-font-family',
-		'breadcrumbs-font-weight',
-		'breadcrumbs-font-style',
-	), $breadcrumbs_typography['font_family'] );
+	$less_vars->add_font(
+		array(
+			'breadcrumbs-font-family',
+			'breadcrumbs-font-weight',
+			'breadcrumbs-font-style',
+		),
+		$breadcrumbs_typography['font_family']
+	);
 	$less_vars->add_pixel_number( 'breadcrumbs-font-size', $breadcrumbs_typography['font_size'] );
 	$less_vars->add_pixel_number( 'breadcrumbs-line-height', $breadcrumbs_typography['line_height'] );
 	$less_vars->add_keyword( 'breadcrumbs-text-transform', $breadcrumbs_typography['text_transform'] );
 
 	$less_vars->add_rgba_color( 'breadcrumbs-bg-color', of_get_option( 'breadcrumbs_bg_color' ) );
 
-	$less_vars->add_paddings( array(
-		'breadcrumbs-padding-top',
-		'breadcrumbs-padding-right',
-		'breadcrumbs-padding-bottom',
-		'breadcrumbs-padding-left',
-	), of_get_option( 'breadcrumbs_padding' ) );
+	$less_vars->add_paddings(
+		array(
+			'breadcrumbs-padding-top',
+			'breadcrumbs-padding-right',
+			'breadcrumbs-padding-bottom',
+			'breadcrumbs-padding-left',
+		),
+		of_get_option( 'breadcrumbs_padding' )
+	);
 
-	$less_vars->add_paddings( array(
-		'breadcrumbs-margin-top',
-		'breadcrumbs-margin-right',
-		'breadcrumbs-margin-bottom',
-		'breadcrumbs-margin-left',
-	), of_get_option( 'breadcrumbs_margin' ) );
+	$less_vars->add_paddings(
+		array(
+			'breadcrumbs-margin-top',
+			'breadcrumbs-margin-right',
+			'breadcrumbs-margin-bottom',
+			'breadcrumbs-margin-left',
+		),
+		of_get_option( 'breadcrumbs_margin' )
+	);
 
-	$less_vars->add_pixel_number( "breadcrumbs-border-radius", of_get_option( "breadcrumbs_border_radius", 0 ) );
-	$less_vars->add_pixel_number( "breadcrumbs-border-width", of_get_option( "breadcrumbs_border_width", 0 ) );
+	$less_vars->add_pixel_number( 'breadcrumbs-border-radius', of_get_option( 'breadcrumbs_border_radius', 0 ) );
+	$less_vars->add_pixel_number( 'breadcrumbs-border-width', of_get_option( 'breadcrumbs_border_width', 0 ) );
 	$less_vars->add_rgba_color( 'breadcrumbs-border-color', of_get_option( 'breadcrumbs_border_color' ) );
-
 
 	$less_vars->add_hex_color( 'page-title-color', of_get_option( 'general-title_color' ) );
 
 	$title_typography = The7_Option_Field_Typography::sanitize( of_get_option( 'general-page-title-typography' ) );
-	$less_vars->add_font( array(
-		'page-title-font-family',
-		'page-title-font-weight',
-		'page-title-font-style',
-	), $title_typography['font_family'] );
+	$less_vars->add_font(
+		array(
+			'page-title-font-family',
+			'page-title-font-weight',
+			'page-title-font-style',
+		),
+		$title_typography['font_family']
+	);
 	$less_vars->add_pixel_number( 'title-font-size', $title_typography['font_size'] );
 	$less_vars->add_pixel_number( 'page-title-line-height', $title_typography['line_height'] );
 	$less_vars->add_keyword( 'page-title-text-transform', $title_typography['text_transform'] );
 
 	$less_vars->add_rgba_color( 'page-title-overlay-color', of_get_option( 'general-title_overlay_color' ) );
 	$less_vars->add_rgba_color( 'title-outline-color', of_get_option( 'general-title_decoration_outline_color' ) );
-	$less_vars->add_pixel_number( 'page-title-border-height', of_get_option( 'general-title_decoration_outline_height', '1px' ) );
+	$less_vars->add_pixel_number(
+		'page-title-border-height',
+		of_get_option( 'general-title_decoration_outline_height', '1px' )
+	);
 	$less_vars->add_keyword( 'page-title-border-style', of_get_option( 'general-title_decoration_outline_style' ) );
 
 	$less_vars->add_rgba_color( 'page-title-line-color', of_get_option( 'general-title_decoration_line_color' ) );
-	$less_vars->add_pixel_number( 'page-title-decorative-line-height', of_get_option( 'general-title_decoration_line_height', '1px' ) );
+	$less_vars->add_pixel_number(
+		'page-title-decorative-line-height',
+		of_get_option( 'general-title_decoration_line_height', '1px' )
+	);
 	$less_vars->add_keyword( 'page-title-line-style', of_get_option( 'general-title_decoration_line_style' ) );
 
-
-	$less_vars->add_image( array(
-		'page-title-bg-image',
-		'page-title-bg-repeat',
-		'page-title-bg-position-x',
-		'page-title-bg-position-y',
-	), of_get_option( 'general-title_bg_image' ) );
-
-	$less_vars->add_keyword( 'page-title-bg-attachment', ( of_get_option( 'general-title_scroll_effect' ) == 'fixed' ? 'fixed' : '~""' ) );
-
-
-	/**
-	 * Small buttons.
-	 */
-
-	$button_typography = The7_Option_Field_Typography::sanitize( of_get_option( 'buttons-s-typography' ) );
-	$less_vars->add_font(
+	$less_vars->add_image(
 		array(
-			'dt-btn-s-font-family',
-			'dt-btn-s-font-weight',
-			'dt-btn-s-font-style',
+			'page-title-bg-image',
+			'page-title-bg-repeat',
+			'page-title-bg-position-x',
+			'page-title-bg-position-y',
 		),
-		$button_typography['font_family']
+		of_get_option( 'general-title_bg_image' )
 	);
-	$less_vars->add_pixel_number( 'dt-btn-s-font-size', $button_typography['font_size'] );
-	$less_vars->add_keyword( 'dt-btn-s-text-transform', $button_typography['text_transform'] );
-	$less_vars->add_pixel_number( 'dt-btn-s-icon-size', of_get_option( 'buttons-s-icon-size') );
-	$less_vars->add_paddings(
-		array(
-			'btn-s-padding-top',
-			'btn-s-padding-right',
-			'btn-s-padding-bottom',
-			'btn-s-padding-left',
-		),
-		of_get_option( 'buttons-s_padding' )
-	);
-	$less_vars->add_pixel_number(
-		'dt-btn-s-border-radius',
-		of_get_option( 'buttons-s_border_radius' )
-	);
-	$less_vars->add_pixel_number(
-		'dt-btn-s-border-width',
-		of_get_option( 'buttons-s_border_width' )
+
+	$less_vars->add_keyword(
+		'page-title-bg-attachment',
+		( of_get_option( 'general-title_scroll_effect' ) === 'fixed' ? 'fixed' : '~""' )
 	);
 
 	/**
-	 * Medium buttons.
+	 * Button styles
 	 */
-
-	$button_typography = The7_Option_Field_Typography::sanitize( of_get_option( 'buttons-m-typography' ) );
-	$less_vars->add_font(
-		array(
-			'dt-btn-m-font-family',
-			'dt-btn-m-font-weight',
-			'dt-btn-m-font-style',
-		),
-		$button_typography['font_family']
-	);
-	$less_vars->add_pixel_number( 'dt-btn-m-font-size', $button_typography['font_size'] );
-	$less_vars->add_pixel_number( 'dt-btn-m-icon-size', of_get_option( 'buttons-m-icon-size') );
-	$less_vars->add_keyword( 'dt-btn-m-text-transform', $button_typography['text_transform'] );
-	$less_vars->add_paddings(
-		array(
-			'btn-m-padding-top',
-			'btn-m-padding-right',
-			'btn-m-padding-bottom',
-			'btn-m-padding-left',
-		),
-		of_get_option( 'buttons-m_padding' )
-	);
-	$less_vars->add_pixel_number(
-		'dt-btn-m-border-radius',
-		of_get_option( 'buttons-m_border_radius' )
-	);
-	$less_vars->add_pixel_number(
-		'dt-btn-m-border-width',
-		of_get_option( 'buttons-m_border_width' )
-	);
-
-	/**
-	 * Big buttons.
-	 */
-
-	$button_typography = The7_Option_Field_Typography::sanitize( of_get_option( 'buttons-l-typography' ) );
-	$less_vars->add_font(
-		array(
-			'dt-btn-l-font-family',
-			'dt-btn-l-font-weight',
-			'dt-btn-l-font-style',
-		),
-		$button_typography['font_family']
-	);
-	$less_vars->add_pixel_number( 'dt-btn-l-font-size', $button_typography['font_size'] );
-
-	$less_vars->add_pixel_number( 'dt-btn-l-icon-size', of_get_option( 'buttons-l-icon-size') );
-	$less_vars->add_keyword( 'dt-btn-l-text-transform', $button_typography['text_transform'] );
-	$less_vars->add_paddings(
-		array(
-			'btn-l-padding-top',
-			'btn-l-padding-right',
-			'btn-l-padding-bottom',
-			'btn-l-padding-left',
-		),
-		of_get_option( 'buttons-l_padding' )
-	);
-	$less_vars->add_pixel_number(
-		'dt-btn-l-border-radius',
-		of_get_option( 'buttons-l_border_radius' )
-	);
-	$less_vars->add_pixel_number(
-		'dt-btn-l-border-width',
-		of_get_option( 'buttons-l_border_width' )
-	);
+	the7_less_add_button_size($less_vars, 'buttons-s', 'btn-s');
+	the7_less_add_button_size($less_vars, 'buttons-m', 'btn-m');
+	the7_less_add_button_size($less_vars, 'buttons-l', 'btn-l');
+	if ( the7_is_elementor_buttons_integration_enabled() ) {
+		the7_less_add_button_size( $less_vars, 'buttons-lg', 'btn-lg' );
+		the7_less_add_button_size( $less_vars, 'buttons-xl', 'btn-xl' );
+	}
 
 	/**
 	 * Contact forms.
@@ -1970,18 +2228,24 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 
 	$less_vars->add_pixel_number( 'input-height', of_get_option( 'input_height' ) );
 	$less_vars->add_pixel_number( 'input-border-radius', of_get_option( 'input_border_radius' ) );
-	$less_vars->add_paddings( array(
-		'top-input-border-width',
-		'right-input-border-width',
-		'bottom-input-border-width',
-		'left-input-border-width',
-	), of_get_option( 'input_border_width' ) );
-	$less_vars->add_paddings( array(
-		'top-input-padding',
-		'right-input-padding',
-		'bottom-input-padding',
-		'left-input-padding',
-	), of_get_option( 'input_padding' ) );
+	$less_vars->add_paddings(
+		array(
+			'top-input-border-width',
+			'right-input-border-width',
+			'bottom-input-border-width',
+			'left-input-border-width',
+		),
+		of_get_option( 'input_border_width' )
+	);
+	$less_vars->add_paddings(
+		array(
+			'top-input-padding',
+			'right-input-padding',
+			'bottom-input-padding',
+			'left-input-padding',
+		),
+		of_get_option( 'input_padding' )
+	);
 	$less_vars->add_hex_color( 'input-color', of_get_option( 'input_color' ) );
 	$less_vars->add_rgba_color( 'input-border-color', of_get_option( 'input_border_color' ) );
 	$less_vars->add_rgba_color( 'input-bg-color', of_get_option( 'input_bg_color' ) );
@@ -1995,6 +2259,7 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 	if ( class_exists( 'Vc_Manager', false ) && get_option( 'wpb_js_responsive_max' ) ) {
 		$wpb_mobile_screen_width = get_option( 'wpb_js_responsive_max' );
 	}
+	$less_vars->storage()->start_excluding_css_vars();
 	$less_vars->add_pixel_number( 'wpb-mobile-screen-width', $wpb_mobile_screen_width );
 
 	/**
@@ -2013,38 +2278,73 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 			$less_vars->add_number( $data_att . '-wc-columns-num', $val );
 		}
 	}
+	$less_vars->storage()->end_excluding_css_vars();
 
 	$less_vars->add_pixel_number( 'wc-grid-product-gap', of_get_option( 'woocommerce_shop_template_gap' ) );
-	$less_vars->add_pixel_number( 'wc-grid-product-min-width', of_get_option( 'woocommerce_shop_template_column_min_width' ) );
+	$less_vars->add_pixel_number(
+		'wc-grid-product-min-width',
+		of_get_option( 'woocommerce_shop_template_column_min_width' )
+	);
+
+	the7_less_add_responsive_font( $less_vars, 'fonts-woo-content', 'woo-content' );
+	the7_less_add_responsive_font( $less_vars, 'fonts-woo-title', 'woo-title' );
 
 	/**
 	 * Stripes.
 	 */
 
-	if ( function_exists( 'presscore_themeoptions_get_stripes_list' ) ) {
+	if ( The7_Admin_Dashboard_Settings::get( 'rows' ) ) {
 
 		foreach ( presscore_themeoptions_get_stripes_list() as $id => $opts ) {
 
-			$less_vars->add_rgba_color( "strype-{$id}-bg-color", of_get_option( "stripes-stripe_{$id}_color", $opts['bg_color'] ), 100 );
+			$less_vars->add_rgba_color(
+				"strype-{$id}-bg-color",
+				of_get_option( "stripes-stripe_{$id}_color", $opts['bg_color'] ),
+				100
+			);
 
-			$less_vars->add_image( array(
-				"strype-{$id}-bg-image",
-				"strype-{$id}-bg-repeat",
-				'',
-				"strype-{$id}-bg-position-y",
-			), of_get_option( "stripes-stripe_{$id}_bg_image", $opts['bg_img'] ) );
+			$less_vars->add_image(
+				array(
+					"strype-{$id}-bg-image",
+					"strype-{$id}-bg-repeat",
+					'',
+					"strype-{$id}-bg-position-y",
+				),
+				of_get_option( "stripes-stripe_{$id}_bg_image", $opts['bg_img'] )
+			);
 
-			$less_vars->add_keyword( "strype-{$id}-bg-size", ( of_get_option( "stripes-stripe_{$id}_bg_fullscreen" ) ? 'cover' : 'auto' ) );
+			$less_vars->add_keyword(
+				"strype-{$id}-bg-size",
+				( of_get_option( "stripes-stripe_{$id}_bg_fullscreen" ) ? 'cover' : 'auto' )
+			);
 
-			$less_vars->add_hex_color( "strype-{$id}-header-color", of_get_option( "stripes-stripe_{$id}_headers_color", $opts['text_header_color'] ) );
+			$less_vars->add_hex_color(
+				"strype-{$id}-header-color",
+				of_get_option( "stripes-stripe_{$id}_headers_color", $opts['text_header_color'] )
+			);
 
-			$less_vars->add_rgba_color( "strype-{$id}-boxes-bg", of_get_option( "stripes-stripe_{$id}_content_boxes_bg_color" ), of_get_option( "stripes-stripe_{$id}_content_boxes_bg_opacity" ) );
+			$less_vars->add_rgba_color(
+				"strype-{$id}-boxes-bg",
+				of_get_option( "stripes-stripe_{$id}_content_boxes_bg_color" ),
+				of_get_option( "stripes-stripe_{$id}_content_boxes_bg_opacity" )
+			);
 
-			$less_vars->add_rgba_color( "strype-{$id}-divider-bg-color", of_get_option( "stripes-stripe_{$id}_content_boxes_decoration_outline_color" ), of_get_option( "stripes-stripe_{$id}_content_boxes_decoration_outline_opacity" ) );
+			$less_vars->add_rgba_color(
+				"strype-{$id}-divider-bg-color",
+				of_get_option( "stripes-stripe_{$id}_content_boxes_decoration_outline_color" ),
+				of_get_option( "stripes-stripe_{$id}_content_boxes_decoration_outline_opacity" )
+			);
 
-			$less_vars->add_rgba_color( "strype-{$id}-backgrounds-bg-color", of_get_option( "stripes-stripe_{$id}_outline_color" ), of_get_option( "stripes-stripe_{$id}_outline_opacity" ) );
+			$less_vars->add_rgba_color(
+				"strype-{$id}-backgrounds-bg-color",
+				of_get_option( "stripes-stripe_{$id}_outline_color" ),
+				of_get_option( "stripes-stripe_{$id}_outline_opacity" )
+			);
 
-			$less_vars->add_hex_color( "strype-{$id}-color", of_get_option( "stripes-stripe_{$id}_text_color", $opts['text_color'] ) );
+			$less_vars->add_hex_color(
+				"strype-{$id}-color",
+				of_get_option( "stripes-stripe_{$id}_text_color", $opts['text_color'] )
+			);
 
 			if ( 'cover' === $less_vars->get_var( "strype-{$id}-bg-size" ) ) {
 				$less_vars->add_keyword( "strype-{$id}-bg-repeat", 'no-repeat' );
@@ -2052,10 +2352,24 @@ function presscore_action_add_less_vars( The7_Less_Vars_Manager_Interface $less_
 			} else {
 				$less_vars->add_keyword( "strype-{$id}-bg-attachment", '~""' );
 			}
+		}
+	}
 
+	$less_vars->storage()->start_excluding_css_vars();
+	if ( the7_elementor_is_active() ) {
+		foreach ( \Elementor\Core\Responsive\Responsive::get_breakpoints() as $size => $value ) {
+			$less_vars->add_pixel_number( "elementor-{$size}-breakpoint", $value );
+			$less_vars->add_pixel_number( "{$size}-breakpoint", $value );
 		}
 
+		// Wide columns for grid layout.
+		if ( function_exists( 'the7_elementor_get_content_width_string' ) ) {
+			$less_vars->add_pixel_number( '_wide-desktop-width', the7_elementor_get_content_width_string() );
+		}
+	} else {
+		$less_vars->add_pixel_number( 'lg-breakpoint', (int) of_get_option( 'header-mobile-first_switch-after' ) + 1 );
+		$less_vars->add_pixel_number( 'md-breakpoint', (int) of_get_option( 'header-mobile-second_switch-after' ) + 1 );
 	}
+	$less_vars->storage()->end_excluding_css_vars();
 }
-
 add_action( 'presscore_setup_less_vars', 'presscore_action_add_less_vars' );

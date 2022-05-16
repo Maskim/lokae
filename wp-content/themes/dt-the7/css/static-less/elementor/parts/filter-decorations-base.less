@@ -538,9 +538,11 @@
 
   a.filter-item {
     color: var(--filter-title-color-normal);
+    &:not(.button-load-more) {
+      transition: all 0.3s;
+    }
 
-    &:hover,
-    &:focus {
+    &:hover {
       color: var(--filter-title-color-hover);
     }
 
@@ -548,4 +550,5 @@
       color: var(--filter-title-color-active);
     }
   }
+
 }

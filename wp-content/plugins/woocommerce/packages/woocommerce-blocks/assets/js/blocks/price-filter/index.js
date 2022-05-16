@@ -4,27 +4,46 @@
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import classNames from 'classnames';
+import { Icon, currencyDollar } from '@wordpress/icons';
+import { isFeaturePluginBuild } from '@woocommerce/block-settings';
+import { useBlockProps } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
  */
 import edit from './edit.js';
-import { IconMoney } from '../../components/icons';
 
 registerBlockType( 'woocommerce/price-filter', {
+	apiVersion: 2,
 	title: __( 'Filter Products by Price', 'woocommerce' ),
 	icon: {
-		src: <IconMoney />,
-		foreground: '#96588a',
+		src: (
+			<Icon
+				icon={ currencyDollar }
+				className="wc-block-editor-components-block-icon"
+			/>
+		),
 	},
 	category: 'woocommerce',
 	keywords: [ __( 'WooCommerce', 'woocommerce' ) ],
 	description: __(
-		'Display a slider to filter products in your store by price.',
+		'Allow customers to filter the products by choosing a lower or upper price limit. Works in combination with the All Products block.',
 		'woocommerce'
 	),
 	supports: {
+		html: false,
 		multiple: false,
+		color: {
+			text: true,
+			background: false,
+		},
+		...( isFeaturePluginBuild() && {
+			__experimentalBorder: {
+				radius: true,
+				color: true,
+				width: false,
+			},
+		} ),
 	},
 	example: {},
 	attributes: {
@@ -48,9 +67,7 @@ registerBlockType( 'woocommerce/price-filter', {
 
 	edit,
 
-	/**
-	 * Save the props to post content.
-	 */
+	// Save the props to post content.
 	save( { attributes } ) {
 		const {
 			className,
@@ -67,7 +84,9 @@ registerBlockType( 'woocommerce/price-filter', {
 		};
 		return (
 			<div
-				className={ classNames( 'is-loading', className ) }
+				{ ...useBlockProps.save( {
+					className: classNames( 'is-loading', className ),
+				} ) }
 				{ ...data }
 			>
 				<span

@@ -1,5 +1,8 @@
 <?php
 
+use WPML\FP\Obj;
+use WCML\MultiCurrency\Geolocation;
+
 /**
  * Class WCML_Currency_Switcher
  *
@@ -56,10 +59,6 @@ class WCML_Currency_Switcher {
 	}
 
 	public function wcml_currency_switcher( $args = [] ) {
-
-		if ( is_page( wc_get_page_id( 'myaccount' ) ) ) {
-			return '';
-		}
 
 		if ( ! is_array( $args ) ) {
 			$args = [];
@@ -128,10 +127,19 @@ class WCML_Currency_Switcher {
 				$wcml_settings['currencies_order'] :
 				$multi_currency_object->get_currency_codes();
 
+			if ( ! is_admin() ) {
+				$currencies = $this->filter_currencies_list_by_settings( $currencies, $wcml_settings );
+			}
+
 			if ( count( $currencies ) > 1 ) {
 				if ( ! is_admin() ) {
 					foreach ( $currencies as $k => $currency ) {
-						if ( $wcml_settings['currency_options'][ $currency ]['languages'][ $this->sitepress->get_current_language() ] != 1 ) {
+						if (
+							Obj::path(
+								[ 'currency_options', $currency, 'languages', $this->sitepress->get_current_language() ],
+								$wcml_settings
+							) != 1
+						) {
 							unset( $currencies[ $k ] );
 						}
 					}
@@ -159,6 +167,29 @@ class WCML_Currency_Switcher {
 		} else {
 			return $preview;
 		}
+	}
+
+	/**
+	 * @param array $currencies
+	 * @param array $wcml_settings
+	 *
+	 * @return array
+	 */
+	private function filter_currencies_list_by_settings( $currencies, $wcml_settings ){
+		$currency_mode = $this->woocommerce_wpml->get_setting('currency_mode');
+
+		$ifDisallowedByLanguage = function( $currency ) use ( $currency_mode, $wcml_settings ) {
+			return Geolocation::MODE_BY_LANGUAGE === $currency_mode && $wcml_settings['currency_options'][ $currency ]['languages'][ $this->sitepress->get_current_language() ] != 1;
+		};
+
+		$ifDisallowedByLocation = function( $currency ) use ( $currency_mode, $wcml_settings ) {
+			return Geolocation::MODE_BY_LOCATION === $currency_mode && !Geolocation::isCurrencyAvailableForCountry( $wcml_settings['currency_options'][ $currency ] );
+		};
+
+		return wpml_collect( $currencies )
+			->reject( $ifDisallowedByLanguage )
+			->reject( $ifDisallowedByLocation )
+			->toArray();
 	}
 
 	public function get_model_data( $args, $currencies ) {
@@ -193,7 +224,7 @@ class WCML_Currency_Switcher {
 
 		if ( is_null( $this->is_touch_screen ) ) {
 			if ( ! class_exists( 'WPML_Mobile_Detect' ) ) {
-				require_once ICL_PLUGIN_PATH . '/lib/mobile-detect.php';
+				require_once WPML_PLUGIN_PATH . '/lib/mobile-detect.php';
 			}
 			$mobile_detect         = new WPML_Mobile_Detect();
 			$this->is_touch_screen = $mobile_detect->isMobile() || $mobile_detect->isTablet();

@@ -53,7 +53,6 @@ class SiteGround {
 	 */
 	private function sg_optimizer_active() {
 		if ( ! function_exists( 'is_plugin_active' ) ) {
-			/* @noinspection PhpIncludeInspection */
 			include_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
@@ -88,7 +87,7 @@ class SiteGround {
 	}
 
 	/**
-	 * Allows to enable/disable switchers in minification page.
+	 * Allows enable/disable switchers in minification page.
 	 *
 	 * @since 2.1.0
 	 *
@@ -127,7 +126,7 @@ class SiteGround {
 				}
 
 				$notice = __( 'Hummingbird detect that the SG Optimizer plugin with frontend optimization features is enabled. Some asset optimization features have been disabled for compatibility.', 'wphb' );
-				Notices::get_instance()->show( 'sg_optimization', $notice, 'info', false, false );
+				Notices::get_instance()->show_inline( $notice, 'info' );
 			}
 		);
 
@@ -158,7 +157,7 @@ class SiteGround {
 				'wphb_advanced_tools_notice',
 				function() {
 					$notice = __( 'Hummingbird detect that the SG Optimizer plugin with frontend optimization features is enabled. Some asset settings have been disabled for compatibility.', 'wphb' );
-					Notices::get_instance()->show( 'tools-notice', $notice, 'info', false, false );
+					Notices::get_instance()->show_inline( $notice, 'info' );
 				}
 			);
 		}

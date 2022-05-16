@@ -6,14 +6,11 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import './style.scss';
+import Icon from '../sui-icon';
+import Loader from '../loader';
 
 /**
  * Box component.
@@ -21,21 +18,21 @@ import './style.scss';
 export default class Box extends React.Component {
 	/**
 	 * Generate header.
-	 * @param {string} title          Box title.
-	 * @param {string} icon           Icon name to use, false for no icon.
-	 * @param {Action} headerActions  Action component.
+	 *
+	 * @param {string}      title         Box title.
+	 * @param {string}      icon          Icon name to use, false for no icon.
+	 * @param {JSX.Element} headerActions Action component.
 	 * @return {*} Box header.
 	 */
 	static boxHeader( title = '', icon = '', headerActions = null ) {
-		const iconClass = 'sui-icon-' + icon;
-
 		return (
 			<React.Fragment>
-				<h3 className="sui-box-title">
-					{ icon &&
-					<i className={ iconClass } aria-hidden="true" />
-					} { title }
-				</h3>
+				{ ( title || icon ) && (
+					<h3 className="sui-box-title">
+						{ icon && <Icon classes={ 'sui-icon-' + icon } /> }
+						{ ' ' + title }
+					</h3>
+				) }
 
 				{ headerActions }
 			</React.Fragment>
@@ -44,35 +41,40 @@ export default class Box extends React.Component {
 
 	/**
 	 * Render component.
+	 *
 	 * @return {*} Box component.
 	 */
 	render() {
 		const boxHeader = Box.boxHeader(
 			this.props.title,
 			this.props.icon,
-			this.props.headerActions,
+			this.props.headerActions
 		);
 
 		return (
 			<div className={ classNames( 'sui-box', this.props.boxClass ) }>
-				<div className={ classNames( 'wphb-loading-overlay', { 'wphb-loading': this.props.loading } ) }>
-					<i className="sui-icon-loader sui-loading" aria-hidden="true" />
-					<p>{ __( 'Fetching latest data...', 'wphb' ) }</p>
-				</div>
+				<Loader loading={ this.props.loading } text={ this.props.loadingText } />
 
-				<div className="sui-box-header">
-					{ boxHeader }
-				</div>
+				{ ! this.props.hideHeader && (
+					<div className="sui-box-header">{ boxHeader }</div>
+				) }
 
-				<div className="sui-box-body">
-					{ this.props.content }
-				</div>
+				{ this.props.content && (
+					<div
+						className={ classNames(
+							'sui-box-body',
+							this.props.boxBodyClass
+						) }
+					>
+						{ this.props.content }
+					</div>
+				) }
 
-				{ this.props.footerActions &&
-				<div className="sui-box-footer">
-					{ this.props.footerActions }
-				</div>
-				}
+				{ this.props.footerActions && (
+					<div className="sui-box-footer">
+						{ this.props.footerActions }
+					</div>
+				) }
 			</div>
 		);
 	}
@@ -80,9 +82,13 @@ export default class Box extends React.Component {
 
 Box.propTypes = {
 	boxClass: PropTypes.string,
+	boxBodyClass: PropTypes.string,
 	title: PropTypes.string,
 	icon: PropTypes.string,
+	hideHeader: PropTypes.bool,
 	headerActions: PropTypes.element,
 	content: PropTypes.element,
 	footerActions: PropTypes.element,
+	loading: PropTypes.bool,
+	loadingText: PropTypes.string,
 };

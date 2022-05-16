@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**
  * Shortcode map class.
- * Inspired by http://www.wprecipes.com/wordpress-shortcode-to-easily-integrate-a-google-map-on-your-blog
+ * Inspired by https://www.wprecipes.com/wordpress-shortcode-to-easily-integrate-a-google-map-on-your-blog
  */
 class DT_Shortcode_Map extends DT_Shortcode {
 

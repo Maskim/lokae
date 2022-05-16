@@ -3,11 +3,11 @@
  * @package The7
  */
 
-namespace The7\Adapters\Elementor\Pro;
+namespace The7\Mods\Compatibility\Elementor\Pro;
 
 use ElementorPro\Modules\ThemeBuilder\Classes\Locations_Manager;
 use ElementorPro\Modules\ThemeBuilder\Module;
-use The7\Adapters\Elementor\Pro;
+use The7\Mods\Compatibility\Elementor\Pro;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -16,6 +16,9 @@ class The7_Elementor_Theme_Builder_Adapter {
 	public function bootstrap() {
 		// Locations registration fire on priority 99, so we need to override them later.
 		add_action( 'init', [ $this, 'on_elementor_init' ], 1 );
+
+		// Launch before base menus override (10) to apply cascade rules.
+		add_action( 'presscore_config_base_init', [ $this, 'header_template_menus_overrides' ], 9 );
 
 		add_action( 'elementor/theme/register_locations', [
 			$this,
@@ -26,10 +29,18 @@ class The7_Elementor_Theme_Builder_Adapter {
 
 	public function on_elementor_init() {
 		require_once __DIR__ . '/modules/theme-support/the7-theme-support.php';
-		new ThemeSupport\The7_Theme_Support();
+		new \The7\Mods\Compatibility\Elementor\Pro\Modules\Theme_Support\The7_Theme_Support();
 
 		require_once __DIR__ . '/modules/dynamic-tags/the7/module.php';
-		new DynamicTags\The7\Module();
+		new \The7\Mods\Compatibility\Elementor\Pro\Modules\Dynamic_Tags\The7\Module();
+
+		new \The7\Mods\Compatibility\Elementor\Pro\Modules\Archive\Custom_Pagination_Query_Handler();
+	}
+
+	public function header_template_menus_overrides() {
+		$header_id = \The7_Elementor_Compatibility::get_document_id_for_location( 'header' );
+		$header_menus_override = new \The7_Header_Menus_Override_Handler( $header_id );
+		$header_menus_override->bootstrap();
 	}
 
 	/**

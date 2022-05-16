@@ -1,6 +1,6 @@
 <?php
 
-namespace The7\Adapters\Elementor\Pro\DynamicTags\The7;
+namespace The7\Mods\Compatibility\Elementor\Pro\Modules\Dynamic_Tags\The7;
 
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 

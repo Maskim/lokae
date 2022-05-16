@@ -1,4 +1,4 @@
-(function($){
+;(function($){
 "use strict";
 
     var WidgetTestimonialCarouselHandler = function ($scope, $) {
@@ -330,7 +330,7 @@
 
     // Google Map
     var WidgetGoogleMapHandler = function ($scope, $) {
-        var googlemap_elem = $scope.find('#htmega-google-map').eq(0);
+        var googlemap_elem = $scope.find('.htmega-google-map').eq(0);
         if ( googlemap_elem.length > 0 ) {
             var mapsettings = googlemap_elem.data('mapmarkers');
             var mapsoptions = googlemap_elem.data('mapoptions');
@@ -630,23 +630,46 @@
         
         var swiper_elem = $scope.find('.swiper-container').eq(0);
         var swiper_opt = swiper_elem.data('settings');
-        var swiper = new Swiper( swiper_elem, {
-            direction: swiper_opt.direction,
-            slidesPerView: swiper_opt.slideitem,
-            spaceBetween: 0,
-            mousewheel: {
-                releaseOnEdges:true,
-            },
-            speed: swiper_opt.speed,
-            pagination: {
-              el: '.swiper-pagination',
-              clickable: true,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-        });
+
+        if( HTMEGAF.elementorpro == true ){
+            var swiper = new Swiper( swiper_elem, {
+                direction: swiper_opt.direction,
+                slidesPerView: swiper_opt.slideitem,
+                spaceBetween: 0,
+                freeMode: true,
+                mousewheel: {
+                    releaseOnEdges:true,
+                },
+                speed: swiper_opt.speed,
+                pagination: {
+                  el: '.swiper-pagination',
+                  clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+        }else{
+            var swiper = new Swiper( swiper_elem, {
+                direction: swiper_opt.direction,
+                slidesPerView: swiper_opt.slideitem,
+                spaceBetween: 0,
+                mousewheel: {
+                    releaseOnEdges:true,
+                },
+                speed: swiper_opt.speed,
+                pagination: {
+                  el: '.swiper-pagination',
+                  clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+        }
+
         if( swiper_opt.mousewheel == false){
             swiper.mousewheel.disable();
         }

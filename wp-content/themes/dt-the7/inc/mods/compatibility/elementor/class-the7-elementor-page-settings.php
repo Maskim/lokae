@@ -4,11 +4,12 @@
  * @package The7
  */
 
-namespace The7\Adapters\Elementor;
+namespace The7\Mods\Compatibility\Elementor;
 
 use Elementor\Controls_Manager;
 use Elementor\Plugin;
 use ElementorPro\Modules\ThemeBuilder\Documents\Theme_Page_Document;
+use The7\Mods\Compatibility\Elementor\Modules\Mega_Menu\Module as Mega_Menu_Module;
 use The7_Elementor_Compatibility;
 
 defined( 'ABSPATH' ) || exit;
@@ -191,7 +192,13 @@ class The7_Elementor_Page_Settings {
 		the7_register_style( 'the7-elementor-editor', PRESSCORE_ADMIN_URI . '/assets/css/elementor-editor' );
 		wp_enqueue_style( 'the7-elementor-editor' );
 
-		wp_enqueue_script( 'the7-elementor-page-settings', PRESSCORE_ADMIN_URI . '/assets/js/elementor/page-settings.js', [], THE7_VERSION, true );
+		the7_register_script_in_footer(
+			'the7-elementor-page-settings',
+			PRESSCORE_ADMIN_URI . '/assets/js/elementor/page-settings.js'
+		);
+		wp_enqueue_script( 'the7-elementor-page-settings' );
+
+		presscore_enqueue_web_fonts();
 
 		$controls_ids = [];
 		$sections = $this->get_sections( null );
@@ -230,20 +237,24 @@ class The7_Elementor_Page_Settings {
 	protected function get_sections( $document ) {
 		$sections_definition = [
 			'the7_document_title_section' => [
-				'exclude_documents' => [ 'footer', 'section', 'widget' ],
+				'exclude_documents' => [ 'footer', 'section', 'widget', 'popup', Mega_Menu_Module::DOCUMENT_TYPE ],
 				'file'              => 'page-title.php',
 			],
 			'the7_document_sidebar'       => [
-				'exclude_documents' => [ 'footer', 'header', 'section', 'widget' ],
+				'exclude_documents' => [ 'footer', 'header', 'section', 'widget', 'popup', Mega_Menu_Module::DOCUMENT_TYPE ],
 				'file'              => 'sidebar.php',
 			],
 			'the7_document_footer'        => [
-				'exclude_documents' => [ 'footer', 'header', 'section', 'widget' ],
+				'exclude_documents' => [ 'footer', 'header', 'section', 'widget', 'popup', Mega_Menu_Module::DOCUMENT_TYPE ],
 				'file'              => 'footer.php',
 			],
 			'the7_document_paddings'      => [
-				'exclude_documents' => [ 'footer', 'header', 'section', 'widget' ],
+				'exclude_documents' => [ 'footer', 'header', 'section', 'widget', 'popup', Mega_Menu_Module::DOCUMENT_TYPE ],
 				'file'              => 'paddings.php',
+			],
+			'the7_document_menus'      => [
+				'exclude_documents' => [ 'footer', 'section', 'widget', 'popup', Mega_Menu_Module::DOCUMENT_TYPE ],
+				'file'              => 'menus.php',
 			],
 		];
 
@@ -257,6 +268,13 @@ class The7_Elementor_Page_Settings {
 				$this->template_option_name = 'page_template';
 			} else if ( empty( $document->get_controls( 'template' ) ) ) {
 				$this->template_option_name = 'post_status'; //workaround if there no template and  page_template on the page
+			}
+
+			if ( get_post_meta( $document->get_main_id(), '_the7_imported_item', true ) ) {
+				$sections_definition['the7_imported_tem'] = [
+					'exclude_documents' => [ 'section', 'widget' ],
+					'file'              => 'the7-demo-content.php',
+				];
 			}
 		}
 
@@ -351,8 +369,9 @@ class The7_Elementor_Page_Settings {
 		if ( ! $document ) {
 			return;
 		}
-		if ( ! in_array( $document->get_name(), [ 'footer', 'section', 'widget' ], true ) ) {
+		if ( ! in_array( $document->get_name(), [ 'footer', 'section', 'widget', 'popup' ], true ) ) {
 			$header_layout = of_get_option( 'header-layout' );
+
 			if ( $header_layout == 'side' || $header_layout == 'side_line' ) {
 				$header_name = '';
 				if ( $header_layout == 'side' ) {
@@ -383,9 +402,25 @@ class The7_Elementor_Page_Settings {
 					$document->end_injection();
 				}
 			}
+			else if( $header_layout === 'disabled' ){
+				$elements = [
+					"the7_document_show_header",
+					"the7_document_disabled_header_heading",
+					"the7_document_disabled_header_style",
+					"the7_document_disabled_header_color_scheme",
+					"the7_document_disabled_header_top_bar_color",
+					"the7_document_disabled_header_backgraund_color",
+					"the7_document_header_heading",
+					"the7_document__background_below_slideshow",
+					"the7_document_fancy_header_style"
+				];
+				foreach ( $elements as $key ) {
+					$document->remove_control($key);
+				}
+			}
 		}
 
-		if ( ! in_array( $document->get_name(), [ 'footer', 'section', 'widget' ], true ) ) {
+		if ( ! in_array( $document->get_name(), [ 'footer', 'section', 'widget', 'popup' ], true ) ) {
 			$applied_archive_template_id = '';
 			if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
 				//check if archive applied
@@ -457,7 +492,7 @@ class The7_Elementor_Page_Settings {
 			$document->end_injection();
 		}
 
-		if ( ! in_array( $document->get_name(), [ 'footer', 'header', 'section', 'archive', 'widget' ], true ) ) {
+		if ( ! in_array( $document->get_name(), [ 'footer', 'header', 'section', 'archive', 'widget', 'popup'], true ) ) {
 			$applied_header_template_id = '';
 			$applied_footer_template_id = '';
 			if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
@@ -467,9 +502,9 @@ class The7_Elementor_Page_Settings {
 				$applied_footer_template_id = The7_Elementor_Compatibility::get_document_id_for_location( 'footer', $applied_footer_template_id );
 			}
 			$document_template_message = __( 'A <a href="%1$s" target="_blank">%2$s template</a>  is being applied to this page. To edit individual %2$s settings, please exclude this page from template display conditions.', 'the7mk2' );
-			if ( ! empty( $applied_header_template_id ) ) {
+			if ( ! empty( $applied_header_template_id ) && $document->get_control_index('the7_document_show_header') ) {
 				$document->start_injection( [
-					'of' => 'the7_document_title',
+					'of' => 'the7_document_show_header',
 					'at' => 'before',
 				] );
 				$document->add_control( 'the7_document_header_template_applied_message', [
@@ -486,7 +521,7 @@ class The7_Elementor_Page_Settings {
 				$document->end_injection();
 			}
 
-			if ( ! empty( $applied_footer_template_id ) ) {
+			if ( ! empty( $applied_footer_template_id ) && $document->get_control_index('the7_document_show_footer_wa') ) {
 				$document->start_injection( [
 					'of' => 'the7_document_show_footer_wa',
 					'at' => 'before',

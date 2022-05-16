@@ -17,6 +17,9 @@ add_action( 'admin_print_styles-nav-menus.php', array( $mega_menu_admin, 'admin_
 add_action( 'admin_print_footer_scripts-nav-menus.php', array( $mega_menu_admin, 'output_popup_template' ) );
 add_action( 'wp_ajax_the7_render_mega_menu_settings', array( $mega_menu_admin, 'ajax_render_mega_menu_settings' ) );
 
+add_action( 'admin_enqueue_scripts', [ $mega_menu_admin, 'add_svg_support_in_megamenu'] );
+
+
 // Front hooks.
 $mega_menu_front = new The7_Mega_Menu();
 add_action( 'presscore_primary_nav_menu_before', array( $mega_menu_front, 'add_hooks' ) );

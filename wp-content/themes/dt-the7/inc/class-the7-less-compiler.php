@@ -88,7 +88,6 @@ class The7_Less_Compiler {
 	public function compile_to_file( $source_file, $output_file, $imports = array() ) {
 		$css = $this->compile_file( $source_file, $imports );
 		$css = $this->make_relative_urls( $css, $source_file, $output_file );
-		wp_mkdir_p( dirname( $output_file ) );
 		$this->put_contents( $output_file, $css );
 	}
 
@@ -191,13 +190,15 @@ class The7_Less_Compiler {
 	 * @param string $output_file Output file.
 	 * @param string $content Content.
 	 */
-	protected function put_contents( $output_file, $content ) {
+	public function put_contents( $output_file, $content ) {
 		/**
 		 * WP Filesystem global.
 		 *
 		 * @var WP_Filesystem_Base $wp_filesystem
 		 */
 		global $wp_filesystem;
+
+		wp_mkdir_p( dirname( $output_file ) );
 
 		$wp_filesystem->put_contents( $output_file, $content );
 	}
@@ -220,6 +221,10 @@ class The7_Less_Compiler {
 		);
 
 		return $css;
+	}
+
+	public function get_lessc( ) {
+		return $this->lessc;
 	}
 }
 

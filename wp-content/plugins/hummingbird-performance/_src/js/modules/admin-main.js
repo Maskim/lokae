@@ -1,9 +1,16 @@
 /* global wphb */
+/* global wphbMixPanel */
 
 /**
  * Internal dependencies
  */
 import Fetcher from '../utils/fetcher';
+import { getString } from '../utils/helpers';
+
+/**
+ * External dependencies
+ */
+const MixPanel = require( 'mixpanel-browser' );
 
 ( function( $ ) {
 	'use strict';
@@ -12,228 +19,77 @@ import Fetcher from '../utils/fetcher';
 		modules: [],
 		// Common functionality to all screens
 		init() {
-			// Dismiss notice via an ajax call.
-			const notice = document.querySelector( '#wphb-dismissable > .sui-notice-dismiss' );
+			/**
+			 * Handles the tab navigation on mobile.
+			 *
+			 * @since 2.7.2
+			 */
+			$( '.sui-mobile-nav' ).on( 'change', ( e ) => {
+				window.location.href = e.target.value;
+			} );
 
-			if ( notice ) {
-				notice.addEventListener( 'click', () => {
-					const noticeId = notice.parentElement.getAttribute( 'data-id' );
-					Fetcher.notice.dismiss( noticeId );
-				} );
-			}
+			/**
+			 * Refresh page, when selecting a report type.
+			 *
+			 * @since 2.0.0
+			 */
+			$( 'select#wphb-performance-report-type' ).on(
+				'change',
+				function( e ) {
+					const url = new URL( window.location );
+					url.searchParams.set( 'type', e.target.value );
+					window.location = url;
+				}
+			);
 
 			/**
 			 * Clear log button clicked.
 			 *
 			 * @since 1.9.2
 			 */
-			$( '.wphb-logging-buttons' ).on( 'click', '.wphb-logs-clear', function( e ) {
-				e.preventDefault();
+			$( '.wphb-logging-buttons' ).on(
+				'click',
+				'.wphb-logs-clear',
+				function( e ) {
+					e.preventDefault();
 
-				Fetcher.logger.clear( e.target.dataset.module )
-					.then( ( response ) => {
-						if ( 'undefined' === typeof response.success ) {
-							return;
-						}
-
-						if ( response.success ) {
-							WPHB_Admin.notices.show(
-								'wphb-ajax-update-notice',
-								true,
-								'success',
-								response.message,
-							);
-						} else {
-							WPHB_Admin.notices.show(
-								'wphb-ajax-update-notice',
-								true,
-								'error',
-								response.message,
-							);
-						}
-					} );
-			} );
-
-			/**
-			 * Add recipient button clicked.
-			 *
-			 * On Performance and Uptime recipient modals.
-			 *
-			 * @since 1.9.3  Unified two handle both modules.
-			 */
-			$( '#add-recipient' ).on( 'click', function() {
-				let module = '';
-				let setting = 'reports';
-
-				// Get the module name from URL.
-				if ( window.location.search.includes( 'wphb-performance' ) ) {
-					module = 'performance';
-				} else if ( window.location.search.includes( 'wphb-uptime' ) ) {
-					module = 'uptime';
-					if ( window.location.search.includes( 'notifications' ) ) {
-						setting = 'notifications';
-					}
-				}
-
-				const reportingEmail = $( '#reporting-email' );
-				const emailField = reportingEmail.closest( '.sui-form-field' );
-				const email = reportingEmail.val();
-				const name = $( '#reporting-first-name' ).val();
-
-				// Remove errors.
-				emailField.removeClass( 'sui-form-field-error' );
-				emailField.find( '.sui-error-message' ).remove();
-
-				Fetcher.common.addRecipient( module, setting, email, name )
-					.then( ( response ) => {
-						const userRow = $( '<div class="sui-recipient"/>' );
-
-						if ( 'notifications' === setting ) {
-							userRow.append( '<span class="sui-recipient-status"><i class="sui-icon-clock" aria-hidden="true"></i></span>' );
-						}
-
-						userRow.append( '<span class="sui-recipient-name"/>' );
-						userRow.find( '.sui-recipient-name' ).append( response.name );
-
-						userRow.append( $( '<span class="sui-recipient-email"/>' ).html( email ) );
-
-						if ( 'notifications' === setting ) {
-							userRow.append( $( '<button/>' ).attr( {
-								class: 'sui-button-icon wphb-resend-recipient sui-tooltip',
-								type: 'button',
-								'data-tooltip': wphb.strings.resendEmail,
-							} ).html( '<i class="sui-icon-send" aria-hidden="true"></i>' ) );
-						}
-
-						userRow.append( $( '<button/>' ).attr( {
-							class: 'sui-button-icon wphb-remove-recipient',
-							type: 'button',
-						} ).html( '<i class="sui-icon-trash" aria-hidden="true"></i>' ) );
-
-						$( '<input>' ).attr( {
-							type: 'hidden',
-							id: 'report-recipient',
-							name: 'report-recipients[]',
-							value: JSON.stringify( { email: response.email, name: response.name } ),
-						} ).appendTo( userRow );
-
-						$( '.sui-recipients' ).append( userRow );
-						$( '#reporting-email' ).val( '' );
-						$( '#reporting-first-name' ).val( '' );
-
-						// Hide no recipients notification.
-						$( '.wphb-no-recipients' ).slideUp();
-						window.SUI.closeModal();
-
-						// Hide top notice.
-						$( '.sui-notice-top.sui-notice-success' ).hide();
-
-						// Hide the last notice.
-						$( '#wphb-pending-sub-notice' ).hide();
-						// Show confirm recipients notice.
-						$( '#wphb-confirm-sub-notice' ).show();
-
-						// Show notice to save settings.
-						WPHB_Admin.notices.show(
-							'wphb-ajax-update-notice',
-							false,
-							'info',
-							name + wphb.strings.successRecipientAdded,
-						);
-					} )
-					.catch( ( error ) => {
-						emailField.addClass( 'sui-form-field-error' );
-						emailField.append( '<span class="sui-error-message"/>' );
-						emailField.find( '.sui-error-message' ).append( error.message );
-					} );
-			} );
-
-			const body = $( 'body' );
-
-			/**
-			 * Save report settings clicked (performance reports, uptime
-			 * reports and uptime notifications).
-			 */
-			body.on( 'submit', '.wphb-report-settings', function( e ) {
-				e.preventDefault();
-
-				$( '#wphb-confirm-sub-notice' ).slideUp();
-
-				$( this ).find( '.button' ).attr( 'disabled', 'disabled' );
-
-				Fetcher.common
-					.saveReportsSettings( this.dataset.module, $( this ).serialize() )
-					.then( ( response ) => {
-						if ( 'undefined' !== typeof response && response.success ) {
-							if ( response.enabled || '' !== response.notice ) {
-								$( '.sui-notice-top' ).hide();
-								$( '.sui-box-body > .sui-notice-default:first-of-type' ).addClass( 'sui-notice-success' ).removeClass( 'sui-notice-default' );
-								$( '.sui-box-body > .sui-notice-success:first-of-type > p' ).text( response.recipientNotice );
-
-								WPHB_Admin.notices.show(
-									'wphb-ajax-update-notice',
-									true,
-									'success',
-									response.enabled ? wphb.strings.confirmRecipient : response.notice,
-								);
-							} else {
-								window.location.search += '&updated=true';
+					Fetcher.common
+						.clearLogs( e.target.dataset.module )
+						.then( ( response ) => {
+							if ( 'undefined' === typeof response.success ) {
+								return;
 							}
-						} else {
-							WPHB_Admin.notices.show(
-								'wphb-ajax-update-notice',
-								true,
-								'error',
-								wphb.strings.errorSettingsUpdate,
-							);
-						}
+
+							if ( response.success ) {
+								WPHB_Admin.notices.show( response.message );
+							} else {
+								WPHB_Admin.notices.show(
+									response.message,
+									'error'
+								);
+							}
+						} );
+				}
+			);
+
+			/**
+			 * Track performance report scan init.
+			 *
+			 * @since 2.5.0
+			 */
+			$( '#performance-run-test, #performance-scan-website' ).on(
+				'click',
+				() => {
+					wphbMixPanel.track( 'plugin_scan_started', {
+						score_mobile_previous: getString(
+							'previousScoreMobile'
+						),
+						score_desktop_previous: getString(
+							'previousScoreDesktop'
+						),
 					} );
-			} );
-
-			/**
-			 * Remove recipient button clicked.
-			 */
-			body.on( 'click', '.wphb-remove-recipient', function() {
-				$( this ).closest( '.sui-recipient' ).remove();
-
-				const id = $( this ).attr( 'data-id' );
-				const row = 'input[id="report-recipient"][value=' + id + ']';
-
-				$( '.wphb-report-settings' ).find( row ).remove();
-
-				if ( 0 === $( '.sui-recipient' ).length ) {
-					$( '#wphb-pending-sub-notice' ).slideUp();
-					$( '.wphb-no-recipients' ).slideDown();
 				}
-			} );
-
-			/**
-			 * Handle the show/hiding of the report schedule.
-			 */
-			$( '#chk1' ).on( 'click', function() {
-				$( '.schedule-box' ).toggleClass( 'sui-hidden' );
-			} );
-
-			/**
-			 * Schedule show/hide day of week.
-			 */
-			$( 'select[name="report-frequency"]' ).change( function() {
-				const freq = $( this ).val();
-
-				if ( '1' === freq ) {
-					$( this ).closest( '.schedule-box' ).find( 'div.days-container' ).hide();
-				} else {
-					$( this ).closest( '.schedule-box' ).find( 'div.days-container' ).show();
-
-					if ( '7' === freq ) {
-						$( this ).closest( '.schedule-box' ).find( '[data-type="week"]' ).show();
-						$( this ).closest( '.schedule-box' ).find( '[data-type="month"]' ).hide();
-					} else {
-						$( this ).closest( '.schedule-box' ).find( '[data-type="week"]' ).hide();
-						$( this ).closest( '.schedule-box' ).find( '[data-type="month"]' ).show();
-					}
-				}
-			} ).change();
+			);
 		},
 
 		initModule( module ) {
@@ -257,42 +113,87 @@ import Fetcher from '../utils/fetcher';
 	 * Admin notices.
 	 */
 	WPHB_Admin.notices = {
-		init() {},
+		init() {
+			const cfNotice = document.getElementById( 'dismiss-cf-notice' );
+			if ( cfNotice ) {
+				cfNotice.onclick = ( e ) => this.dismissCloudflareNotice( e );
+			}
+
+			const http2Notice = document.getElementById(
+				'wphb-floating-http2-info'
+			);
+			if ( http2Notice ) {
+				http2Notice.addEventListener( 'click', ( e ) => {
+					e.preventDefault();
+					Fetcher.common.dismissNotice( 'http2-info' );
+					$( '.wphb-box-notice' ).slideUp();
+				} );
+			}
+		},
+
 		/**
 		 * Show notice.
 		 *
 		 * @since 1.8
 		 *
-		 * @param {string}  id       ID of notice element.
-		 * @param {boolean} top      Scroll to top.
-		 * @param {string}  type     Error or success.
-		 * @param {string}  message  Message to display.
-		 *
-		 * @member {Array} wphb
+		 * @param {string}  message Message to display.
+		 * @param {string}  type    Error or success.
+		 * @param {boolean} dismiss Auto dismiss message.
 		 */
-		show( id, top = false, type = '', message = wphb.strings.successUpdate ) {
-			const notice = $( '#' + id );
-
-			if ( top ) {
-				window.scrollTo( 0, 0 );
+		show( message = '', type = 'success', dismiss = true ) {
+			if ( '' === message ) {
+				message = getString( 'successUpdate' );
 			}
 
-			if ( '' !== type ) {
-				// Remove set classes if doing multiple calls per page load.
-				notice.removeClass( 'sui-notice-error' );
-				notice.removeClass( 'sui-notice-success' );
-				notice.removeClass( 'sui-notice-info' );
-				notice.addClass( 'sui-notice-' + type );
+			const options = {
+				type,
+				dismiss: {
+					show: false,
+					label: getString( 'dismissLabel' ),
+					tooltip: getString( 'dismissLabel' ),
+				},
+				icon: 'info',
+			};
+
+			if ( ! dismiss ) {
+				options.dismiss.show = true;
 			}
 
-			notice.find( 'p' ).html( message );
+			window.SUI.openNotice(
+				'wphb-ajax-update-notice',
+				'<p>' + message + '</p>',
+				options
+			);
+		},
 
-			notice.slideDown();
-			setTimeout( function() {
-				notice.slideUp();
-			}, 5000 );
+		/**
+		 * Dismiss notice.
+		 *
+		 * @since 2.6.0  Refactored and moved from WPHB_Admin.init()
+		 *
+		 * @param {Object} el
+		 */
+		dismiss( el ) {
+			const noticeId = el.closest( '.sui-notice' ).getAttribute( 'id' );
+			Fetcher.common.dismissNotice( noticeId );
+			window.SUI.closeNotice( noticeId );
+		},
+
+		/**
+		 * Dismiss Cloudflare notice from Dashboard or Caching pages.
+		 *
+		 * @since 2.6.0  Refactored and moved from WPHB_Admin.dashboard.init() && WPHB_ADMIN.caching.init()
+		 *
+		 * @param {Object} e
+		 */
+		dismissCloudflareNotice( e ) {
+			e.preventDefault();
+			Fetcher.common.call( 'wphb_cf_notice_dismiss' );
+			const cloudFlareDashNotice = $( '.cf-dash-notice' );
+			cloudFlareDashNotice.slideUp();
+			cloudFlareDashNotice.parent().addClass( 'no-background-image' );
 		},
 	};
 
 	window.WPHB_Admin = WPHB_Admin;
-}( jQuery ) );
+} )( jQuery );

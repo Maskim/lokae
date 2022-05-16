@@ -45,9 +45,9 @@ if (!\class_exists('FcfVendor\\WPDesk_API_KEY')) {
                 if (\class_exists('FcfVendor\\WPDesk_Logger_Factory')) {
                     // Request failed
                     if (\is_wp_error($request)) {
-                        \FcfVendor\WPDesk_Logger_Factory::log_wp_error($request, \debug_backtrace());
+                        \FcfVendor\WPDesk_Logger_Factory::log_wp_error($request, \debug_backtrace(\DEBUG_BACKTRACE_PROVIDE_OBJECT | \DEBUG_BACKTRACE_IGNORE_ARGS));
                     } else {
-                        \FcfVendor\WPDesk_Logger_Factory::log_message_backtrace('Response is invalid. Response: ' . \json_encode($request), \FcfVendor\WPDesk_Logger::ERROR, \debug_backtrace());
+                        \FcfVendor\WPDesk_Logger_Factory::log_message_backtrace('Response is invalid. Response: ' . \json_encode($request), \FcfVendor\WPDesk_Logger::ERROR, \debug_backtrace(\DEBUG_BACKTRACE_PROVIDE_OBJECT | \DEBUG_BACKTRACE_IGNORE_ARGS));
                     }
                 }
                 return \false;
@@ -65,9 +65,9 @@ if (!\class_exists('FcfVendor\\WPDesk_API_KEY')) {
             if (\is_wp_error($request) || \wp_remote_retrieve_response_code($request) != 200) {
                 if (\class_exists('FcfVendor\\WPDesk_Logger_Factory')) {
                     if (\is_wp_error($request)) {
-                        \FcfVendor\WPDesk_Logger_Factory::log_wp_error($request, \debug_backtrace());
+                        \FcfVendor\WPDesk_Logger_Factory::log_wp_error($request, \debug_backtrace(\DEBUG_BACKTRACE_PROVIDE_OBJECT | \DEBUG_BACKTRACE_IGNORE_ARGS));
                     } else {
-                        \FcfVendor\WPDesk_Logger_Factory::log_message_backtrace('Response is invalid. Response: ' . \json_encode($request), \FcfVendor\WPDesk_Logger::ERROR, \debug_backtrace());
+                        \FcfVendor\WPDesk_Logger_Factory::log_message_backtrace('Response is invalid. Response: ' . \json_encode($request), \FcfVendor\WPDesk_Logger::ERROR, \debug_backtrace(\DEBUG_BACKTRACE_PROVIDE_OBJECT | \DEBUG_BACKTRACE_IGNORE_ARGS));
                     }
                 }
                 // Request failed
@@ -94,9 +94,9 @@ if (!\class_exists('FcfVendor\\WPDesk_API_KEY')) {
             if (\is_wp_error($request) || \wp_remote_retrieve_response_code($request) != 200) {
                 if (\class_exists('FcfVendor\\WPDesk_Logger_Factory')) {
                     if (\is_wp_error($request)) {
-                        \FcfVendor\WPDesk_Logger_Factory::log_wp_error($request, \debug_backtrace());
+                        \FcfVendor\WPDesk_Logger_Factory::log_wp_error($request, \debug_backtrace(\DEBUG_BACKTRACE_PROVIDE_OBJECT | \DEBUG_BACKTRACE_IGNORE_ARGS));
                     } else {
-                        \FcfVendor\WPDesk_Logger_Factory::log_message_backtrace('Response is invalid. Response: ' . \json_encode($request), \FcfVendor\WPDesk_Logger::ERROR, \debug_backtrace());
+                        \FcfVendor\WPDesk_Logger_Factory::log_message_backtrace('Response is invalid. Response: ' . \json_encode($request), \FcfVendor\WPDesk_Logger::ERROR, \debug_backtrace(\DEBUG_BACKTRACE_PROVIDE_OBJECT | \DEBUG_BACKTRACE_IGNORE_ARGS));
                     }
                 }
                 // Request failed

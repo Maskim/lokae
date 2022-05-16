@@ -13,7 +13,7 @@ class The7_jsComposer extends BundledContent {
 			return;
 		}
 
-		if ( ! defined( 'JS_COMPOSER_THE7' ) ) {
+		if ( ! defined( 'JS_COMPOSER_THE7' ) && !$this->isBundledPlugin('js_composer')) {
 			$this->deactivatePlugin();
 			return;
 		}

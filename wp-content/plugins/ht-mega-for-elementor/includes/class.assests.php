@@ -320,6 +320,16 @@ if ( !class_exists( 'HTMega_Elementor_Addons_Assests' ) ) {
             $scripts = $this->get_scripts();
             $styles  = $this->get_styles();
 
+            $localize_data_frontend = [];
+
+            if( is_plugin_active('elementor-pro/elementor-pro.php') ){
+                $localize_data_frontend['elementorpro'] = true;
+            }else{
+                wp_deregister_script( 'swiper' );
+                $localize_data_frontend['elementorpro'] = false;
+            }
+
+            
             // Register Scripts
             foreach ( $scripts as $handle => $script ) {
                 $deps = ( isset( $script['deps'] ) ? $script['deps'] : false );
@@ -332,7 +342,10 @@ if ( !class_exists( 'HTMega_Elementor_Addons_Assests' ) ) {
                 wp_register_style( $handle, $style['src'], $deps, $style['version'] );
             }
 
-            //Localize Scripts
+            // Localize Scripts for frontend
+            wp_localize_script( 'htmega-widgets-scripts', 'HTMEGAF', $localize_data_frontend );
+
+            // Localize Scripts for template manager
             $current_user  = wp_get_current_user();
             $localize_data = [
                 'ajaxurl'          => admin_url( 'admin-ajax.php' ),
@@ -340,8 +353,9 @@ if ( !class_exists( 'HTMega_Elementor_Addons_Assests' ) ) {
                 'elementorURL'     => admin_url( 'edit.php?post_type=elementor_library' ),
                 'version'          => HTMEGA_VERSION,
                 'pluginURL'        => plugin_dir_url( __FILE__ ),
-                'alldata'          => ( !empty( HTMega_Template_Library::instance()->get_templates_info()['templates'] ) ? HTMega_Template_Library::instance()->get_templates_info()['templates']:array() ),
-                'prolink'          => ( !empty( HTMega_Template_Library::instance()->get_pro_link() ) ? HTMega_Template_Library::instance()->get_pro_link() : '#' ),
+                'alldata'          => !empty( HTMega_Addons_Elementor::$template_info['templates'] ) ? HTMega_Addons_Elementor::$template_info['templates'] : array(),
+                'prolink'          => isset( HTMega_Addons_Elementor::$template_info['pro_link'] ) ? HTMega_Addons_Elementor::$template_info['pro_link'] : '#',
+
                 'prolabel'         => esc_html__( 'Pro', 'htmega-addons' ),
                 'loadingimg'       => HTMEGA_ADDONS_PL_URL . 'admin/assets/images/loading.gif',
                 'message'          =>[

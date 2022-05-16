@@ -96,6 +96,7 @@ class HTMega_Widgets_Control{
         $videoplayer = htmega_get_option( 'videoplayer', 'htmega_element_tabs', 'on' );
         $workingprocess = htmega_get_option( 'workingprocess', 'htmega_element_tabs', 'on' );
         $errorcontent = htmega_get_option( 'errorcontent', 'htmega_element_tabs', 'on' );
+        $template_selector = htmega_get_option( 'template_selector', 'htmega_element_tabs', 'on' );
 
         // Third Party
         $weather = htmega_get_option( 'weather', 'htmega_thirdparty_element_tabs', 'on' );
@@ -430,6 +431,11 @@ class HTMega_Widgets_Control{
         if ( file_exists( HTMEGA_ADDONS_PL_PATH.'includes/widgets/htmega_cuctom_event.php' ) && $customevent === 'on' ) {
             require_once HTMEGA_ADDONS_PL_PATH.'includes/widgets/htmega_cuctom_event.php';
             $widgets_manager->register_widget_type( new \Elementor\HTMega_Elementor_Widget_Custom_Event() );
+        }
+
+        if ( file_exists( HTMEGA_ADDONS_PL_PATH.'includes/widgets/htmega_template_selector.php' ) && $template_selector === 'on' ) {
+            require_once HTMEGA_ADDONS_PL_PATH.'includes/widgets/htmega_template_selector.php';
+            $widgets_manager->register_widget_type( new \Elementor\HTMega_Elementor_Widget_Template_Selector() );
         }
         
         // Thirdparty plugins Addons

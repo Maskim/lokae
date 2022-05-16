@@ -18,14 +18,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<form id="advanced-general-settings" method="post">
 			<?php $this->do_meta_boxes( 'main' ); ?>
 		</form>
-	<?php elseif ( 'db' === $this->get_current_tab() ) : ?>
-		<form id="advanced-db-settings" method="post">
-			<?php $this->do_meta_boxes( 'db' ); ?>
+	<?php elseif ( 'lazy' === $this->get_current_tab() ) : ?>
+		<form id="advanced-lazy-settings" method="post">
+			<?php $this->do_meta_boxes( 'lazy' ); ?>
 		</form>
 	<?php else : ?>
 		<?php $this->do_meta_boxes( $this->get_current_tab() ); ?>
 	<?php endif; ?>
 </div>
+
+<?php $this->modal( 'site-health-orphaned' ); ?>
 
 <script>
 	jQuery(document).ready( function() {

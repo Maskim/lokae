@@ -15,11 +15,15 @@ class The7_Categorization_Request {
 
 	const TERMS_PARAM = 'term';
 
+	const TAXONOMY_PARAM = 'taxonomy';
+
 	public $orderby = '';
 
 	public $order = '';
 
 	public $terms = array();
+
+	public $taxonomy = '';
 
 	public function __construct() {
 		if ( isset( $_GET[ self::ORDER_PARAM ] ) ) {
@@ -32,6 +36,10 @@ class The7_Categorization_Request {
 
 		if ( isset( $_GET[ self::TERMS_PARAM ] ) ) {
 			$this->terms = array_filter( array_map( 'sanitize_key', (array) $_GET[ self::TERMS_PARAM ] ) );
+		}
+
+		if ( isset( $_GET[ self::TAXONOMY_PARAM ] ) ) {
+			$this->taxonomy = sanitize_key( $_GET[ self::TAXONOMY_PARAM ] );
 		}
 	}
 

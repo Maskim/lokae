@@ -14,7 +14,6 @@ add_action( 'wp_head', 'presscore_tracking_code_in_header_action', 9999 );
 add_filter( 'presscore_get_attachment_post_data-attachment_data', 'presscore_filter_attachment_data', 15 );
 add_filter( 'dt_get_thumb_img-args', 'presscore_add_default_meta_to_images', 15 );
 add_filter( 'presscore_post_edit_link', 'presscore_wrap_edit_link_in_p', 15 );
-add_filter( 'presscore_get_category_list-args', 'presscore_filter_categorizer_hash_arg', 15 );
 add_action( 'parse_query', 'presscore_parse_query_for_front_page_categorizer' );
 add_action( 'init', 'presscore_react_on_categorizer', 15 );
 add_filter( 'the_excerpt', 'presscore_add_password_form_to_excerpts', 99 );
@@ -178,33 +177,6 @@ if ( ! function_exists( 'presscore_wrap_edit_link_in_p' ) ) :
 
 endif;
 
-if ( ! function_exists( 'presscore_filter_categorizer_hash_arg' ) ) :
-
-	/**
-	 * Categorizer hash filter.
-	 */
-	function presscore_filter_categorizer_hash_arg( $args ) {
-		$config = Presscore_Config::get_instance();
-
-		$order   = $config->get( 'order' );
-		$orderby = $config->get( 'orderby' );
-
-		$hash = add_query_arg(
-			array(
-				'term'    => '%TERM_ID%',
-				'orderby' => $orderby,
-				'order'   => $order,
-			),
-			get_permalink()
-		);
-
-		$args['hash'] = $hash;
-
-		return $args;
-	}
-
-endif;
-
 if ( ! function_exists( 'presscore_parse_query_for_front_page_categorizer' ) ) :
 
 	/**
@@ -263,61 +235,46 @@ if ( ! function_exists( 'presscore_react_on_categorizer' ) ) :
 	 * Change config, categorizer.
 	 */
 	function presscore_react_on_categorizer() {
-		if ( ! isset( $_REQUEST['term'] ) ) {
-			return;
-		}
-
 		$config = presscore_config();
 
-		if ( '' === $_REQUEST['term'] ) {
-			$display = array();
-		} elseif ( 'none' === $_REQUEST['term'] ) {
-			$display = array(
-				'terms_ids' => array( 0 ),
-				'select'    => 'except',
-			);
-		} else {
-			$display = array(
-				'terms_ids' => array( absint( $_REQUEST['term'] ) ),
-				'select'    => 'only',
-			);
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+
+		if ( isset( $_REQUEST['term'] ) ) {
+			if ( '' === $_REQUEST['term'] ) {
+				$display = [];
+			} elseif ( 'none' === $_REQUEST['term'] ) {
+				$display = [
+					'terms_ids' => [ 0 ],
+					'select'    => 'except',
+				];
+			} else {
+				$display = [
+					'terms_ids' => [ absint( $_REQUEST['term'] ) ],
+					'select'    => 'only',
+				];
+			}
+			$config->set( 'request_display', $display );
 		}
-		$config->set( 'request_display', $display );
 
 		if ( isset( $_REQUEST['order'] ) ) {
-			$order = strtolower( $_REQUEST['order'] );
-			if ( in_array( $order, array( 'asc', 'desc' ) ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$order = strtolower( (string) $_REQUEST['order'] );
+			if ( in_array( $order, [ 'asc', 'desc' ], true ) ) {
 				$config->set( 'order', $order );
 			}
 		}
 
 		if ( isset( $_REQUEST['orderby'] ) ) {
-			$orderby = strtolower( $_REQUEST['orderby'] );
-			if ( in_array( $orderby, array( 'name', 'date' ) ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$orderby = strtolower( (string) $_REQUEST['orderby'] );
+			if ( in_array( $orderby, [ 'name', 'date' ], true ) ) {
 				$config->set( 'orderby', $orderby );
 			}
 		}
 
+		// phpcs:enable
+
 		add_filter( 'presscore_get_category_list-args', 'presscore_filter_categorizer_current_arg', 15 );
-	}
-
-endif;
-
-if ( ! function_exists( 'presscore_post_navigation_controller' ) ) :
-
-	/**
-	 * Post pagination controller.
-	 */
-	function presscore_post_navigation_controller() {
-		if ( ! in_the_loop() ) {
-			return;
-		}
-
-		$show_navigation = presscore_is_post_navigation_enabled();
-
-		if ( $show_navigation ) {
-			presscore_post_navigation();
-		}
 	}
 
 endif;
@@ -348,30 +305,6 @@ if ( ! function_exists( 'presscore_excerpt_more_filter' ) ) :
 	 */
 	function presscore_excerpt_more_filter( $more ) {
 		return '&hellip;';
-	}
-
-endif;
-
-if ( ! function_exists( 'presscore_add_more_anchor' ) ) :
-
-	/**
-	 * Add anchor #more-{$post->ID} to href.
-	 *
-	 * @param string $content
-	 *
-	 * @return string
-	 */
-	function presscore_add_more_anchor( $content = '' ) {
-		global $post;
-
-		if ( $post ) {
-			$content = preg_replace( '/href=[\'"]?([^\'" >]+)/', ( 'href="$1#more-' . $post->ID ), $content );
-		}
-
-		// Added in helpers.php:3120+.
-		remove_filter( 'presscore_post_details_link', 'presscore_add_more_anchor', 15 );
-
-		return $content;
 	}
 
 endif;
@@ -698,22 +631,33 @@ if ( ! function_exists( 'presscore_post_class_filter' ) ) :
 
 	/**
 	 * Add post format classes to post.
+	 *
+	 * @param array $classes Post classes.
 	 */
 	function presscore_post_class_filter( $classes = array() ) {
 		global $post;
 
-		// All public taxonomies for posts filter.
-		$taxonomy = 'category';
-		if ( $post->post_type !== 'post' ) {
-			$taxonomy = $post->post_type . '_category';
-		}
-		if ( is_object_in_taxonomy( $post->post_type, $taxonomy ) ) {
-			foreach ( (array) get_the_terms( $post->ID, $taxonomy ) as $term ) {
-				if ( empty( $term->slug ) ) {
-					continue;
-				}
+		// Remove filter on posts built with Elementor.
+		if ( the7_is_post_built_with_elementor( $post->ID ) ) {
+			remove_filter( 'post_class', __FUNCTION__ );
 
-				$classes[] = sanitize_html_class( $taxonomy . '-' . $term->term_id );
+			return $classes;
+		}
+
+		if ( isset( $post->post_type ) ) {
+			// All public taxonomies for posts filter.
+			$taxonomy = 'category';
+			if ( $post->post_type !== 'post' ) {
+				$taxonomy = $post->post_type . '_category';
+			}
+			if ( is_object_in_taxonomy( $post->post_type, $taxonomy ) ) {
+				foreach ( (array) get_the_terms( $post->ID, $taxonomy ) as $term ) {
+					if ( empty( $term->slug ) ) {
+						continue;
+					}
+
+					$classes[] = sanitize_html_class( $taxonomy . '-' . $term->term_id );
+				}
 			}
 		}
 
@@ -837,20 +781,29 @@ if ( ! function_exists( 'presscore_render_fullscreen_overlay' ) ) :
 	function presscore_render_fullscreen_overlay() {
 		if ( presscore_config()->get_bool( 'template.beautiful_loading.enabled' ) ) {
 			$tpl_args = array();
+			$loader_template = '';
 			switch ( presscore_config()->get( 'template.beautiful_loading.loadr.style' ) ) {
 				case 'square_jelly_box':
 					$tpl_args['load_class'] = 'ring-loader';
+					$loader_template = 'general/loader-ring';
 					break;
 				case 'ball_elastic_dots':
 					$tpl_args['load_class'] = 'hourglass-loader';
+					$loader_template = 'general/loader-bars';
 					break;
 				case 'custom':
 					$tpl_args['loader_code'] = presscore_config()->get( 'template.beautiful_loading.loadr.custom_code' );
 					break;
 				default:
 					$tpl_args['load_class'] = 'spinner-loader';
+					$loader_template = 'general/loader-spinner';
 			}
 
+            if (!empty($loader_template)) {
+	            ob_start();
+	            presscore_get_template_part( 'theme', $loader_template );
+	            $tpl_args['loader_code'] = ob_get_clean();
+            }
 			presscore_get_template_part( 'theme', 'loader', null, $tpl_args );
 		}
 	}
@@ -875,7 +828,8 @@ if ( ! function_exists( 'presscore_slideshow_controller' ) ) :
 			return;
 		}
 
-		switch ( $config->get( 'slideshow_mode' ) ) {
+		$slideshow_type = $config->get( 'slideshow_mode' );
+		switch ( $slideshow_type ) {
 			case 'revolution':
 				$rev_slider = $config->get( 'slideshow_revolution_slider' );
 
@@ -898,7 +852,7 @@ if ( ! function_exists( 'presscore_slideshow_controller' ) ) :
 				}
 		}
 
-		do_action( 'presscore_do_header_slideshow', $config->get( 'slideshow_mode' ) );
+		do_action( 'presscore_do_header_slideshow', $slideshow_type );
 	}
 
 endif;

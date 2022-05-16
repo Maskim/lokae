@@ -177,13 +177,9 @@ if (!\class_exists('FcfVendor\\WPDesk_Tracker')) {
                 if (!\is_array($options)) {
                     $options = array();
                 }
-                if (\get_option('wpdesk_tracker_notice', '0') === '2') {
-                    \update_option('wpdesk_tracker_notice', 'dismiss_all');
-                    $options['wpdesk_tracker_agree'] = '0';
-                    \update_option('wpdesk_helper_options', $options);
-                } else {
-                    \update_option('wpdesk_tracker_notice', '2');
-                }
+                \update_option('wpdesk_tracker_notice', 'dismiss_all');
+                $options['wpdesk_tracker_agree'] = '0';
+                \update_option('wpdesk_helper_options', $options);
             }
         }
         public function update_option_wpdesk_helper_options($old_value, $value, $option)

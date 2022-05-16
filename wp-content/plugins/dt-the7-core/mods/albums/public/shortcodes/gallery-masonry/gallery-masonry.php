@@ -165,7 +165,7 @@ if ( ! class_exists( 'DT_Shortcode_GalleryMasonry', false ) ):
 					while( $dt_query->have_posts() ) { 
 						$dt_query->the_post();
 						$img_id = get_the_ID();
-						echo '<div ' . presscore_tpl_masonry_item_wrap_class(  ) . presscore_tpl_masonry_item_wrap_data_attr() . '>';
+						echo '<div ' . presscore_tpl_masonry_item_wrap_class( [ 'visible' ] ) . presscore_tpl_masonry_item_wrap_data_attr() . '>';
 						
 							echo '<article ' . $this->post_class( $post_class_array ) . '>';
 

@@ -28,25 +28,7 @@ if ( ! class_exists( 'Presscore_Lib_SimpleBag', false ) ) :
 		}
 
 		public function set( $key, $value ) {
-			if ( is_array( $key ) ) {
-				if ( ! is_array( $value ) ) {
-					$value = array( $value );
-				}
-
-				foreach ( $key as $i=>$k ) {
-					if ( ! $k ) {
-						continue;
-					}
-
-					if ( array_key_exists( $i, $value ) ) {
-						$this->items[ $k ] = $value[ $i ];
-					} else {
-						$this->items[ $k ] = null;
-					}
-				}
-			} else if ( $key ) {
-				$this->items[ $key ] = $value;
-			}
+			$this->set_value( $this->items, $key, $value );
 		}
 
 		public function map( $items ) {
@@ -60,13 +42,7 @@ if ( ! class_exists( 'Presscore_Lib_SimpleBag', false ) ) :
 		}
 
 		public function remove( $key ) {
-			if ( is_array( $key ) ) {
-				foreach ( $key as $k ) {
-					unset( $this->items[ $k ] );
-				}
-			} else {
-				unset( $this->items[ $key ] );
-			}
+			$this->remove_value( $this->items, $key );
 		}
 
 		public function get_all() {
@@ -95,6 +71,38 @@ if ( ! class_exists( 'Presscore_Lib_SimpleBag', false ) ) :
 				}
 			}
 			return $_items;
+		}
+
+		protected function set_value( &$array, $key, $value ) {
+			if ( is_array( $key ) ) {
+				if ( ! is_array( $value ) ) {
+					$value = array( $value );
+				}
+
+				foreach ( $key as $i=>$k ) {
+					if ( ! $k ) {
+						continue;
+					}
+
+					if ( array_key_exists( $i, $value ) ) {
+						$array[ $k ] = $value[ $i ];
+					} else {
+						$array[ $k ] = null;
+					}
+				}
+			} else if ( $key ) {
+				$array[ $key ] = $value;
+			}
+		}
+
+		protected function remove_value( &$array, $key ) {
+			if ( is_array( $key ) ) {
+				foreach ( $key as $k ) {
+					unset( $array[ $k ] );
+				}
+			} else {
+				unset( $array[ $key ] );
+			}
 		}
 	}
 

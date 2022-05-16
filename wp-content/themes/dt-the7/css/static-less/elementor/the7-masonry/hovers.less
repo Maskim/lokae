@@ -146,8 +146,8 @@
     box-sizing: border-box;
     -webkit-border-radius: inherit;
     border-radius: inherit;
-    -webkit-transition: opacity 0.150s linear;
-    transition: opacity 0.150s linear;
+    -webkit-transition: opacity 0.3s;
+    transition: opacity 0.3s;
     -webkit-backface-visibility: hidden;
     .disable-icon-hover-bg & {
       -webkit-transition: none;
@@ -176,8 +176,8 @@
   & > span {
     position: relative;
     z-index: 2;
-    -webkit-transition: color 0.250s;
-    transition: color 0.250s;
+    -webkit-transition: color 0.3s;
+    transition: color 0.3s;
     font-size: 16px;
     line-height: 44px;
   }
@@ -196,25 +196,25 @@
   display: table;
   clear: both;
 }
-.rollover-content .entry-title a {
+.rollover-content .ele-entry-title a {
   #page & {
     background: none;
   }
 }
-.links-hovers-disabled .rollover-content .entry-title a:hover {
+.links-hovers-disabled .rollover-content .ele-entry-title a:hover {
   background: none;
   -webkit-background-clip: text;
 }
 .rollover-content,
 .rollover-content *,
-.rollover-content h3.entry-title,
-.rollover-content h3.entry-title a,
-.post .rollover-content h4.entry-title a:hover,
-.post .rollover-content .entry-title a:hover,
+.rollover-content h3.ele-entry-title,
+.rollover-content h3.ele-entry-title a,
+.post .rollover-content h4.ele-entry-title a:hover,
+.post .rollover-content .ele-entry-title a:hover,
 .rollover-content a:hover,
-.post .rollover-content h3.entry-title a:hover,
-.hover-style-one h2.entry-title,
-.hover-style-two h2.entry-title {
+.post .rollover-content h3.ele-entry-title a:hover,
+.hover-style-one h2.ele-entry-title,
+.hover-style-two h2.ele-entry-title {
   #page & {
     color: #fff;
   }
@@ -226,12 +226,12 @@
     background: #fff;
   }
 }
-.rollover-content h3.entry-title,
-.rollover-content .entry-title a,
-.post .rollover-content .entry-title a:hover,
-.hover-style-one h2.entry-title,
-.hover-style-two h2.entry-title,
-.hover-style-two h4.entry-title {
+.rollover-content h3.ele-entry-title,
+.rollover-content .ele-entry-title a,
+.post .rollover-content .ele-entry-title a:hover,
+.hover-style-one h2.ele-entry-title,
+.hover-style-two h2.ele-entry-title,
+.hover-style-two h4.ele-entry-title {
   #page & {
     background: none;
   }

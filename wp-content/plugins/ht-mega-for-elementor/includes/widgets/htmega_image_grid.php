@@ -1,6 +1,10 @@
 <?php
 namespace Elementor;
 
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class HTMega_Elementor_Widget_Image_Grid extends Widget_Base {
@@ -76,9 +80,9 @@ class HTMega_Elementor_Widget_Image_Grid extends Widget_Base {
             $repeater->add_control(
                 'gridimage_description',
                 [
-                    'label'   => __( 'Desciption', 'htmega-addons' ),
+                    'label'   => __( 'Description', 'htmega-addons' ),
                     'type'    => Controls_Manager::TEXTAREA,
-                    'placeholder' => __('Image Grid Desciption.','htmega-addons'),
+                    'placeholder' => __('Image Grid Description.','htmega-addons'),
                 ]
             );
 
@@ -127,12 +131,12 @@ class HTMega_Elementor_Widget_Image_Grid extends Widget_Base {
                 'imagegrid_list',
                 [
                     'type'    => Controls_Manager::REPEATER,
-                    'fields'  => array_values( $repeater->get_controls() ),
+                    'fields'  =>  $repeater->get_controls(),
                     'default' => [
 
                         [
                             'gridimage_title'        => __('Image Grid Title','htmega-addons'),
-                            'gridimage_description'  => __( 'Image Grid Desciption','htmega-addons' ),
+                            'gridimage_description'  => __( 'Image Grid Description','htmega-addons' ),
                             'gridimage_btntxt'       => __( 'Read More', 'htmega-addons' ),
                             'gridimage_btnlink'       => __( '#', 'htmega-addons' ),
                         ],
@@ -157,10 +161,6 @@ class HTMega_Elementor_Widget_Image_Grid extends Widget_Base {
                 [
                     'label' => __( 'Overlay Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => 'rgba(0, 0, 0, 0.5)',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-singleimage-grid .thumb a::before' => 'background-color: {{VALUE}};',
@@ -228,10 +228,6 @@ class HTMega_Elementor_Widget_Image_Grid extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#ffffff',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-singleimage-grid .image-grid-content h2' => 'color: {{VALUE}};',
@@ -277,7 +273,7 @@ class HTMega_Elementor_Widget_Image_Grid extends Widget_Base {
         $this->start_controls_section(
             'imagegrid_desciption_style_section',
             [
-                'label' => __( 'Desciption', 'htmega-addons' ),
+                'label' => __( 'Description', 'htmega-addons' ),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -318,10 +314,6 @@ class HTMega_Elementor_Widget_Image_Grid extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#18012c',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-singleimage-grid .image-grid-content p' => 'color: {{VALUE}};',
@@ -375,10 +367,6 @@ class HTMega_Elementor_Widget_Image_Grid extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default' => '#ffffff',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-singleimage-grid .image-grid-content a.read-btn' => 'color: {{VALUE}};',
@@ -462,10 +450,6 @@ class HTMega_Elementor_Widget_Image_Grid extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default' => '#ffffff',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-singleimage-grid .image-grid-content a.read-btn:hover' => 'color: {{VALUE}};',

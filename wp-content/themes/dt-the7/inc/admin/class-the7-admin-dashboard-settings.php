@@ -14,96 +14,149 @@ class The7_Admin_Dashboard_Settings {
 
 	const SETTINGS_ID = 'the7_dashboard_settings';
 
-	protected static $settings = array(
-		'db-auto-update' => array(
-			'type' => 'checkbox',
-			'std'  => true,
-		),
-		'mega-menu' => array(
-			'type' => 'checkbox',
-			'std'  => true,
-		),
-		'critical-alerts' => array(
-			'type' => 'checkbox',
-			'std'  => false,
-		),
-		'web-fonts-display-swap' => array(
-			'type' => 'checkbox',
-			'std'  => false,
-		),
-		'silence-purchase-notification' => array(
-			'type' => 'checkbox',
-			'std'  => false,
-		),
-		'critical-alerts-email' => array(
-			'type' => 'text',
-			'std'  => '',
-		),
-		'fontawesome-4-compatibility' => array(
-			'type' => 'checkbox',
-			'std'  => true,
-		),
-		'options-in-sidebar'  => array(
-			'type' => 'checkbox',
-			'std'  => false,
-		),
-		'rows'                => array(
-			'type' => 'checkbox',
-			'std'  => false,
-		),
-		'overlapping-headers' => array(
-			'type' => 'checkbox',
-			'std'  => false,
-		),
-		'portfolio-layout'    => array(
-			'type' => 'checkbox',
-			'std'  => false,
-		),
-		'admin-icons-bar'           => array(
-			'type' => 'checkbox',
-			'std'  => false,
-		),
-		'portfolio'           => array(
-			'type' => 'checkbox',
-			'std'  => true,
-		),
-		'portfolio-slug'      => array(
-			'type' => 'text',
-			'std'  => 'project',
-		),
-		'testimonials'        => array(
-			'type' => 'checkbox',
-			'std'  => true,
-		),
-		'team'                => array(
-			'type' => 'checkbox',
-			'std'  => true,
-		),
-		'team-slug'           => array(
-			'type' => 'text',
-			'std'  => 'dt_team',
-		),
-		'logos'               => array(
-			'type' => 'checkbox',
-			'std'  => false,
-		),
-		'benefits'            => array(
-			'type' => 'checkbox',
-			'std'  => false,
-		),
-		'albums'              => array(
-			'type' => 'checkbox',
-			'std'  => true,
-		),
-		'albums-slug'         => array(
-			'type' => 'text',
-			'std'  => 'dt_gallery',
-		),
-		'slideshow'           => array(
-			'type' => 'checkbox',
-			'std'  => true,
-		),
-	);
+	/**
+	 * Return settings definition.
+	 *
+	 * @return array
+	 */
+	public static function get_settings_definition() {
+		return [
+			'db-auto-update'                => [
+				'type'       => 'checkbox',
+				'std'        => true,
+				'exportable' => false,
+			],
+			'mega-menu'                     => [
+				'type' => 'checkbox',
+				'std'  => true,
+			],
+			'critical-alerts'               => [
+				'type'       => 'checkbox',
+				'std'        => false,
+				'exportable' => false,
+			],
+			'web-fonts-display-swap'        => [
+				'type'       => 'checkbox',
+				'std'        => false,
+				'exportable' => false,
+			],
+			'elementor-buttons-integration' => [
+				'type' => 'checkbox',
+				'std'  => true,
+			],
+			'elementor-theme-style'         => [
+				'type' => 'checkbox',
+				'std'  => false,
+			],
+			'elementor-theme-style-migrate' => [
+				'type'       => 'select',
+				'std'        => 'do_nothing',
+				'exportable' => false,
+			],
+			'disable-gutenberg-styles'      => [
+				'type'       => 'checkbox',
+				'std'        => false,
+				'exportable' => false,
+			],
+			'elementor-zero-paragraph-last-spacing'      => [
+				'type'       => 'checkbox',
+				'std'        => true,
+				'exportable' => true,
+			],
+			'critical-alerts-email'         => [
+				'type'       => 'text',
+				'std'        => '',
+				'exportable' => false,
+			],
+			'fontawesome-4-compatibility'   => [
+				'type'       => 'checkbox',
+				'std'        => true,
+				'exportable' => false,
+			],
+			'options-in-sidebar'            => [
+				'type'       => 'checkbox',
+				'std'        => false,
+				'exportable' => false,
+			],
+			'deprecated_elementor_widgets'  => [
+				'type'       => 'checkbox',
+				'std'        => false,
+				'exportable' => false,
+			],
+			'rows'                          => [
+				'type'       => 'checkbox',
+				'std'        => false,
+				'exportable' => false,
+			],
+			'overlapping-headers'           => [
+				'type'       => 'checkbox',
+				'std'        => false,
+				'exportable' => false,
+			],
+			'deprecated_mega_menu_settings' => [
+				'type'       => 'checkbox',
+				'std'        => false,
+				'exportable' => true,
+			],
+			'portfolio-layout'              => [
+				'type'       => 'checkbox',
+				'std'        => false,
+				'exportable' => false,
+			],
+			'admin-icons-bar'               => [
+				'type'       => 'checkbox',
+				'std'        => false,
+				'exportable' => false,
+			],
+			'portfolio'                     => [
+				'type' => 'checkbox',
+				'std'  => true,
+			],
+			'portfolio-slug'                => [
+				'type'       => 'text',
+				'std'        => 'project',
+				'exportable' => false,
+			],
+			'portfolio-breadcrumbs-text'    => [
+				'type' => 'text',
+				'std'  => '',
+			],
+			'testimonials'                  => [
+				'type' => 'checkbox',
+				'std'  => true,
+			],
+			'team'                          => [
+				'type' => 'checkbox',
+				'std'  => true,
+			],
+			'team-slug'                     => [
+				'type'       => 'text',
+				'std'        => 'dt_team',
+				'exportable' => false,
+			],
+			'logos'                         => [
+				'type' => 'checkbox',
+				'std'  => false,
+			],
+			'benefits'                      => [
+				'type' => 'checkbox',
+				'std'  => false,
+			],
+			'albums'                        => [
+				'type' => 'checkbox',
+				'std'  => true,
+			],
+			'albums-slug'                   => [
+				'type'       => 'text',
+				'std'        => 'dt_gallery',
+				'exportable' => false,
+			],
+			'slideshow'                     => [
+				'type' => 'checkbox',
+				'std'  => true,
+			],
+		];
+	}
 
 	/**
 	 * Setup settings, add hooks.
@@ -122,21 +175,21 @@ class The7_Admin_Dashboard_Settings {
 		$post_types = array(
 			array(
 				'setting' => 'portfolio-slug',
-				'name' => 'dt_portfolio'
+				'name'    => 'dt_portfolio',
 			),
 			array(
 				'setting' => 'albums-slug',
-				'name' => 'dt_gallery'
+				'name'    => 'dt_gallery',
 			),
 			array(
 				'setting' => 'team-slug',
-				'name' => 'dt_team'
-			)
+				'name'    => 'dt_team',
+			),
 		);
 
 		foreach ( $post_types as $post_type ) {
 			$rewrite_data_provider = new Presscore_Post_Type_Rewrite_Rules_Option_DashboardSettings( $post_type['setting'] );
-			$rewrite_filter = new Presscore_Post_Type_Rewrite_Rules_Filter( $rewrite_data_provider );
+			$rewrite_filter        = new Presscore_Post_Type_Rewrite_Rules_Filter( $rewrite_data_provider );
 
 			add_filter( "presscore_post_type_{$post_type['name']}_args", array( $rewrite_filter, 'filter_post_type_rewrite' ), 99 );
 			add_action( 'the7_dashboard_before_settings_save', array( $rewrite_filter, 'flush_rules_after_slug_change' ) );
@@ -144,28 +197,30 @@ class The7_Admin_Dashboard_Settings {
 	}
 
 	/**
-	 * Return settings definition.
+	 * Return all settings value.
 	 *
 	 * @return array
 	 */
-	public static function get_settings_definition() {
-		return self::$settings;
+	public static function get_all() {
+		return get_option( self::SETTINGS_ID, array() );
 	}
 
 	/**
-	 * Return setting.
+	 * Return setting if it's set. Return $default value if it's not null, setting STD value otherwiste.
 	 *
-	 * @param string $name
-	 * @param null $default
+	 * @param  string $name  Setting name.
+	 * @param  null   $default  Default.
 	 *
 	 * @return mixed
 	 */
 	public static function get( $name, $default = null ) {
-		if ( ! array_key_exists( $name, self::$settings ) ) {
+		$settings_definition = self::get_settings_definition();
+
+		if ( ! array_key_exists( $name, $settings_definition ) ) {
 			return $default;
 		}
 
-		$settings = get_option( self::SETTINGS_ID, array() );
+		$settings = self::get_all();
 
 		// Disable db auto update if cron is disabled.
 		if ( defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON ) {
@@ -176,18 +231,29 @@ class The7_Admin_Dashboard_Settings {
 			return $settings[ $name ];
 		}
 
-		if ( is_null( $default ) ) {
-			return self::$settings[ $name ]['std'];
+		if ( $default === null ) {
+			return $settings_definition[ $name ]['std'];
 		}
 
 		return $default;
 	}
 
 	/**
+	 * Return true if setting exists, false otherwise.
+	 *
+	 * @param string $name Setting name.
+	 *
+	 * @return bool
+	 */
+	public static function setting_exists( $name ) {
+		return array_key_exists( $name, self::get_all() );
+	}
+
+	/**
 	 * Set setting.
 	 *
-	 * @param string $name
-	 * @param mixed $value
+	 * @param string $name Setting name.
+	 * @param mixed  $value Setting value.
 	 *
 	 * @return bool
 	 */
@@ -204,6 +270,25 @@ class The7_Admin_Dashboard_Settings {
 	}
 
 	/**
+	 * Remove setting.
+	 *
+	 * @param string $name Setting name.
+	 *
+	 * @return bool
+	 */
+	public static function remove( $name ) {
+		$settings = get_option( self::SETTINGS_ID, array() );
+
+		if ( ! is_array( $settings ) ) {
+			$settings = array();
+		}
+
+		unset( $settings[ $name ] );
+
+		return update_option( self::SETTINGS_ID, $settings );
+	}
+
+	/**
 	 * Check existence of settings in db.
 	 *
 	 * @return bool
@@ -215,12 +300,14 @@ class The7_Admin_Dashboard_Settings {
 	/**
 	 * Action. Reset corresponding admin notices on settings change.
 	 *
-	 * @return voids
+	 * @param array $new_settings New settings.
+	 * @param array $old_settings Old settings.
+	 *
+	 * @return void
 	 */
 	public static function maybe_reset_notices( $new_settings, $old_settings ) {
 		$setting_related_notoces = array(
-			'silence-purchase-notification' => 'silence-purchase-notification',
-			'critical-alerts'               => 'turn-on-critical-alerts',
+			'critical-alerts' => 'turn-on-critical-alerts',
 		);
 		foreach ( $setting_related_notoces as $setting => $notice_id ) {
 			if ( ! isset( $new_settings[ $setting ], $old_settings[ $setting ] ) ) {
@@ -239,7 +326,7 @@ class The7_Admin_Dashboard_Settings {
 	 * @param mixed $value Any value.
 	 * @param sting $type Can be `checkbox` or `text`.
 	 *
-	 * @return mixed
+	 * @return string|bool
 	 */
 	public static function sanitize_setting( $value, $type ) {
 		if ( 'checkbox' === $type ) {
@@ -265,7 +352,7 @@ class The7_Admin_Dashboard_Settings {
 		}
 
 		$settings = array();
-		foreach ( self::$settings as $id => $_data ) {
+		foreach ( self::get_settings_definition() as $id => $_data ) {
 			$new_setting_exists = array_key_exists( $id, $new_settings );
 
 			if ( 'checkbox' === $_data['type'] ) {

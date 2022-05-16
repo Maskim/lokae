@@ -1,6 +1,4 @@
 .filter.filter-decorations:not(.class-1):not(.class-2):not(.class-3):not(.class-4) {
-
-
   .filter-extras a i {
     color: var(--filter-title-color-normal);
   }
@@ -14,5 +12,10 @@
     .filter-switch-toggle {
       background: var(--filter-pointer-bg-color-active);
     }
+  }
+
+  // "Fix" background decoration.
+  .filter-item {
+    z-index: 0;
   }
 }

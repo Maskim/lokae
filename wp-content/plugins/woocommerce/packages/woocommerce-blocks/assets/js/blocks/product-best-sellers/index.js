@@ -3,14 +3,13 @@
  */
 import { __ } from '@wordpress/i18n';
 import { without } from 'lodash';
-import Gridicon from 'gridicons';
+import { Icon, trendingUp } from '@wordpress/icons';
 import { createBlock, registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
  */
 import Block from './block';
-import { deprecatedConvertToShortcode } from '../../utils/deprecations';
 import sharedAttributes, {
 	sharedAttributeBlockTypes,
 } from '../../utils/shared-attributes';
@@ -18,8 +17,12 @@ import sharedAttributes, {
 registerBlockType( 'woocommerce/product-best-sellers', {
 	title: __( 'Best Selling Products', 'woocommerce' ),
 	icon: {
-		src: <Gridicon icon="stats-up-alt" />,
-		foreground: '#96588a',
+		src: (
+			<Icon
+				icon={ trendingUp }
+				className="wc-block-editor-components-block-icon"
+			/>
+		),
 	},
 	category: 'woocommerce',
 	keywords: [ __( 'WooCommerce', 'woocommerce' ) ],
@@ -57,18 +60,10 @@ registerBlockType( 'woocommerce/product-best-sellers', {
 		],
 	},
 
-	deprecated: [
-		{
-			// Deprecate shortcode save method in favor of dynamic rendering.
-			attributes: sharedAttributes,
-			save: deprecatedConvertToShortcode(
-				'woocommerce/product-best-sellers'
-			),
-		},
-	],
-
 	/**
 	 * Renders and manages the block.
+	 *
+	 * @param {Object} props Props to pass to block.
 	 */
 	edit( props ) {
 		return <Block { ...props } />;

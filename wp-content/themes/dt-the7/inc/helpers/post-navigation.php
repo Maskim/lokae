@@ -1,7 +1,7 @@
 <?php
 /**
  * Post navigation helpers
- * 
+ *
  * @package vogue
  * @since 1.0.0
  */
@@ -41,35 +41,6 @@ if ( ! function_exists( 'presscore_get_post_back_link' ) ) :
 		}
 
 		return '';
-	}
-
-endif;
-
-if ( ! function_exists( 'presscore_post_navigation' ) ) :
-
-	function presscore_post_navigation() {
-
-		if ( ! in_the_loop() ) {
-			return '';
-		}
-
-		$config = Presscore_Config::get_instance();
-
-		$output = '';
-
-		if ( $config->get( 'post.navigation.arrows.enabled' ) ) {
-			$output .= presscore_get_previous_post_link( '', 'prev-post', '<a class="prev-post disabled" href="javascript:void(0);"></a>' );
-		}
-
-		if ( $config->get( 'post.navigation.back_button.enabled' ) ) {
-			$output .= presscore_get_post_back_link();
-		}
-
-		if ( $config->get( 'post.navigation.arrows.enabled' ) ) {
-			$output .= presscore_get_next_post_link( '', 'next-post', '<a class="next-post disabled" href="javascript:void(0);"></a>' );
-		}
-
-		return $output;
 	}
 
 endif;
@@ -145,7 +116,16 @@ if ( ! function_exists( 'presscore_new_post_navigation' ) ) :
 		}
 
 		if ( $output ) {
-			$output = '<nav class="navigation post-navigation" role="navigation"><h2 class="screen-reader-text">' . esc_html( $args['screen_reader_text'] ) . '</h2><div class="nav-links">' . $output . '</div></nav>';
+			$nav_class = array(
+				'navigation',
+				'post-navigation',
+			);
+
+			if ( ! $config->get( 'post.navigation.arrows.enabled' ) ) {
+				$nav_class[] = 'disabled-post-navigation';
+			}
+
+			$output = '<nav class="' . esc_attr( implode( ' ', $nav_class ) ) . '" role="navigation"><h2 class="screen-reader-text">' . esc_html( $args['screen_reader_text'] ) . '</h2><div class="nav-links">' . $output . '</div></nav>';
 		}
 
 		return $output;
@@ -208,11 +188,11 @@ if ( ! function_exists( 'presscore_get_breadcrumbs' ) ) :
 
 	/**
 	 * Returns breadcrumbs html
-	 * 
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param array $args
-	 * 
+	 *
 	 * @return string Breadcrumbs html
 	 */
 	function presscore_get_breadcrumbs( $args = array() ) {
@@ -238,6 +218,7 @@ if ( ! function_exists( 'presscore_get_breadcrumbs' ) ) :
 			'beforeBreadcrumbs' => '',
 			'afterBreadcrumbs'  => '',
 			'listAttr'          => ' class="breadcrumbs text-small"',
+			'itemMaxChrCount'   => null,
 		);
 
 		$args = wp_parse_args( $args, $default_args );
@@ -264,7 +245,23 @@ if ( ! function_exists( 'presscore_get_breadcrumbs' ) ) :
 
 		}
 
-		if ( is_category() ) {
+		if ( function_exists( 'is_woocommerce' ) && is_woocommerce() && class_exists( '\WC_Breadcrumb' ) ) {
+			$wc_breadcrumbs      = new \WC_Breadcrumb();
+			$wc_breadcrumbs_list = $wc_breadcrumbs->generate();
+			$the_last_index      = count( $wc_breadcrumbs_list ) - 1;
+
+			// Remove the last link.
+			if ( isset( $wc_breadcrumbs_list[ $the_last_index ] ) ) {
+				$wc_breadcrumbs_list[ $the_last_index ][1] = null;
+			}
+
+			foreach ( $wc_breadcrumbs_list as $i => $crumb ) {
+				$breadcrumbs_parts[] = array(
+					'name' => $crumb[0],
+					'url'  => $crumb[1],
+				);
+			}
+		} elseif ( is_category() ) {
 
 			$thisCat = get_category( get_query_var( 'cat' ), OBJECT );
 
@@ -363,10 +360,7 @@ if ( ! function_exists( 'presscore_get_breadcrumbs' ) ) :
 				$post_type_name = $post_type_obj->labels->singular_name;
 
 				if ( $post_type === 'dt_portfolio' ) {
-					$post_type_name_text = of_get_option( 'portfolio-breadcrumbs-text', '' );
-					if ( $post_type_name_text ) {
-						$post_type_name = apply_filters( 'wpml_translate_single_string', $post_type_name_text, 'dt-the7', 'portfolio-breadcrumbs-text' );
-					}
+					$post_type_name = the7_get_portfolio_breadcrumbs_text( $post_type_name );
 				}
 
 				$breadcrumbs_parts[] = array(
@@ -390,10 +384,7 @@ if ( ! function_exists( 'presscore_get_breadcrumbs' ) ) :
 				$post_type_name = $post_type_obj->labels->singular_name;
 
 				if ( $post_type === 'dt_portfolio' ) {
-					$post_type_name_text = of_get_option( 'portfolio-breadcrumbs-text', '' );
-					if ( $post_type_name_text ) {
-						$post_type_name = apply_filters( 'wpml_translate_single_string', $post_type_name_text, 'dt-the7', 'portfolio-breadcrumbs-text' );
-					}
+					$post_type_name = the7_get_portfolio_breadcrumbs_text( $post_type_name );
 				}
 
 				$breadcrumbs_parts[] = array(
@@ -455,16 +446,24 @@ if ( ! function_exists( 'presscore_get_breadcrumbs' ) ) :
 		$breadcrumbs_parts = (array) apply_filters( 'presscore_breadcrumbs_parts', $breadcrumbs_parts );
 
 		$breadcrumbs = array();
-		foreach( $breadcrumbs_parts as $index => $breadcrumb_part ) {
+		foreach ( $breadcrumbs_parts as $index => $breadcrumb_part ) {
 			if ( ! isset( $breadcrumb_part['name'] ) ) {
 				continue;
 			}
 
-			$breadcrumb = '<span itemprop="name">' . $breadcrumb_part['name'] . '</span>';
-			$position = $index + 1;
+			$item_name = $breadcrumb_part['name'];
+			if ( $itemMaxChrCount ) {
+				$item_name = substr( $item_name, 0, $itemMaxChrCount );
+				if ( $item_name !== $breadcrumb_part['name'] ) {
+					$item_name .= '&hellip;';
+				}
+			}
+
+			$breadcrumb = '<span itemprop="name">' . $item_name . '</span>';
+			$position   = $index + 1;
 			$position_meta = '<meta itemprop="position" content="' . (int) $position . '" />';
-			if ( isset( $breadcrumb_part['url'] ) ) {
-				$breadcrumb = $linkBefore . '<a' . $linkAttr . ' href="' . esc_url( $breadcrumb_part['url'] ) .'" title="">' . $breadcrumb . '</a>' . $position_meta . $linkAfter;
+			if ( ! empty( $breadcrumb_part['url'] ) ) {
+				$breadcrumb = $linkBefore . '<a' . $linkAttr . ' href="' . esc_url( $breadcrumb_part['url'] ) . '" title="">' . $breadcrumb . '</a>' . $position_meta . $linkAfter;
 			} else {
 				$breadcrumb = $before . $breadcrumb . $position_meta . $after;
 			}
@@ -560,3 +559,18 @@ if ( ! function_exists( 'presscore_display_posts_filter' ) ) :
 	}
 
 endif;
+
+/**
+ * @param string $default Default text.
+ *
+ * @return string
+ */
+function the7_get_portfolio_breadcrumbs_text( $default = '' ) {
+	$breadcrumbs_text = The7_Admin_Dashboard_Settings::get( 'portfolio-breadcrumbs-text' );
+
+	if ( ! $breadcrumbs_text ) {
+		return $default;
+	}
+
+	return apply_filters( 'wpml_translate_single_string', $breadcrumbs_text, 'dt-the7', 'portfolio-breadcrumbs-text' );
+}

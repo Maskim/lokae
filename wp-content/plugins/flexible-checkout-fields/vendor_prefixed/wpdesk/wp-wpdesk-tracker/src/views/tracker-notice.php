@@ -46,7 +46,6 @@ if (empty($notice_content)) {
 <script type="text/javascript">
     jQuery(document).on('click', '#wpdesk_tracker_notice .notice-dismiss',function(e){
         e.preventDefault();
-        console.log('dismiss');
         jQuery.ajax( '<?php 
 echo \admin_url('admin-ajax.php');
 ?>',
@@ -61,7 +60,6 @@ echo \admin_url('admin-ajax.php');
     })
     jQuery(document).on('click', '#wpdesk_tracker_allow_button_notice',function(e){
         e.preventDefault();
-        console.log('allow');
         jQuery.ajax( '<?php 
 echo \admin_url('admin-ajax.php');
 ?>',

@@ -5,7 +5,7 @@
 .gform_wrapper .gsection {
 	border-bottom-style: @divider-thin-style !important;
 	border-bottom-width: @divider-thin-height;
-	border-bottom-color: @divider-color;
+	border-bottom-color: var(--the7-divider-color);
 }
 .gform_wrapper .ginput_complex label,
 .gform_wrapper .gfield_time_hour label,
@@ -14,7 +14,7 @@
 .gform_wrapper .gfield_date_day label,
 .gform_wrapper .gfield_date_year label,
 .gform_wrapper .instruction {
-	font-size: @text-small;
+	font-size: var(--the7-text-small-font-size);
 	color: fade(@base-color, 45%);
 }
 #main .gform_wrapper span.ginput_total,
@@ -22,7 +22,7 @@
 #main .gform_wrapper .ginput_left input:focus + label,
 #main .gform_wrapper .ginput_right input:focus + label,
 #main .gform_wrapper .ginput_full input:focus + label {
-	color: @accent-bg-color;
+	color: var(--the7-accent-color);
 }
 .gform_wrapper h3.gform_title,
 .gform_wrapper .gsection .gfield_label,
@@ -33,19 +33,19 @@ form.mc4wp-form label {
 }
 h3.gform_title,
 .gform_wrapper h3.gform_title {
-	color: @h3-color;
-	font: @h3-font-style @h3-font-variant @h3-font-weight @h3-font-size~"/"@h3-line-height @h3-font-family;
-	text-transform: @h3-text-transform;
+	color: var(--the7-h3-color);
+	font: var(--the7-h3-font);
+	text-transform: var(--the7-h3-text-transform);
 }
 .gform_wrapper .gsection .gfield_label,
 .gform_wrapper h2.gsection_title {
-	color: @h4-color;
-	font: @h4-font-style @h4-font-variant @h4-font-weight @h4-font-size~"/"@h4-line-height @h4-font-family;
-	text-transform: @h4-text-transform;
+	color: var(--the7-h4-color);
+	font: var(--the7-h4-font);
+	text-transform: var(--the7-h4-text-transform);
 }
 #main .gform_wrapper textarea,
 .gform_wrapper .top_label .gfield_label {
-	font: @base-font-style @base-font-variant @base-font-weight @base-font-size~"/"@base-line-height @base-font-family;
+	font: var(--the7-base-font);
 }
 
 /* border color
@@ -56,75 +56,7 @@ h3.gform_title,
 	.transparent-border-mixin;
 }
 
-//VC
-.aio-icon {
-	.accent-icon-bg & {
-		background: @accent-bg-color !important;
-		.accent-gradient & {
-			.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2) !important;
-		}
-	}
-	& > i {
-		.accent-icon-color & {
-			//.paint-accent-color;
-			color: @accent-bg-color !important;
-			.accent-gradient & {
-				.text-gradient-text-fill (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
-		  	}
-		}
-	}
-	.accent-border-color & {
-		border-color: @accent-bg-color !important;
-	}
-}
-.uvc-main-heading > *,
-.aio-icon-title {
-	.accent-title-color & {
-		color: @accent-bg-color !important;
-		.accent-gradient & {
-			.text-gradient-text-fill (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
-	  	}
-	}
-}
-.uvc-sub-heading,
-.aio-icon-description {
-	.accent-subtitle-color & {
-		color: @accent-bg-color !important;
-		.accent-gradient & {
-			.text-gradient-text-fill (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
-	  	}
-	}
-}
-.uvc-main-heading > *,
-.uvc-sub-heading {
-	.accent-subtitle-color &,
-	.accent-title-color & {
-		display: inline-block;
-	}
-}
-.uvc-headings-line {
-	.accent-border-color & {
-		border-color: @accent-bg-color !important;
-		.accent-gradient & {
-			border-color: transparent;
-		    -webkit-border-image: -webkit-linear-gradient(@accent-text-color-2);
-		    border-image: linear-gradient(@accent-text-color-2);
-		    border-image-slice: 1;
-		    
-		}
-		border-top: 0;
-		border-right: 0;
-		border-left: 0;
-	}
-}
-.slick-arrow {
-	.accent-arrow-bg & {
-		background: @accent-bg-color !important;
-		.accent-gradient & {
-			.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2) !important;
-		}
-	}
-}
+
 
 //WPML 
 .mini-wpml {
@@ -150,9 +82,10 @@ h3.gform_title,
 
 //CF 7
 .wpcf7-validation-errors,
-.wpcf7-mail-sent-ok {
+.wpcf7-mail-sent-ok,
+.wpcf7-response-output {
 	.popup-message-style & {
-		background-color: @accent-bg-color;
+		background-color: var(--the7-accent-color);
 	}
 	
 	.accent-gradient.popup-message-style & {
@@ -160,12 +93,12 @@ h3.gform_title,
 	}
 	 & .wpcf7-not-valid-tip-text,
 	 & .wpcf7-valid-tip-text {
-	 	font: @base-font-style @base-font-variant @text-big~"/"@text-big-line-height @base-font-family;
+		 font: var(--the7-base-font-big);
 	 }
 }
 
 .asp_product_name {
-	color: @h3-color;
-	font: @h3-font-style @h3-font-variant @h3-font-weight @h3-font-size~"/"@h3-line-height @h3-font-family;
-	text-transform: @h3-text-transform;
+	color: var(--the7-h3-color);
+	font: var(--the7-h3-font);
+	text-transform: var(--the7-h3-text-transform);
 }

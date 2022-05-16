@@ -7,20 +7,49 @@ import classNames from 'classnames';
 /**
  * Button functional component.
  *
- * @param {string}  text      Button text.
- * @param {string}  url       URL link.
- * @param {Array}   classes   Button class.
- * @param {string}  id        Button ID.
- * @param {string}  icon      SUI icon class.
- * @param {string}  target    Target __blank?
- * @param {boolean} disabled  Disabled or not.
- * @param {*}       onClick   onClick callback.
- * @return {*} Button component.
- * @constructor
+ * @param {Object}             props          Component props.
+ * @param {string}             props.text     Button text.
+ * @param {string}             props.url      URL link.
+ * @param {Array}              props.classes  Button class.
+ * @param {string}             props.id       Button ID.
+ * @param {string|JSX.Element} props.icon     SUI icon class.
+ * @param {string}             props.target   Target __blank?
+ * @param {boolean}            props.disabled Disabled or not.
+ * @param {*}                  props.onClick  onClick callback.
+ * @param {string}             props.type     Link or button.
+ * @return {JSX.Element} Button component.
+ * @class
  */
-export default function Button( { text, url, classes, id, icon, target, disabled = false, onClick } ) {
+export default function Button( {
+	text,
+	url = '#',
+	classes,
+	id,
+	icon,
+	target,
+	disabled = false,
+	onClick,
+	type = 'link',
+	...props
+} ) {
 	if ( icon ) {
-		icon = <i className={ icon } aria-hidden="true" />;
+		icon = <span className={ icon } aria-hidden="true" />;
+	}
+
+	if ( 'button' === type ) {
+		return (
+			<button
+				className={ classNames( classes ) }
+				id={ id }
+				disabled={ disabled }
+				onClick={ onClick }
+				{ ...props }
+			>
+				{ ! window.lodash.includes( classes, 'sui-button-icon-right' ) && icon }
+				{ text }
+				{ window.lodash.includes( classes, 'sui-button-icon-right' ) && icon }
+			</button>
+		);
 	}
 
 	let rel;
@@ -29,9 +58,19 @@ export default function Button( { text, url, classes, id, icon, target, disabled
 	}
 
 	return (
-		<a className={ classNames( classes ) } href={ url } id={ id } target={ target } rel={ rel } disabled={ disabled } onClick={ onClick }>
-			{ icon }
+		<a
+			className={ classNames( classes ) }
+			href={ url }
+			id={ id }
+			target={ target }
+			rel={ rel }
+			disabled={ disabled }
+			onClick={ onClick }
+			{ ...props }
+		>
+			{ ! window.lodash.includes( classes, 'sui-button-icon-right' ) && icon }
 			{ text }
+			{ window.lodash.includes( classes, 'sui-button-icon-right' ) && icon }
 		</a>
 	);
 }

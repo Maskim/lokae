@@ -3,8 +3,8 @@
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import { DEFAULT_COLUMNS, DEFAULT_ROWS } from '@woocommerce/block-settings';
-import { IconProductTag } from '@woocommerce/block-components/icons';
+import { getSetting } from '@woocommerce/settings';
+import { Icon, tag } from '@wordpress/icons';
 
 /**
  * Internal dependencies
@@ -18,13 +18,17 @@ import Block from './block';
 registerBlockType( 'woocommerce/product-tag', {
 	title: __( 'Products by Tag', 'woocommerce' ),
 	icon: {
-		src: <IconProductTag />,
-		foreground: '#96588a',
+		src: (
+			<Icon
+				icon={ tag }
+				className="wc-block-editor-components-block-icon"
+			/>
+		),
 	},
 	category: 'woocommerce',
 	keywords: [ __( 'WooCommerce', 'woocommerce' ) ],
 	description: __(
-		'Display a grid of products from your selected tags.',
+		'Display a grid of products with selected tags.',
 		'woocommerce'
 	),
 	supports: {
@@ -42,7 +46,7 @@ registerBlockType( 'woocommerce/product-tag', {
 		 */
 		columns: {
 			type: 'number',
-			default: DEFAULT_COLUMNS,
+			default: getSetting( 'default_columns', 3 ),
 		},
 
 		/**
@@ -50,7 +54,7 @@ registerBlockType( 'woocommerce/product-tag', {
 		 */
 		rows: {
 			type: 'number',
-			default: DEFAULT_ROWS,
+			default: getSetting( 'default_rows', 3 ),
 		},
 
 		/**
@@ -105,10 +109,20 @@ registerBlockType( 'woocommerce/product-tag', {
 			type: 'boolean',
 			default: false,
 		},
+
+		/**
+		 * Whether to display in stock, out of stock or backorder products.
+		 */
+		stockStatus: {
+			type: 'array',
+			default: Object.keys( getSetting( 'stockStatusOptions', [] ) ),
+		},
 	},
 
 	/**
 	 * Renders and manages the block.
+	 *
+	 * @param {Object} props Props to pass to block.
 	 */
 	edit( props ) {
 		return <Block { ...props } />;

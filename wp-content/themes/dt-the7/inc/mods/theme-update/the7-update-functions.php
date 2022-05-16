@@ -4,7 +4,7 @@ use Elementor\Icons_Manager;
 
 defined( 'ABSPATH' ) || exit;
 
-include_once dirname( __FILE__ ) . '/the7-update-utility-functions.php';
+require_once __DIR__ . '/the7-update-utility-functions.php';
 
 function the7_update_550_fancy_titles_parallax() {
 	global $wpdb;
@@ -32,10 +32,10 @@ function the7_update_550_fancy_titles_font_size() {
 
 	foreach ( $title_font_size_meta as $font_size_meta ) {
 		$old_font_size = $font_size_meta->meta_value;
-		if ( in_array( $old_font_size, array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ) ) ) {
+		if ( in_array( $old_font_size, array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ), true ) ) {
 			$font_size_option   = "fonts-{$old_font_size}_font_size";
 			$line_height_option = "fonts-{$old_font_size}_line_height";
-		} elseif ( in_array( $old_font_size, array( 'big', 'normal', 'small' ) ) ) {
+		} elseif ( in_array( $old_font_size, array( 'big', 'normal', 'small' ), true ) ) {
 			$font_size_option   = "fonts-{$old_font_size}_size";
 			$line_height_option = "fonts-{$old_font_size}_size_line_height";
 		} else {
@@ -64,10 +64,10 @@ function the7_update_550_fancy_subtitles_font_size() {
 
 	foreach ( $subtitle_font_size_meta as $font_size_meta ) {
 		$old_font_size = $font_size_meta->meta_value;
-		if ( in_array( $old_font_size, array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ) ) ) {
+		if ( in_array( $old_font_size, array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ), true ) ) {
 			$font_size_option   = "fonts-{$old_font_size}_font_size";
 			$line_height_option = "fonts-{$old_font_size}_line_height";
-		} elseif ( in_array( $old_font_size, array( 'big', 'normal', 'small' ) ) ) {
+		} elseif ( in_array( $old_font_size, array( 'big', 'normal', 'small' ), true ) ) {
 			$font_size_option   = "fonts-{$old_font_size}_size";
 			$line_height_option = "fonts-{$old_font_size}_size_line_height";
 		} else {
@@ -89,18 +89,6 @@ function the7_update_550_fancy_subtitles_font_size() {
 	}
 }
 
-function the7_update_550_db_version() {
-	The7_Install::update_db_version( '5.5.0' );
-}
-
-function the7_update_600_db_version() {
-	The7_Install::update_db_version( '6.0.0' );
-}
-
-function the7_update_610_db_version() {
-	The7_Install::update_db_version( '6.1.0' );
-}
-
 function the7_update_611_page_transparent_top_bar_migration() {
 	global $wpdb;
 
@@ -117,10 +105,14 @@ function the7_update_611_page_transparent_top_bar_migration() {
 
 	$color_obj               = new The7_Less_Vars_Value_Color( of_get_option( 'top_bar-bg-color' ) );
 	$top_bar_with_bg         = $color_obj->get_opacity() > 0;
-	$top_bar_with_decoration = in_array( of_get_option( 'top_bar-bg-style' ), array(
-		'fullwidth_line',
-		'content_line',
-	), true );
+	$top_bar_with_decoration = in_array(
+		of_get_option( 'top_bar-bg-style' ),
+		array(
+			'fullwidth_line',
+			'content_line',
+		),
+		true
+	);
 	$top_bar_opacity         = '0';
 	if ( ! $top_bar_with_decoration && $top_bar_with_bg ) {
 		$top_bar_opacity = '25';
@@ -133,14 +125,6 @@ function the7_update_611_page_transparent_top_bar_migration() {
 		update_post_meta( $post_id, '_dt_header_transparent_top_bar_bg_color', '#ffffff' );
 		update_post_meta( $post_id, '_dt_header_transparent_top_bar_bg_opacity', $top_bar_opacity );
 	}
-}
-
-function the7_update_611_db_version() {
-	The7_Install::update_db_version( '6.1.1' );
-}
-
-function the7_update_620_db_version() {
-	The7_Install::update_db_version( '6.2.0' );
 }
 
 function the7_update_630_microsite_content_visibility_settings_migration() {
@@ -164,14 +148,6 @@ function the7_update_630_microsite_content_visibility_settings_migration() {
 		}
 		update_post_meta( $post_id, '_dt_footer_show', '0' );
 	}
-}
-
-function the7_update_630_db_version() {
-	The7_Install::update_db_version( '6.3.0' );
-}
-
-function the7_update_640_db_version() {
-	The7_Install::update_db_version( '6.4.0' );
 }
 
 function the7_update_641_carousel_backward_compatibility() {
@@ -199,7 +175,7 @@ function the7_update_641_carousel_backward_compatibility() {
 	$posts_content_array = wp_list_pluck( $posts_content, 'post_content', 'ID' );
 
 	if ( ! class_exists( 'The7_Shortcode_Id_Crutch', false ) ) {
-		include( PRESSCORE_SHORTCODES_INCLUDES_DIR . '/class-the7-shortcode-id-crutch.php' );
+		include PRESSCORE_SHORTCODES_INCLUDES_DIR . '/class-the7-shortcode-id-crutch.php';
 	}
 
 	/**
@@ -261,10 +237,12 @@ function the7_update_641_carousel_backward_compatibility() {
 		}
 
 		if ( $save_post ) {
-			wp_update_post( array(
-				'ID'           => $post_id,
-				'post_content' => $content,
-			) );
+			wp_update_post(
+				array(
+					'ID'           => $post_id,
+					'post_content' => $content,
+				)
+			);
 		}
 
 		$processed_posts[] = $post_id;
@@ -274,42 +252,10 @@ function the7_update_641_carousel_backward_compatibility() {
 	delete_option( $cache_key );
 }
 
-function the7_update_641_db_version() {
-	The7_Install::update_db_version( '6.4.1' );
-}
-
-function the7_update_643_db_version() {
-	The7_Install::update_db_version( '6.4.3' );
-}
-
 function the7_update_650_disable_options_autoload() {
 	global $wpdb;
 
 	$wpdb->query( "UPDATE $wpdb->options SET autoload = 'no' WHERE option_name = 'ultimate_google_fonts'" );
-}
-
-function the7_update_650_db_version() {
-	The7_Install::update_db_version( '6.5.0' );
-}
-
-function the7_update_660_db_version() {
-	The7_Install::update_db_version( '6.6.0' );
-}
-
-function the7_update_661_db_version() {
-	The7_Install::update_db_version( '6.6.1' );
-}
-
-function the7_update_670_db_version() {
-	The7_Install::update_db_version( '6.7.0' );
-}
-
-function the7_update_680_db_version() {
-	The7_Install::update_db_version( '6.8.0' );
-}
-
-function the7_update_681_db_version() {
-	The7_Install::update_db_version( '6.8.1' );
 }
 
 function the7_update_693_migrate_custom_menu_widgets() {
@@ -320,10 +266,14 @@ function the7_update_693_migrate_custom_menu_widgets() {
 			continue;
 		}
 
-		$widgets = preg_replace( array(
-			'/presscore-custom-menu-1(.*)/',
-			'/presscore-custom-menu-2(.*)/',
-		), array( 'presscore-custom-menu-one$1', 'presscore-custom-menu-two$1' ), $widgets );
+		$widgets = preg_replace(
+			array(
+				'/presscore-custom-menu-1(.*)/',
+				'/presscore-custom-menu-2(.*)/',
+			),
+			array( 'presscore-custom-menu-one$1', 'presscore-custom-menu-two$1' ),
+			$widgets
+		);
 	}
 	unset( $widgets );
 
@@ -341,14 +291,10 @@ function the7_update_693_migrate_custom_menu_widgets() {
 	}
 }
 
-function the7_update_693_db_version() {
-	The7_Install::update_db_version( '6.9.3' );
-}
-
 /**
  * Migrate shortcodes gradients.
  *
- * @param array $atts
+ * @param array $atts Shortcode attributes.
  *
  * @return array
  */
@@ -379,14 +325,6 @@ function the7_update_700_shortcodes_gradient_backward_compatibility() {
 	);
 
 	the7_migrate_shortcodes_in_all_posts( 'the7_update_700_migrate_shortcodes_gradients', $tags, __FUNCTION__ );
-}
-
-function the7_update_700_db_version() {
-	The7_Install::update_db_version( '7.0.0' );
-}
-
-function the7_update_710_db_version() {
-	The7_Install::update_db_version( '7.1.0' );
 }
 
 function the7_update_730_set_fancy_title_zero_top_padding() {
@@ -442,10 +380,6 @@ function the7_update_730_fancy_title_responsiveness_settings() {
 	}
 }
 
-function the7_update_730_db_version() {
-	The7_Install::update_db_version( '7.3.0' );
-}
-
 /**
  * Migrate fancy title uppercase post meta.
  *
@@ -472,10 +406,6 @@ function the7_update_740_fancy_title_uppercase_migration() {
 	}
 }
 
-function the7_update_740_db_version() {
-	The7_Install::update_db_version( '7.4.0' );
-}
-
 /**
  * Migrate blog back button urls.
  *
@@ -500,14 +430,6 @@ function the7_update_743_back_button_migration() {
 
 		update_post_meta( $post->post_id, '_dt_post_options_back_button', $new_value );
 	}
-}
-
-function the7_update_743_db_version() {
-	The7_Install::update_db_version( '7.4.3' );
-}
-
-function the7_update_750_db_version() {
-	The7_Install::update_db_version( '7.5.0' );
 }
 
 /**
@@ -562,10 +484,6 @@ function the7_update_760_mega_menu_migration() {
 	}
 }
 
-function the7_update_760_db_version() {
-	The7_Install::update_db_version( '7.6.0' );
-}
-
 function the7_update_761_dashboard_settings_migration() {
 	$dashboard_settings = get_option( The7_Admin_Dashboard_Settings::SETTINGS_ID, array() );
 	if ( ! isset( $dashboard_settings['admin-icons-bar'] ) && isset( $dashboard_settings['icons-bar'] ) ) {
@@ -576,16 +494,9 @@ function the7_update_761_dashboard_settings_migration() {
 }
 
 /**
- * Bump db version.
- */
-function the7_update_762_db_version() {
-	The7_Install::update_db_version( '7.6.2' );
-}
-
-/**
  * Migrate blog shortcodes.
  *
- * @param array $atts
+ * @param array $atts Shortcode attributes.
  *
  * @return array
  */
@@ -621,16 +532,9 @@ function the7_update_770_shortcodes_blog_backward_compatibility() {
 }
 
 /**
- * Bump db version.
- */
-function the7_update_770_db_version() {
-	The7_Install::update_db_version( '7.7.0' );
-}
-
-/**
  * Migrate blog shortcodes.
  *
- * @param array $atts
+ * @param array $atts Shortcode attributes.
  *
  * @return array
  */
@@ -643,7 +547,7 @@ function the7_update_771_migrate_blog_shortcodes( $atts ) {
 		} elseif ( empty( $atts['custom_content_bg_color'] ) ) {
 			$new_atts['image_hover_bg_color'] = 'default';
 		} else {
-			$new_atts['image_hover_bg_color'] = 'solid_rollover_bg';
+			$new_atts['image_hover_bg_color']     = 'solid_rollover_bg';
 			$new_atts['custom_rollover_bg_color'] = $atts['custom_content_bg_color'];
 		}
 	}
@@ -663,7 +567,7 @@ function the7_update_771_shortcodes_blog_backward_compatibility() {
 /**
  * Migrate button shortcodes.
  *
- * @param array $atts
+ * @param array $atts Shortcode attributes.
  *
  * @return array
  */
@@ -675,7 +579,7 @@ function the7_update_771_migrate_button_shortcodes( $atts ) {
 			'shadow' => 'btn_shadow',
 		);
 		$buttons_decoration = of_get_option( 'buttons-style' );
-		if ( array_key_exists( $buttons_decoration, $opt_to_att_array ) ) {
+		if ( $buttons_decoration && array_key_exists( $buttons_decoration, $opt_to_att_array ) ) {
 			$new_atts['btn_decoration'] = $opt_to_att_array[ $buttons_decoration ];
 		}
 	}
@@ -693,20 +597,6 @@ function the7_update_771_shortcodes_button_backward_compatibility() {
 }
 
 /**
- * Bump db version.
- */
-function the7_update_771_db_version() {
-	The7_Install::update_db_version( '7.7.1' );
-}
-
-/**
- * Bump db version.
- */
-function the7_update_772_db_version() {
-	The7_Install::update_db_version( '7.7.2' );
-}
-
-/**
  * Enable Font Awesome compatibility mode after theme update, if needed.
  */
 function the7_update_775_fontawesome_compatibility() {
@@ -715,20 +605,6 @@ function the7_update_775_fontawesome_compatibility() {
 	} else {
 		The7_Icon_Manager::enable_fontawesome5();
 	}
-}
-
-/**
- * Bump db version.
- */
-function the7_update_775_db_version() {
-	The7_Install::update_db_version( '7.7.5' );
-}
-
-/**
- * Bump db version.
- */
-function the7_update_776_db_version() {
-	The7_Install::update_db_version( '7.7.6' );
 }
 
 /**
@@ -799,52 +675,10 @@ function the7_update_780_shortcodes_backward_compatibility() {
 }
 
 /**
- * Bump db version.
- */
-function the7_update_780_db_version() {
-	The7_Install::update_db_version( '7.8.0' );
-}
-
-/**
  * Silence plugins purchase notification.
  */
 function the7_update_790_silence_plugins_purchase_notification() {
 	The7_Admin_Dashboard_Settings::set( 'silence-purchase-notification', true );
-}
-
-/**
- * Bump db version.
- */
-function the7_update_790_db_version() {
-	The7_Install::update_db_version( '7.9.0' );
-}
-
-/**
- * Bump db version.
- */
-function the7_update_791_db_version() {
-	The7_Install::update_db_version( '7.9.1' );
-}
-
-/**
- * Bump db version.
- */
-function the7_update_800_db_version() {
-	The7_Install::update_db_version( '8.0.0' );
-}
-
-/**
- * Bump db version.
- */
-function the7_update_810_db_version() {
-	The7_Install::update_db_version( '8.1.0' );
-}
-
-/**
- * Bump db version.
- */
-function the7_update_820_db_version() {
-	The7_Install::update_db_version( '8.2.0' );
 }
 
 /**
@@ -897,20 +731,6 @@ function the7_update_830_migrate_post_mobile_padding() {
 	}
 }
 
-/**
- * Bump db version.
- */
-function the7_update_830_db_version() {
-	The7_Install::update_db_version( '8.3.0' );
-}
-
-/**
- * Bump db version.
- */
-function the7_update_840_db_version() {
-	The7_Install::update_db_version( '8.4.0' );
-}
-
 function the7_update_850_migrate_post_footer_visibility() {
 	global $wpdb;
 
@@ -923,10 +743,6 @@ function the7_update_850_migrate_post_footer_visibility() {
 	foreach ( $posts as $post_id ) {
 		update_post_meta( $post_id, '_dt_footer_show', '1' );
 	}
-}
-
-function the7_update_850_db_version() {
-	The7_Install::update_db_version( '8.5.0' );
 }
 
 function the7_update_8502_migrate_post_footer_source_for_elementor() {
@@ -943,31 +759,545 @@ function the7_update_8502_migrate_post_footer_source_for_elementor() {
 	}
 }
 
-function the7_update_8502_db_version() {
-	The7_Install::update_db_version( '8.5.0.2' );
-}
-
-function the7_update_860_db_version() {
-	The7_Install::update_db_version( '8.6.0' );
-}
-
-function the7_update_870_db_version() {
-	The7_Install::update_db_version( '8.7.0' );
-}
-
 function the7_update_890_elementor_the7_elements() {
 	if ( ! the7_elementor_is_active() ) {
 		return false;
 	}
 
-	$updater = new \The7\Adapters\Elementor\Upgrade\The7_Elementor_Updater();
-	\The7\Adapters\Elementor\Upgrade\Widgets\The7_Elementor_Masonry_Migrations::run( '_8_9_0_migration', $updater );
+	require_once PRESSCORE_MODS_DIR . '/compatibility/elementor/upgrade/widgets/class-the7-elementor-masonry-migrations.php';
 
-	\Elementor\Plugin::$instance->files_manager->clear_cache();
+	$updater = new \The7\Mods\Compatibility\Elementor\Upgrade\The7_Elementor_Updater();
+	\The7\Mods\Compatibility\Elementor\Upgrade\Widgets\The7_Elementor_Masonry_Migrations::run( '_8_9_0_migration', $updater );
+
+	the7_elementor_flush_css_cache();
 
 	return false;
 }
 
-function the7_update_890_db_version() {
-	The7_Install::update_db_version( '8.9.0' );
+function the7_update_912_elementor_the7_elements() {
+	if ( ! the7_elementor_is_active() || the7_is_elementor2() ) {
+		return false;
+	}
+
+	$function_names = array(
+		'_v_3_0_0_move_general_settings_to_kit',
+		'_v_3_0_0_move_default_colors_to_kit',
+		'_v_3_0_0_move_saved_colors_to_kit',
+		'_v_3_0_0_move_default_typography_to_kit',
+	);
+
+	$updater           = new \The7\Mods\Compatibility\Elementor\Upgrade\The7_Elementor_Updater();
+	$upgrade_callbacks = the7_update_elementor_get_upgrade_callbacks( $function_names );
+	foreach ( $upgrade_callbacks as $callback ) {
+		$callback( $updater );
+	}
+
+	// Fix incorrect slider format after settings to kit migration.
+	$active_kit_id = \Elementor\Plugin::$instance->kits_manager->get_active_id();
+	$kit           = \Elementor\Plugin::$instance->documents->get( $active_kit_id );
+	if ( $kit ) {
+		$meta_key     = \Elementor\Core\Settings\Page\Manager::META_KEY;
+		$kit_settings = $kit->get_meta( $meta_key );
+		$update_kit   = false;
+
+		if ( ! isset( $kit_settings['space_between_widgets'] ) ) {
+			if ( get_option( 'elementor_space_between_widgets' ) === '0' ) {
+				$update_kit = true;
+			}
+		} elseif ( (string) $kit_settings['space_between_widgets'] === '0' ) {
+			$update_kit = true;
+		}
+
+		if ( $update_kit ) {
+			$kit_settings['space_between_widgets'] = [
+				'unit' => 'px',
+				'size' => '0',
+			];
+
+			$page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers( 'page' );
+			$page_settings_manager->save_settings( $kit_settings, $active_kit_id );
+		}
+	}
+
+	the7_elementor_flush_css_cache();
+
+	return false;
+}
+
+function the7_update_elementor_get_upgrade_callbacks( $function_names ) {
+	$prefix              = '_v_';
+	$upgrades_class      = \Elementor\Plugin::$instance->upgrade->get_upgrades_class();
+	$upgrades_reflection = new \ReflectionClass( $upgrades_class );
+
+	$callbacks = [];
+
+	foreach ( $upgrades_reflection->getMethods() as $method ) {
+		$method_name = $method->getName();
+		if ( false === strpos( $method_name, $prefix ) ) {
+			continue;
+		}
+
+		if ( ! in_array( $method_name, $function_names, true ) ) {
+			continue;
+		}
+
+		$callbacks[] = [ $upgrades_class, $method_name ];
+	}
+
+	return $callbacks;
+}
+
+function the7_update_931_elementor_the7_photo_scroller() {
+	if ( ! the7_elementor_is_active() ) {
+		return false;
+	}
+
+	require_once PRESSCORE_MODS_DIR . '/compatibility/elementor/upgrade/widgets/class-the7-elementor-photo-scroller-migrations.php';
+
+	$updater = new \The7\Mods\Compatibility\Elementor\Upgrade\The7_Elementor_Updater();
+	\The7\Mods\Compatibility\Elementor\Upgrade\Widgets\The7_Elementor_Photo_Scroller_Migrations::run( '_9_3_1_migration', $updater );
+
+	the7_elementor_flush_css_cache();
+
+	return false;
+}
+
+function the7_update_940_elementor_the7_posts_masonry() {
+	if ( ! the7_elementor_is_active() ) {
+		return false;
+	}
+
+	require_once PRESSCORE_MODS_DIR . '/compatibility/elementor/upgrade/widgets/class-the7-elementor-masonry-migrations.php';
+
+	$updater = new \The7\Mods\Compatibility\Elementor\Upgrade\The7_Elementor_Updater();
+	\The7\Mods\Compatibility\Elementor\Upgrade\Widgets\The7_Elementor_Masonry_Migrations::run( '_9_4_0_migration', $updater );
+
+	the7_elementor_flush_css_cache();
+
+	return false;
+}
+
+function the7_update_940_theme_options() {
+	require_once __DIR__ . '/patches/class-the7-db-patch-090400.php';
+	the7_apply_theme_options_migration( new The7_DB_Patch_090400() );
+}
+
+function the7_update_9402_theme_options() {
+	require_once __DIR__ . '/patches/class-the7-db-patch-090402.php';
+	the7_apply_theme_options_migration( new The7_DB_Patch_090402() );
+}
+
+function the7_update_9600_theme_options() {
+	require_once __DIR__ . '/patches/class-the7-db-patch-090600.php';
+	the7_apply_theme_options_migration( new The7_DB_Patch_090600() );
+}
+
+function the7_update_9142_theme_options() {
+	require_once __DIR__ . '/patches/class-the7-db-patch-091402.php';
+	the7_apply_theme_options_migration( new The7_DB_Patch_091402() );
+}
+
+function the7_update_960_elementor_the7_posts_carousel() {
+	if ( ! the7_elementor_is_active() ) {
+		return false;
+	}
+
+	require_once PRESSCORE_MODS_DIR . '/theme-update/migrations/v9_6_0/posts-carousel-widget-migration.php';
+
+	The7\Inc\Mods\ThemeUpdate\Migrations\v9_6_0\Posts_Carousel_Widget_Migration::migrate();
+
+	the7_elementor_flush_css_cache();
+
+	return false;
+}
+
+function the7_update_9130_elementor_the7_posts_carousel() {
+	if ( ! the7_elementor_is_active() ) {
+		return false;
+	}
+
+	require_once PRESSCORE_MODS_DIR . '/theme-update/migrations/v9_13_0/posts-carousel-widget-migration.php';
+
+	The7\Inc\Mods\ThemeUpdate\Migrations\v9_13_0\Posts_Carousel_Widget_Migration::migrate();
+
+	the7_elementor_flush_css_cache();
+
+	return false;
+}
+
+function the7_update_9130_elementor_the7_testimonials_carousel() {
+	if ( ! the7_elementor_is_active() ) {
+		return false;
+	}
+
+	require_once PRESSCORE_MODS_DIR . '/theme-update/migrations/v9_13_0/testimonials-carousel-widget-migration.php';
+
+	The7\Inc\Mods\ThemeUpdate\Migrations\v9_13_0\Testimonials_Carousel_Widget_Migration::migrate();
+
+	the7_elementor_flush_css_cache();
+
+	return false;
+}
+
+function the7_update_9130_elementor_the7_text_and_icon_carousel() {
+	if ( ! the7_elementor_is_active() ) {
+		return false;
+	}
+
+	require_once PRESSCORE_MODS_DIR . '/theme-update/migrations/v9_13_0/text-and-icon-carousel-widget-migration.php';
+
+	The7\Inc\Mods\ThemeUpdate\Migrations\v9_13_0\Text_And_Icon_Carousel_Widget_Migration::migrate();
+
+	the7_elementor_flush_css_cache();
+
+	return false;
+}
+
+/**
+ * Migrate simple posts widget.
+ */
+function the7_update_9140_simple_posts_widget() {
+	The7\Mods\Theme_Update\Migrations\v09_14_0\Simple_Posts_Widget_Migration::migrate();
+}
+
+/**
+ * Migrate simple posts carousel widget.
+ */
+function the7_update_9140_simple_posts_carousel_widget() {
+	The7\Mods\Theme_Update\Migrations\v09_14_0\Simple_Posts_Carousel_Widget_Migration::migrate();
+}
+
+/**
+ * Migrate simple products widget.
+ */
+function the7_update_9140_simple_products_widget() {
+	The7\Mods\Theme_Update\Migrations\v09_14_0\Simple_Products_Widget_Migration::migrate();
+}
+
+/**
+ * Migrate simple product carousel widget.
+ */
+function the7_update_9140_simple_products_carousel_widget() {
+	The7\Mods\Theme_Update\Migrations\v09_14_0\Simple_Products_Carousel_Widget_Migration::migrate();
+}
+
+/**
+ * Migrate simple product category widget.
+ */
+function the7_update_9140_simple_product_category_widget() {
+	The7\Mods\Theme_Update\Migrations\v09_14_0\Simple_Product_Category_Widget_Migration::migrate();
+}
+
+/**
+ * Migrate simple product category carousel widget.
+ */
+function the7_update_9140_simple_product_category_carousel_widget() {
+	The7\Mods\Theme_Update\Migrations\v09_14_0\Simple_Product_Category_Carousel_Widget_Migration::migrate();
+}
+
+/**
+ * Migrate posts carousel widget.
+ */
+function the7_update_9150_posts_carousel_widget() {
+	The7\Mods\Theme_Update\Migrations\v09_15_1\Carousel_Widget_Width_Migration::migrate( 'the7_elements_carousel' );
+}
+
+/**
+ * Migrate multipurpose carousel widget.
+ */
+function the7_update_9150_multipurpose_carousel_widget() {
+	The7\Mods\Theme_Update\Migrations\v09_15_1\Carousel_Widget_Width_Migration::migrate( 'the7_content_carousel' );
+}
+
+/**
+ * Migrate testimonials carousel widget.
+ */
+function the7_update_9150_testimonials_carousel_widget() {
+	The7\Mods\Theme_Update\Migrations\v09_15_1\Carousel_Widget_Width_Migration::migrate( 'the7_testimonials_carousel' );
+}
+
+/**
+ * Migrate simple posts widget.
+ */
+function the7_update_91501_simple_posts_widget_border() {
+	The7\Mods\Theme_Update\Migrations\v09_15_1\Simple_Widgets_Border_Migration::migrate( 'the7-elements-simple-posts' );
+}
+
+/**
+ * Migrate simple posts carousel widget.
+ */
+function the7_update_91501_simple_posts_carousel_widget_border() {
+	The7\Mods\Theme_Update\Migrations\v09_15_1\Simple_Widgets_Border_Migration::migrate( 'the7-elements-simple-posts-carousel' );
+}
+
+/**
+ * Migrate simple products categories widget.
+ */
+function the7_update_91501_simple_products_categories_widget_border() {
+	The7\Mods\Theme_Update\Migrations\v09_15_1\Simple_Widgets_Border_Migration::migrate( 'the7-elements-simple-product-categories' );
+}
+
+/**
+ * Migrate simple products categories carousel widget.
+ */
+function the7_update_91501_simple_products_categories_carousel_widget_border() {
+	The7\Mods\Theme_Update\Migrations\v09_15_1\Simple_Widgets_Border_Migration::migrate( 'the7-simple-product-categories-carousel' );
+}
+
+/**
+ * Migrate simple products widget.
+ */
+function the7_update_91501_simple_products_widget_border() {
+	The7\Mods\Theme_Update\Migrations\v09_15_1\Simple_Widgets_Border_Migration::migrate( 'the7-elements-woo-simple-products' );
+}
+
+/**
+ * Migrate simple products carousel widget.
+ */
+function the7_update_91501_simple_products_carousel_widget_border() {
+	The7\Mods\Theme_Update\Migrations\v09_15_1\Simple_Widgets_Border_Migration::migrate( 'the7-elements-woo-simple-products-carouse' );
+}
+
+/**
+ * Turn off elementor buttons integration.
+ */
+function the7_update_9160_set_buttons_integration_off() {
+	if ( ! The7_Admin_Dashboard_Settings::setting_exists( 'elementor-buttons-integration' ) ) {
+		The7_Admin_Dashboard_Settings::set( 'elementor-buttons-integration', false );
+	}
+}
+
+/**
+ * Migrate button controls in posts masonry widget.
+ */
+function the7_update_9160_posts_masonry_widget_buttons() {
+	The7\Mods\Theme_Update\Migrations\v09_16_0\Posts_Widget_Button_Migration::migrate( 'the7_elements' );
+}
+
+/**
+ * Migrate button controls in posts carousel widget.
+ */
+function the7_update_9160_posts_carousel_widget_buttons() {
+	The7\Mods\Theme_Update\Migrations\v09_16_0\Posts_Widget_Button_Migration::migrate( 'the7_elements_carousel' );
+}
+
+/**
+ * Migrate button controls in icon box grid widget.
+ */
+function the7_update_9160_icon_box_grid_widget_buttons() {
+	The7\Mods\Theme_Update\Migrations\v09_16_0\Icon_Box_Grid_Widget_Button_Migration::migrate( 'the7_icon_box_grid_widget' );
+}
+
+/**
+ * Migrate button controls in simple posts carousel widget.
+ */
+function the7_update_9160_simple_posts_carousel_widget_buttons() {
+	The7\Mods\Theme_Update\Migrations\v09_16_0\Posts_Widget_Button_Migration::migrate( 'the7-elements-simple-posts-carousel' );
+}
+
+/**
+ * Migrate button controls in simple posts widget.
+ */
+function the7_update_9160_simple_posts_widget_buttons() {
+	The7\Mods\Theme_Update\Migrations\v09_16_0\Posts_Widget_Button_Migration::migrate( 'the7-elements-simple-posts' );
+}
+
+/**
+ * Migrate button controls in simple product categories widget.
+ */
+function the7_update_9160_simple_product_categories_widget_buttons() {
+	The7\Mods\Theme_Update\Migrations\v09_16_0\Posts_Widget_Button_Migration::migrate( 'the7-elements-simple-product-categories' );
+}
+
+/**
+ * Migrate button controls in simple product categories carousel widget.
+ */
+function the7_update_9160_simple_product_categories_carousel_widget_buttons() {
+	The7\Mods\Theme_Update\Migrations\v09_16_0\Posts_Widget_Button_Migration::migrate( 'the7-simple-product-categories-carousel' );
+}
+
+/**
+ * Migrate button controls in simple products widget.
+ */
+function the7_update_9160_simple_products_widget_buttons() {
+	The7\Mods\Theme_Update\Migrations\v09_16_0\Simple_Product_Widgets_Button_Migration::migrate( 'the7-elements-woo-simple-products' );
+}
+
+/**
+ * Migrate button controls in simple products carousel widget.
+ */
+function the7_update_9160_simple_products_carousel_widget_buttons() {
+	The7\Mods\Theme_Update\Migrations\v09_16_0\Simple_Product_Widgets_Button_Migration::migrate( 'the7-elements-woo-simple-products-carousel' );
+}
+
+/**
+ * Migrate button controls in products widget.
+ */
+function the7_update_9160_products_widget_buttons() {
+	The7\Mods\Theme_Update\Migrations\v09_16_0\Products_Widget_Button_Migration::migrate( 'the7-wc-products' );
+}
+
+/**
+ * Migrate button controls in testimonials widget.
+ */
+function the7_update_9160_testimonials_widget_buttons() {
+	The7\Mods\Theme_Update\Migrations\v09_16_0\Icon_Box_Grid_Widget_Button_Migration::migrate( 'the7_testimonials_carousel' );
+}
+
+/**
+ * Migrate button controls in text and icon carousel widget.
+ */
+function the7_update_9160_text_and_icon_carousel_widget_buttons() {
+	The7\Mods\Theme_Update\Migrations\v09_16_0\Icon_Box_Grid_Widget_Button_Migration::migrate( 'the7_content_carousel' );
+}
+
+/**
+ * Migrate button controls in text and icon carousel widget.
+ */
+function the7_update_9170_the7_nav_menu_widget() {
+	\The7\Mods\Theme_Update\Migrations\v09_17_0\Vertical_Menu_Widget_Migration::migrate();
+}
+
+
+/**
+ * Manage flags upon migration.
+ */
+function the7_update_10_0_0_manage_flags() {
+	delete_site_option( 'the7-beta-tester' );
+
+	// Used in `the7-dashboard.php`.
+	add_option( 'the7-theme-style-migrate-first', true );
+}
+
+/**
+ * Migrate WC `add to cart` icon for `The7 Products` widget.
+ */
+function the7_update_10_1_0_products_add_to_cart_icon_migration() {
+	The7\Mods\Theme_Update\Migrations\v10_1_0\Products_Add_To_Cart_Icon_Migration::migrate( 'the7-wc-products' );
+}
+
+/**
+ * Migrate WC `add to cart` icon for `The7 Products Carousel` widget.
+ */
+function the7_update_10_1_0_products_carousel_add_to_cart_icon_migration() {
+	The7\Mods\Theme_Update\Migrations\v10_1_0\Products_Add_To_Cart_Icon_Migration::migrate( 'the7-wc-products-carousel' );
+}
+
+/**
+ * Migrate Horizontal Menu widget gap.
+ */
+function the7_update_10_2_0_horizontal_menu_gap_migration() {
+	The7\Mods\Theme_Update\Migrations\v10_2_0\Horizontal_Menu_Gap_Migration::migrate();
+}
+
+/**
+ * Activate deprecated widgets by default.
+ */
+function the7_update_10_3_0_activate_deprecated_elementor_widgets() {
+	if ( the7_elementor_is_active() && ! The7_Admin_Dashboard_Settings::setting_exists( 'deprecated_elementor_widgets' ) ) {
+		The7_Admin_Dashboard_Settings::set( 'deprecated_elementor_widgets', true );
+	}
+}
+
+/**
+ * Migrate portfolio breadcrumbs text.
+ */
+function the7_update_10_3_0_migrate_portfolio_bredcrumbs_text() {
+	$portfolio_breadcrumbs = of_get_option( 'portfolio-breadcrumbs-text' );
+	if ( $portfolio_breadcrumbs && ! The7_Admin_Dashboard_Settings::setting_exists( 'portfolio-breadcrumbs-text' ) ) {
+		The7_Admin_Dashboard_Settings::set( 'portfolio-breadcrumbs-text', (string) $portfolio_breadcrumbs );
+	}
+}
+
+/**
+ * Activate deprecated megamenu by default.
+ */
+function the7_update_10_3_0_activate_deprecated_mega_menu_settings() {
+	The7_Admin_Dashboard_Settings::set( 'deprecated_mega_menu_settings', true );
+}
+
+/**
+ * Migrate filter settings in `Posts Masonry & Grid` widget.
+ *
+ * @return void
+ */
+function the7_update_10_4_0_posts_masonry_grid_filters_migration() {
+	\The7\Mods\Theme_Update\Migrations\v10_4_0\Posts_Filter_Gap_Migration::migrate();
+}
+
+/**
+ * Replace Andale Mono font with Space Mono, in theme options, since it is not fully cross-platform.
+ *
+ * @return void
+ */
+function the7_update_10_4_0_replace_andale_mono_font_in_theme_options() {
+	$option_values         = optionsframework_get_options();
+	$option_definitions    = _optionsframework_options();
+	$updated_option_values = [];
+
+	foreach ( $option_definitions as $option ) {
+		if ( ! isset( $option['id'] ) || ! isset( $option['type'] ) ) {
+			continue;
+		}
+
+		$id = $option['id'];
+
+		if ( ! isset( $option_values[ $id ] ) ) {
+			continue;
+		}
+
+		$option_value = $option_values[ $id ];
+
+		if ( $option['type'] === 'typography' && isset( $option_value['font_family'] ) && $option_value['font_family'] === 'Andale Mono' ) {
+			$updated_option_values[ $id ]                = $option_value;
+			$updated_option_values[ $id ]['font_family'] = 'Space Mono';
+		} elseif ( $option['type'] === 'web_fonts' && $option_value === 'Andale Mono' ) {
+			$updated_option_values[ $id ] = 'Space Mono';
+		}
+	}
+
+	if ( $updated_option_values ) {
+		update_option( optionsframework_get_options_id(), array_merge( $option_values, $updated_option_values ) );
+	}
+}
+
+/**
+ * Turn on `Additional Custom Breakpoints` experiment if it is in use.
+ *
+ * @return void
+ */
+function the7_update_10_4_3_maybe_turn_on_elementor_custom_breakpoints() {
+	$experiment = get_option( 'elementor_experiment-additional_custom_breakpoints' );
+	if ( $experiment && $experiment !== 'default' ) {
+		return;
+	}
+
+	if ( ! class_exists( 'Elementor\Plugin' ) ) {
+		return;
+	}
+
+	$kit_id = \Elementor\Plugin::$instance->kits_manager->get_active_id();
+	$kit    = \Elementor\Plugin::$instance->documents->get( $kit_id );
+
+	if ( ! $kit ) {
+		return;
+	}
+
+	$active_break_points = $kit->get_settings( 'active_breakpoints' );
+
+	if ( ! is_array( $active_break_points ) || count( $active_break_points ) < 3 ) {
+		return;
+	}
+
+	update_option( 'elementor_experiment-additional_custom_breakpoints', 'active' );
+}
+
+/**
+ * Turn off elementor last spacing
+ */
+function the7_update_10_5_0_turn_off_elementor_paragraph_last_spacing() {
+	$option = 'elementor-zero-paragraph-last-spacing';
+	if ( ! The7_Admin_Dashboard_Settings::setting_exists( $option ) ) {
+		The7_Admin_Dashboard_Settings::set( $option, false );
+	}
 }

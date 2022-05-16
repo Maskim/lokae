@@ -16,42 +16,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <h4><?php esc_html_e( 'Overview', 'wphb' ); ?></h4>
 <p>
-	<?php esc_html_e( 'CSS files control the look and feel of your website. Often, these files come with a lot of extra \'bloat\' that they don\'t need. By compressing those files and removing all the excess you\'ll reduce payload sizes and reduce your page load speed. Optimizing CSS files includes removing comments, formatting and duplicate code.', 'wphb' ); ?>
+	<?php esc_html_e( 'CSS files control the look and feel of your website. Often, these files come with a lot of extra \'bloat\' that they don\'t need. By compressing those files and removing all the excess you\'ll reduce payload sizes and increase your page load speed. Optimizing CSS files includes removing comments, formatting and duplicate code.', 'wphb' ); ?>
 </p>
 
 <h4><?php esc_html_e( 'Status', 'wphb' ); ?></h4>
-<?php if ( isset( $audit->errorMessage ) && ! isset( $audit->score ) ) { ?>
-	<div class="sui-notice sui-notice-error">
-		<p>
-			<?php
-			printf(
-				/* translators: %s - error message */
-				esc_html__( 'Error: %s', 'wphb' ),
-				esc_html( $audit->errorMessage )
-			);
-			?>
-		</p>
-	</div>
-	<?php
+<?php if ( isset( $audit->errorMessage ) && ! isset( $audit->score ) ) {
+	$this->admin_notices->show_inline( /* translators: %s - error message */
+		sprintf( esc_html__( 'Error: %s', 'wphb' ), esc_html( $audit->errorMessage ) ),
+		'error'
+	);
 	return;
 }
 ?>
 <?php if ( isset( $audit->score ) && 1 === $audit->score ) : ?>
-	<div class="sui-notice sui-notice-success">
-		<p><?php esc_html_e( "Nice! We couldn't find any uncompressed CSS files.", 'wphb' ); ?></p>
-	</div>
+	<?php $this->admin_notices->show_inline( esc_html__( "Nice! We couldn't find any uncompressed CSS files.", 'wphb' ) ); ?>
 <?php else : ?>
-	<div class="sui-notice sui-notice-<?php echo esc_attr( \Hummingbird\Core\Modules\Performance::get_impact_class( $audit->score ) ); ?>">
-		<p>
-			<?php
-			printf(
-				/* translators: %s - properly formatted bytes value */
-				esc_html__( 'You can potentially save %s by minifying the following CSS files.', 'wphb' ),
-				esc_html( \Hummingbird\Core\Utils::format_bytes( $audit->details->overallSavingsBytes, 0 ) )
-			);
-			?>
-		</p>
-	</div>
+	<?php
+	$this->admin_notices->show_inline(
+		sprintf( /* translators: %s - properly formatted bytes value */
+			esc_html__( 'You can potentially save %s by minifying the following CSS files.', 'wphb' ),
+			esc_html( \Hummingbird\Core\Utils::format_bytes( $audit->details->overallSavingsBytes, 0 ) )
+		),
+		\Hummingbird\Core\Modules\Performance::get_impact_class( $audit->score )
+	);
+	?>
 
 	<?php if ( $audit->details->items ) : ?>
 		<table class="sui-table">

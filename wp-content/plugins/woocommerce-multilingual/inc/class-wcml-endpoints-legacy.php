@@ -12,7 +12,8 @@ class WCML_Endpoints_Legacy {
 
 	public function add_hooks() {
 
-		add_action( 'icl_ajx_custom_call', array( $this, 'rewrite_rule_endpoints' ), 11, 2 );
+		add_action( 'wpml_st_add_string_translation', array( $this, 'rewrite_rule_endpoints_on_endpoint_translation_save' ) );
+
 		add_action( 'woocommerce_update_options', array( $this, 'add_endpoints' ) );
 
 		add_filter( 'pre_update_option_rewrite_rules', array( $this, 'update_rewrite_rules' ), 100, 2 );
@@ -32,7 +33,7 @@ class WCML_Endpoints_Legacy {
 
 	public function register_endpoints_translations( $language = null ) {
 
-		if ( ! class_exists( 'WooCommerce' ) || ! defined( 'ICL_SITEPRESS_VERSION' ) || ICL_PLUGIN_INACTIVE || version_compare( WOOCOMMERCE_VERSION, '2.2', '<' ) ) {
+		if ( ! class_exists( 'WooCommerce' ) || ! defined( 'ICL_SITEPRESS_VERSION' ) || ICL_PLUGIN_INACTIVE ) {
 			return false;
 		}
 
@@ -108,12 +109,20 @@ class WCML_Endpoints_Legacy {
 
 	}
 
-	public function rewrite_rule_endpoints( $call, $data ) {
+	public function rewrite_rule_endpoints_on_endpoint_translation_save( $string_id ) {
 
-		if ( $call==='icl_st_save_translation' && in_array( $data['icl_st_string_id'], $this->endpoints_strings ) ) {
-			$this->add_endpoints();
-			$this->flush_rules_for_endpoints_translations();
+		if (
+			in_array( $string_id, $this->endpoints_strings )
+			&& ! has_action( 'shutdown', [ $this, 'refresh_endpoints' ] )
+		) {
+			add_action( 'shutdown', [ $this, 'refresh_endpoints' ] );
 		}
+
+	}
+
+	public function refresh_endpoints() {
+		$this->add_endpoints();
+		$this->flush_rules_for_endpoints_translations();
 	}
 
 	public function flush_rules_for_endpoints_translations() {
@@ -130,7 +139,7 @@ class WCML_Endpoints_Legacy {
 			remove_filter( 'gettext_with_context', array(
 				$this->woocommerce_wpml->strings,
 				'category_base_in_strings_language'
-			), 99, 3 );
+			), 99 );
 			if ( (int) get_option( 'page_on_front' ) !== wc_get_page_id( 'myaccount' ) ) {
 				flush_rewrite_rules( false );
 			}
@@ -170,7 +179,7 @@ class WCML_Endpoints_Legacy {
 	public function endpoint_permalink_filter( $p, $pid ) {
 		global $post, $wp;
 
-		if ( isset( $post->ID ) && ! is_admin() && version_compare( WOOCOMMERCE_VERSION, '2.2', '>=' ) && defined( 'ICL_SITEPRESS_VERSION' ) && ! ICL_PLUGIN_INACTIVE ) {
+		if ( isset( $post->ID ) && ! is_admin() && defined( 'ICL_SITEPRESS_VERSION' ) && ! ICL_PLUGIN_INACTIVE ) {
 			global $sitepress;
 
 			$current_lang = $sitepress->get_current_language();
@@ -287,7 +296,7 @@ class WCML_Endpoints_Legacy {
 				$buff_value = array();
 
 				foreach ( $value as $k => $v ) {
-					$k                = preg_replace( '/(\/)?' . $endpoint_key . '(\/)?(\(\/\(\.\*\)\)\?\/\?\$)/', '$1' . $endpoint_translation . '$2$3', $k );
+					$k                = preg_replace( '/(\/|^)' . $endpoint_key . '(\/)?(\(\/\(\.\*\)\)\?\/\?\$)/', '$1' . $endpoint_translation . '$2$3', $k );
 					$buff_value[ $k ] = $v;
 				}
 				$value = $buff_value;

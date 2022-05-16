@@ -72,6 +72,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                 HTMEGA_VERSION,
                 TRUE
             );
+            
         }
 
         // WC Sales Notification

@@ -79,7 +79,7 @@ abstract class Module {
 		}
 
 		// Check if on module page.
-		if ( preg_match( "/(wphb-{$slug})/", $page ) ) {
+		if ( preg_match( "/(wphb-$slug)/", $page ) ) {
 			return true;
 		}
 

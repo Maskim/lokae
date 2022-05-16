@@ -1,5 +1,7 @@
 <?php
 
+use WPML\FP\Obj;
+
 class WCML_Endpoints {
 
 	/** @var woocommerce_wpml */
@@ -37,9 +39,6 @@ class WCML_Endpoints {
 
 		add_filter( 'wpml_sl_blacklist_requests', array( $this, 'reserved_requests' ) );
 		add_filter( 'woocommerce_get_endpoint_url', array( $this, 'filter_get_endpoint_url' ), 10, 4 );
-		if ( ! is_admin() ) {
-			add_filter( 'pre_get_posts', array( $this, 'check_if_endpoint_exists' ) );
-		}
 	}
 
 	public function migrate_ones_string_translations() {
@@ -65,7 +64,7 @@ class WCML_Endpoints {
 			foreach ( $endpoint_keys as $endpoint_key ) {
 
 				$existing_string_id = $this->wpdb->get_var(
-					$this->wpdb->prepare( "SELECT id FROM {$this->wpdb->prefix}icl_strings 
+					$this->wpdb->prepare( "SELECT id FROM {$this->wpdb->prefix}icl_strings
 											WHERE context = %s AND name = %s",
 						WPML_Endpoints_Support::STRING_CONTEXT, $endpoint_key )
 				);
@@ -73,7 +72,7 @@ class WCML_Endpoints {
 				if( $existing_string_id ){
 
 					$existing_wcml_string_id = $this->wpdb->get_var(
-						$this->wpdb->prepare( "SELECT id FROM {$this->wpdb->prefix}icl_strings 
+						$this->wpdb->prepare( "SELECT id FROM {$this->wpdb->prefix}icl_strings
 											WHERE context = %s AND name = %s",
 							'WooCommerce Endpoints', $endpoint_key )
 					);
@@ -167,7 +166,7 @@ class WCML_Endpoints {
 
 	public function add_wc_endpoints_translations( $language ) {
 
-		if ( ! class_exists( 'WooCommerce' ) || ! defined( 'ICL_SITEPRESS_VERSION' ) || ICL_PLUGIN_INACTIVE || version_compare( WOOCOMMERCE_VERSION, '2.2', '<' ) ) {
+		if ( ! class_exists( 'WooCommerce' ) || ! defined( 'ICL_SITEPRESS_VERSION' ) || ICL_PLUGIN_INACTIVE ) {
 			return false;
 		}
 
@@ -200,41 +199,6 @@ class WCML_Endpoints {
 		return array( $link, $endpoint );
 	}
 
-	/*
-	 * We need check special case - when you manually put in URL default not translated endpoint it not generated 404 error
-	 */
-	public function check_if_endpoint_exists( $q ) {
-		global $wp_query;
-
-		$my_account_id = wc_get_page_id( 'myaccount' );
-
-		$current_id = $q->query_vars['page_id'];
-		if ( ! $current_id ) {
-			$current_id = $q->queried_object_id;
-		}
-
-		if ( ! $q->is_404 && $current_id == $my_account_id && $q->is_page ) {
-
-			$uri_vars        = array_filter( explode( '/', $_SERVER['REQUEST_URI'] ) );
-			$endpoints       = WC()->query->get_query_vars();
-			$endpoint_in_url = urldecode( end( $uri_vars ) );
-
-			$endpoints['shipping'] = urldecode( $this->get_translated_edit_address_slug( 'shipping' ) );
-			$endpoints['billing']  = urldecode( $this->get_translated_edit_address_slug( 'billing' ) );
-
-			$endpoint_not_pagename         = isset( $q->query['pagename'] ) && urldecode( $q->query['pagename'] ) != $endpoint_in_url;
-			$endpoint_url_not_in_endpoints = ! in_array( $endpoint_in_url, $endpoints );
-			$uri_vars_not_in_query_vars    = ! in_array( urldecode( prev( $uri_vars ) ), $q->query_vars );
-
-			if ( $endpoint_not_pagename && $endpoint_url_not_in_endpoints && is_numeric( $endpoint_in_url ) && $uri_vars_not_in_query_vars ) {
-				$wp_query->set_404();
-				status_header( 404 );
-				include( get_query_template( '404' ) );
-				die();
-			}
-		}
-	}
-
 	private function get_translated_edit_address_slug( $slug, $language = false ) {
 
 		$strings_language = $this->woocommerce_wpml->strings->get_string_language( $slug, 'woocommerce', 'edit-address-slug: ' . $slug );
@@ -256,7 +220,7 @@ class WCML_Endpoints {
 
 	public function filter_get_endpoint_url( $url, $endpoint, $value, $permalink ) {
 
-		remove_filter( 'woocommerce_get_endpoint_url', array( $this, 'filter_get_endpoint_url' ), 10, 4 );
+		remove_filter( 'woocommerce_get_endpoint_url', array( $this, 'filter_get_endpoint_url' ), 10 );
 
 		$translated_endpoint = $this->get_endpoint_translation( $endpoint );
 		$url                 = wc_get_endpoint_url( $translated_endpoint, $value, $this->sitepress->convert_url( $permalink ) );

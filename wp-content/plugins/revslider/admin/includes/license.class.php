@@ -15,7 +15,7 @@ class RevSliderLicense extends RevSliderFunctions {
 	 * @before 6.2.0: RevSliderAdmin::activate_plugin();
 	 **/
 	public function activate_plugin($code){
-		$rslb = new RevSliderLoadBalancer();
+		$rslb = RevSliderGlobals::instance()->get('RevSliderLoadBalancer');
 		$data = array('code' => urlencode($code), 'version'	=> urlencode(RS_REVISION), 'product' => urlencode(RS_PLUGIN_SLUG));
 		
 		$response	  = $rslb->call_url('activate.php', $data, 'updates');
@@ -26,6 +26,9 @@ class RevSliderLicense extends RevSliderFunctions {
 		if($version_info == 'valid'){
 			update_option('revslider-valid', 'true');
 			update_option('revslider-code', $code);
+			update_option('revslider-trustpilot', 'true');
+			update_option('revslider-deregister-popup', 'false');
+
 			return true;
 		}elseif($version_info == 'exist'){
 			return 'exist';
@@ -43,7 +46,7 @@ class RevSliderLicense extends RevSliderFunctions {
 	 * @before 6.2.0: RevSliderAdmin::deactivate_plugin();
 	 **/
 	public function deactivate_plugin(){
-		$rslb = new RevSliderLoadBalancer();
+		$rslb = RevSliderGlobals::instance()->get('RevSliderLoadBalancer');
 		$code = get_option('revslider-code', '');
 		$data = array('code' => urlencode($code), 'product' => urlencode(RS_PLUGIN_SLUG));
 		
@@ -55,11 +58,12 @@ class RevSliderLicense extends RevSliderFunctions {
 		if($vi == 'valid'){
 			update_option('revslider-valid', 'false');
 			update_option('revslider-code', '');
-			
+			update_option('revslider-trustpilot', 'false');
+			update_option('revslider-deregister-popup', 'true');
+
 			return true;
 		}
 		
 		return false;
 	}
 }
-?>

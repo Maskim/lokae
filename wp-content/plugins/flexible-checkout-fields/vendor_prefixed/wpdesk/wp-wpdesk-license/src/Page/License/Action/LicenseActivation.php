@@ -164,7 +164,7 @@ class LicenseActivation implements \FcfVendor\WPDesk\License\Page\Action
                 break;
             }
         }
-        if (\true === $activate_results['activated']) {
+        if (isset($activate_results['activated']) && \true === $activate_results['activated']) {
             $this->activate_and_save_data($plugin_api_manager, $activation_email, $api_key);
             $this->show_activation_message($activate_results);
         } else {

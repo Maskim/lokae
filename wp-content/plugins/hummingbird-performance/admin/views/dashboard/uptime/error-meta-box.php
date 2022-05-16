@@ -12,15 +12,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-?>
-<div class="sui-notice sui-notice-error">
-	<p><?php echo esc_html( $error ); ?></p>
-	<div class="sui-notice-buttons">
-		<a href="<?php echo esc_url( $retry_url ); ?>" class="sui-button">
-			<?php esc_html_e( 'Try again', 'wphb' ); ?>
-		</a>
-		<a target="_blank" href="<?php echo esc_url( $support_url ); ?>" class="sui-button">
-			<?php esc_html_e( 'Support', 'wphb' ); ?>
-		</a>
-	</div>
-</div>
+$this->admin_notices->show_inline(
+	$error,
+	'error',
+	sprintf( /* translators: %1$s - opening a tag, %2$s - </a> */
+		esc_html__( '%1$sTry again%2$s', 'wphb' ),
+		'<a href="' . esc_url( $retry_url ) . '" class="sui-button">',
+		'</a>'
+	) . sprintf( /* translators: %1$s - opening a tag, %2$s - </a> */
+		esc_html__( '%1$sSupport%2$s', 'wphb' ),
+		'<a href="' . esc_url( $support_url ) . '" target="_blank" class="sui-button">',
+		'</a>'
+	)
+);
+

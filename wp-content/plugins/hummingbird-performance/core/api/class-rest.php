@@ -7,9 +7,11 @@
 
 namespace Hummingbird\Core\Api;
 
+use Hummingbird\Core\Configs;
 use Hummingbird\Core\Utils;
 use WP_Error;
 use WP_REST_Request;
+use WP_REST_Response;
 use WP_REST_Server;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -55,14 +57,15 @@ class Rest {
 	 * Register the REST routes.
 	 */
 	public function register_routes() {
-		// Route to return a modules status.
+		// Route to return a module status.
 		register_rest_route(
 			$this->get_namespace(),
 			'/status/(?P<module>[\\w-]+)',
 			array(
-				'methods'  => WP_REST_Server::READABLE,
-				'callback' => array( $this, 'get_module_status' ),
-				'args'     => array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'get_module_status' ),
+				'permission_callback' => '__return_true',
+				'args'                => array(
 					'module' => array(
 						'required'          => true,
 						'sanitize_callback' => 'sanitize_key',
@@ -71,14 +74,15 @@ class Rest {
 			)
 		);
 
-		// Route to clear a modules cache.
+		// Route to clear a module cache.
 		register_rest_route(
 			$this->get_namespace(),
 			'/clear_cache/(?P<module>[\\w-]+)',
 			array(
-				'methods'  => WP_REST_Server::READABLE,
-				'callback' => array( $this, 'clear_module_cache' ),
-				'module'   => array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'clear_module_cache' ),
+				'permission_callback' => array( $this, 'check_permissions' ),
+				'module'              => array(
 					'required'          => true,
 					'sanitize_callback' => 'sanitize_key',
 				),
@@ -90,11 +94,65 @@ class Rest {
 			$this->get_namespace(),
 			'/test',
 			array(
-				'methods'  => 'POST,GET,PUT,PATCH,DELETE,COPY,HEAD',
-				'callback' => function() {
+				'methods'             => 'POST,GET,PUT,PATCH,DELETE,COPY,HEAD',
+				'callback'            => function() {
 					return true;
 				},
+				'permission_callback' => '__return_true',
 			)
+		);
+
+		// Configs route.
+		register_rest_route(
+			$this->get_namespace(),
+			'/preset_configs',
+			array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_configs' ),
+					'permission_callback' => array( $this, 'check_configs_permissions' ),
+				),
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'set_configs' ),
+					'permission_callback' => array( $this, 'check_configs_permissions' ),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Check if user has proper permissions (minimum manage_options capability) to use the endpoints.
+	 *
+	 * @since 3.0.1
+	 *
+	 * @return bool
+	 */
+	public function check_configs_permissions() {
+		$capability = is_multisite() && is_network_admin() ? 'manage_network' : 'manage_options';
+		return current_user_can( $capability );
+	}
+
+	/**
+	 * Check if user has proper permissions (minimum edit_posts capability) to use the endpoints.
+	 *
+	 * @since 2.7.3
+	 *
+	 * @return bool|WP_Error
+	 */
+	public function check_permissions() {
+		if ( defined( 'WPHB_SKIP_REST_API_AUTH' ) && WPHB_SKIP_REST_API_AUTH ) {
+			return true;
+		}
+
+		if ( current_user_can( 'edit_posts' ) ) {
+			return true;
+		}
+
+		return new WP_Error(
+			'rest_forbidden',
+			esc_html__( 'Not enough permissions to access the endpoint.', 'wphb' ),
+			array( 'status' => 401 )
 		);
 	}
 
@@ -102,15 +160,13 @@ class Rest {
 	 * Returns the status of a module.
 	 *
 	 * @param WP_REST_Request $request  Request.
-	 * @return mixed
+	 *
+	 * @return WP_Error|WP_REST_Response
 	 */
 	public function get_module_status( $request ) {
 		$module = $request->get_param( 'module' );
 
-		$available_modules = array(
-			'gzip',
-			'caching',
-		);
+		$available_modules = array( 'gzip', 'caching' );
 		if ( ! in_array( $module, $available_modules, true ) ) {
 			return new WP_Error(
 				'invalid_module',
@@ -133,7 +189,7 @@ class Rest {
 	 * Clears the cache of a module.
 	 *
 	 * @param WP_REST_Request $request  Request.
-	 * @return mixed
+	 * @return WP_Error|WP_REST_Response
 	 */
 	public function clear_module_cache( $request ) {
 		$module            = $request->get_param( 'module' );
@@ -182,6 +238,61 @@ class Rest {
 		}
 
 		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Gets the local list of configs.
+	 *
+	 * @since 3.0.1
+	 *
+	 * @return array
+	 */
+	public function get_configs() {
+		$stored_configs = get_site_option( 'wphb-preset_configs', false );
+
+		if ( false === $stored_configs ) {
+			$configs = new Configs();
+
+			$stored_configs = array( $configs->get_basic_config() );
+
+			update_site_option( 'wphb-preset_configs', $stored_configs );
+		}
+
+		return $stored_configs;
+	}
+
+	/**
+	 * Updates the local list of configs.
+	 *
+	 * @since 3.0.1
+	 *
+	 * @param WP_REST_Request $request Class containing the request data.
+	 *
+	 * @return array|mixed|WP_Error
+	 */
+	public function set_configs( $request ) {
+		$data = json_decode( $request->get_body(), true );
+
+		if ( ! is_array( $data ) ) {
+			return new WP_Error( '400', esc_html__( 'Missing configs data', 'wphb' ), array( 'status' => 400 ) );
+		}
+
+		foreach ( $data as $key => $value ) {
+			if ( isset( $value['name'] ) ) {
+				$name = sanitize_text_field( $value['name'] );
+
+				$data[ $key ]['name'] = empty( $name ) ? __( 'Undefined', 'wphb' ) : $name;
+			}
+
+			if ( isset( $value['description'] ) ) {
+				$data[ $key ]['description'] = sanitize_text_field( $value['description'] );
+			}
+		}
+
+		// We might want to sanitize before this.
+		update_site_option( 'wphb-preset_configs', $data );
+
+		return $data;
 	}
 
 }

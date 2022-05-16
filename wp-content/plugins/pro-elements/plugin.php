@@ -2,6 +2,7 @@
 namespace ElementorPro;
 
 use ElementorPro\Core\Admin\Admin;
+use ElementorPro\Core\App\App;
 use ElementorPro\Core\Connect;
 use Elementor\Core\Responsive\Files\Frontend as FrontendFile;
 use Elementor\Core\Responsive\Responsive;
@@ -9,6 +10,7 @@ use Elementor\Utils;
 use ElementorPro\Core\Editor\Editor;
 use ElementorPro\Core\Modules_Manager;
 use ElementorPro\Core\Preview\Preview;
+use ElementorPro\Core\Updater\Updater;
 use ElementorPro\Core\Upgrade\Manager as UpgradeManager;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -51,26 +53,16 @@ class Plugin {
 	public $admin;
 
 	/**
-	 * @var License\Admin
+	 * @var App
 	 */
-	public $license_admin;
+	public $app;
+
 
 	private $classes_aliases = [
 		'ElementorPro\Modules\PanelPostsControl\Module' => 'ElementorPro\Modules\QueryControl\Module',
 		'ElementorPro\Modules\PanelPostsControl\Controls\Group_Control_Posts' => 'ElementorPro\Modules\QueryControl\Controls\Group_Control_Posts',
 		'ElementorPro\Modules\PanelPostsControl\Controls\Query' => 'ElementorPro\Modules\QueryControl\Controls\Query',
 	];
-
-	/**
-	 * @deprecated since 1.1.0 Use `ELEMENTOR_PRO_VERSION` instead
-	 *
-	 * @return string
-	 */
-	public function get_version() {
-		_deprecated_function( __METHOD__, '1.1.0' );
-
-		return ELEMENTOR_PRO_VERSION;
-	}
 
 	/**
 	 * Throw error on object clone
@@ -189,6 +181,7 @@ class Plugin {
 			'elementor-pro-frontend',
 			ELEMENTOR_PRO_URL . 'assets/js/frontend' . $suffix . '.js',
 			[
+				'elementor-pro-webpack-runtime',
 				'elementor-frontend-modules',
 				'elementor-sticky',
 			],
@@ -196,9 +189,18 @@ class Plugin {
 			true
 		);
 
+		if ( self::elementor()->experiments->is_feature_active( 'e_optimized_assets_loading' ) ) {
+			wp_enqueue_script( 'pro-elements-handlers' );
+		} else {
+			wp_enqueue_script( 'pro-preloaded-elements-handlers' );
+		}
+
 		$locale_settings = [
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'nonce' => wp_create_nonce( 'elementor-pro-frontend' ),
+			'urls' => [
+				'assets' => apply_filters( 'elementor_pro/frontend/assets_url', ELEMENTOR_PRO_ASSETS_URL ),
+			],
 		];
 
 		/**
@@ -221,6 +223,34 @@ class Plugin {
 
 	public function register_frontend_scripts() {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+		wp_register_script(
+			'elementor-pro-webpack-runtime',
+			ELEMENTOR_PRO_URL . 'assets/js/webpack-pro.runtime' . $suffix . '.js',
+			[],
+			ELEMENTOR_PRO_VERSION,
+			true
+		);
+
+		wp_register_script(
+			'pro-elements-handlers',
+			ELEMENTOR_PRO_URL . 'assets/js/elements-handlers' . $suffix . '.js',
+			[
+				'elementor-frontend',
+			],
+			ELEMENTOR_PRO_VERSION,
+			true
+		);
+
+		wp_register_script(
+			'pro-preloaded-elements-handlers',
+			ELEMENTOR_PRO_URL . 'assets/js/preloaded-elements-handlers' . $suffix . '.js',
+			[
+				'elementor-frontend',
+			],
+			ELEMENTOR_PRO_VERSION,
+			true
+		);
 
 		wp_register_script(
 			'smartmenus',
@@ -326,14 +356,33 @@ class Plugin {
 
 		$this->preview = new Preview();
 
+		$this->app = new App();
+
 		if ( is_admin() ) {
 			$this->admin = new Admin();
-			$this->license_admin = new License\Admin();
+
+			require_once __DIR__ . '/updater/updater.php';
+			$config = array(
+				'slug' => 'pro-elements.php',
+				'plugin_basename' => ELEMENTOR_PRO_PLUGIN_BASE,
+				'proper_folder_name' => 'pro-elements',
+				'api_url' => 'https://api.github.com/repos/proelements/proelements',
+				'raw_url' => 'https://raw.githubusercontent.com/proelements/proelements/master',
+				'github_url' => 'https://github.com/proelements/proelements',
+				'zip_url' => 'https://github.com/proelements/proelements/archive/v{release_version}.zip',
+				'sslverify' => true,
+				'requires' => '5.0',
+				'tested' => '5.4.2',
+				'readme' => 'README.md',
+				'access_token' => '',
+			);
+
+			new Updater( $config );
 		}
 	}
 
 	final public static function get_title() {
-		return __( 'Elementor Pro', 'elementor-pro' );
+		return __( 'Pro Elements', 'elementor-pro' );
 	}
 }
 

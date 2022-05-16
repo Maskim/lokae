@@ -9,12 +9,6 @@
 // File Security Check.
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-$nav_menus_clear = array( -1 => _x( 'Default menu', 'backend metabox', 'the7mk2' ) );
-$nav_menus = wp_get_nav_menus();
-foreach ( $nav_menus as $nav_menu ) {
-	$nav_menus_clear[ $nav_menu->term_id ] = wp_html_excerpt( $nav_menu->name, 40, '&hellip;' );
-}
-
 $logo_field_title = _x( 'Logo:', 'backend metabox', 'the7mk2' );
 $logo_hd_field_title = _x( 'High-DPI (retina) logo:', 'backend metabox', 'the7mk2' );
 
@@ -64,6 +58,19 @@ $DT_META_BOXES[] = array(
 			),
 			'top_divider' => true,
 		),
+	),
+	'only_on' => array( 'template' => array( 'template-microsite.php' ) ),
+);
+
+$nav_menus_clear = the7_microsite_get_nav_menu_options_for_select();
+
+$DT_META_BOXES[] = array(
+	'id'       => 'dt_page_box-menus',
+	'title'    => _x( 'Menus', 'backend metabox', 'the7mk2' ),
+	'pages'    => array( 'page', 'post', 'dt_portfolio' ),
+	'context'  => 'side',
+	'priority' => 'default',
+	'fields'   => array(
 
 		array(
 			'name'        => _x( 'Primary menu:', 'backend', 'the7mk2' ),
@@ -72,7 +79,6 @@ $DT_META_BOXES[] = array(
 			'options'     => $nav_menus_clear,
 			'placeholder' => _x( 'Primary Menu location', 'backend metabox', 'the7mk2' ),
 			'std'         => '',
-			'top_divider' => true,
 		),
 
 		array(
@@ -103,7 +109,7 @@ $DT_META_BOXES[] = array(
 		),
 
 	),
-	'only_on' => array( 'template' => array( 'template-microsite.php' ) ),
+	'only_on' => array( 'template' => array( 'template-microsite.php', 'elementor_header_footer', 'default' ) ),
 );
 
 $DT_META_BOXES[] = array(
@@ -194,7 +200,7 @@ $DT_META_BOXES[] = array(
 
 		array(
 			'name' => _x( 'TOP LINE / SIDE LINE / FLOATING MENU BUTTON', 'backend metabox', 'the7mk2' ),
-			'id'   => 'transparent_logo_heading',
+			'id'   => 'mixed_logo_heading',
 			'type' => 'heading',
 		),
 
@@ -224,6 +230,42 @@ $DT_META_BOXES[] = array(
 			'name'             => $logo_hd_field_title,
 			'desc'             => _x( 'Leave empty to hide logo.', 'backend metabox', 'the7mk2' ),
 			'id'               => "{$prefix}mixed_logo_hd",
+			'type'             => 'image_advanced_mk2',
+			'max_file_uploads' => 1,
+		),
+
+		array(
+			'name' => _x( 'TRANSPARENT TOP LINE', 'backend metabox', 'the7mk2' ),
+			'id'   => 'mixed_transparent_logo_heading',
+			'type' => 'heading',
+		),
+
+		array(
+			'name'        => '',
+			'id'          => "{$prefix}mixed_transparent_logo_type",
+			'type'        => 'radio',
+			'std'         => 'default',
+			'options'     => array(
+				'default'  => _x( 'Default', 'backend metabox', 'the7mk2' ),
+				'custom' => _x( 'Custom', 'backend metabox', 'the7mk2' ),
+			),
+			'hide_fields'	=> array(
+				'default'	=> array("{$prefix}mixed_transparent_logo_regular", "{$prefix}mixed_transparent_logo_hd" ),
+			)
+		),
+
+		array(
+			'name'             => $logo_field_title,
+			'desc'             => _x( 'Leave empty to hide logo.', 'backend metabox', 'the7mk2' ),
+			'id'               => "{$prefix}mixed_transparent_logo_regular",
+			'type'             => 'image_advanced_mk2',
+			'max_file_uploads' => 1,
+		),
+
+		array(
+			'name'             => $logo_hd_field_title,
+			'desc'             => _x( 'Leave empty to hide logo.', 'backend metabox', 'the7mk2' ),
+			'id'               => "{$prefix}mixed_transparent_logo_hd",
 			'type'             => 'image_advanced_mk2',
 			'max_file_uploads' => 1,
 		),

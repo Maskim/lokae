@@ -20,47 +20,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 </p>
 
 <h4><?php esc_html_e( 'Status', 'wphb' ); ?></h4>
-<?php if ( isset( $audit->errorMessage ) && ! isset( $audit->score ) ) { ?>
-	<div class="sui-notice sui-notice-error">
-		<p>
-			<?php
-			printf(
-				/* translators: %s - error message */
-				esc_html__( 'Error: %s', 'wphb' ),
-				esc_html( $audit->errorMessage )
-			);
-			?>
-		</p>
-	</div>
-	<?php
+<?php if ( isset( $audit->errorMessage ) && ! isset( $audit->score ) ) {
+	$this->admin_notices->show_inline( /* translators: %s - error message */
+		sprintf( esc_html__( 'Error: %s', 'wphb' ), esc_html( $audit->errorMessage ) ),
+		'error'
+	);
 	return;
 }
+
+if ( isset( $audit->score ) && 1 === $audit->score ) {
+	$this->admin_notices->show_inline(
+		sprintf( /* translators: %s - time to complete in seconds */
+			esc_html__( 'Nice! Your main thread just took %s to complete and following is the breakdown of your main thread.', 'wphb' ),
+			esc_html( $audit->displayValue )
+		)
+	);
+} else {
+	$this->admin_notices->show_inline(
+		sprintf( /* translators: %s - time to complete in seconds */
+			esc_html__( 'Your main thread took %s to complete and following is the breakdown of your main thread.', 'wphb' ),
+			esc_html( $audit->displayValue )
+		),
+		\Hummingbird\Core\Modules\Performance::get_impact_class( $audit->score )
+	);
+}
 ?>
-<?php if ( isset( $audit->score ) && 1 === $audit->score ) : ?>
-	<div class="sui-notice sui-notice-success">
-		<p>
-			<?php
-			printf(
-				/* translators: %s - time to complete in seconds */
-				esc_html__( 'Nice! Your main thread just took %s to complete and following is the breakdown of your main thread.', 'wphb' ),
-				esc_html( $audit->displayValue )
-			);
-			?>
-		</p>
-	</div>
-<?php else : ?>
-	<div class="sui-notice sui-notice-<?php echo esc_attr( \Hummingbird\Core\Modules\Performance::get_impact_class( $audit->score ) ); ?>">
-		<p>
-			<?php
-			printf(
-				/* translators: %s - time to complete in seconds */
-				esc_html__( 'Your main thread took %s to complete and following is the breakdown of your main thread.', 'wphb' ),
-				esc_html( $audit->displayValue )
-			);
-			?>
-		</p>
-	</div>
-<?php endif; ?>
 
 <?php if ( $audit->details->items ) : ?>
 	<table class="sui-table">

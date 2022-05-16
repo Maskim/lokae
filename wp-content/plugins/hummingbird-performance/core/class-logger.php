@@ -199,6 +199,17 @@ class Logger {
 	 * @param  string $module   Module slug.
 	 */
 	private function write_file( $mode, $message = '', $module = '' ) {
+		/**
+		 * Return if log directory is not exist.
+		 * Some log requests come after running Hummingbird\Core\Logger::cleanup() by WP_Hummingbird::flush_cache();
+		 * At this moment log directory is not exist.
+		 *
+		 * @since 2.5.0
+		 */
+		if ( ! file_exists( $this->log_dir ) ) {
+			return;
+		}
+
 		try {
 			$fp = fopen( $this->files[ $module ], $mode );
 			flock( $fp, LOCK_EX );
@@ -281,7 +292,10 @@ class Logger {
 				break;
 			default:
 				// Default to logging only when wp debug is set.
-				if ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
+				$debug     = defined( 'WP_DEBUG' ) && WP_DEBUG;
+				$debug_log = defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG;
+
+				if ( $debug && $debug_log ) {
 					$do_log = true;
 				}
 				break;
@@ -346,7 +360,7 @@ class Logger {
 		}
 
 		// Only allow these actions.
-		if ( ! in_array( $action, array( 'download' ), true ) ) {
+		if ( 'download' !== $action ) {
 			return;
 		}
 
@@ -433,7 +447,11 @@ class Logger {
 		$now = date( 'c' );
 
 		foreach ( $this->modules as $slug ) {
-			$file = $this->get_file( $slug );
+			if ( 'page_cache' === $slug ) {
+				$file = WP_CONTENT_DIR . '/wphb-logs/page-caching-log.php';
+			} else {
+				$file = $this->get_file( $slug );
+			}
 
 			if ( ! file_exists( $file ) ) {
 				continue;
@@ -473,16 +491,15 @@ class Logger {
 					unset( $content[ $i ] );
 				} else {
 					// It looks like it's a valid date string, compare with today.
-					$more_than_day = round( ( strtotime( $now ) - strtotime( $items[1] ) ) / MONTH_IN_SECONDS );
+					$time_diff = strtotime( $now ) - strtotime( $items[1] );
 
 					// We don't need to continue on, because if this entry is not older than 30 days, the next one will not be as well.
-					if ( ! $more_than_day ) {
+					if ( $time_diff < MONTH_IN_SECONDS ) {
 						break;
 					}
 
 					$delete = true;
 					unset( $content[ $i ] );
-
 				}
 			}
 
@@ -493,7 +510,19 @@ class Logger {
 
 			// Glue back together and write back to file.
 			$content = implode( '', $content );
-			$this->write_file( 'w', $content, $slug );
+			if ( 'page_cache' === $slug ) {
+				global $wphb_fs;
+
+				if ( ! $wphb_fs && class_exists( 'Filesystem' ) ) {
+					$wphb_fs = Filesystem::instance();
+				}
+
+				if ( $wphb_fs ) {
+					$wphb_fs->write( $file, $content );
+				}
+			} else {
+				$this->write_file( 'w', $content, $slug );
+			}
 		}
 	}
 

@@ -3,6 +3,7 @@
 class WCML_Attributes {
 
 	const PRIORITY_AFTER_WC_INIT = 100;
+	const CACHE_GROUP_VARIATION = 'wpml-all-meta-product-variation' ;
 
 	/** @var woocommerce_wpml */
 	private $woocommerce_wpml;
@@ -30,6 +31,7 @@ class WCML_Attributes {
 		$this->post_translations = $post_translations;
 		$this->term_translations = $term_translations;
 		$this->wpdb              = $wpdb;
+		wp_cache_add_non_persistent_groups( self::CACHE_GROUP_VARIATION );
 	}
 
 	private function get_wcml_terms_instance() {
@@ -45,10 +47,10 @@ class WCML_Attributes {
 		add_action( 'init', [ $this, 'init' ] );
 
 		add_filter(
-			'wpml_translation_job_post_meta_value_translated',
+			'wpml_tm_job_field_is_translatable',
 			[
 				$this,
-				'filter_product_attributes_for_translation',
+				'set_custom_product_attributes_as_translatable_for_tm_job',
 			],
 			10,
 			2
@@ -89,6 +91,7 @@ class WCML_Attributes {
 				10,
 				4
 			);
+			add_action( 'added_post_meta', [ $this, 'invalidateVariationMetaCache' ], 10, 3 );
 			add_filter(
 				'woocommerce_product_get_default_attributes',
 				[
@@ -325,7 +328,7 @@ class WCML_Attributes {
 		$orig_product_attrs  = $this->get_product_attributes( $original_product_id );
 		$trnsl_product_attrs = $this->get_product_attributes( $tr_product_id );
 
-		$translated_labels = [];
+		$translated_labels = $this->get_attr_label_translations( $tr_product_id );
 
 		foreach ( $orig_product_attrs as $key => $orig_product_attr ) {
 			$sanitized_key = $this->filter_attribute_name( $orig_product_attr['name'], $original_product_id, true );
@@ -379,15 +382,21 @@ class WCML_Attributes {
 	public function get_attr_label_translations( $product_id, $lang = false ) {
 		$trnsl_labels = get_post_meta( $product_id, 'attr_label_translations', true );
 
-		if ( ! is_array( $trnsl_labels ) ) {
-			$trnsl_labels = [];
+		$remove_empty_values = function ( $values ) {
+			return \wpml_collect( $values )->filter()->toArray();
+		};
+
+		if ( ! $lang && is_array( $trnsl_labels ) ) {
+			return \wpml_collect( $trnsl_labels )
+				->map( $remove_empty_values )
+				->toArray();
 		}
 
 		if ( isset( $trnsl_labels[ $lang ] ) ) {
-			return $trnsl_labels[ $lang ];
+			return $remove_empty_values( $trnsl_labels[ $lang ] );
 		}
 
-		return $trnsl_labels;
+		return [];
 	}
 
 	public function sync_default_product_attr( $orig_post_id, $transl_post_id, $lang ) {
@@ -528,11 +537,19 @@ class WCML_Attributes {
 		return $attribute;
 	}
 
-	public function filter_product_attributes_for_translation( $translated, $key ) {
-		$translated = $translated
-			? preg_match( '#^(?!field-_product_attributes-(.+)-(.+)-(?!value|name))#', $key ) : 0;
+	/**
+	 * @param int|bool $translatable
+	 * @param array $job_translate
+	 *
+	 * @return bool|int
+	 */
+	public function set_custom_product_attributes_as_translatable_for_tm_job( $translatable, $job_translate ) {
 
-		return $translated;
+		if ( 'wc_attribute' === substr( $job_translate['field_type'], 0, 12 ) ) {
+			return true;
+		}
+
+		return $translatable;
 	}
 
 	public function icl_custom_tax_sync_options() {
@@ -630,25 +647,41 @@ class WCML_Attributes {
 	/*
 	 * special case when original attribute language is German or Danish,
 	 * needs handle special chars accordingly
-	 * https://onthegosystems.myjetbrains.com/youtrack/issue/wcml-1785
 	 */
 	public function filter_attribute_name( $attribute_name, $product_id, $return_sanitized = false ) {
 
-		if ( $product_id ) {
-			$orig_lang        = $this->get_wcml_products_instance()->get_original_product_language( $product_id );
-			$current_language = $this->sitepress->get_current_language();
+		$special_symbols_languages = [ 'de', 'da' ];
+		$sanitize_in_origin        = false;
+		$current_language          = $this->sitepress->get_current_language();
 
-			if ( in_array( $orig_lang, [ 'de', 'da' ] ) && $current_language !== $orig_lang ) {
+		if ( $product_id ) {
+			$orig_lang = $this->get_wcml_products_instance()->get_original_product_language( $product_id );
+
+			if ( in_array( $orig_lang, $special_symbols_languages, true ) && $current_language !== $orig_lang ) {
 				$attribute_name = $this->sitepress->locale_utils->filter_sanitize_title( remove_accents( $attribute_name ), $attribute_name );
-				remove_filter( 'sanitize_title', [ $this->sitepress->locale_utils, 'filter_sanitize_title' ], 10 );
+				$this->remove_wpml_locale_sanitize_title_filter();
+			}
+
+			$sanitize_in_origin = in_array( $current_language, $special_symbols_languages, true ) && $current_language !== $orig_lang;
+			if ( $sanitize_in_origin && $return_sanitized ) {
+				$this->remove_wpml_locale_sanitize_title_filter();
+				$this->sitepress->switch_lang( $orig_lang );
 			}
 		}
 
 		if ( $return_sanitized ) {
 			$attribute_name = sanitize_title( $attribute_name );
+
+			if ( $sanitize_in_origin ) {
+				$this->sitepress->switch_lang( $current_language );
+			}
 		}
 
 		return $attribute_name;
+	}
+
+	private function remove_wpml_locale_sanitize_title_filter() {
+		remove_filter( 'sanitize_title', [ $this->sitepress->locale_utils, 'filter_sanitize_title' ], 10 );
 	}
 
 	public function filter_adding_to_cart_product_attributes_names( $attributes ) {
@@ -718,9 +751,8 @@ class WCML_Attributes {
 
 		if ( '' === $meta_key && 'product_variation' === get_post_type( $object_id ) ) {
 
-			$cache_group  = 'wpml-all-meta-product-variation';
-			$cache_key    = $this->sitepress->get_current_language() . $object_id;
-			$cached_value = wp_cache_get( $cache_key, $cache_group );
+			$cache_key    = $this->getCacheKey( $object_id );
+			$cached_value = wp_cache_get( $cache_key, self::CACHE_GROUP_VARIATION );
 
 			if ( $cached_value ) {
 				return $cached_value;
@@ -749,14 +781,14 @@ class WCML_Attributes {
 
 			if ( $all_meta ) {
 				foreach ( $all_meta as $meta_key => $meta_value ) {
-					if ( 'attribute_' === substr( $meta_key, 0, 10 ) ) {
+					if ( self::isAttributeMeta( $meta_key ) ) {
 						foreach ( $meta_value as $key => $value ) {
 							$all_meta[ $meta_key ][ $key ] = $this->get_attribute_term_translation_in_current_language( substr( $meta_key, 10 ), $value );
 						}
 					}
 				}
 
-				wp_cache_add( $cache_key, $all_meta, $cache_group );
+				wp_cache_add( $cache_key, $all_meta, self::CACHE_GROUP_VARIATION );
 
 				return $all_meta;
 			}
@@ -766,6 +798,34 @@ class WCML_Attributes {
 
 	}
 
+	/**
+	 * @param int    $mid
+	 * @param int    $objectId
+	 * @param string $key
+	 */
+	public function invalidateVariationMetaCache( $mid, $objectId, $key ) {
+		if ( self::isAttributeMeta( $key ) ) {
+			wp_cache_delete( $this->getCacheKey( $objectId ), self::CACHE_GROUP_VARIATION );
+		}
+	}
+
+	/**
+	 * @param string $key
+	 *
+	 * @return bool
+	 */
+	private static function isAttributeMeta( $key ) {
+		return 'attribute_' === substr( $key, 0, 10 );
+	}
+
+	/**
+	 * @param int $variationId
+	 *
+	 * @return string
+	 */
+	private function getCacheKey( $variationId ) {
+		return $this->sitepress->get_current_language() . $variationId;
+	}
 
 	/**
 	 * @param array $default_attributes

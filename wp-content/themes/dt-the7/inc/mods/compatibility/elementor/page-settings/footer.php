@@ -3,7 +3,7 @@
  * @package The7
  */
 
-namespace The7\Adapters\Elementor\Page_Settings;
+namespace The7\Mods\Compatibility\Elementor\Page_Settings;
 
 use Elementor\Controls_Manager;
 use Elementor\Modules\PageTemplates\Module as PageTemplatesModule;
@@ -16,7 +16,7 @@ $template_condition = [ PageTemplatesModule::TEMPLATE_CANVAS];
 
 return [
 	'args'     => [
-		'label'     => __( 'Footer settings', 'the7mk2' ),
+		'label'     => __( 'Footer Settings', 'the7mk2' ),
 		'tab'       => Controls_Manager::TAB_SETTINGS,
 		'conditions' => [
 			'relation' => 'or',

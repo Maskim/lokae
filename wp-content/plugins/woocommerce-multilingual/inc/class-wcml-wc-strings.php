@@ -73,7 +73,7 @@ class WCML_WC_Strings {
 			]
 		);
 
-		add_filter( 'woocommerce_get_breadcrumb', [ $this, 'filter_woocommerce_breadcrumbs' ], 10, 2 );
+		add_filter( 'woocommerce_get_breadcrumb', [ $this, 'filter_woocommerce_breadcrumbs' ] );
 	}
 
 	public function translated_attribute_label( $label, $name, $product_obj = false ) {
@@ -177,10 +177,8 @@ class WCML_WC_Strings {
 	public function translate_default_slug( $translation, $text, $context, $domain ) {
 
 		if ( 'slug' === $context || 'default-slug' === $context ) {
-			$wc_slug = $this->woocommerce_wpml->url_translation->get_woocommerce_product_base();
-			if ( is_admin() ) {
-				$admin_language = $this->sitepress->get_admin_language();
-			}
+			$wc_slug          = $this->woocommerce_wpml->url_translation->get_woocommerce_product_base();
+			$admin_language   = is_admin() ? $this->sitepress->get_admin_language() : null;
 			$current_language = $this->sitepress->get_current_language();
 
 			$strings_language = $this->get_domain_language( 'woocommerce' );
@@ -189,7 +187,7 @@ class WCML_WC_Strings {
 				$this->sitepress->switch_lang( $strings_language );
 				$translation = _x( $text, 'URL slug', $domain );
 				$this->sitepress->switch_lang( $current_language );
-				if ( is_admin() ) {
+				if ( $admin_language ) {
 					$this->sitepress->set_admin_language( $admin_language );
 				}
 			} else {
@@ -260,8 +258,10 @@ class WCML_WC_Strings {
 					} else {
 						$value = trim( $permalink_options['product_base'], '/' );
 					}
-
 					break;
+                default:
+	                $input_name = '';
+	                $value      = '';
 			}
 
 			$language = $this->get_string_language( trim( $value, '/' ), $this->woocommerce_wpml->url_translation->url_strings_context(), $this->woocommerce_wpml->url_translation->url_string_name( $base ) );
@@ -378,14 +378,14 @@ class WCML_WC_Strings {
 	 * Filter breadcrumbs
 	 *
 	 */
-	public function filter_woocommerce_breadcrumbs( $breadcrumbs, $object ) {
+	public function filter_woocommerce_breadcrumbs( $breadcrumbs ) {
 
 		$current_language = $this->sitepress->get_current_language();
 		$default_language = $this->sitepress->get_default_language();
 
 		$woocommerce_shop_page = wc_get_page_id( 'shop' );
 
-		if ( isset( $woocommerce_shop_page ) ) {
+		if ( $woocommerce_shop_page ) {
 
 			$is_shop_page_active = get_post_status( $woocommerce_shop_page );
 

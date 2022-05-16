@@ -40,23 +40,23 @@
 }
 
 .text-normal {
-  font-size: @base-font-size;
-  line-height: @base-line-height;
+  font-size: var(--the7-base-font-size);
+  line-height: var(--the7-base-line-height);
 }
 
 .text-small {
-  font-size: @text-small;
-  line-height: @text-small-line-height;
+  font-size: var(--the7-text-small-font-size);
+  line-height: var(--the7-text-small-line-height);
 }
 
 .text-big {
-  font-size: @text-big;
-  line-height: @text-big-line-height;
+  font-size: var(--the7-text-big-font-size);
+  line-height:  var(--the7-text-big-line-height);
 }
 
 
 .solid-bg-mixin {
-  background-color: @content-boxes-bg;
+  background-color: var(--the7-content-boxes-bg);
 }
 /*Theme Options -> Appearance -> Content boxes -> Decoration: Outline*/
 .outline-decoration {
@@ -71,7 +71,7 @@
   }
 }
 .header-color {
-  color: @h1-color;
+  color: var(--the7-h1-color);
   .sidebar-content & {
     color: @widget-sidebar-header-color;
   }
@@ -84,27 +84,13 @@
 }
 /*--------------1.2 - Mixins:end--------------*/
 
-@text-near-logo-color-temp: escape(~"@{text-near-logo-color}");
-@top-icons-bg-color-temp: escape(~"@{top-color}");
-@menu-color-temp: escape(~"@{menu-color}");
 @temp-menu-hover-color: escape(~"@{menu-hover-color}");
-@accent-bg-color-temp: escape(~"@{accent-bg-color}");
 @strype-4-color: #ffffff;
 @strype-4-header-color: #ffffff;
 @strype-5-color: #333333;
 @strype-5-header-color: #333333;
 @base-color-temp: escape(~"@{base-color}");
-@strype-1-color-temp: escape(~"@{strype-1-color}");
-@strype-2-color-temp: escape(~"@{strype-2-color}");
-@strype-3-color-temp: escape(~"@{strype-3-color}");
-@strype-4-color-temp: escape(~"@{strype-4-color}");
-@strype-5-color-temp: escape(~"@{strype-5-color}");
 
-@secondary-color-temp: escape(~"@{secondary-text-color}");
-@additional-menu-elements-color-temp: escape(~"@{additional-menu-elements-color}");
-@additional-logo-elements-color-temp:escape(~"@{additional-logo-elements-color}");
-@microwidgets-in-top-line-color-temp:escape(~"@{microwidgets-in-top-line-color}");
-@microwidgets-below-menu-color-temp:escape(~"@{microwidgets-below-menu-color}");
 
 /*should be deleted*/
 @additional-menu-elements-font-style: normal;
@@ -127,8 +113,6 @@
 @additional-logo-elements-font-style: normal;
 @additional-logo-elements-font-weight: normal;
 
-@mobile-menu-color-temp: escape(~"@{mobile-menu-color}");
-@mobile-microwidgets-color-temp: escape(~"@{mobile-microwidgets-color}");
 
 .custom-mixin-footer-color (@customColor) when (iscolor(@customColor)) {
   color: @customColor;
@@ -351,7 +335,7 @@
 }
 
 .shopping-cart-inner .amount {
-  font-size: @base-font-size;
+  font-size: var(--the7-base-font-size);
 }
 .shopping-cart-inner .total,
 .widget_shopping_cart .total {
@@ -362,32 +346,32 @@
 					.shopping-cart-inner a.button:hover*/ {
   .masthead &,
   .dt-mobile-header & {
-    color: @dt-btn-color !important;
+    color: var(--the7-btn-color) !important;
   }
   .light-preset-color.masthead:not(#phantom):not(.sticky-on):not(.sticky-mobile-on) &  {
-    color: @dt-btn-color !important;
+    color: var(--the7-btn-color) !important;
   }
 }
 .shopping-cart-inner a.button:hover,
 .shopping-cart-inner a.button:hover > span {
   .masthead &,
   .dt-mobile-header & {
-    color: @dt-btn-hover-color !important;
+    color: var(--the7-btn-hover-color) !important;
   }
   .light-preset-color.masthead:not(#phantom):not(.sticky-on):not(.sticky-mobile-on) &  {
-    color: @dt-btn-hover-color !important;
+    color: var(--the7-btn-hover-color) !important;
   }
 }
 .shopping-cart-inner a:not(.button):hover {
   .masthead &,
   .dt-mobile-header & {
     background: none;
-    color: @accent-bg-color !important;
+    color: var(--the7-accent-color) !important;
     text-decoration: none !important;
     .text-gradient (@startColor: @accent-bg-color, @endColor: @accent-text-color-2) !important;
   }
   .light-preset-color.masthead:not(#phantom):not(.sticky-on):not(.sticky-mobile-on) &  {
-    color: @accent-bg-color !important;
+    color: var(--the7-accent-color) !important;
   }
 }
 .masthead .shopping-cart .buttons a.button *,
@@ -613,7 +597,7 @@ a.edd-ico-cart:hover {
           width: 0;
           height: 0;
           border-top: 3px solid transparent;
-          border-right: 4px solid @accent-bg-color;
+          border-right: 4px solid var(--the7-accent-color);
           border-bottom: 3px solid transparent;
           content: "";
         }
@@ -670,13 +654,12 @@ a.edd-ico-cart:hover {
 .masthead .shopping-cart-inner a.remove,
 .dt-mobile-header .shopping-cart-inner a.remove {
   .border-radius (100%);
-  color: @accent-bg-color !important;
-
+  color: var(--the7-accent-color) !important;
 }
 .widget_shopping_cart a.remove {
   #page & {
     .border-radius (100%);
-    color: @accent-bg-color;
+    color: var(--the7-accent-color);
   }
   #page .footer & {
     .custom-mixin-footer-color (@widget-footer-accent-color);
@@ -684,14 +667,14 @@ a.edd-ico-cart:hover {
 }
 .masthead .shopping-cart-inner .cart_list a.remove:hover,
 .dt-mobile-header .shopping-cart-inner .cart_list a.remove:hover {
-  background: @accent-bg-color;
+  background: var(--the7-accent-color);
   .accent-gradient & {
     .background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2) !important;
   }
 }
 .cart_list a.remove:hover {
   #page .woocommerce & {
-    background: @accent-bg-color;
+    background: var(--the7-accent-color);
   }
   .accent-gradient #page .woocommerce & {
     .background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);

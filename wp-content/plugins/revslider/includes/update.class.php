@@ -9,7 +9,7 @@ if(!defined('ABSPATH')) exit();
 
 class RevSliderUpdate {
 
-	private $plugin_url	 = 'https://www.themepunch.com/links/slider_revolution_wordpress';
+	private $plugin_url	 = 'https://www.sliderrevolution.com/';
 	private $remote_url	 = 'check_for_updates.php';
 	private $remote_url_info = 'revslider/revslider.php';
 	private $plugin_slug = 'revslider';
@@ -22,7 +22,7 @@ class RevSliderUpdate {
 	public function __construct($version){
 		$this->option = $this->plugin_slug . '_update_info';
 		$this->_retrieve_version_info();
-		$this->version = $version;
+		$this->version = (empty($version)) ? RS_REVISION : $version;
 	}
 	
 	
@@ -48,10 +48,14 @@ class RevSliderUpdate {
 		if(isset($transient) && !isset($transient->response)){
 			$transient->response = array();
 		}
-
+		
 		if(!empty($this->data->basic) && is_object($this->data->basic)){
-			if(version_compare($this->version, $this->data->basic->version, '<')){
-				$this->data->basic->new_version = $this->data->basic->version;
+			$version = (isset($this->data->basic->version)) ? $this->data->basic->version : $this->data->basic->new_version;
+			if(version_compare($this->version, $version, '<')){
+				$this->data->basic->new_version = $version;
+				if(isset($this->data->basic->version)){
+					unset($this->data->basic->version);
+				}
 				$transient->response[RS_PLUGIN_SLUG_PATH] = $this->data->basic;
 			}
 		}
@@ -92,8 +96,8 @@ class RevSliderUpdate {
 		if(time() - $last_check > 172800 || $this->force == true){
 			$data = $this->_retrieve_update_info();
 			
+			update_option('revslider-update-check', time());
 			if(isset($data->basic)) {
-				update_option('revslider-update-check', time());
 				
 				$this->data->checked = time();
 				$this->data->basic	 = $data->basic;
@@ -111,7 +115,7 @@ class RevSliderUpdate {
 
 
 	public function _retrieve_update_info(){
-		$rslb = new RevSliderLoadBalancer();
+		$rslb = RevSliderGlobals::instance()->get('RevSliderLoadBalancer');
 		$data = new stdClass;
 
 		// Build request
@@ -119,7 +123,7 @@ class RevSliderUpdate {
 			'code'		=> urlencode(get_option('revslider-code', '')),
 			'version'	=> urlencode(RS_REVISION)
 		);
-
+		
 		if(get_option('revslider-valid', 'false') !== 'true' && version_compare(RS_REVISION, get_option('revslider-stable-version', '4.2'), '<')){ //We'll get the last stable only now!
 			$rattr['get_stable'] = 'true';
 		}
@@ -142,7 +146,7 @@ class RevSliderUpdate {
 	
 	
 	public function _retrieve_version_info(){
-		$rslb		= new RevSliderLoadBalancer();
+		$rslb		= RevSliderGlobals::instance()->get('RevSliderLoadBalancer');
 		$last_check	= get_option('revslider-update-check-short');
 		
 		// Check for updates
@@ -214,4 +218,3 @@ class RevSliderUpdate {
  * @since: 5.0
  **/
 class UniteUpdateClassRev extends RevSliderUpdate {}
-?>

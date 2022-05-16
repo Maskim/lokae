@@ -22,12 +22,13 @@ class Section extends Theme_Section_Document {
 		$properties = parent::get_properties();
 
 		$properties['admin_tab_group'] = 'library';
+		$properties['support_site_editor'] = false;
 
 		return $properties;
 	}
 
-	protected function _register_controls() {
-		parent::_register_controls();
+	protected function register_controls() {
+		parent::register_controls();
 
 		Module::instance()->get_locations_manager()->register_locations();
 

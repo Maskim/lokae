@@ -1,6 +1,10 @@
 <?php
 namespace Elementor;
 
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 if ( ! class_exists('TwitterOAuth') ) {
@@ -597,10 +601,6 @@ class HTMega_Elementor_Widget_Twitter_Feed extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#434343',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-content p' => 'color: {{VALUE}};',
@@ -613,10 +613,6 @@ class HTMega_Elementor_Widget_Twitter_Feed extends Widget_Base {
                 [
                     'label' => __( 'Link Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#00c8fa',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-content p a' => 'color: {{VALUE}};',
@@ -687,10 +683,6 @@ class HTMega_Elementor_Widget_Twitter_Feed extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default' => '#5c5c5c',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-twitter-single .htmega-content .htmega-author h6 a' => 'color: {{VALUE}};',
@@ -747,10 +739,6 @@ class HTMega_Elementor_Widget_Twitter_Feed extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default' => '#5c5c5c',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-twitter-single .htmega-content .htmega-author h6 a:hover' => 'color: {{VALUE}};',
@@ -781,10 +769,6 @@ class HTMega_Elementor_Widget_Twitter_Feed extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#000000',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-twitter-single span.twitter-time' => 'color: {{VALUE}};',
@@ -855,10 +839,6 @@ class HTMega_Elementor_Widget_Twitter_Feed extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default' => '#aaaaaa',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-twitter-single ul.twitter-meta li a' => 'color: {{VALUE}};',
@@ -906,10 +886,6 @@ class HTMega_Elementor_Widget_Twitter_Feed extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default' => '#18012c',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-twitter-single ul.twitter-meta li a:hover' => 'color: {{VALUE}};',
@@ -951,10 +927,6 @@ class HTMega_Elementor_Widget_Twitter_Feed extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default' => '#2d3e50',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-twitter-area .slick-arrow' => 'color: {{VALUE}};',
@@ -1095,10 +1067,6 @@ class HTMega_Elementor_Widget_Twitter_Feed extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default' => '#2d3e50',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-twitter-area .slick-arrow:hover' => 'color: {{VALUE}};',

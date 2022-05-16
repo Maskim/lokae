@@ -31,7 +31,7 @@ class Minify_Groups_List {
 	 *
 	 * @var string styles|scripts
 	 */
-	private $type = '';
+	private $type;
 
 	/**
 	 * Group dependencies.
@@ -43,7 +43,7 @@ class Minify_Groups_List {
 	/**
 	 * Save the status for every group
 	 *
-	 * A group can has status as:
+	 * A group can have status as:
 	 * - 'process' = The group should process its file
 	 * - 'ready' = The group has already a processed file and must be enqueued
 	 * - 'only-handles' = The group file won't be processed and its files will be enqueued by separate
@@ -138,8 +138,8 @@ class Minify_Groups_List {
 	 * all those group hashes
 	 *
 	 * IMPORTANT NOTE: All group IDs ($group->group_id) should be already set
-	 * if you want this function to work properly. Otherwise it will return WP_Error
-	 * and self::preprocess_groups() should has been called
+	 * if you want this function to work properly. Otherwise, it will return WP_Error
+	 * and self::preprocess_groups() should have been called
 	 *
 	 * @param string|int $key_or_hash  Key or hash.
 	 *
@@ -181,7 +181,7 @@ class Minify_Groups_List {
 	 * Split a group
 	 *
 	 * $new_handles_order is a multidimensional array that
-	 * will tell the function how the new splitted groups must be
+	 * will tell the function how the new split groups must be
 	 *
 	 * for instance:
 	 * Let's say that the group has the following handles:
@@ -200,7 +200,7 @@ class Minify_Groups_List {
 	 *      )
 	 * )
 	 *
-	 * This will delete hte original group and create two new groups with those handles
+	 * This will delete the original group and create two new groups with those handles
 	 *
 	 * The function will keep the groups order instead of adding them at the end of the list
 	 *
@@ -240,8 +240,7 @@ class Minify_Groups_List {
 			// Remove the group from the right, we don't need it anymore.
 			unset( $sliced_right[ $first_key_on_right_slice ] );
 
-			// And merge the right side on the left too
-			// and we're done!
+			// And merge the right side on the left too, and we're done!
 			$this->groups = array_merge( $sliced_left, $sliced_right );
 
 			return true;
@@ -256,7 +255,7 @@ class Minify_Groups_List {
 	 *
 	 * @param string|int $key_or_hash  Key or hash.
 	 *
-	 * @return bool|mixed
+	 * @return bool|int|string
 	 */
 	public function get_group_position( $key_or_hash ) {
 		if ( isset( $this->groups[ $key_or_hash ] ) ) {
@@ -299,7 +298,10 @@ class Minify_Groups_List {
 	}
 
 	/**
-	 * Mark the groups to be processed or not
+	 * Mark the groups to be processed or not.
+	 *
+	 * Groups that need to be processed will have an asset that either requires minification, combine or should be
+	 * served via CDN. Basically, anything that needs to be sent out to our API.
 	 */
 	public function preprocess_groups() {
 		foreach ( $this->get_groups() as $group ) {
@@ -315,13 +317,13 @@ class Minify_Groups_List {
 				// The group has its file and is not expired.
 				$this->set_group_status( $group->hash, 'ready' );
 			} elseif ( $group->should_process_group() && ( empty( $group_src ) || $group->is_expired() ) ) {
-				// The group must be processed but it has no file yet.
+				// The group must be processed, but it has no file yet.
 				$this->set_group_status( $group->hash, 'process' );
 
 				// Delete file in case there's one (but is expired).
 				$group->delete_file();
 			} else {
-				// The group won't be processed
+				// The group won't be processed.
 				// Use the original handles and their URLs instead.
 				$this->set_group_status( $group->hash, 'only-handles' );
 			}
@@ -355,7 +357,7 @@ class Minify_Groups_List {
 				$search_group_hash          = $group->hash;
 				$deps[ $search_group_hash ] = array();
 
-				foreach ( $self->get_groups() as $position => $g ) {
+				foreach ( $self->get_groups() as $g ) {
 					$g_status = $self->get_group_status( $g->hash );
 					$g_hash   = $g->hash;
 

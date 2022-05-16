@@ -6,6 +6,12 @@ final class HTMega_Addons_Elementor {
     const MINIMUM_PHP_VERSION = '7.0';
 
     /**
+     * [$template_info]
+     * @var array
+     */
+    public static $template_info = [];
+
+    /**
      * [$_instance]
      * @var null
      */
@@ -29,7 +35,7 @@ final class HTMega_Addons_Elementor {
         if ( ! function_exists('is_plugin_active') ){ include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); }
 
         add_action( 'init', [ $this, 'i18n' ] );
-        add_action( 'plugins_loaded', [ $this, 'init' ] );
+        add_action( 'plugins_loaded', [ $this, 'init' ], 15 );
 
         // Register Plugin Active Hook
         register_activation_hook( HTMEGA_ADDONS_PL_ROOT, [ $this, 'plugin_activate_hook'] );
@@ -78,6 +84,14 @@ final class HTMega_Addons_Elementor {
 
         // Plugins Setting Page
         add_filter('plugin_action_links_'.HTMEGA_ADDONS_PLUGIN_BASE, [ $this, 'plugins_setting_links' ] );
+
+        /**
+         * [$template_info] Assign template data
+         * @var [type]
+         */
+        if( is_admin() && class_exists('HTMega_Template_Library') ){
+            self::$template_info = HTMega_Template_Library::instance()->get_templates_info();
+        }
         
     }
 
@@ -204,6 +218,16 @@ final class HTMega_Addons_Elementor {
         require_once ( HTMEGA_ADDONS_PL_PATH . 'admin/admin-init.php' );
         require_once ( HTMEGA_ADDONS_PL_PATH . 'includes/widgets_control.php' );
         require_once ( HTMEGA_ADDONS_PL_PATH . 'includes/class.htmega-icon-manager.php' );
+
+        // Admin Required File
+        if( is_admin() ){
+
+            // Post Duplicator
+            if( htmega_get_option( 'postduplicator', 'htmega_advance_element_tabs', 'off' ) === 'on' ){
+                require_once ( HTMEGA_ADDONS_PL_PATH . 'includes/class.post-duplicator.php' );
+            }
+            
+        }
 
         // Extension Assest Management
         require_once( HTMEGA_ADDONS_PL_PATH . 'extensions/class.enqueue_scripts.php' );

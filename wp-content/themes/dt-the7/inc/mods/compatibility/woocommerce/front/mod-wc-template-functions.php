@@ -260,20 +260,27 @@ if ( ! function_exists( 'dt_woocommerce_template_loop_category_title' ) ) :
 
 	/**
 	 * Show the subcategory title in the product loop.
+	 *
+	 * @param object $category Product term.
 	 */
 	function dt_woocommerce_template_loop_category_title( $category ) {
-		if ( presscore_config()->get( 'show_titles' ) ) :
-		?>
+		if ( presscore_config()->get( 'show_titles' ) ) {
+			$title_text = esc_html( $category->name );
+			if ( $category->count > 0 ) {
+				// translators: %s: number of products in a category.
+				$products_count = sprintf( _n( '%s Product', '%s Products', $category->count, 'the7mk2' ), number_format_i18n( $category->count ) );
+				$title_text    .= apply_filters(
+					'woocommerce_subcategory_count_html',
+					' <div class="count">' . esc_html( $products_count ) . '</div>',
+					$category
+				);
+			}
+			?>
 			<h3 class="entry-title">
-				<a href="<?php echo get_term_link( $category->slug, 'product_cat' ); ?>"><?php
-					echo $category->name;
-
-					if ( $category->count > 0 )
-						echo apply_filters( 'woocommerce_subcategory_count_html', ' <mark class="count">(' . $category->count . ')</mark>', $category );
-				?></a>
+				<a href="<?php echo esc_url( get_term_link( $category->slug, 'product_cat' ) ); ?>"><?php echo $title_text; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 			</h3>
-		<?php
-		endif;
+			<?php
+		}
 	}
 
 endif;
@@ -322,10 +329,7 @@ if ( ! function_exists( 'dt_woocommerce_get_product_description' ) ) :
 	function dt_woocommerce_get_product_description() {
 		ob_start();
 		get_template_part( 'inc/mods/compatibility/woocommerce/front/templates/product/mod-wc-product-description' );
-
-		$content = ob_get_contents();
-		ob_end_clean();
-		return $content;
+		return ob_get_clean();
 	}
 
 endif;
@@ -354,15 +358,13 @@ if ( ! function_exists( 'dt_woocommerce_template_subcategory_description' ) ) :
 endif;
 
 /**
- * Get Hover image for WooCommerce Grid.
+ * Return the first image in the product gallery.
+ *
+ * @param WC_Product $product Product.
+ *
+ * @return string
  */
-function dt_woocommerce_get_alt_product_thumbnail() {
-	if ( ! of_get_option( 'woocommerce_hover_image' ) ) {
-		return;
-	}
-
-	global $product;
-
+function the7_wc_get_the_first_product_gallery_image_html( $product ) {
 	if ( method_exists( 'WC_Product', 'get_gallery_image_ids' ) ) {
 		$attachment_ids = $product->get_gallery_image_ids();
 	} else {
@@ -370,7 +372,7 @@ function dt_woocommerce_get_alt_product_thumbnail() {
 	}
 
 	if ( empty( $attachment_ids ) ) {
-		return;
+		return '';
 	}
 
 	$class      = 'show-on-hover back-image';
@@ -381,10 +383,26 @@ function dt_woocommerce_get_alt_product_thumbnail() {
 			continue;
 		}
 
-		echo apply_filters( 'dt_woocommerce_get_alt_product_thumbnail', wp_get_attachment_image( $attachment_id, $image_size, false, array( 'class' => $class ) ) );
+		return apply_filters(
+			'dt_woocommerce_get_alt_product_thumbnail',
+			wp_get_attachment_image( $attachment_id, $image_size, false, [ 'class' => $class ] )
+		);
+	}
 
+	return '';
+}
+
+/**
+ * Get Hover image for WooCommerce Grid.
+ */
+function dt_woocommerce_get_alt_product_thumbnail() {
+	if ( ! of_get_option( 'woocommerce_hover_image' ) ) {
 		return;
 	}
+
+	global $product;
+
+	echo the7_wc_get_the_first_product_gallery_image_html( $product ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 add_action( 'dt_woocommerce_shop_loop_images', 'dt_woocommerce_get_alt_product_thumbnail', 11 );
@@ -627,7 +645,7 @@ if ( ! function_exists( 'dt_woocommerce_get_product_details_icon' ) ) :
 			$class = implode( ' ', $class );
 		}
 
-		$output = '<a href="' . get_permalink( $post_id ) . '" class="' . esc_attr( $class ) . '" rel="nofollow">' . __( 'Product details', 'the7mk2' ) . '</a>';
+		$output = '<a href="' . get_permalink( $post_id ) . '" class="' . esc_attr( $class ) . '">' . __( 'Product details', 'the7mk2' ) . '</a>';
 
 		return apply_filters( 'dt_woocommerce_get_product_details_icon', $output, $post_id, $class );
 	}
@@ -926,22 +944,19 @@ endif;
 if ( ! function_exists( 'dt_woocommerce_wrap_add_to_cart_text_in_filter_popup' ) ) :
 
 	/**
-	 * @param string $link
-	 * @param object $product
+	 * Filter. Adds and icon to default WC add to cart button text.
+	 *
+	 * @param string     $link    Add to cart anchor HTML.
+	 * @param WC_Product $product Product.
 	 *
 	 * @return string
 	 */
 	function dt_woocommerce_wrap_add_to_cart_text_in_filter_popup( $link, $product ) {
-		if ( $product->is_purchasable() && $product->is_in_stock() ) {
-			$icon_class = of_get_option( 'woocommerce_add_to_cart_icon' );
-		} else {
-			$icon_class = of_get_option( 'woocommerce_details_icon' );
-		}
-		$text = $product->add_to_cart_text();
+		$text             = $product->add_to_cart_text();
 		$text_replacement = sprintf(
 			'<span class="filter-popup">%s</span><i class="popup-icon %s"></i>',
 			$text,
-			$icon_class
+			the7_get_wc_product_add_to_cart_icon( $product )
 		);
 
 		return str_replace( ">$text<", ">$text_replacement<", $link );
@@ -1157,3 +1172,64 @@ if ( ! function_exists( 'dt_woocommerce_remove_product_info' ) ) :
 	}
 
 endif;
+
+function the7_catalog_ordering( $orderby = '', $default_order = '' ) {
+	$show_default_orderby    = 'menu_order' === apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby', 'menu_order' ) );
+	$catalog_orderby_options = apply_filters(
+		'woocommerce_catalog_orderby',
+		array(
+			'menu_order' => __( 'Default sorting', 'woocommerce' ),
+			'popularity' => __( 'Sort by popularity', 'woocommerce' ),
+			'rating'     => __( 'Sort by average rating', 'woocommerce' ),
+			'date'       => __( 'Sort by latest', 'woocommerce' ),
+			'price'      => __( 'Sort by price: low to high', 'woocommerce' ),
+			'price-desc' => __( 'Sort by price: high to low', 'woocommerce' ),
+		)
+	);
+
+	$default_orderby = wc_get_loop_prop( 'is_search' ) ? 'relevance' : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby', '' ) );
+
+	if ( wc_get_loop_prop( 'is_search' ) ) {
+		$catalog_orderby_options = array_merge( array( 'relevance' => __( 'Relevance', 'woocommerce' ) ), $catalog_orderby_options );
+
+		unset( $catalog_orderby_options['menu_order'] );
+	}
+
+	if ( ! $show_default_orderby ) {
+		unset( $catalog_orderby_options['menu_order'] );
+	}
+
+	if ( ! wc_review_ratings_enabled() ) {
+		unset( $catalog_orderby_options['rating'] );
+	}
+
+	if ( ! array_key_exists( $orderby, $catalog_orderby_options ) ) {
+		$orderby = current( array_keys( $catalog_orderby_options ) );
+	}
+
+	wc_get_template(
+		'loop/orderby.php',
+		array(
+			'catalog_orderby_options' => $catalog_orderby_options,
+			'orderby'                 => $orderby,
+			'show_default_orderby'    => $show_default_orderby,
+		)
+	);
+}
+
+/**
+ * Return WC Product add to cart icon class from Theme Options.
+ *
+ * @since 9.14.0
+ *
+ * @param WC_Product $product Product object.
+ *
+ * @return string
+ */
+function the7_get_wc_product_add_to_cart_icon( $product ) {
+	if ( in_array( $product->get_type(), [ 'variable', 'grouped' ], true ) ) {
+		return of_get_option( 'woocommerce_details_icon' );
+	}
+
+	return of_get_option( 'woocommerce_add_to_cart_icon' );
+}

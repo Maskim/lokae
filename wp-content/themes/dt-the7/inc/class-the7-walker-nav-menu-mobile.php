@@ -33,6 +33,12 @@ class The7_Walker_Nav_Menu_Mobile extends The7_Walker_Nav_Menu {
 			$this->unset_children( $element, $children_elements );
 			return;
 		}
+		if ( The7_Admin_Dashboard_Settings::get( 'deprecated_mega_menu_settings' ) ) {
+			if ( isset( $element->the7_mega_menu['menu-item-hide-icon-on-mobile'] ) && $element->the7_mega_menu['menu-item-hide-icon-on-mobile'] === 'on' &&
+			     isset( $element->the7_mega_menu['menu-item-icon-type']) && in_array($element->the7_mega_menu['menu-item-icon-type'], [ 'image', 'icon' ])) {
+				$element->the7_mega_menu['menu-item-icon-type'] = 'none';
+			}
+		}
 
 		if ( isset( $element->the7_mega_menu['mega-menu-start-new-column'] ) ) {
 			$element->the7_mega_menu['mega-menu-start-new-column'] = 'off';

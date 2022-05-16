@@ -7,7 +7,7 @@
  * @wordpress-plugin
  * Plugin Name:       The7 Elements
  * Description:       This plugin contains The7 custom post types, elements for WPBakery Page Builder and Elementor, theme builder, and other advanced features.
- * Version:           2.5.0.1
+ * Version:           2.5.9
  * Author:            Dream-Theme
  * Author URI:        http://dream-theme.com/
  * Text Domain:       dt-the7-core
@@ -44,7 +44,7 @@ if ( ! class_exists( 'The7PT_Core' ) ) :
 
 	final class The7PT_Core {
 
-		const THE7_COMPATIBLE_VERSION = '8.9.0';
+		const THE7_COMPATIBLE_VERSION = '10.3.0';
 		const PLUGIN_DB_VERSION = '2.2.4';
 
 		/**
@@ -52,7 +52,7 @@ if ( ! class_exists( 'The7PT_Core' ) ) :
 		 *
 		 * @var string
 		 */
-		private $version = '2.5.0.1';
+		private $version = '2.5.9';
 
 		/**
 		 * The single instance of the class.
@@ -71,18 +71,6 @@ if ( ! class_exists( 'The7PT_Core' ) ) :
 				self::$_instance = new self();
 			}
 			return self::$_instance;
-		}
-
-		/**
-		 * Cloning is forbidden.
-		 */
-		private function __clone() {
-		}
-
-		/**
-		 * Unserializing instances of this class is forbidden.
-		 */
-		private function __wakeup() {
 		}
 
 		/**
@@ -106,9 +94,16 @@ if ( ! class_exists( 'The7PT_Core' ) ) :
 			require_once $plugin_path . 'includes/compatibility-functions.php';
 			require_once $plugin_path . 'includes/class-the7pt-shortcode-with-inline-css.php';
 
-			if ( ! defined( 'DISABLE_THE7_PRO_ELEMENTS' ) ) {
-				require_once $plugin_path . 'mods/pro-elements/pro-elements.php';
-			}
+//			if (
+//				! defined( 'ELEMENTOR_PRO_VERSION' )
+//				&& class_exists( 'Elementor\Plugin' )
+//			) {
+//				the7_admin_notices()->add(
+//					'the7_pro_elements_removal',
+//					[ 'The7PT_Admin', 'display_pro_elements_removal_notice' ],
+//					'the7-dashboard-notice notice-error is-dismissible'
+//				);
+//			}
 
 			$this->load_plugin_textdomain();
 

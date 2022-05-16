@@ -15,15 +15,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 <p class="sui-margin-bottom"><?php esc_html_e( 'Store local copies of Gravatars to avoid your visitors loading them on every page load.', 'wphb' ); ?></p>
-<?php if ( $is_active ) { ?>
-	<div class="sui-notice sui-notice-success">
-		<p><?php esc_html_e( 'Gravatar caching is currently active.', 'wphb' ); ?></p>
-	</div>
-<?php } ?>
-
+<?php
+if ( $is_active ) {
+	$this->admin_notices->show_inline( esc_html__( 'Gravatar caching is currently active.', 'wphb' ) );
+}
+?>
 
 <?php if ( ! $is_active ) : ?>
-	<a href="<?php echo esc_url( $activate_url ); ?>" class="sui-button sui-button-blue" id="activate-page-caching">
+	<a href="<?php echo esc_url( $activate_url ); ?>" class="sui-button sui-button-blue" id="activate-gravatar-caching" onclick="wphbMixPanel.enableFeature( 'Gravatar Caching' )">
 		<?php esc_html_e( 'Activate', 'wphb' ); ?>
 	</a>
 <?php endif; ?>

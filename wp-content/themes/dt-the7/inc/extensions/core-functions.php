@@ -42,152 +42,156 @@ function dt_constrain_dim( $w0, $h0, &$w1, &$h1, $change = false ) {
 	return array( $w1, $h1 );
 }
 
-/**
- * Resize image to speciffic dimetions.
- *
- * Magick - do not touch!
- *
- * Evaluate new width and height.
- * $img - image meta array ($img[0] - image url, $img[1] - width, $img[2] - height).
- * $opts - options array, supports w, h, zc, a, q.
- *
- * @param array $img
- * @param 
- * @return array
- */
-function dt_get_resized_img( $img, $opts, $resize = true, $is_retina = false ) {
+if ( ! function_exists( 'dt_get_resized_img' ) ) {
 
-	$opts = apply_filters( 'dt_get_resized_img-options', $opts, $img );
+	/**
+	 * Resize image to speciffic dimetions.
+	 *
+	 * Magick - do not touch!
+	 *
+	 * Evaluate new width and height.
+	 * $img - image meta array ($img[0] - image url, $img[1] - width, $img[2] - height).
+	 * $opts - options array, supports w, h, zc, a, q.
+	 *
+	 * @param array $img
+	 * @param
+	 *
+	 * @return array
+	 */
+	function dt_get_resized_img( $img, $opts, $resize = true, $is_retina = false ) {
 
-	if ( !is_array( $img ) || !$img || (!$img[1] && !$img[2]) ) {
-		return false;
-	}
+		$opts = apply_filters( 'dt_get_resized_img-options', $opts, $img );
 
-	if ( !is_array( $opts ) || !$opts ) {
-
-		if ( !isset( $img[3] ) ) {
-
-			$img[3] = image_hwstring( $img[1], $img[2] );
+		if ( ! is_array( $img ) || ! $img || ( ! $img[1] && ! $img[2] ) ) {
+			return false;
 		}
 
-		return $img;
-	}
+		if ( ! is_array( $opts ) || ! $opts ) {
 
-	$defaults = array( 'w' => 0, 'h' => 0, 'zc' => 1, 'z' => 1, 'hd_ratio' => 2, 'hd_convert' => true );
-	$opts = wp_parse_args( $opts, $defaults );
+			if ( ! isset( $img[3] ) ) {
 
-	$w = absint( $opts['w'] );
-	$h = absint( $opts['h'] );
+				$img[3] = image_hwstring( $img[1], $img[2] );
+			}
 
-	// Return original image if there is no proper dimensions.
-	if ( !$w && !$h ) {
-		if ( !isset( $img[3] ) ) {
-			$img[3] = image_hwstring( $img[1], $img[2] );
+			return $img;
 		}
 
-		return $img;
-    }
+		$defaults = array( 'w' => 0, 'h' => 0, 'zc' => 1, 'z' => 1, 'hd_ratio' => 2, 'hd_convert' => true );
+		$opts     = wp_parse_args( $opts, $defaults );
 
-	// If zoomcropping off and image smaller then required square
-	if ( 0 == $opts['zc'] && ( $img[1] <= $w  && $img[2] <= $h ) ) {
+		$w = absint( $opts['w'] );
+		$h = absint( $opts['h'] );
 
-		return array( $img[0], $img[1], $img[2], image_hwstring( $img[1], $img[2] ) );
+		// Return original image if there is no proper dimensions.
+		if ( ! $w && ! $h ) {
+			if ( ! isset( $img[3] ) ) {
+				$img[3] = image_hwstring( $img[1], $img[2] );
+			}
 
-	} elseif ( 3 == $opts['zc'] || empty ( $w ) || empty ( $h ) ) {
+			return $img;
+		}
 
-		if ( 0 == $opts['z'] ) {
-			dt_constrain_dim( $img[1], $img[2], $w, $h, true );
-		} else {
-			$p = absint( $img[1] ) / absint( $img[2] );
-			$hx = absint( floor( $w / $p ) ); 
-			$wx = absint( floor( $h * $p ) );
-			
-			if ( empty( $w ) ) {
-				$w = $wx;
-			} else if ( empty( $h ) ) {
-				$h = $hx;
+		// If zoomcropping off and image smaller then required square
+		if ( 0 == $opts['zc'] && ( $img[1] <= $w && $img[2] <= $h ) ) {
+
+			return array( $img[0], $img[1], $img[2], image_hwstring( $img[1], $img[2] ) );
+
+		} elseif ( 3 == $opts['zc'] || empty ( $w ) || empty ( $h ) ) {
+
+			if ( 0 == $opts['z'] ) {
+				dt_constrain_dim( $img[1], $img[2], $w, $h, true );
 			} else {
-				if ( $hx < $h && $wx >= $w ) {
-					$h = $hx;
-				} elseif ( $wx < $w && $hx >= $h ) {
+				$p  = absint( $img[1] ) / absint( $img[2] );
+				$hx = absint( floor( $w / $p ) );
+				$wx = absint( floor( $h * $p ) );
+
+				if ( empty( $w ) ) {
 					$w = $wx;
+				} elseif ( empty( $h ) ) {
+					$h = $hx;
+				} else {
+					if ( $hx < $h && $wx >= $w ) {
+						$h = $hx;
+					} elseif ( $wx < $w && $hx >= $h ) {
+						$w = $wx;
+					}
 				}
 			}
-		}
 
-		if ( $img[1] == $w && $img[2] == $h ) {
-			return array( $img[0], $img[1], $img[2], image_hwstring( $img[1], $img[2] ) );
-		}
-
-	}
-
-	$img_h = $h;
-	$img_w = $w;
-
-	if ( $opts['hd_convert'] && $is_retina ) {
-		$img_h = round( $img_h * $opts['hd_ratio'] );
-		$img_w = round( $img_w * $opts['hd_ratio'] );
-	}
-
-	if ( 1 == $opts['zc'] ) {
-
-		if ( $img[1] >= $img_w && $img[2] >= $img_h ) {
-
-			// do nothing
-
-		} else if ( $img[1] <= $img[2] && $img_w >= $img_h ) { // img=portrait; c=landscape
-
-			$cw_new = $img[1];
-			$k = $cw_new/$img_w;
-			$ch_new = $k * $img_h;
-
-		} else if ( $img[1] >= $img[2] && $img_w <= $img_h ) { // img=landscape; c=portrait
-
-			$ch_new = $img[2];
-			$k = $ch_new/$img_h;
-			$cw_new = $k * $img_w;
-
-		} else {
-
-			$kh = $img_h/$img[2];
-			$kw = $img_w/$img[1];
-			$kres = max( $kh, $kw );
-			$ch_new = $img_h/$kres;
-			$cw_new = $img_w/$kres;
+			if ( $img[1] == $w && $img[2] == $h ) {
+				return array( $img[0], $img[1], $img[2], image_hwstring( $img[1], $img[2] ) );
+			}
 
 		}
 
-		if ( isset($ch_new, $cw_new) ) {
-			$img_h = absint(floor($ch_new));
-			$img_w = absint(floor($cw_new));
+		$img_h = $h;
+		$img_w = $w;
+
+		if ( $opts['hd_convert'] && $is_retina ) {
+			$img_h = round( $img_h * $opts['hd_ratio'] );
+			$img_w = round( $img_w * $opts['hd_ratio'] );
 		}
 
+		if ( 1 == $opts['zc'] ) {
+
+			if ( $img[1] >= $img_w && $img[2] >= $img_h ) {
+
+				// do nothing
+
+			} elseif ( $img[1] <= $img[2] && $img_w >= $img_h ) { // img=portrait; c=landscape
+
+				$cw_new = $img[1];
+				$k      = $cw_new / $img_w;
+				$ch_new = $k * $img_h;
+
+			} elseif ( $img[1] >= $img[2] && $img_w <= $img_h ) { // img=landscape; c=portrait
+
+				$ch_new = $img[2];
+				$k      = $ch_new / $img_h;
+				$cw_new = $k * $img_w;
+
+			} else {
+
+				$kh     = $img_h / $img[2];
+				$kw     = $img_w / $img[1];
+				$kres   = max( $kh, $kw );
+				$ch_new = $img_h / $kres;
+				$cw_new = $img_w / $kres;
+
+			}
+
+			if ( isset( $ch_new, $cw_new ) ) {
+				$img_h = absint( floor( $ch_new ) );
+				$img_w = absint( floor( $cw_new ) );
+			}
+
+		}
+
+		if ( $resize ) {
+			$img_width = $img_height = null;
+			if ( ! empty( $opts['speed_resize'] ) ) {
+				$img_width  = $img[1];
+				$img_height = $img[2];
+			}
+
+			$file_url = the7_aq_resize( $img[0], $img_width, $img_height, $img_w, $img_h, true, true, false );
+		}
+
+		if ( empty( $file_url ) ) {
+			$file_url = $img[0];
+		}
+
+		return array(
+			$file_url,
+			$img_w,
+			$img_h,
+			image_hwstring( $img_w, $img_h )
+		);
 	}
-
-	if ( $resize ) {
-	    $img_width = $img_height = null;
-	    if ( ! empty( $opts['speed_resize'] ) ) {
-            $img_width = $img[1];
-            $img_height = $img[2];
-        }
-
-		$file_url = the7_aq_resize( $img[0], $img_width, $img_height, $img_w, $img_h, true, true, false );
-	}
-
-	if ( empty( $file_url ) ) {
-		$file_url = $img[0];
-	}
-
-	return array(
-		$file_url,
-		$img_w,
-		$img_h,
-		image_hwstring( $img_w, $img_h )
-	);
 }
 
 /**
- * DT master get image function. 
+ * DT master get image function.
  *
  * @param $opts array
  *
@@ -220,6 +224,11 @@ function dt_get_thumb_img( $opts = array() ) {
 		'echo' => true,
 	);
 	$opts = wp_parse_args( $opts, $defaults );
+
+	if ( $opts['img_id'] && 'image/svg+xml' === get_post_mime_type( $opts['img_id'] ) ) {
+		$opts['img_class'] .= ' the7-svg-image';
+	}
+
 	$opts = apply_filters('dt_get_thumb_img-args', $opts);
 
 	$original_image = null;
@@ -229,7 +238,7 @@ function dt_get_thumb_img( $opts = array() ) {
 		$original_image = wp_get_attachment_image_src( $opts['img_id'], 'full' );
 	}
 
-	if ( !$original_image ) {
+	if ( empty( $original_image[0] ) || empty( $original_image[1] ) || empty( $original_image[2] ) ) {
 		$original_image = $opts['default_img'];
 	}
 
@@ -459,7 +468,7 @@ function dt_parse_of_uploaded_image_src ( $str ) {
 	// if no additional arguments specified
 	if ( ! isset( $str_arr[1] ) ) {
 		return array();
-	} 
+	}
 
 	$args_arr = array();
 	wp_parse_str( $str_arr[1], $args_arr );
@@ -645,7 +654,7 @@ function dt_admin_get_metabox_list( $opts = array() ) {
 			if( isset($wp_meta_boxes[$opts['page']][$context][$priority]) ) {
 				foreach ( (array) $wp_meta_boxes[$opts['page']][$context][$priority] as $id=>$box ) {
 					if( false !== strpos( $id, $opts['id']) ) {
-						$meta_boxes[] = $id; 
+						$meta_boxes[] = $id;
 					}
 				}
 			}
@@ -871,7 +880,7 @@ add_filter( 'dt_sanitize_flag', 'dt_sanitize_flag', 15 );
 
 /**
  * Get attachment data by id.
- * Source http://wordpress.org/ideas/topic/functions-to-get-an-attachments-caption-title-alt-description
+ * Source https://wordpress.org/ideas/topic/functions-to-get-an-attachments-caption-title-alt-description
  *
  * Return attachment meta array if $attachment_id is valid, other way return false.
  *
@@ -949,7 +958,7 @@ function dt_count_words( $text, $num_words = 55 ) {
 /**
  * Simple function to print from the filter array.
  *
- * @see http://stackoverflow.com/questions/5224209/wordpress-how-do-i-get-all-the-registered-functions-for-the-content-filter
+ * @see https://stackoverflow.com/questions/5224209/wordpress-how-do-i-get-all-the-registered-functions-for-the-content-filter
  */
 function dt_print_filters_for( $hook = '' ) {
 	global $wp_filter;
@@ -995,8 +1004,13 @@ function dt_get_next_posts_url( $max_page = 0, $cur_page = null ) {
 	return '';
 }
 
-function dt_is_woocommerce_enabled() {
-	return class_exists( 'Woocommerce' );
+/**
+ * Determine if the WooCommerce plugin is active.
+ *
+ * @return bool
+ */
+function the7_is_woocommerce_enabled() {
+	return class_exists( 'WooCommerce' );
 }
 
 function dt_the7_core_is_enabled() {
@@ -1169,7 +1183,7 @@ function presscore_get_censored_purchase_code() {
  * @return boolean
  */
 function presscore_is_silence_enabled() {
-	return presscore_theme_is_activated() && The7_Admin_Dashboard_Settings::get( 'silence-purchase-notification' );
+	return presscore_theme_is_activated() && defined('THE7_SILENCE_BUNDLED_PLUGINS') && THE7_SILENCE_BUNDLED_PLUGINS;
 }
 
 /**
@@ -1256,6 +1270,168 @@ function the7_add_submenu_page_after( $parent_slug, $page_title, $menu_title, $c
 	return $hook;
 }
 
+function the7_fvm_is_active() {
+	return function_exists( "fvm_can_minify" ) || function_exists("fvm_can_minify_js");
+}
+
 function the7_elementor_is_active() {
 	return class_exists( 'Elementor\Plugin' );
+}
+
+/**
+ * @return bool
+ */
+function the7_elementor_pro_is_active() {
+	return defined( 'ELEMENTOR_PRO_VERSION' );
+}
+
+/**
+ * @sice 9.4.0
+ *
+ * @return bool
+ */
+function the7_is_elementor2() {
+	return defined( 'ELEMENTOR_VERSION' ) && version_compare( ELEMENTOR_VERSION, '3.0.0', '<' );
+}
+
+/**
+ * @since 9.4.0
+ *
+ * @return bool
+ */
+function the7_is_elementor3() {
+	return defined( 'ELEMENTOR_VERSION' ) && version_compare( ELEMENTOR_VERSION, '3.0.0', '>=' );
+}
+
+function the7_is_elementor3_4() {
+	return defined( 'ELEMENTOR_VERSION' ) && version_compare( ELEMENTOR_VERSION, '3.4.0', '>=' );
+}
+
+/**
+ * Return true if elementor kit custom styles are enabled, false otherwise.
+ *
+ * @return bool
+ */
+function the7_is_elementor_kit_custom_styles_enabled() {
+	if ( the7_is_elementor3() ) {
+		$kits_manager = Elementor\Plugin::$instance->kits_manager;
+
+		return $kits_manager && ( $kits_manager->is_custom_colors_enabled() || $kits_manager->is_custom_typography_enabled() );
+	}
+
+	return false;
+}
+
+/**
+ * Return true if Elementor plugin is active and buttons integration is enabled.
+ *
+ * @return bool
+ */
+function the7_is_elementor_buttons_integration_enabled() {
+	return the7_elementor_is_active() && The7_Admin_Dashboard_Settings::get( 'elementor-buttons-integration' );
+}
+
+/**
+ * Return true if  elementor theme style and Elementor plugin is active
+ *
+ * @return bool
+ */
+function the7_is_elementor_theme_style_enabled() {
+	return the7_elementor_is_active() && The7_Admin_Dashboard_Settings::get( 'elementor-theme-style' );
+}
+
+/**
+ * @param int $id Post ID.
+ *
+ * @return bool
+ */
+function the7_is_post_built_with_elementor( $id ) {
+	if ( ! the7_elementor_is_active() ) {
+		return false;
+	}
+
+	$document = \Elementor\Plugin::$instance->documents->get( $id );
+
+	return $document && $document->is_built_with_elementor();
+}
+
+/**
+ * Flush WC attributes cache.
+ *
+ * @sice 9.6.1
+ */
+function the7_wc_flush_attributes_cache() {
+	delete_transient( 'wc_attribute_taxonomies' );
+	if ( class_exists( '\WC_Cache_Helper' ) ) {
+		\WC_Cache_Helper::invalidate_cache_group( 'woocommerce-attributes' );
+	}
+}
+
+/**
+ * Flush Elementor CSS cache.
+ *
+ * @since 9.12.0
+ */
+function the7_elementor_flush_css_cache() {
+	if ( class_exists( 'Elementor\Plugin' ) ) {
+		\Elementor\Plugin::$instance->files_manager->clear_cache();
+	}
+}
+
+/**
+ * Find the first matched element recursive.
+ *
+ * @param  array    $elements  Elements.
+ * @param  callable $callable  Filter callback. Return true if element passed.
+ *
+ * @return false|array
+ */
+function the7_elementor_find_the_first_element_recursive( $elements, $callable ) {
+	if ( ! is_callable( $callable ) ) {
+		return false;
+	}
+
+	foreach ( $elements as $element ) {
+		if ( $callable( $element ) ) {
+			return $element;
+		}
+
+		if ( ! empty( $element['elements'] ) && is_array( $element['elements'] ) ) {
+			$element = the7_elementor_find_the_first_element_recursive( $element['elements'], $callable );
+
+			if ( $element ) {
+				return $element;
+			}
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Match array value.
+ *
+ * @since 3.0.0
+ *
+ * @param int|string $key     Key.
+ * @param array      $array   Array key => value.
+ * @param mixed      $default Default value.
+ *
+ * @return mixed Returns null if $key not in $array
+ */
+function the7_array_match( $key, $array, $default = null ) {
+	return isset( $array[ $key ] ) ? $array[ $key ] : $default;
+}
+
+/**
+ * Add data to allowed protocols.
+ *
+ * @param string[] $protocols Array of allowed protocols e.g. 'http', 'ftp', 'tel', and more.
+ *
+ * @return string[]
+ */
+function the7_add_data_to_kses_allowed_protocols( $protocols ) {
+	$protocols[] = 'data';
+
+	return $protocols;
 }

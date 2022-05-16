@@ -22,13 +22,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</span>
 		</div><!-- end col-third -->
 		<div class="sui-box-settings-col-2">
-			<input type="hidden" name="accessible_colors" value="0" />
-			<label class="sui-toggle">
-				<input type="checkbox" name="accessible_colors" value="1"
-					   id="color_accessible" <?php checked( 1, $settings['accessible_colors'] ); ?> />
-				<span class="sui-toggle-slider"></span>
+			<label for="color_accessible" class="sui-toggle">
+				<input type="hidden" name="accessible_colors" value="0" />
+				<input
+					type="checkbox"
+					id="color_accessible"
+					name="accessible_colors"
+					aria-labelledby="color_accessible-label"
+					<?php checked( 1, $settings['accessible_colors'] ); ?>
+				/>
+				<span class="sui-toggle-slider" aria-hidden="true"></span>
+				<span id="color_accessible-label" class="sui-toggle-label">
+					<?php esc_html_e( 'Enable high contrast mode', 'wphb' ); ?>
+				</span>
 			</label>
-			<label for="color_accessible"><?php esc_html_e( 'Enable high contrast mode', 'wphb' ); ?></label>
 		</div>
 	</div>
 </form>

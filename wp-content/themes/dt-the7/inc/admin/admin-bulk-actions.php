@@ -106,6 +106,19 @@ function presscore_add_bulk_edit_fields( $col, $type ) {
 
 	<?php endif; ?>
 
+		<fieldset class="inline-edit-col-left dt-inline-edit-single-post">
+			<legend class="inline-edit-legend"><?php _ex( 'Demo content', 'backend bulk edit', 'the7mk2' ); ?></legend>
+			<div class="inline-edit-col">
+				<label class="alignleft">
+					<span class="title"><?php _ex( 'Remove with demo', 'backend bulk edit', 'the7mk2' ); ?></span>
+					<select name="_dt_bulk_edit_exclude_from_demo_import_history">
+						<?php echo $no_change_option; ?>
+						<option value="1"><?php _ex( 'No', 'backend bulk edit', 'the7mk2' ); ?></option>
+					</select>
+				</label>
+			</div>
+		</fieldset>
+
 	</div>
 <?php
 }
@@ -169,6 +182,11 @@ function presscore_bulk_edit_save_changes( $post_ID, $post ) {
 			    update_post_meta( $post_ID, $post_type_meta[ $post->post_type ], absint( $_REQUEST['_dt_bulk_edit_show_thumbnail'] ) );
 		    }
 		}
+
+		// Demo content.
+		if ( isset( $_REQUEST['_dt_bulk_edit_exclude_from_demo_import_history'] ) && '1' === $_REQUEST['_dt_bulk_edit_exclude_from_demo_import_history'] ) {
+			delete_post_meta( $post_ID, '_the7_imported_item' );
+		}
 	}
 }
 add_action( 'save_post', 'presscore_bulk_edit_save_changes', 10, 2 );
@@ -201,8 +219,6 @@ add_action('admin_footer-upload.php', 'presscore_add_media_bulk_actions');
 
 /**
  * Add handler to close and resolve bulk actions.
- *
- * see http://www.foxrunsoftware.net/articles/wordpress/add-custom-bulk-action/
  */
 function presscore_media_bulk_actions_handler() {
 	global $typenow;

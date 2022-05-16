@@ -1,6 +1,10 @@
 <?php
 namespace Elementor;
 
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class HTMega_Elementor_Widget_Lightbox extends Widget_Base {
@@ -189,10 +193,6 @@ class HTMega_Elementor_Widget_Lightbox extends Widget_Base {
                 [
                     'label' => __( 'Overlay', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => 'rgba(0, 0, 0, 0.5)',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-lightbox .htmega-lightbox-action::before' => 'background-color: {{VALUE}};',
@@ -261,10 +261,6 @@ class HTMega_Elementor_Widget_Lightbox extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#ffffff',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-lightbox .image-popup-vertical-fit' => 'color: {{VALUE}};',

@@ -1,9 +1,9 @@
 ﻿=== HT Mega - Absolute Addons for Elementor Page Builder ===
-Contributors: hasthemes, htplugins, devitemsllc
+Contributors: hasthemes, htplugins, devitemsllc, tarekht
 Tags: Elementor, Elementor Addons, Elementor Widgets, elementor page builder, Elementor Blocks
 Requires at least: 4.7
-Tested up to: 5.4.1
-Stable tag: 1.4.1
+Tested up to: 5.7.1
+Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ The HTMega is a elementor addons package for Elementor page builder plugin for W
 == Description ==
 HTMega is a absolute addons for elementor includes 80+ elements & 360 Blocks with unlimited variations. HT Mega brings limitless possibilities. Embellish your site with the elements of HT Mega.
 
-[Check the Plugin Demo](https://demo.hasthemes.com/ht-mega/index.html)
+[Video Tutorial Playlist](https://www.youtube.com/watch?v=d7jAiAYusUg&list=PLk25BQFrj7wEEGUHn9x2zwOql990bZAo_) | [Plugin Live Demo](https://demo.hasthemes.com/ht-mega/index.html) | [Documentation](https://htmega.hasthemes.com/doc/)
 
 = Advanced Features: =
 = Header/Footer Builder =
@@ -162,25 +162,6 @@ Is there any feature that you want to get in this plugins?
 Needs assistance to use this plugins? 
 Feel free to [Contact us](https://htplugins.com/contact-us/)
 
-== What's New ==
-October 29 - 2019:
-    1. Theme Builder Added.
-	2. Sales Notification Options Added.
-	3. Mega Menu Builder Added.
-	
-October 23 - 2019:
-    1. Special Day offter Banner Addon Added.
-
-September 19 - 2019:
-	1. Popovers close when user click of a different element.
-	
-August 26 - 2019:
-	1. Scroll Navigation Height options Added.
-	
-August 05 - 2019:
-    1. Includes Template Library.
-
-	
 == Check out our other projects ==
 * [WooLentor](https://wordpress.org/plugins/woolentor-addons/) - WooCommerce page builder for Elementor Addon. Create unlimited product grid, layouts, custom product and shop pages layouts.
 *[WC Builder](https://wordpress.org/plugins/wc-builder/) – WooCommerce Page Builder for WPBakery. Create custom product and Shop pages easily.
@@ -189,6 +170,70 @@ August 05 - 2019:
 Visit [HasThemes](https://hasthemes.com/) for more details about HTML, Shopify and WordPress products and services.
 
 == Changelog ==
+
+= Version: 1.5.9 - Date: 2021-05-26 =
+* Solved Header already sent issue.
+* Solved Instagram video showing issue.
+* Solved Instagram column issue.
+* Solved console error issue.
+* Solved template data import issue.
+* Solved Thumbnails slider pagination style issue.
+* Updated template library API
+
+= Version: 1.5.8 - Date: 2021-04-25 =
+* Compatible with Elementor latest version
+
+= Version: 1.5.7 - Date: 2021-03-27 =
+* HTML tags validation issue solved.
+
+= Version: 1.5.5- Date: 2021-03-11 =
+* Instagram issue solved.
+
+= Version: 1.5.4 - Date: 2021-03-02 =
+* GoogleMap Console error issue solved.
+
+= Version: 1.5.3 - Date: 2021-03-1 =
+* Reduce API call.
+* Add admin page saide banner
+* Minor bug fixed.
+
+= Version: 1.5.2 - Date: 2021-02-10 =
+* Repeater field console error issue solved.
+* Minor bug fixed.
+
+= Version: 1.5.1 - Date: 2020-12-28 =
+* Theme builder admin bar issue solved.
+* Instagram cache data clear option.
+
+= Version: 1.4.9 - Date: 2020-11-08 =
+* Instagram network banned issue solved.
+
+= Version: 1.4.8 - Date: 2020-11-30 =
+* Swiper JS map load issue solved.
+
+= Version: 1.4.7 - Date: 2020-08-13 =
+* Capability With latest WordPress Version
+
+= Version: 1.4.6 - Date: 2020-08-11 =
+* Accodion Line height Issue Solved
+
+= Version: 1.4.5 - Date: 2020-07-29 =
+* Instagram Addon Issue Solved
+* Thumbnail Opacity add for style-3 in HT Mega post carousal widget.
+* Add default background in HT Mega button widget.
+* Border radius issue and read-mode border issue fixed in HT Mega button widget.
+* Add dependency for style-2 and style-3 in HT Mega countdown widget.
+* Title Background color issue fixed in HT Mega post grid tab.
+* Add image opacity in HT Mega image marker.
+* Progress bar animation issue and value size issue fixed in HT Mega progress bar.
+* Footer-Background color issue fixed for style-5 in HT Mega pricing table.
+
+= Version: 1.4.3 - Date: 2020-06-17 =
+* Post Duplicator Option Added.
+
+= Version: 1.4.2 - Date: 2020-06-02 =
+* Scroll Navigation addon Scoring issue has been solved.
+* Admin popup console error issue has been solved.
 
 = Version: 1.4.1 - Date: 2020-05-11 =
 * Working process Icon style Option added.

@@ -4,26 +4,36 @@
  *
  * @package Hummingbird
  *
- * @var object $uptime_stats       Last stats report.
- * @var string $data_range_text    Human readable data range text.
+ * @var object $uptime_stats           Last stats report.
+ * @var string $data_range_text        Human readable data range text.
+ * @var bool   $notifications_enabled  Status of uptime notifications.
+ * @var string $notifications_next     Next scheduled notification label.
+ * @var bool   $reports_enabled        Status of uptime reports.
+ * @var string $reports_next           Next scheduled report label.
+ * @var string $notifications_url      Notifications module link.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+$branded_image = apply_filters( 'wpmudev_branding_hero_image', '' );
 ?>
-<div class="sui-summary-image-space">
-</div>
+
+<?php if ( $branded_image ) : ?>
+	<div class="sui-summary-image-space" aria-hidden="true" style="background-image: url('<?php echo esc_url( $branded_image ); ?>')"></div>
+<?php else : ?>
+	<div class="sui-summary-image-space" aria-hidden="true"></div>
+<?php endif; ?>
 <div class="sui-summary-segment">
 	<div class="sui-summary-details">
 		<span class="sui-summary-large">
 			<?php
 			if ( $uptime_stats && ! is_wp_error( $uptime_stats ) ) :
-				if ( 0 === round( $uptime_stats->availability, 1 ) || null === $uptime_stats->response_time ) :
+				if ( 0 === round( (int) $uptime_stats->availability, 1 ) || null === $uptime_stats->response_time ) :
 					echo esc_html( '100%' );
 				else :
-					echo esc_html( round( $uptime_stats->availability, 1 ) ) . '%';
+					echo esc_html( round( (int) $uptime_stats->availability, 1 ) ) . '%';
 				endif;
 			endif;
 			?>
@@ -44,8 +54,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<li>
 			<span class="sui-list-label"><?php esc_html_e( 'Outages', 'wphb' ); ?></span>
 			<span class="sui-list-detail">
-				<?php if ( is_object( $uptime_stats ) && intval( $uptime_stats->outages ) > 0 ) : ?>
-					<?php echo intval( $uptime_stats->outages ); ?>
+				<?php if ( is_object( $uptime_stats ) && (int) $uptime_stats->outages > 0 ) : ?>
+					<?php echo (int) $uptime_stats->outages; ?>
 				<?php else : ?>
 					<?php esc_html_e( 'None', 'wphb' ); ?>
 				<?php endif; ?>
@@ -76,6 +86,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 					echo esc_html( $site_date );
 				}
 				?>
+			</span>
+		</li>
+		<li>
+			<span class="sui-list-label">
+				<?php esc_html_e( 'Scheduled reports', 'wphb' ); ?>
+			</span>
+			<span class="sui-list-detail">
+				<?php if ( $reports_enabled ) : ?>
+					<?php echo esc_html( $reports_next ); ?>
+					<a href="<?php echo esc_url( $notifications_url ); ?>#uptime-reports">
+						<span class="sui-icon-pencil" aria-hidden="true"></span>
+					</a>
+				<?php else : ?>
+					<a href="<?php echo esc_url( $notifications_url ); ?>#uptime-reports">
+						<span class="sui-tag"><?php esc_html_e( 'Disabled', 'wphb' ); ?></span>
+					</a>
+				<?php endif; ?>
+			</span>
+		</li>
+		<li>
+			<span class="sui-list-label"><?php esc_html_e( 'Scheduled notifications', 'wphb' ); ?></span>
+			<span class="sui-list-detail">
+				<?php if ( $notifications_enabled ) : ?>
+					<?php echo esc_html( $notifications_next ); ?>
+					<a href="<?php echo esc_url( $notifications_url ); ?>#uptime-notifications">
+						<span class="sui-icon-pencil" aria-hidden="true"></span>
+					</a>
+				<?php else : ?>
+					<a href="<?php echo esc_url( $notifications_url ); ?>#uptime-notifications">
+						<span class="sui-tag"><?php esc_html_e( 'Disabled', 'wphb' ); ?></span>
+					</a>
+				<?php endif; ?>
 			</span>
 		</li>
 	</ul>

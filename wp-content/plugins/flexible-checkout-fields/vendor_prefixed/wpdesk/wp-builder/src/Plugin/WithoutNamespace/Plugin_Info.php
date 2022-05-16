@@ -5,10 +5,10 @@ namespace FcfVendor;
 if (!\interface_exists('FcfVendor\\WPDesk_Translatable')) {
     require_once __DIR__ . '/Translatable.php';
 }
-if (!\class_exists('FcfVendor\\WPDesk_Buildable')) {
+if (!\interface_exists('FcfVendor\\WPDesk_Buildable')) {
     require_once __DIR__ . '/Buildable.php';
 }
-if (!\class_exists('FcfVendor\\WPDesk_Has_Plugin_Info')) {
+if (!\interface_exists('FcfVendor\\WPDesk_Has_Plugin_Info')) {
     require_once __DIR__ . '/Has_Plugin_Info.php';
 }
 /**

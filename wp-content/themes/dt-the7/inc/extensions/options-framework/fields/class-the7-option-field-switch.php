@@ -13,15 +13,11 @@ class The7_Option_Field_Switch extends The7_Option_Field_Abstract {
 			'1' => 'On',
 			'0' => 'Off',
 		),
+		'show_hide'         => [],
 	);
 
 	public function html() {
-		$field_config = array();
-		if ( isset( $this->option['options'] ) ) {
-			$field_config['options'] = $this->option['options'];
-		}
-
-		return  The7_Option_Field_Switch::static_html( $this->option_name, $this->option['id'], $this->val, $field_config );
+		return  The7_Option_Field_Switch::static_html( $this->option_name, $this->option['id'], $this->val, $this->option );
 	}
 
 	/**
@@ -44,8 +40,29 @@ class The7_Option_Field_Switch extends The7_Option_Field_Abstract {
 
 		$values_attr = json_encode( array( $on, $off ) );
 
+		$wrapper_class = '';
+		$wrapper_data = '';
+
+		if ( ! empty( $config['show_hide'] ) ) {
+			$wrapper_class .= ' of-js-hider';
+
+			$wrapper_data = [];
+			$show_hide_config = array_map(
+				function($el) {
+					return is_array( $el ) ? $el : [ $el ];
+				},
+				(array) $config['show_hide']
+			);
+			foreach ( $show_hide_config as $show_on => $classes ) {
+				$data_attr = ( $show_on === $on ? 'data-show-on-yes' : 'data-show-on-no' );
+				$wrapper_data[] = sprintf( '%s="%s"', $data_attr, implode( ',', $classes ) );
+			}
+
+			$wrapper_data = implode( ' ', $wrapper_data );
+		}
+
 		$output = '';
-		$output .= '<div class="the7-option-switch">';
+		$output .= '<div class="the7-option-switch' . $wrapper_class . '" ' . $wrapper_data . '>';
 		$output .= '<input type="checkbox" id="' . esc_attr( $id ) . '" name="' . esc_attr( $name ) . '" data-values="' . esc_attr( $values_attr ) . '" value="' . esc_attr( $value ) . '" class="the7-option-switch-checkbox ' . esc_attr( $config['value_input_class'] ) . '" ' . checked( $value, $on, false ) . '>';
 		$output .= '<label class="the7-option-switch-label" for="' . esc_attr( $id ) . '">';
 		$output .= '<div class="the7-option-switch-inner">';

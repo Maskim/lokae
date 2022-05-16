@@ -23,36 +23,6 @@ add_action( 'load-widgets.php', array( 'The7_Admin_WA_Manager', 'enqueue_assets'
 
 add_action( 'save_post', 'the7_update_post_css_on_save', 20 );
 
-/**
- * @param $post_id
- */
-function the7_update_post_css_on_save( $post_id ) {
-	if ( wp_is_post_revision( $post_id ) ) {
-		return;
-	}
-	
-	the7_update_post_css( $post_id );
-}
-
-/**
- * @param $post_id
- *
- * @throws Exception
- */
-function the7_update_post_css( $post_id ) {
-	$css = The7_Post_CSS_Generator::generate_css_for_post(
-		$post_id,
-		the7_get_new_shortcode_less_vars_manager(),
-		new The7_Less_Compiler()
-	);
-
-	if ( $css ) {
-		The7_Post_CSS_Generator::update_css_for_post( $post_id, $css );
-	} else {
-		The7_Post_CSS_Generator::delete_css_for_post( $post_id );
-	}
-}
-
 if ( ! function_exists( 'presscore_themeoptions_add_share_buttons' ) ) :
 
 	/**
@@ -120,6 +90,21 @@ function presscore_attachment_fields_to_edit( $fields, $post ) {
 				'html'       	=> "<input id='attachments-{$post->ID}-dt-img-hide-title' type='checkbox' name='attachments[{$post->ID}][dt-img-hide-title]' value='1' " . checked($hide_title, true, false) . "/>",
 				'show_in_edit' 	=> true
 		);
+
+		if ( get_post_meta( $post->ID, '_the7_imported_item', true ) ) {
+			$fields['the7_keep_the_attachment'] = array(
+				'label'         => _x( 'Keep this attachment', 'attachment field', 'the7mk2' ),
+				'helps'         => esc_html_x(
+					'This attachment is a part of the demo content and will be deleted with "Delete content" action. You can save this attachment by checking the box.',
+					'attachment field',
+					'the7mk2'
+				),
+				'input'         => 'html',
+				'html'          => "<input id='attachments-{$post->ID}-the7_keep_the_attachment' type='checkbox' name='attachments[{$post->ID}][the7_keep_the_attachment]' value='1' />",
+				'show_in_edit'  => false,
+				'show_in_modal' => true,
+			);
+		}
 	}
 
 	return $fields;
@@ -149,6 +134,11 @@ function presscore_save_attachment_fields( $attachment_id ) {
 	// hide title
 	$hide_title = (int) isset( $_REQUEST['attachments'][$attachment_id]['dt-img-hide-title'] );
 	update_post_meta( $attachment_id, 'dt-img-hide-title', $hide_title );
+
+	// Remove the7_imported_item flag.
+	if ( isset( $_REQUEST['attachments'][$attachment_id]['the7_keep_the_attachment'] ) ) {
+		delete_post_meta( $attachment_id, '_the7_imported_item' );
+	}
 }
 add_action( 'edit_attachment', 'presscore_save_attachment_fields' );
 
@@ -902,6 +892,70 @@ if ( ! function_exists( 'presscore_of_localized_vars_filter' ) ) :
 				)
 			),
 
+			'microwidgets-tab' => array(
+				array(
+					array(
+						'field' => 'header-layout',
+						'operator' => '!=',
+						'value' => 'disabled',
+					)
+				)
+			),
+            'topbar-tab' => array(
+				array(
+					array(
+						'field' => 'header-layout',
+						'operator' => '!=',
+						'value' => 'disabled',
+					)
+				)
+			),
+            'header-tab' => array(
+				array(
+					array(
+						'field' => 'header-layout',
+						'operator' => '!=',
+						'value' => 'disabled',
+					)
+				)
+			),
+            'menu-tab' => array(
+	            array(
+		            array(
+			            'field' => 'header-layout',
+			            'operator' => '!=',
+			            'value' => 'disabled',
+		            )
+	            )
+            ),
+            'submenu-tab' => array(
+	            array(
+		            array(
+			            'field' => 'header-layout',
+			            'operator' => '!=',
+			            'value' => 'disabled',
+		            )
+	            )
+            ),
+            'mobile-header-tab' => array(
+	            array(
+		            array(
+			            'field' => 'header-layout',
+			            'operator' => '!=',
+			            'value' => 'disabled',
+		            )
+	            )
+            ),
+            'mobile-menu-tab' => array(
+	            array(
+                    array(
+                        'field' => 'header-layout',
+                        'operator' => '!=',
+                        'value' => 'disabled',
+                    )
+                )
+			),
+
 			// Floating header
 			'floating-header-tab' => array(
 				array(
@@ -925,7 +979,13 @@ if ( ! function_exists( 'presscore_of_localized_vars_filter' ) ) :
 						'value' => 'split',
 					)
 				),
-				
+				array(
+					array(
+						'field' => 'header-layout',
+						'operator' => '!=',
+						'value' => 'disabled',
+					)
+				),
 			),
 			// Woocommerce
 			'isotope-block-settings' => array(
@@ -1256,4 +1316,27 @@ if ( ! function_exists( 'presscore_get_post_type_edit_link_template' ) ) {
 		return admin_url( str_replace( '99999', '%#%', sprintf( $post_type_object->_edit_link . $action, 99999 ) ) );
 	}
 
+}
+
+add_action( 'after_setup_theme', 'the7_admin_log_theme_activations' );
+
+function the7_admin_log_theme_activations() {
+	if ( ! defined( 'WP_CLI' ) && ! is_admin() ) {
+		return;
+	}
+
+	$activation_log            = (array) get_option( 'the7_theme_activation_log', [] );
+	$previous_version          = end( $activation_log );
+	$another_version_is_active = version_compare( $previous_version['version'], THE7_VERSION, '!=' );
+
+	if ( ! isset( $previous_version['version'] ) || $another_version_is_active ) {
+		$activation_log[] = [
+			'version'      => THE7_VERSION,
+			'activated_at' => time(),
+		];
+
+		$activation_log = array_slice( $activation_log, max( count( $activation_log ) - 7, 0 ) );
+
+		update_option( 'the7_theme_activation_log', $activation_log, false );
+	}
 }

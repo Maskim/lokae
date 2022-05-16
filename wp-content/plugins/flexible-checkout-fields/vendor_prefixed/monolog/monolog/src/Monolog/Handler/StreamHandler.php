@@ -98,7 +98,7 @@ class StreamHandler extends \FcfVendor\Monolog\Handler\AbstractProcessingHandler
             \restore_error_handler();
             if (!\is_resource($this->stream)) {
                 $this->stream = null;
-                throw new \UnexpectedValueException(\sprintf('The stream or file "%s" could not be opened: ' . $this->errorMessage, $this->url));
+                throw new \UnexpectedValueException(\sprintf('The stream or file "%s" could not be opened in append mode: ' . $this->errorMessage, $this->url));
             }
         }
         if ($this->useLocking) {
@@ -137,7 +137,7 @@ class StreamHandler extends \FcfVendor\Monolog\Handler\AbstractProcessingHandler
         if ('file://' === \substr($stream, 0, 7)) {
             return \dirname(\substr($stream, 7));
         }
-        return;
+        return null;
     }
     private function createDir()
     {

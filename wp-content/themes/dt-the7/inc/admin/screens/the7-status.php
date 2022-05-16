@@ -313,18 +313,21 @@ If the issue persists, contact your hosting provider and make sure that %s is no
 		                if ( $the7_server_code === 400 ) {
 			                echo '<span class="yes">&#10004;</span>';
 		                } else {
-			                printf( __( '<span class="error">No</span><br> Seems that your server is blocking connections to your own site. It may break theme db update process and lead to style corruption. Please, make sure that remote requests to %s are not blocked.', 'the7mk2' ), $ajax_url );
+							echo '<span class="error">&#10006;</span><br> ';
+							echo esc_html(
+								sprintf(
+									__(
+										'Seems that your server is blocking connections to your own site (responded with %1$s code). It may break theme db update process and lead to style corruption. Please, make sure that remote requests to %2$s are not blocked.',
+										'the7mk2'
+									),
+									$the7_server_code,
+									$ajax_url
+								)
+							);
 		                }
 		                ?>
                     </td>
                 </tr>
-
-				<?php if ( class_exists( 'The7_Dev_Beta_Tester' ) && The7_Dev_Beta_Tester::get_status() ): ?>
-                    <tr>
-                        <td data-export-label="The7 BETA tester"><?php _e( 'The7 BETA tester:' ) ?></td>
-                        <td><span class="yes">&#10004;</span></td>
-                    </tr>
-				<?php endif ?>
 
                 </tbody>
             </table>

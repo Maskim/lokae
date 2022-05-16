@@ -323,7 +323,7 @@ class Module extends Module_Base {
 
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'maybe_init_cart' ] );
 		add_action( 'elementor/dynamic_tags/register_tags', [ $this, 'register_tags' ] );
-		//add_action( 'elementor/documents/register', [ $this, 'register_documents' ] );
+		add_action( 'elementor/documents/register', [ $this, 'register_documents' ] );
 		add_action( 'elementor/theme/register_conditions', [ $this, 'register_conditions' ] );
 
 		add_filter( 'elementor/theme/need_override_location', [ $this, 'theme_template_include' ], 10, 2 );

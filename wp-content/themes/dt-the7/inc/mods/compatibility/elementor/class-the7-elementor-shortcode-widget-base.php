@@ -1,9 +1,8 @@
 <?php
 
-namespace The7\Adapters\Elementor;
+namespace The7\Mods\Compatibility\Elementor;
 
-use DT_Shortcode_With_Inline_Css;
-use The7\Adapters\Elementor\ShortcodeAdapters\The7_Shortcode_Adapter_Interface;
+use The7\Mods\Compatibility\Elementor\Shortcode_Adapters\The7_Shortcode_Adapter_Interface;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -14,14 +13,6 @@ abstract class The7_Elementor_Shortcode_Adaptor_Widget_Base extends The7_Element
 
 	protected $shortcode_adapter;
 
-	public function __construct( $data = [], $args = null, DT_Shortcode_With_Inline_Css $shortcode_adapter ) {
-		parent::__construct( $data, $args );
-		if ( ! $shortcode_adapter instanceof The7_Shortcode_Adapter_Interface ) {
-			throw new \Exception( "The class should implement The7ShortcodeAdaptorInterface" );
-		}
-		$this->shortcode_adapter = $shortcode_adapter;
-	}
-
 	public function generate_inline_css() {
 		$this->shortcode_adapter->set_unique_class( $this->get_unique_class() );
 		$this->shortcode_adapter->adapter_init_shortcode( $this->get_adapted_settings() );
@@ -30,6 +21,10 @@ abstract class The7_Elementor_Shortcode_Adaptor_Widget_Base extends The7_Element
 	}
 
  	abstract protected function get_adapted_settings();
+
+	protected function setup_shortcode_adapter( The7_Shortcode_Adapter_Interface $shortcode_adapter ) {
+		$this->shortcode_adapter = $shortcode_adapter;
+	}
 
 	/**
 	 * Return shortcode less file absolute path to output inline.

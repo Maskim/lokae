@@ -1,21 +1,20 @@
-//Post content
-
 .post-entry-content {
-	#page .@{unique-shortcode-class-name}.content-bg-on.gradient-overlap-layout-list & {
-		background: linear-gradient(to bottom,  @post-content-bg,  @post-content-bg) no-repeat 0px 150px;
-		&:before {
-			.custom-background-gradient (@startColor: @post-content-bg, @opacity: 100%);
-		
-		}
+  #page .@{unique-shortcode-class-name}.content-bg-on.gradient-overlap-layout-list & {
+    background: linear-gradient(to bottom, var(--content-bg-color), var(--content-bg-color)) no-repeat 0px 125px;
+    overflow: hidden;
 
-	}
-	#page .@{unique-shortcode-class-name}.content-bg-on.gradient-overlap-layout-list .no-img & {
-		background: @post-content-bg;
-		padding: @post-content-padding-right @post-content-padding-right @post-content-padding-bottom @post-content-padding-left;
-		&:before {
-			display: none;
-		
-		}
+    &:before {
+      box-shadow: 0 0 40px 80px var(--content-bg-color);
+      top: 125px;
+      background: none;
+    }
+  }
 
-	}
+  #page .@{unique-shortcode-class-name}.content-bg-on.gradient-overlap-layout-list .no-img & {
+    background: var(--content-bg-color);
+
+    &:before {
+      display: none;
+    }
+  }
 }

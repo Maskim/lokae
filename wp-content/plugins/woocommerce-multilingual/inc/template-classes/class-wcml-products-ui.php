@@ -175,12 +175,7 @@ class WCML_Products_UI extends WCML_Templates_Factory {
 
 			$products[ $key ]->view_link = get_post_permalink( $product->ID );
 
-			if ( isset( $current_translator ) ) {
-				$prod_lang = $original_product_lang;
-			} else {
-				$prod_lang = $slang;
-			}
-
+			$prod_lang            = $slang;
 			$trid                 = $this->sitepress->get_element_trid( $product->ID, 'post_' . $product->post_type );
 			$product_translations = $this->sitepress->get_element_translations( $trid, 'post_' . $product->post_type, true, true );
 
@@ -222,8 +217,7 @@ class WCML_Products_UI extends WCML_Templates_Factory {
 	 */
 	private function is_show_type_column() {
 
-		return $this->sitepress->get_wp_api()->version_compare( $this->sitepress->get_wp_api()->constant( 'WC_VERSION' ), '3.4.0', '<' ) ||
-			   apply_filters( 'wcml_show_type_column', false );
+		return apply_filters( 'wcml_show_type_column', false );
 	}
 
 	public function get_product_info_from_self_edit_mode() {

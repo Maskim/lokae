@@ -31,12 +31,16 @@ class Editor extends App {
 		add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'enqueue_editor_styles' ] );
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
 
+		if (!defined('IS_PRO_ELEMENTS'))
 		add_filter( 'elementor/editor/localize_settings', [ $this, 'localize_settings' ] );
 	}
 
 	public function get_init_settings() {
 		$settings = [
-			'i18n' => [],
+			'i18n' => [
+				// 'edit_element' is here for Backwards Compatibility for Elementor Pro versions <3.1.0
+				'edit_element' => __( 'Edit %s', 'elementor-pro' ),
+			],
 			'isActive' => true,
 			'urls' => [
 				'modules' => ELEMENTOR_PRO_MODULES_URL,

@@ -1,6 +1,6 @@
 <?php
 /**
- * Provides connection to WPMU API to perform queries agains performance endpoint.
+ * Provides connection to WPMU API to perform queries against performance endpoint.
  *
  * @package Hummingbird
  */
@@ -68,7 +68,7 @@ class Performance extends Service {
 	}
 
 	/**
-	 * Ping to Performance Module so it starts to gather data.
+	 * Ping to performance module, so it starts to gather data.
 	 *
 	 * @since 1.8.1 Changed timeout from 0.1 to 2 seconds.
 	 *
@@ -155,35 +155,6 @@ class Performance extends Service {
 			array(
 				'domain' => $this->request->get_this_site(),
 				'tests'  => wp_json_encode( $params ),
-			)
-		);
-	}
-
-	/**
-	 * Set ignore report on server.
-	 *
-	 * @return array|mixed|object|WP_Error
-	 */
-	public function ignore_report() {
-		return $this->request->post(
-			'site/reports/',
-			array(
-				'domain' => $this->request->get_this_site(),
-				'ignore' => 1,
-			)
-		);
-	}
-
-	/**
-	 * Is report ignored.
-	 *
-	 * @return bool
-	 */
-	public function is_report_ignored() {
-		return $this->request->get(
-			'site/reports/',
-			array(
-				'domain' => $this->request->get_this_site(),
 			)
 		);
 	}

@@ -33,6 +33,8 @@ class WCML_Upgrade {
 		'4.7.3',
 		'4.7.6',
 		'4.7.8',
+		'4.10.0',
+        '4.11.0'
 	];
 
 	public function __construct() {
@@ -226,7 +228,7 @@ class WCML_Upgrade {
 				$ccr = [];
 
 				foreach ( $translations as $translation ) {
-					if ( $translation->element_id != $row->ID ) {
+					if ( isset( $language_currencies ) && $translation->element_id != $row->ID ) {
 						$meta                                = get_post_meta( $translation->element_id );
 						$translated_prices['_price']         = $meta['_price'][0];
 						$translated_prices['_regular_price'] = $meta['_regular_price'][0];
@@ -275,7 +277,7 @@ class WCML_Upgrade {
 
 		$currencies = $wpdb->get_results( 'SELECT * FROM ' . $wpdb->prefix . 'icl_currencies ORDER BY `id` ASC', OBJECT );
 		if ( $currencies ) {
-			foreach ( $this->currencies as $currency ) {
+			foreach ( $currencies as $currency ) {
 				$woocommerce_wpml->settings['currency_options'][ $currency->code ]['rate']      = $currency->value;
 				$woocommerce_wpml->settings['currency_options'][ $currency->code ]['updated']   = $currency->changed;
 				$woocommerce_wpml->settings['currency_options'][ $currency->code ]['position']  = 'left';
@@ -826,5 +828,17 @@ class WCML_Upgrade {
 				icl_register_string( $domain, $name, $emailSettings['additional_content'], false, '' );
 			}
 		}
+	}
+
+	private function upgrade_4_10_0() {
+		$wcml_settings = get_option( '_wcml_settings' );
+		if ( WCML_MULTI_CURRENCIES_INDEPENDENT === $wcml_settings['enable_multi_currency'] ) {
+			$wcml_settings['currency_mode'] = 'by_language';
+			update_option( '_wcml_settings', $wcml_settings );
+		}
+	}
+
+	private function upgrade_4_11_0() {
+	    WCML_Install::set_language_to_existing_orders();
 	}
 }

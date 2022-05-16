@@ -9,8 +9,8 @@ import assign from 'lodash/assign';
 /**
  * Fetcher.
  *
- * @var {string} wphb.nonces.HBFetchNonce
- * @constructor
+ * @member {string} wphb.nonces.HBFetchNonce
+ * @class
  */
 function Fetcher() {
 	const fetchUrl = ajaxurl;
@@ -20,175 +20,134 @@ function Fetcher() {
 
 	/**
 	 * Request ajax with a promise.
+	 * Use FormData Object as data if you need to upload file
 	 *
-	 * @param {string} action
-	 * @param {Object} data
-	 * @param {string} method
+	 * @param {string}          action
+	 * @param {Object|FormData} data
+	 * @param {string}          method
 	 * @return {Promise<any>} Request results.
 	 */
 	function request( action, data = {}, method = 'GET' ) {
-		data.nonce = fetchNonce;
-		data.action = action;
-		const args = { data, method };
-		args.url = fetchUrl;
+		const args = {
+			url: fetchUrl,
+			method,
+			cache: false
+		};
+
+		if ( data instanceof FormData ) {
+			data.append( 'nonce', fetchNonce );
+			data.append( 'action', action );
+			args.contentType = false;
+			args.processData = false;
+		} else {
+			data.nonce 	= fetchNonce;
+			data.action = action;
+		}
+		args.data = data;
 		const Promise = require( 'es6-promise' ).Promise;
 		return new Promise( ( resolve, reject ) => {
 			jQuery.ajax( args ).done( resolve ).fail( reject );
-		} )
-			.then( ( response ) => checkStatus( response ) );
+		} ).then( ( response ) => checkStatus( response ) );
 	}
 
 	const methods = {
-		/**
-		 * Notices actions.
-		 */
-		notice: {
-			/**
-			 * Dismiss notice
-			 * @param {string} id
-			 * @return {Promise<any>} Response
-			 */
-			dismiss: ( id ) => {
-				const action = actionPrefix + 'notice_dismiss';
-				return request( action, { id }, 'POST' );
-			},
-
-			/**
-			 * Dismiss CloudFlare dash notice
-			 * @return {Promise<any>} Response
-			 */
-			dismissCloudflareDash: () => {
-				const action = actionPrefix + 'cf_notice_dismiss';
-				return request( action, {}, 'POST' );
-			},
-		},
-
 		/**
 		 * Caching module actions.
 		 */
 		caching: {
 			/**
-			 * Activate browser caching.
-			 * @since 1.9.0
-			 * @return {Promise<any>} Response
-			 */
-			activate: () => {
-				const action = actionPrefix + 'caching_activate';
-				return request( action, {}, 'POST' )
-					.then( ( response ) => {
-						return response;
-					} );
-			},
-
-			/**
 			 * Unified save settings method.
+			 *
 			 * @since 1.9.0
 			 * @param {string} module
-			 * @param {string} data  Serialized form data.
-			 * @return {Promise<any>} Response
+			 * @param {string} data   Serialized form data.
 			 */
 			saveSettings: ( module, data ) => {
-				const action = actionPrefix + module + '_save_settings';
-				return request( action, { data }, 'POST' )
-					.then( ( response ) => {
-						return response;
-					} );
+				return request(
+					actionPrefix + module + '_save_settings',
+					{ data },
+					'POST'
+				).then( ( response ) => {
+					return response;
+				} );
 			},
 
 			/**
 			 * Clear cache for selected module.
+			 *
 			 * @since 1.9.0
 			 * @param {string} module
-			 * @return {Promise<any>} Response
 			 */
 			clearCache: ( module ) => {
-				const action = actionPrefix + 'clear_module_cache';
-				return request( action, { module }, 'POST' )
-					.then( ( response ) => {
-						return response;
-					} );
-			},
-
-			/**
-			 * Set expiration for browser caching.
-			 * @param {Object} expiry_times Type expiry times.
-			 * @return {Promise<any>} Response
-			 */
-			setExpiration: ( expiry_times ) => {
-				const action = actionPrefix + 'caching_set_expiration';
-				return request( action, { expiry_times }, 'POST' )
-					.then( ( response ) => {
-						return response;
-					} );
-			},
-
-			/**
-			 * Set server type.
-			 * @param {string} value Server type.
-			 * @return {Promise<any>} Response
-			 */
-			setServer: ( value ) => {
-				const action = actionPrefix + 'caching_set_server_type';
-				return request( action, { value }, 'POST' );
-			},
-
-			/**
-			 * Reload snippet.
-			 * @param {string} type Server type.
-			 * @param {Object} expiry_times Type expiry times.
-			 * @return {Promise<any>} Response
-			 */
-			reloadSnippets: ( type, expiry_times ) => {
-				const action = actionPrefix + 'caching_reload_snippet';
-				return request( action, { type, expiry_times }, 'POST' )
-					.then( ( response ) => {
-						return response;
-					} );
-			},
-
-			/**
-			 * Update htaccess file.
-			 * @return {Promise<any>} Response
-			 */
-			updateHtaccess: () => {
-				const action = actionPrefix + 'caching_update_htaccess';
-				return request( action, {}, 'POST' )
-					.then( ( response ) => {
-						return response;
-					} );
-			},
-
-			/**
-			 * Re-check expiry in meta box header button action.
-			 * @return {Promise<any>} Response
-			 */
-			recheckExpiry: () => {
-				const action = actionPrefix + 'caching_recheck_expiry';
-				return request( action, {}, 'POST' )
-					.then( ( response ) => {
-						return response;
-					} );
+				return request(
+					actionPrefix + 'clear_module_cache',
+					{ module },
+					'POST'
+				).then( ( response ) => {
+					return response;
+				} );
 			},
 
 			/**
 			 * Clear cache for post.
+			 *
 			 * @param {number} postId
-			 * @return {Promise<any>} Response
 			 */
 			clearCacheForPost: ( postId ) => {
-				const action = actionPrefix + 'gutenberg_clear_post_cache';
-				return request( action, { postId }, 'POST' );
+				return request(
+					actionPrefix + 'gutenberg_clear_post_cache',
+					{ postId },
+					'POST'
+				);
 			},
 
 			/**
-			 * Cancel cache preload.
+			 * Save Redis settings.
 			 *
-			 * @since 2.1.0
-			 * @return {Promise<any>} Response
+			 * @since 2.5.0
+			 *
+			 * @param {string} host
+			 * @param {number} port
+			 * @param {string} password
+			 * @param {number} db
 			 */
-			cancelPreload() {
-				const action = actionPrefix + 'preload_cancel';
-				return request( action, {}, 'POST' );
+			redisSaveSettings( host, port, password, db ) {
+				return request(
+					actionPrefix + 'redis_save_settings',
+					{ host, port, password, db },
+					'POST'
+				);
+			},
+
+			/**
+			 * Toggle Redis object cache setting.
+			 *
+			 * @since 2.5.0
+			 *
+			 * @param {boolean} value
+			 */
+			redisObjectCache( value ) {
+				return request(
+					actionPrefix + 'redis_toggle_object_cache',
+					{ value },
+					'POST'
+				);
+			},
+
+			/**
+			 * Clear out page cache for a batch of subsites in a network.
+			 *
+			 * @since 2.7.0
+			 *
+			 * @param {number} sites
+			 * @param {number} offset
+			 */
+			clearCacheBatch( sites, offset ) {
+				return request(
+					actionPrefix + 'clear_network_cache',
+					{ sites, offset },
+					'POST'
+				);
 			},
 		},
 
@@ -198,59 +157,22 @@ function Fetcher() {
 		cloudflare: {
 			/**
 			 * Connect to Cloudflare.
-			 * @param {string} step
-			 * @param {string} formData
-			 * @param {Array} cfData
-			 * @return {Promise<any>} Response
+			 *
+			 * @since 3.0.0
+			 *
+			 * @param {string} email
+			 * @param {string} key
+			 * @param {string} token
+			 * @param {string} zone
 			 */
-			connect: ( step, formData, cfData ) => {
-				const action = actionPrefix + 'cloudflare_connect';
-				return request( action, { step, formData, cfData }, 'POST' )
-					.then( ( response ) => {
-						return response;
-					} );
-			},
-
-			/**
-			 * Set expiry for Cloudflare cache.
-			 * @param {Object} value Expiry value.
-			 * @return {Promise<any>} Response
-			 */
-			setExpiration: ( value ) => {
-				const action = actionPrefix + 'cloudflare_set_expiry';
-				return request( action, { value }, 'POST' );
-			},
-
-			/**
-			 * Purge Cloudflare cache.
-			 * @return {Promise<any>} Response
-			 */
-			purgeCache: () => {
-				const action = actionPrefix + 'cloudflare_purge_cache';
-				return request( action, {}, 'POST' );
-			},
-
-			/**
-			 * Recheck Cloudflare zones.
-			 * @return {Promise<any>} Response
-			 */
-			recheckZones: () => {
-				const action = actionPrefix + 'cloudflare_recheck_zones';
-				return request( action, {}, 'POST' );
-			},
-		},
-
-		/**
-		 * Dashboard module actions.
-		 */
-		dashboard: {
-			/**
-			 * Skip quick setup.
-			 * @return {Promise<any>} Response
-			 */
-			skipSetup: () => {
-				const action = actionPrefix + 'dash_skip_setup';
-				return request( action, {}, 'POST' );
+			connect: ( email, key, token, zone ) => {
+				return request(
+					actionPrefix + 'cloudflare_connect',
+					{ email, key, token, zone },
+					'POST'
+				).then( ( response ) => {
+					return response;
+				} );
 			},
 		},
 
@@ -260,8 +182,8 @@ function Fetcher() {
 		minification: {
 			/**
 			 * Toggle CDN settings.
+			 *
 			 * @param {string} value CDN checkbox value.
-			 * @return {Promise<any>} Response
 			 */
 			toggleCDN: ( value ) => {
 				const action = actionPrefix + 'minification_toggle_cdn';
@@ -270,8 +192,8 @@ function Fetcher() {
 
 			/**
 			 * Toggle logs settings.
+			 *
 			 * @param {string} value
-			 * @return {Promise<any>} Response
 			 */
 			toggleLog: ( value ) => {
 				const action = actionPrefix + 'minification_toggle_log';
@@ -280,17 +202,17 @@ function Fetcher() {
 
 			/**
 			 * Toggle minification advanced mode.
-			 * @param {string} value
-			 * @return {Promise<any>} Response
+			 *
+			 * @param {string}  value
+			 * @param {boolean} hide
 			 */
-			toggleView: ( value ) => {
+			toggleView: ( value, hide ) => {
 				const action = actionPrefix + 'minification_toggle_view';
-				return request( action, { value }, 'POST' );
+				return request( action, { value, hide }, 'POST' );
 			},
 
 			/**
 			 * Start minification check.
-			 * @return {Promise<any>} Response
 			 */
 			startCheck: () => {
 				const action = actionPrefix + 'minification_start_check';
@@ -299,32 +221,30 @@ function Fetcher() {
 
 			/**
 			 * Do a step in minification process.
+			 *
 			 * @param {number} step
-			 * @return {Promise<any>} Response
 			 */
 			checkStep: ( step ) => {
 				const action = actionPrefix + 'minification_check_step';
-				return request( action, { step }, 'POST' )
-					.then( ( response ) => {
+				return request( action, { step }, 'POST' ).then(
+					( response ) => {
 						return response;
-					} );
+					}
+				);
 			},
 
 			/**
 			 * Finish minification process.
-			 * @return {Promise<any>} Response
 			 */
 			finishCheck: () => {
 				const action = actionPrefix + 'minification_finish_scan';
-				return request( action, {}, 'POST' )
-					.then( ( response ) => {
-						return response;
-					} );
+				return request( action, {}, 'POST' ).then( ( response ) => {
+					return response;
+				} );
 			},
 
 			/**
 			 * Cancel minification scan.
-			 * @return {Promise<any>} Response
 			 */
 			cancelScan: function cancelScan() {
 				const action = actionPrefix + 'minification_cancel_scan';
@@ -333,23 +253,24 @@ function Fetcher() {
 
 			/**
 			 * Process critical css form.
+			 *
 			 * @since 1.8
 			 * @param {string} form
-			 * @return {Promise<any>} Response
 			 */
 			saveCriticalCss: ( form ) => {
 				const action = actionPrefix + 'minification_save_critical_css';
-				return request( action, { form }, 'POST' )
-					.then( ( response ) => {
+				return request( action, { form }, 'POST' ).then(
+					( response ) => {
 						return response;
-					} );
+					}
+				);
 			},
 
 			/**
 			 * Update custom asset path
+			 *
 			 * @since 1.9
 			 * @param {string} value
-			 * @return {Promise<any>} Response
 			 */
 			updateAssetPath: ( value ) => {
 				const action = actionPrefix + 'minification_update_asset_path';
@@ -358,9 +279,9 @@ function Fetcher() {
 
 			/**
 			 * Reset individual file.
+			 *
 			 * @since 1.9.2
 			 * @param {string} value
-			 * @return {Promise<any>} Response
 			 */
 			resetAsset: ( value ) => {
 				const action = actionPrefix + 'minification_reset_asset';
@@ -369,24 +290,14 @@ function Fetcher() {
 
 			/**
 			 * Save settings in network admin.
+			 *
 			 * @since 2.0.0
 			 * @param {string} settings
-			 * @return {Promise<any>} Response
 			 */
 			saveNetworkSettings: ( settings ) => {
-				const action = actionPrefix + 'minification_update_network_settings';
+				const action =
+					actionPrefix + 'minification_update_network_settings';
 				return request( action, { settings }, 'POST' );
-			},
-
-			/**
-			 * Skip tour.
-			 *
-			 * @since 2.1.0
-			 * @return {Promise<any>} Response
-			 */
-			skipTour: () => {
-				const action = actionPrefix + 'minification_skip_tour';
-				return request( action, {}, 'POST' );
 			},
 
 			/**
@@ -394,7 +305,6 @@ function Fetcher() {
 			 *
 			 * @since 2.4.0
 			 * @param {Object} data
-			 * @return {Promise<any>} Response
 			 */
 			updateExcludeList: ( data ) => {
 				const action = actionPrefix + 'minification_save_exclude_list';
@@ -407,21 +317,9 @@ function Fetcher() {
 		 */
 		performance: {
 			/**
-			 * Run performance test.
-			 * @return {Promise<any>} Response
-			 */
-			runTest: () => {
-				const action = actionPrefix + 'performance_run_test';
-				return request( action, {}, 'POST' )
-					.then( ( response ) => {
-						return response;
-					} );
-			},
-
-			/**
 			 * Save performance test settings.
+			 *
 			 * @param {string} data From data.
-			 * @return {Promise<any>} Response
 			 */
 			savePerformanceTestSettings: ( data ) => {
 				const action = actionPrefix + 'performance_save_settings';
@@ -435,58 +333,46 @@ function Fetcher() {
 		advanced: {
 			/**
 			 * Save settings from advanced tools general and db cleanup sections.
-			 * @param {string} data  Type.
-			 * @param {string} form  Serialized form.
-			 * @return {Promise<any>} Response
+			 *
+			 * @param {string} data Type.
+			 * @param {string} form Serialized form.
 			 */
 			saveSettings: ( data, form ) => {
 				const action = actionPrefix + 'advanced_save_settings';
-				return request( action, { data, form }, 'POST' )
-					.then( ( response ) => {
+				return request( action, { data, form }, 'POST' ).then(
+					( response ) => {
 						return response;
-					} );
+					}
+				);
 			},
 
 			/**
 			 * Delete selected data from database.
+			 *
 			 * @param {string} data
-			 * @return {Promise<any>} Response
 			 */
 			deleteSelectedData: ( data ) => {
 				const action = actionPrefix + 'advanced_db_delete_data';
-				return request( action, { data }, 'POST' )
-					.then( ( response ) => {
+				return request( action, { data }, 'POST' ).then(
+					( response ) => {
 						return response;
-					} );
+					}
+				);
 			},
 
 			/**
-			 * Schedule cleanup cron.
-			 * @return {Promise<any>} Response
+			 * Clear out a batch of orphaned asset optimization data.
+			 *
+			 * @since 2.7.0
+			 *
+			 * @param {number} rows
 			 */
-			scheduleCleanup: () => {
-				const action = actionPrefixPro + 'advanced_db_schedule';
-				return request( action, {}, 'POST' );
-			},
-		},
-
-		/**
-		 * Logger module actions.
-		 *
-		 * @since 1.9.2
-		 */
-		logger: {
-			/**
-			 * Clear logs.
-			 * @param {string} module  Module slug.
-			 * @return {Promise<any>} Response
-			 */
-			clear: ( module ) => {
-				const action = actionPrefix + 'logger_clear';
-				return request( action, { module }, 'POST' )
-					.then( ( response ) => {
-						return response;
-					} );
+			clearOrphanedBatch( rows ) {
+				return request(
+					actionPrefix + 'advanced_purge_orphaned',
+					{ rows },
+					'POST'
+				);
 			},
 		},
 
@@ -498,25 +384,37 @@ function Fetcher() {
 			 * Save settings from HB admin settings.
 			 *
 			 * @param {string} form_data
-			 * @return {Promise<any>} Response
 			 */
 			saveSettings: ( form_data ) => {
 				const action = actionPrefix + 'admin_settings_save_settings';
-				return request( action, { form_data }, 'POST' )
-					.then( ( response ) => {
+				return request( action, { form_data }, 'POST' ).then(
+					( response ) => {
 						return response;
-					} );
+					}
+				);
 			},
 
 			/**
-			 * Reset plugin settings.
+			 * Upload settings import file from HB admin settings.
 			 *
-			 * @since 2.0.0
-			 * @return {Promise<any>} Response
+			 * @param {Object} form_data
 			 */
-			resetSettings: () => {
-				const action = actionPrefix + 'reset_settings';
-				return request( action, {}, 'POST' );
+			importSettings: ( form_data ) => {
+				const action = actionPrefix + 'admin_settings_import_settings';
+				return request( action, form_data, 'POST' ).then(
+					( response ) => {
+						return response;
+					}
+				);
+			},
+
+			/**
+			 * Export settings from HB admin settings.
+			 */
+			exportSettings: () => {
+				const action = actionPrefix + 'admin_settings_export_settings';
+				window.location =
+					fetchUrl + '?action=' + action + '&nonce=' + fetchNonce;
 			},
 		},
 
@@ -527,60 +425,161 @@ function Fetcher() {
 		 */
 		common: {
 			/**
-			 * Add recipient for Performance and Uptime reports.
+			 * Dismiss notice.
 			 *
-			 * @param {string} module  Module name.
-			 * @param {string} setting Setting name.
-			 * @param {string} email   Email.
-			 * @param {string} name    User.
-			 * @return {Promise<any>} Response
+			 * @param {string} id
 			 */
-			addRecipient: ( module, setting, email, name ) => {
-				const action = actionPrefixPro + 'add_recipient';
-				return request( action, { module, setting, email, name }, 'POST' )
-					.then( ( response ) => {
-						return response;
-					} );
+			dismissNotice: ( id ) => {
+				return request(
+					actionPrefix + 'notice_dismiss',
+					{ id },
+					'POST'
+				);
 			},
 
 			/**
-			 * Save report settings for Performance and Uptime modules.
+			 * Clear logs.
 			 *
-			 * @param {string} module  Module name.
-			 * @param {Array}  data    From data.
-			 * @return {Promise<any>} Response
+			 * @since 1.9.2
+			 *
+			 * @param {string} module Module slug.
 			 */
-			saveReportsSettings: ( module, data ) => {
-				const action = actionPrefixPro + 'save_report_settings';
-				return request( action, { module, data }, 'POST' )
-					.then( ( response ) => {
+			clearLogs: ( module ) => {
+				const action = actionPrefix + 'logger_clear';
+				return request( action, { module }, 'POST' ).then(
+					( response ) => {
 						return response;
-					} );
+					}
+				);
+			},
+
+			/**
+			 * Do a POST request to an AJAX endpoint.
+			 *
+			 * @since 2.5.0
+			 * @param {string} endpoint AJAX endpoint.
+			 */
+			call: ( endpoint ) => {
+				return request( endpoint, {}, 'POST' ).then( ( response ) => {
+					return response;
+				} );
+			},
+
+			/**
+			 * Clear selected module cache.
+			 *
+			 * @since 2.7.1
+			 *
+			 * @param {Array} modules List of modules to clear cache for.
+			 */
+			clearCaches: ( modules ) => {
+				const action = actionPrefix + 'clear_caches';
+				return request( action, { modules }, 'POST' ).then(
+					( response ) => {
+						return response;
+					}
+				);
 			},
 		},
 
 		/**
-		 * Uptime actions.
+		 * Notifications module actions.
 		 *
-		 * @since 2.3.0
+		 * @since 3.1.1
 		 */
-		uptime: {
+		notifications: {
 			/**
 			 * Resend email confirmation.
 			 *
 			 * @since 2.3.0
+			 * @since 3.1.1 Moved from uptime module.
 			 *
-			 * @param {string} name   JSON encoded recipient name string.
-			 * @param {string} email  JSON encoded recipient email string.
-			 *
-			 * @return {Promise<any>} Response
+			 * @param {string} name  JSON encoded recipient name string.
+			 * @param {string} email JSON encoded recipient email string.
 			 */
 			resendConfirmationEmail: ( name, email ) => {
 				const action = actionPrefixPro + 'resend_confirmation';
-				return request( action, { name, email }, 'POST' )
-					.then( ( response ) => {
+				return request( action, { name, email }, 'POST' ).then(
+					( response ) => {
 						return response;
-					} );
+					}
+				);
+			},
+
+			/**
+			 * Send email confirmation.
+			 *
+			 * @since 3.1.1
+			 *
+			 * @param {string} name  JSON encoded recipient name string.
+			 * @param {string} email JSON encoded recipient email string.
+			 */
+			sendConfirmationEmail: ( name, email ) => {
+				const action = actionPrefixPro + 'send_confirmation';
+				return request( action, { name, email }, 'POST' ).then(
+					( response ) => {
+						return response;
+					}
+				);
+			},
+
+			/**
+			 * Disable notification.
+			 *
+			 * @since 3.1.1
+			 * @param {string} id
+			 * @param {string} type
+			 */
+			disable: ( id, type ) => {
+				const action = actionPrefixPro + 'disable_notification';
+				return request( action, { id, type }, 'POST' );
+			},
+
+			/**
+			 * Activate/enable notification and save settings.
+			 *
+			 * @since 3.1.1
+			 * @param {Object}  settings Settings object.
+			 * @param {boolean} update   Is this an update of current settings?
+			 *
+			 */
+			enable: ( settings, update = false ) => {
+				const action = actionPrefixPro + 'enable_notification';
+				return request( action, { settings, update }, 'POST' ).then(
+					( response ) => {
+						return response;
+					}
+				);
+			},
+
+			/**
+			 * Get user avatar based on email.
+			 *
+			 * @since 3.1.1
+			 * @param {string} email
+			 */
+			getAvatar: ( email ) => {
+				const action = actionPrefixPro + 'get_avatar';
+				return request( action, { email }, 'POST' ).then(
+					( response ) => {
+						return response;
+					}
+				);
+			},
+
+			/**
+			 * Get users.
+			 *
+			 * @since 3.1.1
+			 * @param {Array} exclude
+			 */
+			getUsers: ( exclude ) => {
+				const action = actionPrefixPro + 'search_users';
+				return request( action, { exclude }, 'POST' ).then(
+					( response ) => {
+						return response;
+					}
+				);
 			},
 		},
 	};
@@ -593,6 +592,7 @@ export default HBFetcher;
 
 /**
  * Check status.
+ *
  * @param {Object|string} response
  * @return {*} Response
  */
@@ -605,7 +605,9 @@ function checkStatus( response ) {
 	}
 
 	const data = response.data || {};
-	const error = new Error( data.message || 'Error trying to fetch response from server' );
+	const error = new Error(
+		data.message || 'Error trying to fetch response from server'
+	);
 	error.response = response;
 	throw error;
 }

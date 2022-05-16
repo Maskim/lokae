@@ -421,7 +421,7 @@ if ( ! class_exists( 'DT_Shortcode_Media_Gallery_Carousel', false ) ) :
 					) );
 			}
 			$less_vars->add_keyword( 'portfolio-img-shadow', $shadow_style );
-			$less_vars->add_pixel_number( 'shadow-v-length',abs($this->get_att('shadow_v_length' )));
+			$less_vars->add_pixel_number( 'shadow-v-length', abs( (int) $this->get_att( 'shadow_v_length' ) ) );
 
 			$less_vars->add_pixel_number( 'icon-size', $this->get_att( 'arrow_icon_size' ) );
 			$less_vars->add_paddings( array(

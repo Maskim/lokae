@@ -1,154 +1,126 @@
-const Row = ( _element, _filter, _filter_sec ) => {
-    let $el = _element,
-        filter = _filter.toLowerCase(),
-        filterSecondary = false,
-        selected = false,
-        visible = true;
+import { getString } from '../utils/helpers';
 
-    const $include = $el.find( '.toggle-include' ),
-        $combine = $el.find( '.toggle-combine' ),
-        $minify = $el.find( '.toggle-minify' ),
-        $posFooter = $el.find( '.toggle-position-footer' ),
-        $defer = $el.find( '.toggle-defer' ),
-        $inline = $el.find( '.toggle-inline' ),
-        $disableIcon = $el.find( '.toggle-cross > i' ),
-        $selectCheckbox = $el.find( '.wphb-minification-file-select input[type=checkbox]' );
+const Row = ( _element, _filter, _filterSec, _filterType ) => {
+	const $el = _element;
+	const filter = _filter.toLowerCase();
+	const filterSecondary = _filterSec ? _filterSec.toLowerCase() : false;
+	const filterType = _filterType.toLowerCase();
+	const $selectCheckbox = $el.find(
+		'.wphb-minification-file-select input[type=checkbox]'
+	);
+	let selected = false;
+	let visible = true;
 
-    if ( _filter_sec ) {
-        filterSecondary = _filter_sec.toLowerCase();
-    }
+	return {
+		hide() {
+			$el.addClass( 'out-of-filter' );
+			visible = false;
+		},
 
-    return {
-        hide: function() {
-            $el.addClass( 'out-of-filter' );
-            visible = false;
-        },
+		show() {
+			$el.removeClass( 'out-of-filter' );
+			visible = true;
+		},
 
-        show: function() {
-            $el.removeClass( 'out-of-filter' );
-            visible = true;
-        },
+		getElement() {
+			return $el;
+		},
 
-        getElement: function() {
-            return $el;
-        },
+		getId() {
+			return $el.attr( 'id' );
+		},
 
-        getId: function() {
-            return $el.attr( 'id' );
-        },
+		getFilter() {
+			return filter;
+		},
 
-        getFilter: function() {
-            return filter;
-        },
+		matchFilter( text ) {
+			if ( text === '' ) {
+				return true;
+			}
 
-        matchFilter: function( text ) {
-            if ( text === '' ) {
-                return true;
-            }
+			text = text.toLowerCase();
+			return filter.search( text ) > -1;
+		},
 
-            text = text.toLowerCase();
-            return filter.search( text ) > - 1;
-        },
+		matchSecondaryFilter( text ) {
+			if ( text === '' ) {
+				return true;
+			}
 
-        matchSecondaryFilter: function( text ) {
-            if ( text === '' ) {
-                return true;
-            }
+			if ( ! filterSecondary ) {
+				return false;
+			}
 
-            if ( ! filterSecondary ) {
-                return false;
-            }
+			text = text.toLowerCase();
+			return filterSecondary === text;
+		},
 
-            text = text.toLowerCase();
-            return filterSecondary === text;
-        },
+		matchTypeFilter( text ) {
+			if ( text === '' || ! filterType ) {
+				return true;
+			}
 
-        isVisible: function() {
-            return visible;
-        },
+			if ( text === 'all' ) {
+				return true;
+			}
 
-        isSelected: function() {
-            return selected;
-        },
+			return filterType === text;
+		},
 
-        isType: function( type ) {
-            return type === $selectCheckbox.attr( 'data-type' )
-        },
+		isVisible() {
+			return visible;
+		},
 
-        select: function() {
-            selected = true;
+		isSelected() {
+			return selected;
+		},
+
+		isType( type ) {
+			return type === $selectCheckbox.attr( 'data-type' );
+		},
+
+		select() {
+			selected = true;
 			$selectCheckbox.prop( 'checked', true );
-        },
+		},
 
-        unSelect: function() {
-            selected = false;
+		unSelect() {
+			selected = false;
 			$selectCheckbox.prop( 'checked', false );
-        },
+		},
 
-        change: function( what, value ) {
-            switch ( what ) {
-                case 'minify': {
-                    $minify.prop( 'checked', value );
-                    $minify.toggleClass('changed');
-                    let row = $minify.closest('.wphb-border-row');
-                    let row_status = row.find('span.wphb-row-status');
-                    row_status.removeClass('hidden');
-                    break;
-                }
-                case 'combine': {
-                    $combine.prop( 'checked', value );
-                    $combine.toggleClass('changed');
-                    let row = $combine.closest('.wphb-border-row');
-                    let row_status = row.find('span.wphb-row-status');
-                    row_status.removeClass('hidden');
-                    break;
-                }
-                case 'defer': {
-                    $defer.prop( 'checked', value );
-                    $defer.toggleClass('changed');
-                    let row = $defer.closest('.wphb-border-row');
-                    let row_status = row.find('span.wphb-row-status');
-                    row_status.removeClass('hidden');
-                    break;
-                }
-				case 'inline': {
-					$inline.prop( 'checked', value );
-					$inline.toggleClass('changed');
-                    let row = $inline.closest('.wphb-border-row');
-                    let row_status = row.find('span.wphb-row-status');
-                    row_status.removeClass('hidden');
-					break;
-				}
-                case 'include': {
-                    $disableIcon.removeClass();
-                    $include.prop( 'checked', value );
-                    $include.toggleClass('changed');
-                    let row = $include.closest('.wphb-border-row');
-                    let row_status = row.find('span.wphb-row-status');
-                    row_status.removeClass('hidden');
-                    if ( value ) {
-                        $el.removeClass( 'disabled' );
-                        $disableIcon.addClass( 'dev-icon dev-icon-cross' );
-                        $include.attr( 'checked', true );
-                    } else {
-                        $el.addClass( 'disabled' );
-                        $disableIcon.addClass( 'wdv-icon wdv-icon-refresh' );
-                        $include.removeAttr( 'checked' );
-                    }
-                    break;
-                }
-                case 'footer': {
-                    $posFooter.prop( 'checked', value );
-                    $posFooter.toggleClass('changed');
-                    let row = $posFooter.closest('.wphb-border-row');
-                    let row_status = row.find('span.wphb-row-status');
-                    row_status.removeClass('hidden');
-                    break;
-                }
-            }
-        }
+		change( what, value ) {
+			const el = $el.find( '.toggle-' + what );
+			what = 'position-footer' === what ? 'footer' : what;
 
-    };
+			// Only action for found items.
+			if ( 'undefined' === typeof el ) {
+				return;
+			}
+
+			// Skip disabled items.
+			if ( true === el.prop( 'disabled' ) ) {
+				return;
+			}
+
+			// Uppercase the type.
+			const type = what.charAt( 0 ).toUpperCase() + what.slice( 1 );
+			const tooltip = getString( value.toString() + type );
+
+			// Change checkbox value.
+			el.prop( 'checked', value );
+			el.toggleClass( 'changed' );
+
+			// Add the notice icon on the left of the row.
+			el.closest( '.wphb-border-row' )
+				.find( 'span.wphb-row-status' )
+				.removeClass( 'hidden' );
+
+			// Change the tooltip.
+			el.next().attr( 'data-tooltip', tooltip );
+		},
+	};
 };
 
 export default Row;

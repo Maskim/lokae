@@ -15,7 +15,9 @@ $config      = presscore_config();
 $show_avatar = $config->get( 'show_avatar', true );
 $avatar      = '';
 if ( $show_avatar ) {
-	$avatar = '<span class="alignleft no-avatar"></span>';
+	$avatar = '<span class="alignleft no-avatar"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve"><path d="M8,8c2.2,0,4-1.8,4-4s-1.8-4-4-4S4,1.8,4,4S5.8,8,8,8z M8,10c-2.7,0-8,1.3-8,4v1c0,0.5,0.4,1,1,1h14c0.5,0,1-0.5,1-1v-1
+	C16,11.3,10.7,10,8,10z"/></svg></span>';
 
 	if ( has_post_thumbnail( $post_id ) ) {
 		$avatar = dt_get_thumb_img(

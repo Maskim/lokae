@@ -6,7 +6,7 @@ import React from 'react';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+const { __ } = wp.i18n;
 
 /**
  * Internal dependencies
@@ -18,11 +18,13 @@ import SettingsRow from '../../components/sui-box-settings/row';
 
 /**
  * GzipConfig component.
+ *
  * @since 2.1.1
  */
 export default class GzipConfig extends React.Component {
 	/**
 	 * Component constructor.
+	 *
 	 * @param {Object} props
 	 */
 	constructor( props ) {
@@ -48,34 +50,48 @@ export default class GzipConfig extends React.Component {
 
 	/**
 	 * Render component.
+	 *
 	 * @return {*} GzipConfig component.
 	 */
 	render() {
+		const fullyEnabled =
+			Object.entries( this.props.status ).filter( ( item ) => item[ 1 ] )
+				.length === 3;
+
+		if ( true === fullyEnabled ) {
+			return null;
+		}
+
 		// Remove Cloudflare from the server list.
-		const serverList = Object.entries( this.props.data.servers_array ).filter( ( value ) => {
+		const serverList = Object.entries(
+			this.props.data.servers_array
+		).filter( ( value ) => {
 			return 'cloudflare' !== value[ 0 ];
 		} );
 
-		const serverSelect = <Select
-			selectId="wphb-server-type"
-			label={ __( 'Server type', 'wphb' ) }
-			items={ serverList }
-			selected={ this.state.currentServer }
-			onChange={ this.handleServerChange }
-		/>;
+		const serverSelect = (
+			<Select
+				label={ __( 'Server type', 'wphb' ) }
+				items={ serverList }
+				selected={ this.state.currentServer }
+				onChange={ this.handleServerChange }
+			/>
+		);
 
-		const serverInstructions = <ServerInstructions
-			currentServer={ this.state.currentServer }
-			fullyEnabled={ Object.entries( this.props.status ).filter( ( item ) => item[ 1 ] ).length === 3 }
-			gzipStatus={ this.props.status }
-			htaccessError={ this.props.data.htaccess_error }
-			htaccessWritable={ this.props.data.htaccess_writable }
-			htaccessWritten={ this.props.data.htaccess_written }
-			serverSnippets={ this.props.data.snippets }
-			enableGzip={ this.props.enableGzip }
-			disableGzip={ this.props.disableGzip }
-			server={ this.props.data.server_name }
-		/>;
+		const serverInstructions = (
+			<ServerInstructions
+				currentServer={ this.state.currentServer }
+				fullyEnabled={ fullyEnabled }
+				gzipStatus={ this.props.status }
+				htaccessError={ this.props.data.htaccess_error }
+				htaccessWritable={ this.props.data.htaccess_writable }
+				htaccessWritten={ this.props.data.htaccess_written }
+				serverSnippets={ this.props.data.snippets }
+				enable={ this.props.enableGzip }
+				disable={ this.props.disableGzip }
+				server={ this.props.data.server_name }
+			/>
+		);
 
 		return (
 			<Box
@@ -86,12 +102,20 @@ export default class GzipConfig extends React.Component {
 					<React.Fragment>
 						<SettingsRow
 							label={ __( 'Server type', 'wphb' ) }
-							description={ __( 'Choose your server type. If you don’t know this, please contact your hosting provider.', 'wphb' ) }
-							content={ serverSelect } />
+							description={ __(
+								'Choose your server type. If you don’t know this, please contact your hosting provider.',
+								'wphb'
+							) }
+							content={ serverSelect }
+						/>
 						<SettingsRow
-							label={ __( 'Enable compression', 'wphb' ) }
-							description={ __( 'Follow the instructions to activate GZip compression for this website.', 'wphb' ) }
-							content={ serverInstructions } />
+							label={ __( 'Enable compression' ) }
+							description={ __(
+								'Follow the instructions to activate GZip compression for this website.',
+								'wphb'
+							) }
+							content={ serverInstructions }
+						/>
 					</React.Fragment>
 				}
 			/>

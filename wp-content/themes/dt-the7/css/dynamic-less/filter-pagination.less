@@ -40,26 +40,22 @@
 		.filter:not(.filter-bg-decoration):not(.filter-underline-decoration) & {
 			&:hover,
 			&.act {
-				color: @accent-bg-color;
+				color: var(--the7-accent-color);
 			}
-			.accent-gradient & {
-				&:hover,
-				&.act {
-					.text-gradient (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
-				}
+			&:hover,
+			&.act {
+				.text-gradient (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
 			}
 		}
 		.filter-bg-decoration & {
 			&:not(.act):hover {
-				color: @accent-bg-color;
+				color: var(--the7-accent-color);
 			}
 			&:after {
 				display: none;
 			}
-			.accent-gradient & {
-				&:not(.act):hover {
-					.text-gradient (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
-				}
+			&:not(.act):hover {
+				.text-gradient (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
 			}
 			&.act {
 				color: #fff;
@@ -79,20 +75,15 @@
 	}
 /*Sorting*/
 .filter-switch {
-	#page & {
-		background-color: fade(@accent-bg-color, 20%);
-	}
-	.accent-gradient #page & {
-		.background-gradient(  @startColor: fade(@accent-bg-color,20% ), @endColor: @accent-bg-filter-switch );
-	}
+	background-color: fade(@accent-bg-color, 20%);
+	.background-gradient(  @startColor: fade(@accent-bg-color,20% ), @endColor: @accent-bg-filter-switch );
+	
 }
 
 .filter:not(.filter-bg-decoration) .filter-categories a.act:after,
 .filter-switch-toggle {
-	background-color: @accent-bg-color;
-	.accent-gradient & {
-		.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
-	}
+	background-color: var(--the7-accent-color);
+	.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
 }
 /* #PAGINATOR
 ================================================== */
@@ -118,8 +109,8 @@
 	&.animate-load,
 	&.button-lazy-loading {
 		& .stick {
-			border-top-color: fade(@h5-color, 100%);
-			border-right-color: fade(@h5-color, 100%);
+			border-top-color: var(--the7-h5-color);
+			border-right-color: var(--the7-h5-color);
 		}
 	}
 }

@@ -1,6 +1,10 @@
 <?php
 namespace Elementor;
 
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class HTMega_Elementor_Widget_Blockquote extends Widget_Base {
@@ -270,10 +274,6 @@ class HTMega_Elementor_Widget_Blockquote extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#5b5b5b',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-blockquote blockquote .blockquote_content' => 'color: {{VALUE}};',
@@ -332,10 +332,6 @@ class HTMega_Elementor_Widget_Blockquote extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#0056ff',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-blockquote blockquote cite' => 'color: {{VALUE}};',
@@ -418,10 +414,6 @@ class HTMega_Elementor_Widget_Blockquote extends Widget_Base {
                 [
                     'label' => __( 'Separator Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#0056ff',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-blockquote blockquote cite::before' => 'background-color: {{VALUE}};',
@@ -504,10 +496,6 @@ class HTMega_Elementor_Widget_Blockquote extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#ffffff',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-blockquote blockquote .blockquote_icon' => 'color: {{VALUE}};',

@@ -1,7 +1,7 @@
 <?php
 namespace Elementor;
 
-use Elementor\Core\Settings\Manager as SettingsManager;
+use Elementor\Core\Settings\Page\Manager as PageManager;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -88,7 +88,15 @@ class Group_Control_Typography extends Group_Control_Base {
 	protected function init_fields() {
 		$fields = [];
 
-		$default_fonts = SettingsManager::get_settings_managers( 'general' )->get_model()->get_settings( 'elementor_default_generic_fonts' );
+		$kit = Plugin::$instance->kits_manager->get_active_kit_for_frontend();
+
+		/**
+		 * Retrieve the settings directly from DB, because of an open issue when a controls group is being initialized
+		 * from within another group
+		 */
+		$kit_settings = $kit->get_meta( PageManager::META_KEY );
+
+		$default_fonts = isset( $kit_settings['default_generic_fonts'] ) ? $kit_settings['default_generic_fonts'] : 'Sans-serif';
 
 		if ( $default_fonts ) {
 			$default_fonts = ', ' . $default_fonts;
@@ -120,19 +128,24 @@ class Group_Control_Typography extends Group_Control_Base {
 			'selector_value' => 'font-size: {{SIZE}}{{UNIT}}',
 		];
 
-		$typo_weight_options = [
-			'' => __( 'Default', 'elementor' ),
-		];
-
-		foreach ( array_merge( [ 'normal', 'bold' ], range( 100, 900, 100 ) ) as $weight ) {
-			$typo_weight_options[ $weight ] = ucfirst( $weight );
-		}
-
 		$fields['font_weight'] = [
 			'label' => _x( 'Weight', 'Typography Control', 'elementor' ),
 			'type' => Controls_Manager::SELECT,
 			'default' => '',
-			'options' => $typo_weight_options,
+			'options' => [
+				'100' => '100',
+				'200' => '200',
+				'300' => '300',
+				'400' => '400',
+				'500' => '500',
+				'600' => '600',
+				'700' => '700',
+				'800' => '800',
+				'900' => '900',
+				'' => esc_html__( 'Default', 'elementor' ),
+				'normal' => esc_html__( 'Normal', 'elementor' ),
+				'bold' => esc_html__( 'Bold', 'elementor' ),
+			],
 		];
 
 		$fields['text_transform'] = [
@@ -140,7 +153,7 @@ class Group_Control_Typography extends Group_Control_Base {
 			'type' => Controls_Manager::SELECT,
 			'default' => '',
 			'options' => [
-				'' => __( 'Default', 'elementor' ),
+				'' => esc_html__( 'Default', 'elementor' ),
 				'uppercase' => _x( 'Uppercase', 'Typography Control', 'elementor' ),
 				'lowercase' => _x( 'Lowercase', 'Typography Control', 'elementor' ),
 				'capitalize' => _x( 'Capitalize', 'Typography Control', 'elementor' ),
@@ -153,7 +166,7 @@ class Group_Control_Typography extends Group_Control_Base {
 			'type' => Controls_Manager::SELECT,
 			'default' => '',
 			'options' => [
-				'' => __( 'Default', 'elementor' ),
+				'' => esc_html__( 'Default', 'elementor' ),
 				'normal' => _x( 'Normal', 'Typography Control', 'elementor' ),
 				'italic' => _x( 'Italic', 'Typography Control', 'elementor' ),
 				'oblique' => _x( 'Oblique', 'Typography Control', 'elementor' ),
@@ -165,7 +178,7 @@ class Group_Control_Typography extends Group_Control_Base {
 			'type' => Controls_Manager::SELECT,
 			'default' => '',
 			'options' => [
-				'' => __( 'Default', 'elementor' ),
+				'' => esc_html__( 'Default', 'elementor' ),
 				'underline' => _x( 'Underline', 'Typography Control', 'elementor' ),
 				'overline' => _x( 'Overline', 'Typography Control', 'elementor' ),
 				'line-through' => _x( 'Line Through', 'Typography Control', 'elementor' ),
@@ -209,6 +222,31 @@ class Group_Control_Typography extends Group_Control_Base {
 			'selector_value' => 'letter-spacing: {{SIZE}}{{UNIT}}',
 		];
 
+		$fields['word_spacing'] = [
+			'label' => _x( 'Word Spacing', 'Typography Control', 'elementor' ),
+			'type' => Controls_Manager::SLIDER,
+			'desktop_default' => [
+				'unit' => 'em',
+			],
+			'tablet_default' => [
+				'unit' => 'em',
+			],
+			'mobile_default' => [
+				'unit' => 'em',
+			],
+			'size_units' => [ 'px', 'em' ],
+			'range' => [
+				'px' => [
+					'step' => 1,
+				],
+				'em' => [
+					'step' => 0.1,
+				],
+			],
+			'responsive' => true,
+			'selector_value' => 'word-spacing: {{SIZE}}{{UNIT}}',
+		];
+
 		return $fields;
 	}
 
@@ -227,6 +265,7 @@ class Group_Control_Typography extends Group_Control_Base {
 	protected function prepare_fields( $fields ) {
 		array_walk(
 			$fields, function( &$field, $field_name ) {
+
 				if ( in_array( $field_name, [ 'typography', 'popover_toggle' ] ) ) {
 					return;
 				}
@@ -257,6 +296,9 @@ class Group_Control_Typography extends Group_Control_Base {
 	 */
 	protected function add_group_args_to_field( $control_id, $field_args ) {
 		$field_args = parent::add_group_args_to_field( $control_id, $field_args );
+
+		$field_args['groupPrefix'] = $this->get_controls_prefix();
+		$field_args['groupType'] = 'typography';
 
 		$args = $this->get_args();
 
@@ -289,6 +331,10 @@ class Group_Control_Typography extends Group_Control_Base {
 				'starter_title' => _x( 'Typography', 'Typography Control', 'elementor' ),
 				'settings' => [
 					'render_type' => 'ui',
+					'groupType' => 'typography',
+					'global' => [
+						'active' => true,
+					],
 				],
 			],
 		];

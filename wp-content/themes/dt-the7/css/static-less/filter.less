@@ -2,10 +2,12 @@
 ================================================== */
 .filter {
 	position: relative;
+	&.iso-filter {
+		z-index: 1;
+	}
 	.flex-display(@display: flex);
 	.align-items(@align: center);
 	.justify-content(@justify: center);
-	z-index: 10;
 	.filter-align-left & {
 		.justify-content(@justify: flex-start);
 		.flex-flow( row wrap);
@@ -134,7 +136,7 @@
 			.filter & {
 				position: absolute;
 				left: 50%;
-				//.horizontal-centering;
+              	z-index: 999;
 				bottom: 100%;
 				padding: 2px 6px;
 				margin-bottom: 15px;

@@ -41,7 +41,9 @@ class Uptime extends Page {
 	 * Register meta boxes.
 	 */
 	public function register_meta_boxes() {
-		if ( ! Utils::is_member() || ( defined( 'WPHB_WPORG' ) && WPHB_WPORG ) ) {
+		$this->uptime = Utils::get_module( 'uptime' );
+
+		if ( ! $this->uptime->has_access() ) {
 			$this->add_meta_box(
 				'uptime/no-membership',
 				__( 'Upgrade', 'wphb' ),
@@ -56,8 +58,6 @@ class Uptime extends Page {
 
 			return;
 		}
-
-		$this->uptime = Utils::get_module( 'uptime' );
 
 		if ( ! $this->uptime->is_active() ) {
 			$this->add_meta_box(
@@ -81,10 +81,7 @@ class Uptime extends Page {
 			$this->add_meta_box(
 				'uptime',
 				__( 'Uptime Monitoring', 'wphb' ),
-				array( $this, 'uptime_metabox' ),
-				null,
-				null,
-				'main'
+				array( $this, 'uptime_metabox' )
 			);
 
 			return;
@@ -105,7 +102,8 @@ class Uptime extends Page {
 			null,
 			'summary',
 			array(
-				'box_content_class' => 'sui-box sui-summary',
+				'box_class'         => 'sui-box sui-summary ' . Utils::get_whitelabel_class(),
+				'box_content_class' => false,
 			)
 		);
 
@@ -142,17 +140,13 @@ class Uptime extends Page {
 	 */
 	public function on_load() {
 		$this->tabs = array(
-			'main'          => __( 'Response Time', 'wphb' ),
-			'downtime'      => __( 'Downtime', 'wphb' ),
-			'notifications' => __( 'Notifications', 'wphb' ),
-			'reports'       => __( 'Reporting', 'wphb' ),
-			'settings'      => __( 'Settings', 'wphb' ),
+			'main'     => __( 'Response Time', 'wphb' ),
+			'downtime' => __( 'Downtime', 'wphb' ),
+			'settings' => __( 'Settings', 'wphb' ),
 		);
 
 		if ( is_wp_error( $this->current_report ) || ! $this->current_report ) {
 			unset( $this->tabs['downtime'] );
-			unset( $this->tabs['notifications'] );
-			unset( $this->tabs['reports'] );
 			unset( $this->tabs['settings'] );
 		}
 	}
@@ -199,19 +193,6 @@ class Uptime extends Page {
 				wp_safe_redirect( $redirect_to );
 				exit;
 			}
-			$options = $this->uptime->get_options();
-
-			// Add recipient for notifications if none exist.
-			if ( ! isset( $options['notifications']['recipients'] ) || empty( $options['notifications']['recipients'] ) ) {
-				$options['notifications']['recipients'][] = Utils::get_user_for_report();
-			}
-
-			// Add recipient for reporting if none exist.
-			if ( ! isset( $options['reports']['recipients'] ) || empty( $options['reports']['recipients'] ) ) {
-				$options['reports']['recipients'][] = Utils::get_user_for_report();
-			}
-
-			$this->uptime->update_options( $options );
 
 			$redirect_to = add_query_arg( 'run', 'true', Utils::get_admin_menu_url( 'uptime' ) );
 			$redirect_to = add_query_arg( '_wpnonce', wp_create_nonce( 'wphb-run-uptime' ), $redirect_to );
@@ -234,80 +215,44 @@ class Uptime extends Page {
 	public function add_screen_hooks() {
 		parent::add_screen_hooks();
 
-		// Icons in the submenu.
-		add_filter( 'wphb_admin_after_tab_' . $this->get_slug(), array( $this, 'after_tab' ) );
+		// Header actions.
+		add_action( 'wphb_sui_header_sui_actions_right', array( $this, 'add_header_actions' ) );
 	}
 
 	/**
-	 * Render header.
+	 * Add content to the header.
+	 *
+	 * @since 2.5.0
 	 */
-	public function render_header() {
-		if ( ! Utils::is_member() || ( defined( 'WPHB_WPORG' ) && WPHB_WPORG ) ) {
-			parent::render_header();
+	public function add_header_actions() {
+		if ( ! $this->uptime->has_access() || ! $this->uptime->is_active() ) {
 			return;
 		}
 
 		$data_ranges         = $this->get_data_ranges();
 		$data_range_selected = $this->get_current_data_range();
 		?>
-
-		<div class="sui-header">
-			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-			<div class="sui-actions-right">
-				<?php if ( Utils::is_member() && $this->uptime->is_active() ) : ?>
-					<label for="wphb-uptime-data-range" class="inline-label header-label sui-hidden-xs sui-hidden-sm">
-						<?php esc_html_e( 'Reporting period', 'wphb' ); ?>
-					</label>
-					<select name="wphb-uptime-data-range" class="uptime-data-range sui-select-sm" id="wphb-uptime-data-range">
-						<?php
-						foreach ( $data_ranges as $range => $label ) :
-							$data_url = add_query_arg(
-								array(
-									'view'       => $this->get_current_tab(),
-									'data-range' => $range,
-								),
-								Utils::get_admin_menu_url( 'uptime' )
-							);
-							?>
-							<option value="<?php echo esc_attr( $range ); ?>"
-								<?php selected( $data_range_selected, $range ); ?>
-									data-url="<?php echo esc_url( $data_url ); ?>">
-								<?php echo esc_html( $label ); ?>
-							</option>
-						<?php endforeach; ?>
-					</select>
-				<?php endif; ?>
-				<?php if ( ! apply_filters( 'wpmudev_branding_hide_doc_link', false ) ) : ?>
-					<a href="<?php echo esc_url( Utils::get_documentation_url( $this->slug, $this->get_current_tab() ) ); ?>" target="_blank" class="sui-button sui-button-ghost">
-						<i class="sui-icon-academy" aria-hidden="true"></i>
-						<?php esc_html_e( 'View Documentation', 'wphb' ); ?>
-					</a>
-				<?php endif; ?>
-			</div>
-		</div><!-- end header -->
+		<label for="wphb-uptime-data-range" class="inline-label header-label sui-hidden-xs sui-hidden-sm">
+			<?php esc_html_e( 'Reporting period', 'wphb' ); ?>
+		</label>
+		<select name="wphb-uptime-data-range" class="uptime-data-range sui-select sui-select-sm" id="wphb-uptime-data-range" data-width="120px">
+			<?php
+			foreach ( $data_ranges as $range => $label ) :
+				$data_url = add_query_arg(
+					array(
+						'view'       => $this->get_current_tab(),
+						'data-range' => $range,
+					),
+					Utils::get_admin_menu_url( 'uptime' )
+				);
+				?>
+				<option value="<?php echo esc_attr( $range ); ?>"
+					<?php selected( $data_range_selected, $range ); ?> data-url="<?php echo esc_url( $data_url ); ?>">
+					<?php echo esc_html( $label ); ?>
+				</option>
+			<?php endforeach; ?>
+		</select>
 		<?php
-	}
-
-	/**
-	 * We need to insert an extra label to the tabs sometimes
-	 *
-	 * @param string $tab Current tab.
-	 */
-	public function after_tab( $tab ) {
-		if ( 'notifications' === $tab || 'reports' === $tab ) {
-			$options = Settings::get_setting( $tab, 'uptime' );
-
-			// Nothing to display if not enabled.
-			if ( ! $options['enabled'] ) {
-				return;
-			}
-
-			if ( ! empty( $options['recipients'] ) ) {
-				echo '<i class="sui-icon-check-tick sui-success" aria-hidden="true"></i>';
-			} else {
-				echo '<i class="sui-icon-warning-alert sui-warning" aria-hidden="true"></i>';
-			}
-		}
 	}
 
 	/**
@@ -344,7 +289,8 @@ class Uptime extends Page {
 	 * @return string
 	 */
 	private function get_current_data_range() {
-		$data_range = filter_input( INPUT_GET, 'data-range', FILTER_SANITIZE_STRING );
+		$data_range = filter_input( INPUT_GET, 'data-range', FILTER_UNSAFE_RAW );
+		$data_range = sanitize_text_field( $data_range );
 		return $data_range && array_key_exists( $data_range, $this->get_data_ranges() ) ? $data_range : 'week';
 	}
 
@@ -379,19 +325,14 @@ class Uptime extends Page {
 	 * Render inner content.
 	 */
 	protected function render_inner_content() {
-		if ( ! Utils::is_member() || ( defined( 'WPHB_WPORG' ) && WPHB_WPORG ) ) {
+		if ( ! is_object( $this->uptime ) || ! $this->uptime->has_access() ) {
 			parent::render_inner_content();
 			return;
 		}
 
 		$error = false;
 
-		if ( ! Utils::is_member() ) {
-			parent::render_inner_content();
-			return;
-		}
-
-		if ( is_object( $this->uptime ) && $this->uptime->is_active() && isset( $this->current_report->code ) ) {
+		if ( $this->uptime->is_active() && isset( $this->current_report->code ) ) {
 			$error = $this->current_report->message;
 		}
 
@@ -435,11 +376,9 @@ class Uptime extends Page {
 		$stats = $this->current_report;
 
 		if ( is_wp_error( $stats ) ) {
-			$error      = $stats->get_error_message();
-			$error_type = 'error';
+			$error = $stats->get_error_message();
 		} elseif ( isset( $_GET['error'] ) ) { // Input var ok.
-			$error      = urldecode( $_GET['message'] ); // Input var ok.
-			$error_type = 'error';
+			$error = urldecode( $_GET['message'] ); // Input var ok.
 		} else {
 			// This is used for testing to create the state where no data exists when uptime is first activated.
 			if ( defined( 'WPHB_UPTIME_REFRESH' ) ) {
@@ -464,10 +403,6 @@ class Uptime extends Page {
 			'downtime_chart_json' => $downtime_chart_json,
 		);
 
-		if ( ! empty( $error_type ) ) {
-			$args['error_type'] = $error_type;
-		}
-
 		$this->view( 'uptime/meta-box', $args );
 	}
 
@@ -490,11 +425,26 @@ class Uptime extends Page {
 			'month' => __( '30 days', 'wphb' ),
 		);
 
+		$options = Settings::get_settings( 'uptime' );
+
+		$notifications_next = '';
+		$reports_next       = '';
+
+		if ( Utils::get_module( 'uptime' )->has_access() && Utils::pro() ) {
+			$notifications_next = Utils::pro()->module( 'notifications' )->get_schedule_label_for( 'uptime', 'notifications' );
+			$reports_next       = Utils::pro()->module( 'notifications' )->get_schedule_label_for( 'uptime', 'reports' );
+		}
+
 		$this->view(
 			'uptime/summary-meta-box',
 			array(
-				'uptime_stats'    => $stats,
-				'data_range_text' => $current_range[ $this->get_current_data_range() ],
+				'uptime_stats'          => $stats,
+				'data_range_text'       => $current_range[ $this->get_current_data_range() ],
+				'notifications_enabled' => isset( $options['notifications']['enabled'] ) ? $options['notifications']['enabled'] : false,
+				'notifications_next'    => $notifications_next,
+				'reports_enabled'       => isset( $options['reports']['enabled'] ) ? $options['reports']['enabled'] : false,
+				'reports_next'          => $reports_next,
+				'notifications_url'     => Utils::get_admin_menu_url( 'notifications' ),
 			)
 		);
 	}

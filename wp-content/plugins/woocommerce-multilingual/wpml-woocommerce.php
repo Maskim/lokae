@@ -7,11 +7,11 @@
  * Author URI: http://www.onthegosystems.com/
  * Text Domain: woocommerce-multilingual
  * Requires at least: 4.7
- * Tested up to: 5.3
- * Version: 4.8.0
+ * Tested up to: 5.7.1
+ * Version: 4.11.5
  * Plugin Slug: woocommerce-multilingual
- * WC requires at least: 3.3.0
- * WC tested up to: 4.0.1
+ * WC requires at least: 3.9.0
+ * WC tested up to: 5.2
  *
  * @package WCML
  * @author  OnTheGoSystems
@@ -33,7 +33,7 @@ if ( ! $wpml_php_version_check->is_ok() ) {
 	return;
 }
 
-define( 'WCML_VERSION', '4.8.0' );
+define( 'WCML_VERSION', '4.11.5' );
 define( 'WCML_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'WCML_PLUGIN_FOLDER', basename( WCML_PLUGIN_PATH ) );
 define( 'WCML_LOCALE_PATH', WCML_PLUGIN_PATH . '/locale' );
@@ -71,7 +71,12 @@ if ( WPML_Core_Version_Check::is_ok( WCML_PLUGIN_PATH . '/wpml-dependencies.json
  * Load WooCommerce Multilingual after WPML is loaded
  */
 function wcml_loader() {
+	if ( ! class_exists( 'WooCommerce' ) ) {
+		return;
+	}
+
 	\WPML\Container\share( \WCML\Container\Config::getSharedInstances() );
+	\WPML\Container\share( \WCML\Container\Config::getSharedClasses() );
 
 	$xdomain_data = new WCML_xDomain_Data( new WPML_Cookie() );
 	$xdomain_data->add_hooks();
@@ -83,6 +88,15 @@ function wcml_loader() {
 		\WCML\Email\Settings\Hooks::class,
 		\WCML\Block\Convert\Hooks::class,
 		\WCML\MO\Hooks::class,
+		\WCML\Multicurrency\Shipping\ShippingHooksFactory::class,
+		\WCML\Tax\Strings\Hooks::class,
+		\WCML\AdminDashboard\Hooks::class,
+		\WCML\AdminNotices\Review::class,
+		\WCML\Multicurrency\UI\Factory::class,
+		\WCML\PaymentGateways\Hooks::class,
+		\WCML\CLI\Hooks::class,
+		\WCML\AdminNotices\CachePlugins::class,
+		\WCML\Reports\Products\Query::class,
 	];
 
 	if (
@@ -103,9 +117,8 @@ function wcml_loader() {
 	$action_filter_loader->load( $loaders );
 }
 
-$wcml_rest_api = new WCML_REST_API();
-if ( $wcml_rest_api->is_rest_api_request() ) {
-	add_action( 'wpml_before_init', [ $wcml_rest_api, 'remove_wpml_global_url_filters' ], 0 );
+if ( WCML\Rest\Functions::isRestApiRequest() ) {
+	add_action( 'wpml_before_init', [ WCML\Rest\Functions::class, 'removeWpmlGlobalUrlFilters' ], 0 );
 }
 
 add_action( 'plugins_loaded', 'load_wcml_without_wpml', 10000 );

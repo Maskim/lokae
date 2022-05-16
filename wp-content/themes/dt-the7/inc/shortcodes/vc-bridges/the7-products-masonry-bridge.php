@@ -6,6 +6,7 @@ return array(
 	'weight' => -1,
 	'name' => __( 'Products Masonry and Grid', 'the7mk2' ),
 	'base' => 'dt_products_masonry',
+	'description' => '',
 	'class' => 'dt_vc_sc_products_masonry',
 	'icon' => 'dt_vc_ico_products',
 	'category' => __( 'by Dream-Theme', 'the7mk2' ),

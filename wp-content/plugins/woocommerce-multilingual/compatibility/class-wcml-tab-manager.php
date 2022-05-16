@@ -547,7 +547,7 @@ class WCML_Tab_Manager {
 					$new_wc_product_tab = [
 						'post_type'    => 'wp_product_tab',
 						'post_title'   => $value['title'],
-						'post_content' => $value['description'],
+						'post_content' => isset( $value['description'] ) ? $value['description'] : '',
 						'post_status'  => 'publish',
 					];
 
@@ -601,6 +601,13 @@ class WCML_Tab_Manager {
 				}
 
 				$translated_product_tabs_updated = true;
+			}
+
+			foreach ( $original_product_tabs as $original_product_tab ) {
+				if ( isset( $translated_product_tabs ) && 'global' === $original_product_tab['type'] ) {
+					$translated_product_tabs         = $this->set_global_tab( $original_product_tab, $translated_product_tabs, $job->language_code );
+					$translated_product_tabs_updated = true;
+				}
 			}
 
 			if ( true === $translated_product_tabs_updated && isset( $translated_product_tabs ) ) {
@@ -672,12 +679,16 @@ class WCML_Tab_Manager {
 	}
 
 	/**
-	 * @param $tab_id
+	 * @param int|string $tab_id
 	 *
-	 * @return mixed|void
+	 * @return int|string
 	 */
 	public function wc_tab_manager_tab_id( $tab_id ) {
-		return apply_filters( 'wpml_object_id', $tab_id, 'wc_product_tab', true );
+		if ( is_int( $tab_id ) ) {
+			return apply_filters( 'wpml_object_id', $tab_id, 'wc_product_tab', true );
+		} else {
+			return $tab_id;
+		}
 	}
 
 	public function filter_default_layout( $default_tabs ) {

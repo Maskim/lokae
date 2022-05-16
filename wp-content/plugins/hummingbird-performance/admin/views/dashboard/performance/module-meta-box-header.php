@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <h3 class="sui-box-title"><?php echo esc_html( $title ); ?></h3>
 <div class="sui-actions-right">
 	<?php if ( true === $can_run_scan ) : ?>
-		<a href="<?php echo esc_url( $scan_link ); ?>" class="sui-button sui-button-blue">
+		<a href="<?php echo esc_url( $scan_link ); ?>" class="sui-button sui-button-blue" id="performance-run-test">
 			<?php esc_html_e( 'Run Test', 'wphb' ); ?>
 		</a>
 		<?php

@@ -1,6 +1,10 @@
 <?php
 namespace Elementor;
 
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class HTMega_Elementor_Widget_SocialShere extends Widget_Base {
@@ -103,8 +107,8 @@ class HTMega_Elementor_Widget_SocialShere extends Widget_Base {
                             'label'   => esc_html__( 'Icon', 'htmega-addons' ),
                             'type'    => Controls_Manager::ICONS,
                             'default' => [
-                                'value'=>'fa fa-facebook',
-                                'library'=>'solid',
+                                'value'=>'fab fa-facebook-square',
+                                'library'=>'brands',
                             ],
                         ]
                     );
@@ -132,6 +136,7 @@ class HTMega_Elementor_Widget_SocialShere extends Widget_Base {
                         [
                             'label'     => __( 'Color', 'htmega-addons' ),
                             'type'      => Controls_Manager::COLOR,
+                            'default'   => '#000000',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-social-share {{CURRENT_ITEM}}' => 'color: {{VALUE}};',
                             ],
@@ -304,22 +309,22 @@ class HTMega_Elementor_Widget_SocialShere extends Widget_Base {
                 'htmega_socialmedia_list',
                 [
                     'type'    => Controls_Manager::REPEATER,
-                    'fields'  => array_values( $repeater->get_controls() ),
+                    'fields'  => $repeater->get_controls(),
                     'default' => [
                         [
                             'htmega_social_media' => 'facebook',
                             'htmega_social_title' => __( 'Facebook', 'htmega-addons' ),
-                            'htmega_social_icon' => 'fas fa-facebook',
+                            'htmega_social_icon' => 'fab fa-facebook-square',
                         ],
                         [
                             'htmega_social_media' => 'twitter',
                             'htmega_social_title' => __( 'Twitter', 'htmega-addons' ),
-                            'htmega_social_icon' => 'fas fa-twitter',
+                            'htmega_social_icon' => 'fab fa-twitter-square',
                         ],
                         [
                             'htmega_social_media' => 'googleplus',
                             'htmega_social_title' => __( 'Google Plus', 'htmega-addons' ),
-                            'htmega_social_icon' => 'fas fa-google-plus',
+                            'htmega_social_icon' => 'fab fa-google-plus-square',
                         ],
                     ],
                     'title_field' => '{{{ htmega_social_title }}}',

@@ -162,7 +162,7 @@ if ( vc_has_class( 'prettyphoto', $el_class ) ) {
 if ( ! empty( $atts['img_link'] ) ) {
 	$link = $atts['img_link'];
 	if ( ! preg_match( '/^(https?\:\/\/|\/\/)/', $link ) ) {
-		$link = 'http://' . $link;
+		$link = 'https://' . $link;
 	}
 }
 

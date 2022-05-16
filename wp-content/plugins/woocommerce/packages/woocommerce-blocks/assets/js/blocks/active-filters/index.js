@@ -3,8 +3,10 @@
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import Gridicon from 'gridicons';
+import { toggle } from '@woocommerce/icons';
+import { Icon } from '@wordpress/icons';
 import classNames from 'classnames';
+import { useBlockProps } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
@@ -12,19 +14,29 @@ import classNames from 'classnames';
 import edit from './edit.js';
 
 registerBlockType( 'woocommerce/active-filters', {
+	apiVersion: 2,
 	title: __( 'Active Product Filters', 'woocommerce' ),
 	icon: {
-		src: <Gridicon icon="list-checkmark" />,
-		foreground: '#96588a',
+		src: (
+			<Icon
+				icon={ toggle }
+				className="wc-block-editor-components-block-icon"
+			/>
+		),
 	},
 	category: 'woocommerce',
 	keywords: [ __( 'WooCommerce', 'woocommerce' ) ],
 	description: __(
-		'Display a list of active product filters.',
+		'Show the currently active product filters. Works in combination with the All Products and filters blocks.',
 		'woocommerce'
 	),
 	supports: {
+		html: false,
 		multiple: false,
+		color: {
+			text: true,
+			background: false,
+		},
 	},
 	example: {
 		attributes: {},
@@ -44,9 +56,7 @@ registerBlockType( 'woocommerce/active-filters', {
 		},
 	},
 	edit,
-	/**
-	 * Save the props to post content.
-	 */
+	// Save the props to post content.
 	save( { attributes } ) {
 		const { className, displayStyle, heading, headingLevel } = attributes;
 		const data = {
@@ -54,9 +64,12 @@ registerBlockType( 'woocommerce/active-filters', {
 			'data-heading': heading,
 			'data-heading-level': headingLevel,
 		};
+
 		return (
 			<div
-				className={ classNames( 'is-loading', className ) }
+				{ ...useBlockProps.save( {
+					className: classNames( 'is-loading', className ),
+				} ) }
 				{ ...data }
 			>
 				<span

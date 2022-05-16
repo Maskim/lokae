@@ -1,4 +1,9 @@
 <?php
+/**
+ * Abstract request class.
+ *
+ * @package Hummingbird\Core\Api\Request
+ */
 
 namespace Hummingbird\Core\Api\Request;
 
@@ -173,8 +178,7 @@ abstract class Request {
 	 */
 	public function get( $path, $data = array() ) {
 		try {
-			$result = $this->request( $path, $data, 'get' );
-			return $result;
+			return $this->request( $path, $data, 'get' );
 		} catch ( Exception $e ) {
 			return new WP_Error( $e->getCode(), $e->getMessage() );
 		}
@@ -190,8 +194,7 @@ abstract class Request {
 	 */
 	public function post( $path, $data = array() ) {
 		try {
-			$result = $this->request( $path, $data, 'post' );
-			return $result;
+			return $this->request( $path, $data );
 		} catch ( Exception $e ) {
 			return new WP_Error( $e->getCode(), $e->getMessage() );
 		}
@@ -207,8 +210,7 @@ abstract class Request {
 	 */
 	public function patch( $path, $data = array() ) {
 		try {
-			$result = $this->request( $path, $data, 'patch' );
-			return $result;
+			return $this->request( $path, $data, 'patch' );
 		} catch ( Exception $e ) {
 			return new WP_Error( $e->getCode(), $e->getMessage() );
 		}
@@ -224,8 +226,7 @@ abstract class Request {
 	 */
 	public function head( $path, $data = array() ) {
 		try {
-			$result = $this->request( $path, $data, 'head' );
-			return $result;
+			return $this->request( $path, $data, 'head' );
 		} catch ( Exception $e ) {
 			return new WP_Error( $e->getCode(), $e->getMessage() );
 		}
@@ -242,8 +243,7 @@ abstract class Request {
 	 */
 	public function delete( $path, $data = array() ) {
 		try {
-			$result = $this->request( $path, $data, 'delete' );
-			return $result;
+			return $this->request( $path, $data, 'delete' );
 		} catch ( Exception $e ) {
 			return new WP_Error( $e->getCode(), $e->getMessage() );
 		}
@@ -261,8 +261,25 @@ abstract class Request {
 	 */
 	public function purge( $path, $data = array() ) {
 		try {
-			$result = $this->request( $path, $data, 'purge' );
-			return $result;
+			return $this->request( $path, $data, 'purge' );
+		} catch ( Exception $e ) {
+			return new WP_Error( $e->getCode(), $e->getMessage() );
+		}
+	}
+
+	/**
+	 * Make a PUT API Call
+	 *
+	 * @since 3.3.1
+	 *
+	 * @param string $path  Endpoint route.
+	 * @param array  $data  Data.
+	 *
+	 * @return mixed
+	 */
+	public function put( $path, $data = array() ) {
+		try {
+			return $this->request( $path, $data, 'put' );
 		} catch ( Exception $e ) {
 			return new WP_Error( $e->getCode(), $e->getMessage() );
 		}
@@ -278,7 +295,6 @@ abstract class Request {
 	 * @param string $method  Method.
 	 *
 	 * @return array|mixed|object
-	 * @throws Exception  Exception.
 	 */
 	public function request( $path, $data = array(), $method = 'post' ) {
 		$url = $this->get_api_url( $path );
@@ -286,7 +302,7 @@ abstract class Request {
 		$this->sign_request();
 
 		$url = add_query_arg( $this->get_args, $url );
-		if ( 'post' !== $method && 'patch' !== $method && 'delete' !== $method ) {
+		if ( ! in_array( $method, array( 'post', 'patch', 'delete', 'put' ), true ) ) {
 			$url = add_query_arg( $data, $url );
 		}
 
@@ -301,13 +317,14 @@ abstract class Request {
 			$args['blocking'] = false;
 		}
 
-		$this->logger->log( "WPHB API: Sending request to {$url}", 'api' );
+		$this->logger->log( "WPHB API: Sending request to $url", 'api' );
 		$this->logger->log( 'WPHB API: Arguments:', 'api' );
 		$this->logger->log( $args, 'api' );
 
 		switch ( strtolower( $method ) ) {
 			case 'patch':
 			case 'delete':
+			case 'put':
 			case 'post':
 				if ( is_array( $data ) ) {
 					$args['body'] = array_merge( $data, $this->post_args );
@@ -335,6 +352,9 @@ abstract class Request {
 		return $response;
 	}
 
+	/**
+	 * Sign request.
+	 */
 	protected function sign_request() {}
 
 }

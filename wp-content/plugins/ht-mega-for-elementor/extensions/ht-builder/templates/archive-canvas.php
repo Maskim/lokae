@@ -21,6 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
+	<?php wp_body_open(); ?>
 	<?php
 		/**
 	 * Before canvas page template content.
@@ -36,16 +37,16 @@ if ( ! defined( 'ABSPATH' ) ) {
      ?>
 
 
-<?php /**
-	 * After canvas page template content.
-	 *
-	 * Fires after the content of Elementor canvas page template.
-	 *
-	 * @since 1.0.0
-	 */
-	do_action( 'elementor/page_templates/canvas/after_content' );
+    <?php /**
+    	 * After canvas page template content.
+    	 *
+    	 * Fires after the content of Elementor canvas page template.
+    	 *
+    	 * @since 1.0.0
+    	 */
+    	do_action( 'elementor/page_templates/canvas/after_content' );
 
-	wp_footer();
-?>
+    	wp_footer();
+    ?>
 	</body>
 </html>

@@ -50,8 +50,7 @@ class HTMega_Admin_Setting{
     *   Enqueue admin scripts
     */
     public function htmega_enqueue_admin_scripts( $hook ){
-
-        if( $hook === 'htmega-addons_page_htmega_addons_templates_library' || $hook === 'htmega-addons_page_htmega_addons_options' ){
+        if( $hook === 'htmega-addons_page_htmega_addons_templates_library' || $hook === 'htmega-addons_page_htmega_addons_options' || $hook === 'htmega-addons_page_htmeganotification' || $hook === 'htmega-addons_page_htmegamenubl' ){
             // wp core styles
             wp_enqueue_style( 'wp-jquery-ui-dialog' );
             wp_enqueue_style( 'htmega-admin' );

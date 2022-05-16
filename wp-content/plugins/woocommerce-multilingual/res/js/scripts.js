@@ -1,4 +1,4 @@
-jQuery(document).ready(function ($) {
+jQuery(function ($) {
     var discard = false;
 
     window.onbeforeunload = function (e) {
@@ -111,7 +111,7 @@ jQuery(document).ready(function ($) {
 
         var wrap = $(this).closest('.wcml-wrap');
 
-        $(this).attr('disabled', 'disabled');
+        $(this).prop('disabled', true);
         var ajaxLoader = $('<span class="spinner" style="visibility: visible;">');
         var setting = jQuery(this).data('setting');
         $(this).parent().prepend(ajaxLoader);
@@ -138,7 +138,7 @@ jQuery(document).ready(function ($) {
      * Function to display larger image on hover while you are in product list.
      **/
 
-    $(document).ready(function() {
+    $(function() {
         $('.original-image').mousemove(function(e) {
             $img = $("#" + $(this).data('image-id'));
             $img.show(200);

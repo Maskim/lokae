@@ -29,6 +29,11 @@ class The7_Walker_Nav_Menu extends Walker_Nav_Menu {
 	protected $dt_is_first = true;
 
 	/**
+	 * @var int
+	 */
+	protected $the_last_depth_0_item_id;
+
+	/**
 	 * Starts the list before the elements are added.
 	 *
 	 * @param string   $output Used to append additional content (passed by reference).
@@ -42,7 +47,7 @@ class The7_Walker_Nav_Menu extends Walker_Nav_Menu {
 
 		$output .= apply_filters(
 			'presscore_nav_menu_start_lvl',
-			'<ul class="' . esc_attr( $args->submenu_class ) . '">',
+			'<ul class="' . esc_attr( $args->submenu_class ) . '" role="menubar">',
 			$depth,
 			$args
 		);
@@ -86,8 +91,8 @@ class The7_Walker_Nav_Menu extends Walker_Nav_Menu {
 		$el_before   = apply_filters( 'presscore_nav_menu_el_before', '', $item, $args, $depth );
 
 		// li wrap.
-		$output .= $el_before . '<li class="' . implode( ' ', array_filter( $classes ) ) . '">';
-
+		$li_wrap = $el_before . '<li class="' . implode( ' ', array_filter( $classes ) ) . '" role="presentation">';
+		$output .= apply_filters( 'presscore_nav_menu_start_el_li', $li_wrap, $item, $args, $depth );
 		$title       = apply_filters( 'the_title', $item->title, $item->ID );
 		$title       = apply_filters( 'nav_menu_item_title', $title, $item, $args, $depth );
 		$description = '';
@@ -104,13 +109,12 @@ class The7_Walker_Nav_Menu extends Walker_Nav_Menu {
 
 		$attributes = $this->dt_prepare_atts( $this->dt_get_item_atts( $item, $args, $depth ) );
 		if ( $attributes ) {
-			$item_output = '<a' . $attributes . '>' . $menu_item . '</a>';
+			$item_output = '<a' . $attributes . ' role="menuitem">' . $menu_item . '</a>';
 		} else {
 			$item_output = '<span>' . $menu_item . '</span>';
 		}
 
 		$item_output = $args->before . $item_output . $args->after;
-
 		$output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
 	}
 
@@ -127,8 +131,7 @@ class The7_Walker_Nav_Menu extends Walker_Nav_Menu {
 	public function end_el( &$output, $item, $depth = 0, $args = array() ) {
 		$this->dt_is_first = false;
 		$el_after          = apply_filters( 'presscore_nav_menu_el_after', '', $item, $args, $depth );
-
-		$output .= '</li>' . $el_after . ' ';
+		$output           .= apply_filters( 'presscore_nav_menu_end_el_li', '</li>' . $el_after . ' ', $item, $args, $depth );
 	}
 
 	/**
@@ -164,6 +167,45 @@ class The7_Walker_Nav_Menu extends Walker_Nav_Menu {
 	}
 
 	/**
+	 * Display array of elements hierarchically.
+	 *
+	 * Does not assume any existing order of elements.
+	 *
+	 * $max_depth = -1 means flatly display every element.
+	 * $max_depth = 0 means display all levels.
+	 * $max_depth > 0 specifies the number of display levels.
+	 *
+	 * @param  array $elements  An array of elements.
+	 * @param  int   $max_depth  The maximum hierarchical depth.
+	 * @param  mixed ...$args  Optional additional arguments.
+	 *
+	 * @return string The hierarchical item output.
+	 * @since 2.1.0
+	 * @since 5.3.0 Formalized the existing `...$args` parameter by adding it
+	 *              to the function signature.
+	 */
+	public function walk( $elements, $max_depth, ...$args ) {
+		$parent_field = $this->db_fields['parent'];
+		$id_field     = $this->db_fields['id'];
+
+		// Flat display.
+		if ( - 1 === $max_depth ) {
+			$the_last_element               = end( $elements );
+			$this->the_last_depth_0_item_id = $the_last_element->$id_field;
+		} else {
+			foreach ( $elements as $e ) {
+				if ( empty( $e->$parent_field ) ) {
+					$this->the_last_depth_0_item_id = $e->$id_field;
+				}
+			}
+		}
+
+		reset( $elements );
+
+		return parent::walk( $elements, $max_depth, ...$args );
+	}
+
+	/**
 	 * Return item attributes array.
 	 *
 	 * @param WP_Post  $item  Page data object.
@@ -186,6 +228,7 @@ class The7_Walker_Nav_Menu extends Walker_Nav_Menu {
 
 		$atts['data-level'] = absint( $depth ) + 1;
 
+		// TODO: Move to the The7_Mega_Menu class.
 		if ( isset( $item->the7_mega_menu['menu-item-icon-type'] ) && in_array( $item->the7_mega_menu['menu-item-icon-type'], array( 'image', 'icon' ) ) ) {
 			$atts['class'] .= ' mega-menu-img';
 			if ( isset( $item->the7_mega_menu['menu-item-image-position'] ) ) {
@@ -242,9 +285,15 @@ class The7_Walker_Nav_Menu extends Walker_Nav_Menu {
 			$classes[] = 'first';
 		}
 
+		if ( $item->ID === $this->the_last_depth_0_item_id ) {
+			$classes[] = 'last';
+		}
+
 		if ( $item->dt_is_parent ) {
 			$classes[] = 'has-children';
 		}
+
+		$classes[] = 'depth-' . $depth;
 
 		$classes = apply_filters( 'presscore_nav_menu_css_class', $classes, $item, $args, $depth );
 

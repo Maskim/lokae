@@ -290,6 +290,19 @@ class WCML_Resources {
 		do_action( 'wcml_after_load_lock_fields_js' );
 
 	}
+	/**
+	 * @param int    $original_id
+	 * @param string $language
+	 *
+	 * @return string
+	 */
+	private static function linkToTranslation( $original_id, $language ) {
+		$status_display_factory = new WPML_Post_Status_Display_Factory( self::$sitepress );
+		$status_display         = $status_display_factory->create();
+		list( $text, $link, $trid, $css_class ) = $status_display->get_status_data( $original_id, $language );
+
+		return apply_filters( 'wpml_link_to_translation', $link, $original_id, $language, $trid, $css_class );
+	}
 
 	public static function hidden_label() {
 		global $sitepress;
@@ -305,11 +318,11 @@ class WCML_Resources {
 			$original_id = $sitepress->get_original_element_id_by_trid( sanitize_text_field( $_GET['trid'] ) );
 		}
 
-		if ( isset( $_GET['lang'] ) ) {
-			$language = $_GET['lang'];
-		} else {
+		if ( ! isset( $_GET['lang'], $original_id ) ) {
 			return;
 		}
+
+		$language = filter_var( $_GET['lang'], FILTER_SANITIZE_STRING );
 
 		echo '<h3 class="wcml_prod_hidden_notice">' .
 			sprintf(
@@ -318,7 +331,7 @@ class WCML_Resources {
 					'woocommerce-multilingual'
 				),
 				'<a href="' . get_edit_post_link( $original_id ) . '" >' . get_the_title( $original_id ) . '</a>',
-				'<a data-action="product-translation-dialog" class="js-wcml-dialog-trigger" data-id="' . $original_id . '" data-job_id="" data-language="' . $language . '">' .
+				'<a href="' . self::linkToTranslation( $original_id, $language ) . '" >' .
 				__( 'WooCommerce Multilingual products translator', 'woocommerce-multilingual' ) . '</a>'
 			) . '</h3>';
 	}

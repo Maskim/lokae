@@ -172,7 +172,17 @@ if ( ! class_exists( 'The7_TGMPA' ) ) {
 		 * @return bool True if installable, false otherwise.
 		 */
 		public function is_plugin_installable( $slug ) {
-			if ( 'external' === $this->plugins[ $slug ]['source_type'] && ! presscore_theme_is_activated() ) {
+			if ( ! isset( $this->plugins[ $slug ] ) ) {
+				return false;
+			}
+
+			$plugin = $this->plugins[ $slug ];
+
+			if ( isset( $plugin['source_type'] ) && 'external' === $plugin['source_type'] && ! presscore_theme_is_activated() ) {
+				return false;
+			}
+
+			if ( $this->is_plugin_can_be_activated_only( $slug ) ) {
 				return false;
 			}
 
@@ -255,6 +265,10 @@ if ( ! class_exists( 'The7_TGMPA' ) ) {
 			$installed_plugins = $this->get_plugins();
 			$plugin_file_path  = $this->plugins[ $slug ]['file_path'];
 
+			if ( isset( $installed_plugins[ $plugin_file_path ]['Package'] ) && $installed_plugins[ $plugin_file_path ]['Package']  == 'the7') {
+				return true;
+			}
+
 			if ( ! isset( $installed_plugins[ $plugin_file_path ]['Name'] ) ) {
 				return false;
 			}
@@ -263,7 +277,6 @@ if ( ! class_exists( 'The7_TGMPA' ) ) {
 			if ( $plugin_name === 'pro elements' ) {
 				return true;
 			}
-
 			return strpos( $plugin_name, 'the7' ) === 0;
 		}
 

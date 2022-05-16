@@ -2,26 +2,32 @@
  * External dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InnerBlocks } from '@wordpress/editor';
+import { InnerBlocks } from '@wordpress/block-editor';
 import { registerBlockType } from '@wordpress/blocks';
-import { DEFAULT_HEIGHT } from '@woocommerce/block-settings';
+import { getSetting } from '@woocommerce/settings';
+import { isFeaturePluginBuild } from '@woocommerce/block-settings';
+import { Icon, starEmpty } from '@wordpress/icons';
 
 /**
  * Internal dependencies
  */
 import './style.scss';
-import './editor.scss';
 import { example } from './example';
-import Block from './block';
+import { Edit } from './edit';
 
 /**
  * Register and run the "Featured Product" block.
  */
 registerBlockType( 'woocommerce/featured-product', {
+	apiVersion: 2,
 	title: __( 'Featured Product', 'woocommerce' ),
 	icon: {
-		src: 'star-filled',
-		foreground: '#96588a',
+		src: (
+			<Icon
+				icon={ starEmpty }
+				className="wc-block-editor-components-block-icon"
+			/>
+		),
 	},
 	category: 'woocommerce',
 	keywords: [ __( 'WooCommerce', 'woocommerce' ) ],
@@ -32,6 +38,15 @@ registerBlockType( 'woocommerce/featured-product', {
 	supports: {
 		align: [ 'wide', 'full' ],
 		html: false,
+		color: true,
+		...( isFeaturePluginBuild() && {
+			__experimentalBorder: {
+				color: true,
+				radius: true,
+				width: true,
+				__experimentalSkipSerialization: false,
+			},
+		} ),
 	},
 	example,
 	attributes: {
@@ -71,7 +86,7 @@ registerBlockType( 'woocommerce/featured-product', {
 		 */
 		height: {
 			type: 'number',
-			default: DEFAULT_HEIGHT,
+			default: getSetting( 'default_height', 500 ),
 		},
 
 		/**
@@ -88,20 +103,6 @@ registerBlockType( 'woocommerce/featured-product', {
 		mediaSrc: {
 			type: 'string',
 			default: '',
-		},
-
-		/**
-		 * The overlay color, from the color list.
-		 */
-		overlayColor: {
-			type: 'string',
-		},
-
-		/**
-		 * The overlay color, if a custom color value.
-		 */
-		customOverlayColor: {
-			type: 'string',
 		},
 
 		/**
@@ -146,10 +147,10 @@ registerBlockType( 'woocommerce/featured-product', {
 
 	/**
 	 * Renders and manages the block.
+	 *
+	 * @param {Object} props Props to pass to block.
 	 */
-	edit( props ) {
-		return <Block { ...props } />;
-	},
+	edit: Edit,
 
 	/**
 	 * Block content is rendered in PHP, not via save function.

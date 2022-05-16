@@ -1,6 +1,10 @@
 <?php
 namespace Elementor;
 
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class HTMega_Elementor_Widget_User_Login_Form extends Widget_Base {
@@ -409,7 +413,7 @@ class HTMega_Elementor_Widget_User_Login_Form extends Widget_Base {
                         'size' => 50,
                     ],
                     'selectors' => [
-                        '{{WRAPPER}} .htmega-login-form-wrapper input' => 'height: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .htmega-login-form-wrapper input[type="text"],{{WRAPPER}} .htmega-login-form-wrapper input[type="password"]' => 'height: {{SIZE}}{{UNIT}};',
                     ],
                     'separator' =>'before',
                 ]
@@ -437,6 +441,67 @@ class HTMega_Elementor_Widget_User_Login_Form extends Widget_Base {
             );
 
         $this->end_controls_section();
+
+        // Rememberme section start
+        $this->start_controls_section(
+            'login_form_style_rememberme',
+            [
+                'label' => __( 'Remember Me Checkbox', 'htmega-addons' ),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+            $this->add_group_control(
+                Group_Control_Typography::get_type(),
+                [
+                    'name' => 'login_form_input_rememberme_typography',
+                    'scheme' => Scheme_Typography::TYPOGRAPHY_1,
+                    'selector' => '{{WRAPPER}} .htmega-login-form-wrapper form .log-remember label',
+                ]
+            );
+
+            $this->add_responsive_control(
+                'login_form_input_rememberme_margin',
+                [
+                    'label' => __( 'Margin', 'htmega-addons' ),
+                    'type' => Controls_Manager::DIMENSIONS,
+                    'size_units' => [ 'px', '%', 'em' ],
+                    'selectors' => [
+                        '{{WRAPPER}} .htmega-login-form-wrapper form .log-remember label input[type="checkbox"]' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'separator' =>'before',
+                ]
+            );
+
+            $this->add_control(
+                'login_form_input_rememberme_height',
+                [
+                    'label' => __( 'Height', 'htmega-addons' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 20,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .htmega-login-form-wrapper form .log-remember label input[type="checkbox"]' => 'height: {{SIZE}}{{UNIT}};',
+                    ],
+                    'separator' =>'before',
+                ]
+            );
+
+        $this->end_controls_section(); // Checkbox section end
 
         // Submit Button
         $this->start_controls_section(

@@ -6,7 +6,7 @@
 
 .sui-header .sui-actions-right {
     label,
-    .select-container {
+    .select2-container {
         margin-right: 10px;
     }
     label {
@@ -107,22 +107,18 @@
 /**
  * Summary meta box
  */
-.wpmud .box-uptime-summary .sui-summary {
+.wpmud .wrap-wphb-uptime .box-uptime-summary.sui-summary:not(.sui-rebranded):not(.sui-unbranded):not(.sui-summary-sm) {
+    @if variable-exists(summary-image) {
+        @include background-2x("#{$image--path}/summary-graphic-uptime", 'png', 192px, 172px, 30px 100%);
+    }
 
-	&:not(.sui-unbranded):not(.sui-summary-sm) {
-
-		@if variable-exists(summary-image) {
-			@include background-2x( "#{$image--path}/hb-graphic-uptime-up", 'png', 192px, 172px, 30px 100% );
-		}
-
-        @include media(max-width, md) {
-            background-image: unset;
-        }
-	}
+    @include media(max-width, md) {
+        background-image: unset;
+    }
 }
 
 /**
- * Uptime reponse time meta box
+ * Uptime response time meta box
  */
 .wpmud .box-uptime-response-time {
     .uptime-chart {
@@ -276,80 +272,7 @@
     }
 }
 
-/**
- * Uptime notifications.
- */
-.wpmud .box-uptime-notifications {
-    .sui-border-frame > .sui-notice-warning {
-        margin: 0 0 10px;
-    }
-
-    .sui-border-frame > .sui-notice {
-        margin-top: -20px;
-        margin-bottom: 30px;
-    }
-}
-
-.wpmud .box-uptime-notifications .spinner,
-.wpmud .box-uptime-notifications-disabled .spinner {
-    margin-top: 2px;
-    margin-right: 10px;
-}
-
-/**
- * Reporting
- */
-@include body-class(true) {
-    .sui-recipients {
-        .sui-form-field {
-            margin-bottom: 10px;
-            .select-container {
-                max-width: 240px;
-            }
-        }
-
-        .sui-recipient-status {
-            margin-right: 13px;
-            padding-right: 13px;
-            border-right: 1px solid #E6E6E6;
-        }
-
-        .wphb-resend-recipient {
-            margin-right: 10px !important;
-        }
-
-        .sui-recipient-status i:before {
-            font-size: 16px;
-            line-height: 30px;
-            vertical-align: bottom;
-        }
-
-        .wphb-not-pending-recipient {
-            margin-left: 35px;
-        }
-
-        .sui-icon-check-tick:before {
-            color: #1ABC9C;
-        }
-
-        .wphb-remove-recipient {
-            margin-right: 0 !important;
-        }
-    }
-}
-
 @include bp(phone-large) {
-    .wpmud .select-container.uptime-data-range {
-        position: absolute;
-        top: 0;
-        right: 0;
-        margin-right: 0;
-    }
-
-    .wpmud .wrap-wphb-uptime .actions > .documentation-button {
-        margin-left: 0 !important;
-    }
-
     .wpmud .wrap-wphb-uptime .wphb-pills.green {
         position: absolute;
         top: 0;

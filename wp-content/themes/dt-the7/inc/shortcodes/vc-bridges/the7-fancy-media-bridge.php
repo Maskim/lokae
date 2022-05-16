@@ -361,7 +361,7 @@ return array(
 		array(
 			'group'      => __( 'Icon', 'the7mk2' ),
 			'heading'          => __( 'Icon color', 'the7mk2' ),
-			'description'      => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description'      => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'param_name'       => 'rollover_icon_color',
 			'type'             => 'colorpicker',
 			'value'            => 'rgba(255,255,255,1)',
@@ -410,7 +410,7 @@ return array(
 				'element' => 'rollover_icon_bg',
 				'value'   => 'y',
 			),
-			'description'      => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description'      => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'edit_field_class' => 'the7-icons-dependent vc_col-xs-12',
 		),
 		array(
@@ -442,7 +442,7 @@ return array(
 		array(
 			'group'      => __( 'Icon', 'the7mk2' ),
 			'heading'          => __( 'Border color', 'the7mk2' ),
-			'description'      => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description'      => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'param_name'       => 'rollover_icon_border_color',
 			'type'             => 'colorpicker',
 			'value'            => '',

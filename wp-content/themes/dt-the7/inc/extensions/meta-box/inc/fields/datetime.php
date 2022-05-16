@@ -125,7 +125,7 @@ if ( !class_exists( 'THE7_RWMB_Datetime_Field' ) )
 		/**
 		 * Returns a date() compatible format string from the JavaScript format
 		 *
-		 * @see http://www.php.net/manual/en/function.date.php
+		 * @see https://www.php.net/manual/en/function.date.php
 		 *
 		 * @param array $field
 		 *

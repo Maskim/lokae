@@ -1,6 +1,6 @@
 <?php
 
-namespace The7\Adapters\Elementor\Pro\ThemeSupport;
+namespace The7\Mods\Compatibility\Elementor\Pro\Modules\Theme_Support;
 
 use Elementor\Plugin;
 use ElementorPro\Modules\ThemeBuilder\Documents\Footer;

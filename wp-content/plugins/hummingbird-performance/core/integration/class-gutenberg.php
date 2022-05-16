@@ -8,9 +8,6 @@
 
 namespace Hummingbird\Core\Integration;
 
-use Hummingbird\Core\Settings;
-use Hummingbird\Core\Utils;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -35,10 +32,15 @@ class Gutenberg {
 	 * @since 1.9.4
 	 */
 	public function __construct() {
-		if ( ! is_admin() ) {
-			return;
-		}
+		add_action( 'admin_init', array( $this, 'init' ) );
+	}
 
+	/**
+	 * Detect page caching and gutenberg, and initialize block editor components
+	 *
+	 * @since 2.5.0
+	 */
+	public function init() {
 		// Page caching is not enabled.
 		if ( ! apply_filters( 'wp_hummingbird_is_active_module_page_cache', false ) ) {
 			return;
@@ -61,7 +63,6 @@ class Gutenberg {
 		global $wp_version;
 
 		if ( ! function_exists( 'is_plugin_active' ) ) {
-			/* @noinspection PhpIncludeInspection */
 			include_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 

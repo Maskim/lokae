@@ -15,17 +15,20 @@ if ( ! function_exists( 'presscore_register_scripts' ) ) :
 	 * @since 5.4.0
 	 */
 	function presscore_register_scripts() {
-		$register_styles = array(
-			'dt-main'                 => array(
+		$register_styles = [
+			'dt-main'                 => [
 				'src' => PRESSCORE_THEME_URI . '/css/main',
-			),
-			'the7-font'               => array(
+			],
+			'the7-font'               => [
 				'src' => PRESSCORE_THEME_URI . '/fonts/icomoon-the7-font/icomoon-the7-font',
-			),
-			'the7-awesome-fonts-back' => array(
+			],
+			'the7-awesome-fonts-back' => [
 				'src' => PRESSCORE_THEME_URI . '/fonts/FontAwesome/back-compat',
-			),
-		);
+			],
+			'the7-custom-scrollbar' => [
+				'src' => PRESSCORE_THEME_URI . '/lib/custom-scrollbar/custom-scrollbar',
+			],
+		];
 
 		foreach ( $register_styles as $name => $props ) {
 			the7_register_style( $name, $props['src'] );
@@ -35,29 +38,49 @@ if ( ! function_exists( 'presscore_register_scripts' ) ) :
 			the7_register_fontawesome_style( 'the7-awesome-fonts' );
 		}
 
-		$register_scripts = array(
-			'dt-above-fold' => array(
+		$register_scripts = [
+			'dt-above-fold'     => [
 				'src'       => PRESSCORE_THEME_URI . '/js/above-the-fold',
-				'deps'      => array( 'jquery' ),
+				'deps'      => [ 'jquery' ],
 				'in_footer' => false,
-			),
-			'dt-main'       => array(
+			],
+			'dt-main'           => [
 				'src'       => PRESSCORE_THEME_URI . '/js/main',
-				'deps'      => array( 'jquery' ),
+				'deps'      => [ 'jquery' ],
 				'in_footer' => true,
-			),
-			'dt-legacy'     => array(
+			],
+			'dt-legacy'         => [
 				'src'       => PRESSCORE_THEME_URI . '/js/legacy',
-				'deps'      => array( 'jquery' ),
+				'deps'      => [ 'jquery' ],
 				'in_footer' => true,
-			),
-
-			'dt-photo-scroller'     => array(
+			],
+			'dt-photo-scroller' => [
 				'src'       => PRESSCORE_THEME_URI . '/js/photo-scroller',
-				'deps'      => array( 'jquery' ),
+				'deps'      => [ 'dt-main' ],
 				'in_footer' => true,
-			),
-		);
+			],
+			'the7-cookies'      => [
+				'src'       => PRESSCORE_THEME_URI . '/js/cookies',
+				'deps'      => [],
+				'in_footer' => true,
+			],
+			'jquery-mousewheel' => [
+				'src'       => PRESSCORE_THEME_URI . '/lib/jquery-mousewheel/jquery-mousewheel',
+				'deps'      =>  [ 'jquery' ],
+				'in_footer' => true,
+			],
+            'the7-custom-scrollbar' => [
+				'src'       => PRESSCORE_THEME_URI . '/lib/custom-scrollbar/custom-scrollbar',
+				'deps'      => ['jquery-mousewheel'],
+				'in_footer' => true,
+			],
+		];
+
+		$register_scripts['dt-woocommerce'] = [
+			'src'       => PRESSCORE_THEME_URI . '/js/compatibility/woocommerce/woocommerce',
+			'deps'      => [ 'jquery' ],
+			'in_footer' => false,
+		];
 
 		foreach ( $register_scripts as $name => $props ) {
 			the7_register_script( $name, $props['src'], $props['deps'], false, $props['in_footer'] );
@@ -185,16 +208,15 @@ if ( ! function_exists( 'presscore_localize_main_script' ) ) :
 					'secondSwitchPointHeight' => (int) of_get_option( 'header-mobile-second_switch-height' ),
 					'mobileToggleCaptionEnabled' =>   $config->get( 'header.mobile.hamburger.caption' ),
 					'mobileToggleCaption' => of_get_option( 'header-mobile-menu_icon-caption-text' ),
-					
 				),
 				'stickyMobileHeaderFirstSwitch'  => array(
 					'logo' => array(
-						'html' => presscore_get_logo_image( presscore_get_mobile_logos_meta() ),
+						'html' => presscore_get_logo_image( presscore_get_floating_mobile_logos_meta() ),
 					),
 				),
 				'stickyMobileHeaderSecondSwitch' => array(
 					'logo' => array(
-						'html' => presscore_get_logo_image( presscore_get_mobile_logos_meta_second() ),
+						'html' => presscore_get_logo_image( presscore_get_floating_mobile_logos_meta_second() ),
 					),
 				),
 				'content'                        => array(
@@ -298,6 +320,12 @@ if ( ! function_exists( 'presscore_enqueue_scripts' ) ) :
 		if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 			wp_enqueue_script( 'comment-reply' );
 		}
+
+		//TODO check when we need scrool in the menu
+		//if (presscore_header_layout_is_side()){
+			wp_enqueue_style( 'the7-custom-scrollbar' );
+			wp_enqueue_script( 'the7-custom-scrollbar' );
+        //}
 	}
 
 endif;
@@ -354,8 +382,8 @@ if ( ! function_exists( 'presscore_print_beautiful_loading_scripts_in_footer' ) 
 			return;
 		}
 		?>
-<script type="text/javascript">
-document.addEventListener("DOMContentLoaded", function(event) { 
+<script type="text/javascript" id="the7-loader-script">
+document.addEventListener("DOMContentLoaded", function(event) {
 	var load = document.getElementById("load");
 	if(!load.classList.contains('loader-removed')){
 		var removeLoading = setTimeout(function() {
@@ -546,7 +574,7 @@ if ( ! function_exists( 'presscore_body_class' ) ) :
 		if( $config->get( 'header.mixed.menu-close_icon.position' ) == 'outside'){
 			$classes[] ='ouside-menu-close-icon';
 		}
-	
+
 		switch ( $config->get( 'header.mobile.close.hamburger.caption' )){
 			case 'left':
 				$classes[] = 'mobile-close-left-caption';
@@ -582,20 +610,20 @@ if ( ! function_exists( 'presscore_body_class' ) ) :
 			$classes[] = 'left-side-line';
 			$classes[] = 'header-above-side-line';
 		}
-		$classes[] = presscore_array_value( $config->get( 'header.mobile.hamburger.close.bg' ), array(
+		$classes[] = the7_array_match( $config->get( 'header.mobile.hamburger.close.bg' ), array(
 			'enabled' => 'mobile-hamburger-close-bg-enable',
 		) );
-		$classes[] = presscore_array_value( $config->get( 'header.mobile.hamburger.close.bg.hover' ), array(
+		$classes[] = the7_array_match( $config->get( 'header.mobile.hamburger.close.bg.hover' ), array(
 			'enabled' => 'mobile-hamburger-close-bg-hover-enable',
 		) );
-		$classes[] = presscore_array_value( $config->get( 'header.mobile.hamburger.close.border' ), array(
+		$classes[] = the7_array_match( $config->get( 'header.mobile.hamburger.close.border' ), array(
 			'enabled' => 'mobile-hamburger-close-border-enable',
 		) );
-		$classes[] = presscore_array_value( $config->get( 'header.mobile.hamburger.close.border.hover' ), array(
+		$classes[] = the7_array_match( $config->get( 'header.mobile.hamburger.close.border.hover' ), array(
 			'enabled' => 'mobile-hamburger-close-border-hover-enable',
 		) );
-		
-		$classes[] = presscore_array_value( $config->get( 'header.mobile.menu-close_icon.size' ), array(
+
+		$classes[] = the7_array_match( $config->get( 'header.mobile.menu-close_icon.size' ), array(
 			//'small' => 'small-mobile-menu-close-icon',
 			'minus-medium' => 'minus-medium-mobile-menu-close-icon',
 			'fade_medium' => 'fade-medium-mobile-menu-close-icon',
@@ -607,7 +635,7 @@ if ( ! function_exists( 'presscore_body_class' ) ) :
 			'h_dots' => 'h-dots-mobile-menu-close-icon',
 			'scale_dot' => 'scale-dot-mobile-menu-close-icon',
 		) );
-		$classes[] = presscore_array_value( $config->get( 'header.mixed.menu-close_icon.size' ), array(
+		$classes[] = the7_array_match( $config->get( 'header.mixed.menu-close_icon.size' ), array(
 
 			'minus-medium' => 'medium-menu-close-icon',
 			'fade_medium' => 'fade-medium-menu-close-icon',
@@ -628,7 +656,7 @@ if ( ! function_exists( 'presscore_body_class' ) ) :
 		}
 		$classes[] = 'srcset-enabled';
 
-		switch ( $config->get( 'buttons.style' ) ) {
+		/*switch ( $config->get( 'buttons.style' ) ) {
 			case '3d':
 				$classes[] = 'btn-3d';
 				break;
@@ -638,7 +666,8 @@ if ( ! function_exists( 'presscore_body_class' ) ) :
 			case 'shadow':
 				$classes[] = 'btn-shadow';
 				break;
-		}
+		}*/
+		$classes[] = 'btn-flat';
 
 		switch ( $config->get( 'buttons.text.color' ) ) {
 			case 'accent':
@@ -685,7 +714,7 @@ if ( ! function_exists( 'presscore_body_class' ) ) :
 
 		if ( $config->get( 'header.floating_navigation.enabled' ) && ( $config->get( 'header.layout' ) === 'classic' || $config->get( 'header.layout' ) === 'inline' || $config->get( 'header.layout' ) === 'split' ) ) {
 
-			$classes[] = presscore_array_value(
+			$classes[] = the7_array_match(
 				$config->get( 'header.floating_navigation.style' ),
 				array(
 					'fade'   => 'phantom-fade',
@@ -694,7 +723,7 @@ if ( ! function_exists( 'presscore_body_class' ) ) :
 				)
 			);
 
-			$classes[] = presscore_array_value(
+			$classes[] = the7_array_match(
 				$config->get( 'header.floating_navigation.decoraion' ),
 				array(
 					'disabled' => 'phantom-disable-decoration',
@@ -704,7 +733,7 @@ if ( ! function_exists( 'presscore_body_class' ) ) :
 				)
 			);
 
-			$classes[] = presscore_array_value(
+			$classes[] = the7_array_match(
 				$config->get( 'header.floating_navigation.logo.style' ),
 				array(
 					'custom' => 'phantom-custom-logo-on',
@@ -717,14 +746,23 @@ if ( ! function_exists( 'presscore_body_class' ) ) :
 		if ( $config->get( 'header.floating_top-bar.enabled' ) ) {
 			$classes[] = 'floating-top-bar';
 		}
+		if ( $config->get( 'header.layout' ) !== 'disabled' ) {
+			$classes[] = the7_array_match(
+				$config->get( 'header.mobile.floatin_navigation' ),
+				array(
+					'sticky'    => 'sticky-mobile-header',
+					'menu_icon' => 'floating-mobile-menu-icon',
+				)
+			);
+		}
 
-		$classes[] = presscore_array_value(
-			$config->get( 'header.mobile.floatin_navigation' ),
-			array(
-				'sticky'    => 'sticky-mobile-header',
-				'menu_icon' => 'floating-mobile-menu-icon',
-			)
-		);
+		// $classes[] = the7_array_match(
+		// 	$config->get( 'header.mobile.floatin_navigation' ),
+		// 	array(
+		// 		'sticky'    => 'sticky-mobile-header',
+		// 		'menu_icon' => 'floating-mobile-menu-icon',
+		// 	)
+		// );
 
 		if ( 'disabled' !== $config->get( 'sidebar_position' ) && $config->get( 'sidebar_hide_on_mobile' ) ) {
 			$classes[] = 'mobile-hide-sidebar';
@@ -738,7 +776,7 @@ if ( ! function_exists( 'presscore_body_class' ) ) :
 			$classes[] = 'top-header';
 		}
 
-		$classes[] = presscore_array_value(
+		$classes[] = the7_array_match(
 			$config->get( 'header.mobile.logo.first_switch.layout' ),
 			array(
 				'left_right'   => 'first-switch-logo-right first-switch-menu-left',
@@ -748,7 +786,7 @@ if ( ! function_exists( 'presscore_body_class' ) ) :
 			)
 		);
 
-		$classes[] = presscore_array_value(
+		$classes[] = the7_array_match(
 			$config->get( 'header.mobile.logo.second_switch.layout' ),
 			array(
 				'left_right'   => 'second-switch-logo-right second-switch-menu-left',
@@ -904,11 +942,12 @@ if ( ! function_exists( 'presscore_enqueue_web_fonts' ) ) :
 				$font_family = of_get_option( $option['id'] );
 			}
 
-			if ( in_array( $font_family, $websafe_fonts ) ) {
+			$font_obj = new The7_Web_Font( $font_family );
+
+			if ( in_array( $font_obj->get_family(), $websafe_fonts, true ) ) {
 				continue;
 			}
 
-			$font_obj = new The7_Web_Font( $font_family );
 			$font_obj->add_weight( '400' );
 			$font_obj->add_weight( '600' );
 			$font_obj->add_weight( '700' );

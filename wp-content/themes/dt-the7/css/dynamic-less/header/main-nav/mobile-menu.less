@@ -83,7 +83,7 @@ html:not(.touchevents) .dt-mobile-header::-webkit-scrollbar-track
 			margin: @toggle-mobile-margin-top @toggle-mobile-margin-right @toggle-mobile-margin-bottom @toggle-mobile-margin-left;
 			&:before {
 				.mobile-menu-icon-bg-on & {
-					background-color: @accent-bg-color;
+					background-color: var(--the7-accent-color);
 					.accent-gradient & {
 						.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
 					}
@@ -91,13 +91,13 @@ html:not(.touchevents) .dt-mobile-header::-webkit-scrollbar-track
 					.disable-mobile-animation-bg(@mobile-toggle-menu-bg-color, @mobile-toggle-menu-bg-hover-color);
 				}
 				.mobile-menu-icon-border-enable & {
-					border: @mobile-hamburger-border-width solid @accent-bg-color;
+					border: @mobile-hamburger-border-width solid var(--the7-accent-color);
 					.custom-mixin-toggle-border (@mobile-toggle-menu-border-color, @mobile-hamburger-border-width);
 				}
 			}
 			&:after {
 				.mobile-menu-icon-hover-bg-on & {
-					background-color: @accent-bg-color;
+					background-color: var(--the7-accent-color);
 					.accent-gradient & {
 						.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
 					}
@@ -105,21 +105,19 @@ html:not(.touchevents) .dt-mobile-header::-webkit-scrollbar-track
 					.disable-mobile-animation-bg(@mobile-toggle-menu-bg-color, @mobile-toggle-menu-bg-hover-color);
 				}
 				.mobile-menu-icon-hover-border-enable & {
-					border: @mobile-hamburger-border-width solid @accent-bg-color;
+					border: @mobile-hamburger-border-width solid var(--the7-accent-color);
 					.custom-mixin-toggle-border (@mobile-toggle-menu-border-hover-color, @mobile-hamburger-border-width);
 				}
 			}
 			&:not(:hover) {
-				
 				& .menu-toggle-caption {
-					color: @accent-bg-color;
+					color: var(--the7-accent-color);
 					.custom-mixin-toggle-color (@toggle-mobile-menu-caption-color);
 				}
 				& .menu-line {
 					.animate-color-mobile-menu-icon &,
 					.two-line-mobile-menu-icon & {
-						background-color: @mobile-toggle-menu-color;
-						background-color: @accent-bg-color;
+						background-color: var(--the7-accent-color);
 						.accent-gradient & {
 							.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
 						}
@@ -128,7 +126,7 @@ html:not(.touchevents) .dt-mobile-header::-webkit-scrollbar-track
 				}
 			}
 			& .menu-line:before {
-				background-color: @accent-bg-color;
+				background-color: var(--the7-accent-color);
 				.accent-gradient & {
 					.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
 				}
@@ -136,7 +134,7 @@ html:not(.touchevents) .dt-mobile-header::-webkit-scrollbar-track
 				.disable-mobile-animation-bg(@mobile-toggle-menu-color, @mobile-toggle-menu-hover-color);
 			}
 			& .menu-line:after {	
-				background-color: @accent-bg-color;
+				background-color: var(--the7-accent-color);
 				.accent-gradient & {
 					.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
 				}
@@ -145,12 +143,12 @@ html:not(.touchevents) .dt-mobile-header::-webkit-scrollbar-track
 			}
 			&:hover {
 				& .menu-toggle-caption {
-					color: @accent-bg-color;
+					color: var(--the7-accent-color);
 					.custom-mixin-toggle-color (@toggle-mobile-menu-caption-color-hover);
 				}
 				& .menu-line {
 					.masthead:not(.animate-color-mobile-menu-icon):not(.two-line-mobile-menu-icon) & {
-						background-color: @accent-bg-color;
+						background-color: var(--the7-accent-color);
 						.accent-gradient & {
 							.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
 						}
@@ -158,8 +156,7 @@ html:not(.touchevents) .dt-mobile-header::-webkit-scrollbar-track
 					}
 					.animate-color-mobile-menu-icon &,
 					.two-line-mobile-menu-icon & {
-
-						background-color: @accent-bg-color;
+						background-color: var(--the7-accent-color);
 						.accent-gradient& {
 							.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
 						}
@@ -171,7 +168,7 @@ html:not(.touchevents) .dt-mobile-header::-webkit-scrollbar-track
 					.dots-mobile-menu-icon &,
 					.h-dots-mobile-menu-icon &,
 					.two-line-mobile-menu-icon & {
-						background-color: @accent-bg-color;
+						background-color: var(--the7-accent-color);
 						.accent-gradient & {
 							.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
 						}
@@ -221,13 +218,13 @@ html:not(.touchevents) .dt-mobile-header::-webkit-scrollbar-track
 	}
 	&:not(:hover) {
 		& .mobile-menu-close-caption {
-			color: @accent-bg-color;
+			color: var(--the7-accent-color);
 			.custom-mixin-toggle-color (@close-mobile-menu-caption-color);
 		}
 	}
 	&:hover {
 		& .mobile-menu-close-caption {
-			color: @accent-bg-color;
+			color: var(--the7-accent-color);
 			.custom-mixin-toggle-color (@close-mobile-menu-caption-color-hover);
 		}
 	}
@@ -270,11 +267,14 @@ html:not(.touchevents) .dt-mobile-header::-webkit-scrollbar-track
 	.transparent .masthead:not(.mixed-header) & {
 		padding: @transparent-mobile-logo-top-padding @transparent-mobile-logo-right-padding @transparent-mobile-logo-bottom-padding @transparent-mobile-logo-left-padding;
 	}
+	.sticky-mobile-on.masthead:not(.mixed-header) & {
+		padding: @floating-mobile-logo-top-padding @floating-mobile-logo-right-padding @floating-mobile-logo-bottom-padding @floating-mobile-logo-left-padding;
+	}
 }
 .sticky-mobile-logo-first-switch,
 .sticky-mobile-logo-second-switch {
-	.transparent .masthead.sticky-mobile-on & {
-		padding: @mobile-logo-top-padding @mobile-logo-right-padding @mobile-logo-bottom-padding @mobile-logo-left-padding;
+	.sticky-mobile-on.masthead.masthead-mobile-header & {
+		padding: @floating-mobile-logo-top-padding @floating-mobile-logo-right-padding @floating-mobile-logo-bottom-padding @floating-mobile-logo-left-padding;
 	}
 }
 /*Mobile menu*/
@@ -388,7 +388,7 @@ html:not(.touchevents) .dt-mobile-header::-webkit-scrollbar-track
 
 	&:before {
 		.mobile-hamburger-close-bg-enable & {
-			background-color: @accent-bg-color;
+			background-color: var(--the7-accent-color);
 			.accent-gradient& {
 				.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
 			}
@@ -397,13 +397,13 @@ html:not(.touchevents) .dt-mobile-header::-webkit-scrollbar-track
 			.disable-mobile-animation-bg(@toggle-mobile-menu-close-bg-color, @toggle-mobile-menu-hover-bg-color);
 		}
 		.mobile-hamburger-close-border-enable & {
-			border: @hamburger-mobile-close-border-width solid @accent-bg-color;
+			border: @hamburger-mobile-close-border-width solid var(--the7-accent-color);
 			.custom-mixin-toggle-border (@toggle-mobile-menu-close-border-color, @hamburger-mobile-close-border-width);
 		}
 	}
 	&:after {
 		.mobile-hamburger-close-bg-hover-enable & {
-			background-color: @accent-bg-color;
+			background-color: var(--the7-accent-color);
 			.accent-gradient& {
 				.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
 			}
@@ -412,12 +412,12 @@ html:not(.touchevents) .dt-mobile-header::-webkit-scrollbar-track
 			.disable-mobile-animation-bg(@toggle-mobile-menu-close-bg-color, @toggle-mobile-menu-hover-bg-color);
 		}
 		.mobile-hamburger-close-border-hover-enable & {
-			border: @hamburger-mobile-close-border-width solid @accent-bg-color;
+			border: @hamburger-mobile-close-border-width solid var(--the7-accent-color);
 			.custom-mixin-toggle-border (@toggle-mobile-menu-close-border-color-hover, @hamburger-mobile-close-border-width);
 		}
 	}
 	& span:after {
-		background-color: @accent-bg-color;
+		background-color: var(--the7-accent-color);
 		.accent-gradient & {
 			.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
 		}
@@ -426,7 +426,7 @@ html:not(.touchevents) .dt-mobile-header::-webkit-scrollbar-track
 	}
 	border-radius: @hamburger-mobile-close-border-radius;
 	& span:before {
-		background-color: @accent-bg-color;
+		background-color: var(--the7-accent-color);
 		.accent-gradient & {
 			.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
 		}

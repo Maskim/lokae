@@ -70,7 +70,7 @@ function sakura_widget_quickflickr($args) {
 		// Screen name or RSS in $username?
 		//echo $username."?";
 		if (!preg_match("/http[s]?:\/\/api\.flickr\.com\/services\/feeds/", $username))
-			$url = "http://api.flickr.com/services/feeds/photos_public.gne?id=".urlencode($user_id)."&format=".$flickrformat."&lang=en-us".$tags;
+			$url = "https://api.flickr.com/services/feeds/photos_public.gne?id=".urlencode($user_id)."&format=".$flickrformat."&lang=en-us".$tags;
 		else
 			$url = $username."&format=".$flickrformat.$tags;
 		
@@ -231,7 +231,7 @@ function sakura_widget_quickflickr_control() {
 			if (!preg_match("/http:\/\/api\.flickr\.com\/services\/feeds/", $newoptions["username"])) // Not a feed
 			{
 				global $flickr_api_key;
-				$str = wp_remote_fopen("http://api.flickr.com/services/rest/?method=flickr.people.findByUsername&api_key=".$flickr_api_key."&username=".urlencode($newoptions["username"])."&format=rest");
+				$str = wp_remote_fopen("https://api.flickr.com/services/rest/?method=flickr.people.findByUsername&api_key=".$flickr_api_key."&username=".urlencode($newoptions["username"])."&format=rest");
 				//echo htmlspecialchars($str); 
 				preg_match("/<rsp stat=\\\"([A-Za-z]+)\\\"/", $str, $regs);
 				$findByUsername["stat"] = $regs[1];

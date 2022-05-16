@@ -39,6 +39,7 @@ if ( ! class_exists( 'The7_DevToolMainModule', false ) ) :
 
 		public static function init() {
 			add_action( 'admin_notices', array( __CLASS__, 'add_admin_notice' ), 1 );
+			add_action( 'network_admin_notices', array( __CLASS__, 'add_admin_notice' ), 1 );
 			add_action( 'admin_notices', array( __CLASS__, 'remove_plugin_notices' ), 9999 );
 			add_action( 'vc_settings_tabs', array( __CLASS__, 'remove_vc_tabs'), 10, 1);
 
@@ -63,19 +64,24 @@ if ( ! class_exists( 'The7_DevToolMainModule', false ) ) :
 
 		public static function pre_download_filter($reply, $package, $updater) {
 			global $the7_tgmpa;
-			if (!presscore_theme_is_activated()) return $reply;
+
+			if ( ! is_a( $updater, 'Plugin_Upgrader' ) || !presscore_theme_is_activated() ) {
+				return $reply;
+			}
 
 			if ( ! $the7_tgmpa ) {
 				if (class_exists( 'Presscore_Modules_TGMPAModule' )){
 					Presscore_Modules_TGMPAModule::init_the7_tgmpa();
 					Presscore_Modules_TGMPAModule::register_plugins_action();
 				}
-				else return $reply;
+				else {
+					return $reply;
+				}
 			}
 			$skin = $updater->skin;
 
 			$slug_found = "";
-			if ( false === $updater->bulk && isset( $skin->options['extra']['slug'] ) ) {
+			if ( isset($updater->bulk) && false === $updater->bulk && isset( $skin->options['extra']['slug'] ) ) {
 				$slug_found = $skin->options['extra']['slug'];
 			} else {
 				// Bulk installer contains less info, so fall back on the info registered in tgma
@@ -102,39 +108,44 @@ if ( ! class_exists( 'The7_DevToolMainModule', false ) ) :
 				the7_admin_notices()->add( 'the7_dev_tool_error', array( __CLASS__, 'render_error_notice' ), 'error the7-dashboard-notice' );
 			}
 
-			if (presscore_is_silence_enabled())
-			{
-				global $the7_tgmpa;
-				if ( ! $the7_tgmpa && class_exists( 'Presscore_Modules_TGMPAModule' ) ) {
-					Presscore_Modules_TGMPAModule::init_the7_tgmpa();
-					Presscore_Modules_TGMPAModule::register_plugins_action();
-				}
+			if ( ! presscore_is_silence_enabled() ) {
+				return;
+			}
 
-				if ($the7_tgmpa->is_the7_plugin( "LayerSlider" )){
-					if (defined('LS_PLUGIN_BASE')) {
-						remove_action( 'after_plugin_row_' . LS_PLUGIN_BASE, 'layerslider_plugins_purchase_notice', 10 );
-					}
-				}
+			global $the7_tgmpa;
+			if ( ! $the7_tgmpa && class_exists( 'Presscore_Modules_TGMPAModule' ) ) {
+				Presscore_Modules_TGMPAModule::init_the7_tgmpa();
+				Presscore_Modules_TGMPAModule::register_plugins_action();
+			}
 
-				if ($the7_tgmpa->is_the7_plugin("go_pricing")) {
-					if ( method_exists( 'GW_GoPricing_AdminNotices', 'instance' ) ) {
-						remove_action( 'admin_notices', array( GW_GoPricing_AdminNotices::instance(), 'print_remote_admin_notices' ) );
-					}
+			if ( $the7_tgmpa->is_the7_plugin( 'LayerSlider' ) ) {
+				if ( defined( 'LS_PLUGIN_BASE' ) ) {
+					remove_action(
+						'after_plugin_row_' . LS_PLUGIN_BASE,
+						'layerslider_plugins_purchase_notice',
+						10
+					);
 				}
+			}
 
-				if ( $the7_tgmpa->is_the7_plugin( "js_composer" ) )				{
-					if( defined( 'WPB_VC_VERSION' ) && function_exists( 'vc_license' ) ) //wpbakery
-						remove_action( 'admin_notices', array( vc_license(), 'adminNoticeLicenseActivation' ), 10 );
+			if ( $the7_tgmpa->is_the7_plugin( 'go_pricing' ) ) {
+				if ( method_exists( 'GW_GoPricing_AdminNotices', 'instance' ) ) {
+					remove_action(
+						'admin_notices',
+						array( GW_GoPricing_AdminNotices::instance(), 'print_remote_admin_notices' )
+					);
 				}
+			}
 
-				if ($the7_tgmpa->is_the7_plugin("Ultimate_VC_Addons") || $the7_tgmpa->is_the7_plugin("convertplug"))
-				{
-					if (defined("ULTIMATE_VERSION")) { //ult addon
-						if ( ! defined( 'BSF_PRODUCTS_NOTICES' ) )
-						{
-							define( 'BSF_PRODUCTS_NOTICES', false );
-						}
-					}
+			if ( $the7_tgmpa->is_the7_plugin( 'js_composer' ) ) {
+				if ( defined( 'WPB_VC_VERSION' ) && function_exists( 'vc_license' ) ) {
+					remove_action( 'admin_notices', array( vc_license(), 'adminNoticeLicenseActivation' ), 10 );
+				}
+			}
+
+			if ( $the7_tgmpa->is_the7_plugin( 'Ultimate_VC_Addons' ) || $the7_tgmpa->is_the7_plugin( 'convertplug' ) ) {
+				if ( defined( 'ULTIMATE_VERSION' ) && ! defined( 'BSF_PRODUCTS_NOTICES' ) ) {
+					define( 'BSF_PRODUCTS_NOTICES', false );
 				}
 			}
 		}

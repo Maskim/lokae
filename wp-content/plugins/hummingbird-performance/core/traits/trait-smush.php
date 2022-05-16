@@ -8,6 +8,10 @@
 
 namespace Hummingbird\Core\Traits;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Trait Smush
  */
@@ -32,7 +36,7 @@ trait Smush {
 
 		$plugins = get_plugins();
 		if ( array_key_exists( 'wp-smush-pro/wp-smush.php', $plugins ) ) {
-			$this->is_pro = true;
+			$this->is_smush_pro = true;
 		}
 
 		return array_key_exists( 'wp-smush-pro/wp-smush.php', $plugins ) || array_key_exists( 'wp-smushit/wp-smush.php', $plugins );
@@ -65,4 +69,61 @@ trait Smush {
 		$networkwide = get_site_option( 'wp-smush-networkwide' );
 		return '0' !== $networkwide && false !== $networkwide;
 	}
+
+	/**
+	 * Check if Smush has lazy load enabled.
+	 *
+	 * @return bool
+	 */
+	public function is_lazy_load_enabled() {
+		if ( ! $this->is_smush_enabled() ) {
+			return false;
+		}
+
+		$subsite_control = get_site_option( 'wp-smush-networkwide' );
+
+		$settings = is_multisite() && ! $subsite_control ? get_site_option( 'wp-smush-settings', array() ) : get_option( 'wp-smush-settings', array() );
+		if ( empty( $settings ) || ! is_array( $settings ) ) {
+			return false;
+		}
+
+		return ! empty( $settings['lazy_load'] ) && $settings['lazy_load'];
+	}
+
+	/**
+	 * Check if user can enable Smush lazy loading.
+	 *
+	 * @since 2.5.0
+	 *
+	 * @return bool
+	 */
+	public function is_lazy_load_configurable() {
+		// Render all pages on single site installs.
+		if ( ! is_multisite() ) {
+			return true;
+		}
+
+		$access = get_site_option( 'wp-smush-networkwide' );
+
+		if ( ! $access ) {
+			return is_network_admin();
+		}
+
+		if ( '1' === $access ) {
+			return ! is_network_admin();
+		}
+
+		if ( is_array( $access ) ) {
+			if ( is_network_admin() && ! in_array( 'lazy_load', $access, true ) ) {
+				return true;
+			}
+
+			if ( ! is_network_admin() && in_array( 'lazy_load', $access, true ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 }

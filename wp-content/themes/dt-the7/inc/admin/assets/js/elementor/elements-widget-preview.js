@@ -1,11 +1,76 @@
 (function ($) {
 
+    // Make sure you run this code under Elementor.
+    $(window).on("elementor/frontend/init", function () {
+        var onEditSettingsTimeout;
+
+        // the7_elements widget.
+        elementorFrontend.hooks.addAction("frontend/element_ready/the7_elements.default", the7ElementsWidgetHandler);
+
+        elementorEditorAddOnChangeHandler("the7_elements:overlay_background_background", toggleDefaultImageOverlay);
+        elementorEditorAddOnChangeHandler("the7_elements:overlay_hover_background_background", toggleDefaultImageOverlay);
+        elementorEditorAddOnChangeHandler("the7_elements", function (controlView, widgetView) {
+            if ($.isEmptyObject(controlView.model.attributes.selectors)) {
+                return;
+            }
+
+            relayoutIsotope(widgetView, widgetView.model.getSetting("layout"));
+        });
+
+        // the7-elements-woo-masonry widget.
+        elementorFrontend.hooks.addAction("frontend/element_ready/the7-elements-woo-masonry.default", the7ElementsWidgetHandler);
+        elementorFrontend.hooks.addAction("frontend/element_ready/the7-elements-woo-masonry.default", handleMasonryLayout);
+
+        // the7-wc-products widget.
+        elementorFrontend.hooks.addAction("frontend/element_ready/the7-wc-products.default", the7ElementsWidgetHandler);
+        elementorFrontend.hooks.addAction("frontend/element_ready/the7-wc-products.default", handleMasonryLayout);
+        elementorEditorAddOnChangeHandler("the7-wc-products:item_preserve_ratio", function(controlView, widgetView) {
+            window.jQuery(widgetView.$el).the7WidgetImageRatio("refresh");
+            relayoutIsotope(widgetView, widgetView.model.getSetting("mode"));
+        });
+        elementorEditorAddOnChangeHandler("the7-wc-products:item_ratio", function (controlView, widgetView) {
+            relayoutIsotope(widgetView, widgetView.model.getSetting("mode"));
+        });
+
+        function relayoutIsotope(widgetView, layout) {
+            if (layout === "masonry") {
+                clearTimeout(onEditSettingsTimeout);
+                onEditSettingsTimeout = setTimeout(function () {
+                    window.jQuery(widgetView.$el).find(".iso-container").isotope("layout");
+                }, 400);
+            }
+        }
+    });
+
+    /**
+     * @param controlView Control view object.
+     * @param widgetView Widget view object.
+     */
+    function toggleDefaultImageOverlay(controlView, widgetView) {
+        if (widgetView.model.getSetting("overlay_background_background") || widgetView.model.getSetting("overlay_hover_background_background")) {
+            widgetView.$el.find(".the7-elementor-widget").removeClass("enable-bg-rollover");
+        } else {
+            widgetView.$el.find(".the7-elementor-widget").addClass("enable-bg-rollover");
+        }
+    }
+
     /**
      * @param $scope The Widget wrapper element as a jQuery element
      * @param $ The jQuery alias
      */
-    var the7ElementsWidgetHandler = function ($scope, $) {
-        var precessEffects = function ($atoms, instant) {
+    function handleMasonryLayout($scope, $) {
+        var $isoContainer = $scope.find(".iso-container");
+        if ($isoContainer.length) {
+            the7ApplyColumns($scope.attr("data-id"), $isoContainer, the7GetMasonryColumnsConfig);
+        }
+    }
+
+    /**
+     * @param $scope The Widget wrapper element as a jQuery element
+     * @param $ The jQuery alias
+     */
+    function the7ElementsWidgetHandler($scope, $) {
+        var processEffects = function ($atoms, instant) {
             var k = 1;
 
             var $itemsToAnimate = $atoms.filter(function () {
@@ -24,7 +89,7 @@
                     $this.removeClass("animation-triggered").addClass("shown");
                 }, timeout);
             });
-        }
+        };
 
         var calculateColumns = function ($dataContainer, $isoContainer) {
             var contWidth = parseInt($dataContainer.attr("data-width"));
@@ -32,11 +97,11 @@
             var contPadding = parseInt($dataContainer.attr("data-padding"));
 
             $isoContainer.calculateColumns(contWidth, contNum, contPadding, null, null, null, null, "px", window.the7GetElementorMasonryColumnsConfig);
-        }
+        };
 
         var calculateColumnsOnResize = function () {
             calculateColumns($dataAttrContainer, $dataAttrContainer.find(".iso-container"));
-        }
+        };
 
         var $dataAttrContainer = $scope.find(".portfolio-shortcode");
         if (!$dataAttrContainer.length) {
@@ -61,18 +126,6 @@
                 $(".preload-me", $isoContainer).heightHack();
                 $isoContainer.isotope("layout");
             });
-
-            $(window).off("debouncedresize.The7Elements", calculateColumnsOnResize).on("debouncedresize.The7Elements", calculateColumnsOnResize);
-
-            $isoContainer.on("IsoLayout.The7Elements", function () {
-                calculateColumns($dataAttrContainer, $dataAttrContainer.find(".iso-container"));
-            });
-
-            calculateColumns($dataAttrContainer, $isoContainer);
-
-            setTimeout(function () {
-                $isoContainer.isotope("layout");
-            }, 600);
         } else if ($dataAttrContainer.hasClass("jquery-filter")) {
             if ($dataAttrContainer.hasClass("dt-css-grid-wrap")) {
                 // Filter active item class handling since it's not included in filtrade.
@@ -89,7 +142,7 @@
             $dataAttrContainer.find(".post-entry-wrapper").clickOverlayGradient();
         }
 
-        precessEffects($dataAttrContainer.find(".wf-cell"), $dataAttrContainer.hasClass("loading-effect-none"));
+        processEffects($dataAttrContainer.find(".wf-cell"), $dataAttrContainer.hasClass("loading-effect-none"));
 
         window.the7AddHovers($dataAttrContainer);
         window.the7AddDesktopHovers($dataAttrContainer);
@@ -101,46 +154,6 @@
 
             return false;
         });
-    };
-
-    // Make sure you run this code under Elementor.
-    $(window).on("elementor/frontend/init", function () {
-        elementorFrontend.hooks.addAction("frontend/element_ready/the7_elements.default", the7ElementsWidgetHandler);
-        elementorFrontend.hooks.addAction("frontend/element_ready/the7-elements-woo-masonry.default", the7ElementsWidgetHandler);
-    });
-
-    function elementorEditorAddOnChangeHandler(widgetType, handler) {
-        widgetType = widgetType ? ":" + widgetType : "";
-        elementor.channels.editor.on("change" + widgetType, handler);
     }
-
-    $(function () {
-        var onEditSettingsTimeout;
-
-        function toggleDefaultImageOverlay(controlView, widgetView) {
-            if (widgetView.model.getSetting("overlay_background_background") || widgetView.model.getSetting("overlay_hover_background_background")) {
-                widgetView.$el.find(".the7-elementor-widget").removeClass("enable-bg-rollover");
-            } else {
-                widgetView.$el.find(".the7-elementor-widget").addClass("enable-bg-rollover");
-            }
-        }
-
-        elementorEditorAddOnChangeHandler("the7_elements:overlay_background_background", toggleDefaultImageOverlay);
-        elementorEditorAddOnChangeHandler("the7_elements:overlay_hover_background_background", toggleDefaultImageOverlay);
-        elementorEditorAddOnChangeHandler("the7_elements", function (controlView, widgetView) {
-            if ($.isEmptyObject(controlView.model.attributes.selectors)) {
-                return;
-            }
-
-            if (widgetView.model.getSetting("layout") !== "masonry") {
-                return;
-            }
-
-            clearTimeout(onEditSettingsTimeout);
-            onEditSettingsTimeout = setTimeout(function () {
-                window.jQuery(widgetView.$el).find(".iso-container").isotope("layout");
-            }, 800);
-        });
-    });
 
 })(jQuery);

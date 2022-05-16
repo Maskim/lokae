@@ -36,7 +36,7 @@ class RavenHandler extends \FcfVendor\Monolog\Handler\AbstractProcessingHandler
      */
     protected $ravenClient;
     /**
-     * @var LineFormatter The formatter to use for the logs generated via handleBatch()
+     * @var FormatterInterface The formatter to use for the logs generated via handleBatch()
      */
     protected $batchFormatter;
     /**
@@ -65,7 +65,7 @@ class RavenHandler extends \FcfVendor\Monolog\Handler\AbstractProcessingHandler
         }
         // the record with the highest severity is the "main" one
         $record = \array_reduce($records, function ($highest, $record) {
-            if ($record['level'] > $highest['level']) {
+            if (null === $highest || $record['level'] > $highest['level']) {
                 return $record;
             }
             return $highest;

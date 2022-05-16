@@ -6,6 +6,7 @@ return array(
 	'weight'   => -1,
 	'name'     => __( 'Button', 'the7mk2' ),
 	'base'     => 'dt_default_button',
+	'description' => '',
 	'icon'     => 'dt_vc_ico_button',
 	'class'    => 'dt_vc_default_button',
 	'category' => __( 'by Dream-Theme', 'the7mk2' ),
@@ -336,7 +337,7 @@ return array(
 			'units'      => 'px',
 			'group'      => __( 'Link settings', 'the7mk2' ),
 		),
-		
+
 		array(
 			'heading'    => __( 'Normal', 'the7mk2' ),
 			'param_name' => 'link_normal_settings',
@@ -348,7 +349,7 @@ return array(
 			'param_name'  => 'link_text_color',
 			'type'        => 'colorpicker',
 			'value'       => '',
-			'description' => __( 'Live empty to use accent color. ', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color. ', 'the7mk2' ),
 			'group'       => __( 'Link settings', 'the7mk2' ),
 		),
 		array(
@@ -373,7 +374,7 @@ return array(
 			'param_name'  => 'link_text_hover_color',
 			'type'        => 'colorpicker',
 			'value'       => '',
-			'description' => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'dependency'  => array(
 				'element' => 'link_hover',
 				'value'   => 'y',
@@ -419,7 +420,7 @@ return array(
 			'param_name'  => 'link_border_color',
 			'type'        => 'colorpicker',
 			'value'       => '',
-			'description' => __( 'Live empty to use accent color.', 'the7mk2' ),
+			'description' => __( 'Leave empty to use accent color.', 'the7mk2' ),
 			'dependency' => array(
 				'element' => 'link_decoration',
 				'value'   => array( 'left_to_right', 'from_center', 'upwards', 'downwards' ),
@@ -446,7 +447,7 @@ return array(
 			'param_name'       => 'icon',
 			'type'             => 'textarea_raw_html',
 			'value'            => '',
-			'description'      => 'f.e. <code>&lt;i class="fa fa-arrow-circle-right"&gt;&lt;/i&gt;</code> <a href="http://fontawesome.io/icons/" target="_blank">http://fontawesome.io/icons/</a>.',
+			'description'      => 'f.e. <code>&lt;i class="fa fa-arrow-circle-right"&gt;&lt;/i&gt;</code> <a href="https://fontawesome.io/icons/" target="_blank">https://fontawesome.io/icons/</a>.',
 			'edit_field_class' => 'custom-textarea-height vc_col-xs-12  vc_column',
 			'dependency'       => array(
 				'element' => 'icon_type',
@@ -472,7 +473,7 @@ return array(
 			'value'      => '8px',
 			'units'      => 'px',
 			'group'      => __( 'Icon', 'the7mk2' ),
-			
+
 			'dependency' => array(
 				'element' => 'icon_type',
 				'value'   => array( 'picker', 'html' ),

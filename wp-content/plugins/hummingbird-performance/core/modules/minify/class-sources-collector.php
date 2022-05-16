@@ -44,10 +44,7 @@ class Sources_Collector {
 	 *
 	 * @var array $collected
 	 */
-	private $collected = array(
-		'styles'  => array(),
-		'scripts' => array(),
-	);
+	private $collected;
 
 	/**
 	 * Sources_Collector constructor.

@@ -27,19 +27,14 @@
   margin-bottom: 32px;
 }
 .testimonial-vcard .no-avatar {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   width: 60px;
   height: 60px;
 }
-.testimonial-vcard .no-avatar:after {
-  content: "\e502";
-  font-size: 28px;
-}
 .testimonial-vcard a.no-avatar:hover:after {
   color: #fff;
-}
-.widget .testimonial-vcard .text-secondary,
-.widget .testimonial-vcard .text-primary {
-  font-weight: normal;
 }
 .testimonial-vcard .rollover i {
   width: 60px;
@@ -81,9 +76,13 @@ body.testimonials {
   align-self: center;
 }
 .testimonial-vcard .alignleft {
-  margin: 0 20px 5px 0;
+  margin: 0 15px 5px 0;
   font-size: 0;
   line-height: 0;
+}
+#sidebar .testimonial-vcard .alignleft,
+#footer .testimonial-vcard .alignleft {
+  margin: 0 15px 5px 0;
 }
 .testimonial-vcard .alignleft div {
   overflow: hidden;
@@ -368,7 +367,7 @@ body.testimonials {
 }
 #sidebar .team-desc,
 #footer .team-desc {
-  padding: 8px 0 7px;
+  padding: 13px 0 7px;
 }
 .team-container .soc-ico {
   padding-top: 5px;
@@ -387,9 +386,6 @@ body.testimonials {
 }
 .round-images .team-container {
   text-align: center;
-}
-.team-author-name {
-  margin-bottom: 5px;
 }
 .team-author-name a {
   text-decoration: none;
@@ -415,6 +411,12 @@ body.testimonials {
 }
 .dt-team-shortcode .team-author p {
   display: inline-block;
+}
+.team-author {
+  padding-bottom: 5px;
+}
+.team-author p {
+  margin-bottom: 5px;
 }
 .hide-team-position .team-author p,
 .dt-team-shortcode.hide-team-position .team-author p {
@@ -1067,8 +1069,10 @@ body.testimonials {
 ========================================================================= */
 .widget .instagram-photos {
   overflow: hidden;
-  margin-bottom: 15px;
   padding-top: 5px;
+}
+.widget_media_gallery .gallery-item {
+  line-height: 0;
 }
 .instagram-photos a {
   position: relative;
@@ -1856,13 +1860,8 @@ body.testimonials {
 .mobile-false .albums-shortcode figure:hover > .post-thumbnail-rollover:after {
   opacity: 1;
 }
-.mobile-false .content-rollover-layout-list article:hover > .post-thumbnail-wrap .post-thumbnail-rollover:after,
-.mobile-false .gradient-overlay-layout-list article:hover > .post-thumbnail-wrap .post-thumbnail-rollover:after,
-.mobile-false .gradient-overlap-layout-list article:hover > .post-thumbnail-wrap .post-thumbnail-rollover:after {
-  opacity: 1;
-}
-.mobile-true .content-rollover-layout-list article.is-clicked > .post-thumbnail-wrap .post-thumbnail-rollover:after,
-.mobile-true .gradient-overlay-layout-list article.is-clicked > .post-thumbnail-wrap .post-thumbnail-rollover:after,
-.mobile-true .gradient-overlap-layout-list article.is-clicked > .post-thumbnail-wrap .post-thumbnail-rollover:after {
+.content-rollover-layout-list article:hover > .post-thumbnail-wrap .post-thumbnail-rollover:after,
+.gradient-overlay-layout-list article:hover > .post-thumbnail-wrap .post-thumbnail-rollover:after,
+.gradient-overlap-layout-list article:hover > .post-thumbnail-wrap .post-thumbnail-rollover:after {
   opacity: 1;
 }

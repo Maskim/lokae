@@ -21,12 +21,12 @@ class WCML_Mix_and_Match_Products {
 		}
 
 		if ( 'product' === $post->post_type ) {
-			remove_action( 'updated_post_meta', [ $this, 'sync_mnm_data' ], 10, 4 );
+			remove_action( 'updated_post_meta', [ $this, 'sync_mnm_data' ], 10 );
 
 			if ( $woocommerce_wpml->products->is_original_product( $post_id ) ) {
 				$original_product_id = $post_id;
 			} else {
-				$original_product_id = $this->woocommerce_wpml->products->get_original_product_id( $post_id );
+				$original_product_id = $woocommerce_wpml->products->get_original_product_id( $post_id );
 			}
 
 			$mnm_data             = maybe_unserialize( get_post_meta( $original_product_id, '_mnm_data', true ) );

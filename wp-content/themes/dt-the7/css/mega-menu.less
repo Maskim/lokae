@@ -288,6 +288,7 @@
 	padding-top: 0;
 }
 .mobile-main-nav .sub-nav.sub-nav-widgets {
+	padding:0 !important;
 //	margin-left: 0;
 	#page & {
 		max-width: 100%;
@@ -470,6 +471,7 @@
 .top-header .dt-mega-menu-wrap .sub-nav-widgets > li:last-child .widget {
 	padding-bottom: 0;
 }
+
 .masthead:not(.sub-downwards) .main-nav .dt-mega-menu-wrap {
 	background-color: @submenu-bg-color;
 }
@@ -488,6 +490,14 @@
 .sub-downwards .main-nav .sub-nav > li.dt-mega-parent.empty-title > a {
 	padding: @mega-submenu-item-padding-top @mega-submenu-item-padding-right @mega-submenu-item-padding-bottom @mega-submenu-item-padding-left;
 }
+
+.main-nav .sub-nav:first-child > li.dt-mega-parent.has-children:not(.has-widget) > a,
+.main-nav .sub-nav:first-child > li.dt-mega-parent.has-children.has-widget > .sub-nav-widgets,
+.sub-downwards .main-nav .sub-nav:first-child > li.dt-mega-parent.empty-title.has-children:not(.has-widget) > a,
+.sub-downwards .main-nav .sub-nav:first-child > li.dt-mega-parent.empty-title.has-children.has-widget > .sub-nav-widgets{
+	margin-bottom: @mega-submenu-item-2-level-spacing;
+}
+
 .sub-downwards .sub-nav > li.dt-mega-parent > .next-level-button {
 	margin-top: @mega-submenu-item-padding-top;
 	margin-bottom: @mega-submenu-item-padding-bottom;
@@ -573,6 +583,12 @@
 	}
 
 	//Widgets
+	.sidebar-content .widget {
+		.dt-mega-parent & {
+			border: none;
+			margin-bottom: 0;
+		}
+	}
 	.sidebar-content .widget *,
 	.sidebar-content .widget:not(.widget_icl_lang_sel_widget) a:not(:hover),
 	.sidebar-content.solid-bg .widget:not(.widget_icl_lang_sel_widget) a:not(:hover) * {
@@ -580,8 +596,11 @@
 			color: @mega-menu-widget-color;
 		}
 	}
-	
-	.sidebar-content .widget-title {
+	.dt-mega-menu .dt-mega-parent .sidebar-content .widget .recent-posts a {
+		color: @mega-menu-widget-title-color;
+	}
+	.sidebar-content .widget-title,
+	.sidebar-content .widget .team-author-name a:not(:hover) {
 		.dt-mega-parent & {
 			color: @mega-menu-widget-title-color;
 		}
@@ -589,7 +608,7 @@
 	.sidebar-content .widget a:not(.button):not(.dt-btn):hover,
 	.sidebar-content .widget a:not(.button):not(.dt-btn):hover * {
 		.dt-mega-parent & {
-			color: @accent-bg-color;
+			color: var(--the7-accent-color);
 			.accent-gradient & {
 				.text-gradient (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
 			}
@@ -613,7 +632,7 @@
 .soc-ico a {
 	.mega-menu-widgets & {
 		&:after {
-			background-color: @accent-bg-color;
+			background-color: var(--the7-accent-color);
 			box-shadow: none;
 		}
 	}
@@ -624,7 +643,7 @@
 	}
 }
 .dt-mega-parent .sidebar-content .widget .post-content .text-secondary {
-	color: @mega-menu-widget-color;
+	color: fade(@mega-menu-widget-color, 50%);
 }
 .custom-categories a,
 .custom-categories a .item-name,
@@ -676,7 +695,7 @@
 a.rsswidget:hover {
 
 	.dt-mega-parent .sidebar-content .widget & {
-		color: @accent-bg-color;
+		color: var(--the7-accent-color);
 		.accent-gradient & {
 			.text-gradient (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
 		}
@@ -698,4 +717,8 @@ a.rsswidget:hover {
 	.dt-mega-parent .sidebar-content .widget & {
 		color: fade(@mega-menu-widget-color, 50%);
 	}
+}
+
+.main-nav li.dt-mega-menu .mega-menu-img >.the7-svg-image {
+	width: 16px;
 }

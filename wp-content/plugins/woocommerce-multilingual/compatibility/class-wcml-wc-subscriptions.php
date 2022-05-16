@@ -9,6 +9,9 @@ class WCML_WC_Subscriptions {
 	/** @var wpdb */
 	private $wpdb;
 
+	/** @var WC_Cart[]|null $recurring_carts */
+	private $recurring_carts;
+
 	public function __construct( woocommerce_wpml $woocommerce_wpml, wpdb $wpdb ) {
 		$this->woocommerce_wpml = $woocommerce_wpml;
 		$this->wpdb             = $wpdb;
@@ -200,7 +203,7 @@ class WCML_WC_Subscriptions {
 			echo '</div>';
 			?>
 			<script>
-				jQuery(document).ready(function($) {
+				jQuery(function($) {
 					jQuery('.wcml_prices_if_subscription .wcml_custom_prices_input').attr('name', '_wcml_custom_prices[new_subscription]').attr( 'id', '_wcml_custom_prices[new_subscription]');
 					jQuery('.wcml_prices_if_subscription .wcml_custom_prices_options_block>label').attr('for', '_wcml_custom_prices[new_subscription]');
 					jQuery('.wcml_prices_if_subscription .wcml_schedule_input').each( function(){

@@ -1,33 +1,4 @@
 <?php
-/*
-Plugin Name: Options Framework
-Plugin URI: http://www.wptheming.com
-Description: A framework for building theme options.
-Version: 1.5
-Author: Devin Price
-Author URI: http://www.wptheming.com
-License: GPLv2
-Modified By: Daniel Gerasimov
-*/
-
-/*
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*/
-
-/* Basic plugin definitions */
-
 define( 'OPTIONS_FRAMEWORK_VERSION', '1.5' );
 define( 'OPTIONS_FRAMEWORK_URL', trailingslashit( get_template_directory_uri() . '/inc/extensions/' . basename(dirname( __FILE__ )) ) );
 define( 'OPTIONS_FRAMEWORK_DIR', trailingslashit( dirname( __FILE__ ) ) );
@@ -139,10 +110,16 @@ function optionsframework_empty_main_menu( $submenu_file ) {
 /**
  * Get options id.
  *
+ * @return string
  */
 function optionsframework_get_options_id() {
-	$name = preg_replace("/\W/", "", strtolower(wp_get_theme()->Name));
-	return apply_filters( 'optionsframework_get_options_id', $name );
+	static $options_id = null;
+
+	if ( $options_id === null ) {
+		$options_id = preg_replace( '/\W/', '', strtolower( wp_get_theme()->Name ) );
+	}
+
+	return apply_filters( 'optionsframework_get_options_id', $options_id );
 }
 
 /**
@@ -153,7 +130,7 @@ function optionsframework_get_options_id() {
  */
 function optionsframework_option_name() {
 	$options_id = optionsframework_get_options_id();
-	$of_settings = get_option('optionsframework');
+	$of_settings = get_option('optionsframework', []);
 	$update = false;
 
 	if ( ! isset( $of_settings['id'] ) || $options_id != $of_settings['id'] ) {
@@ -186,7 +163,7 @@ function optionsframework_load_sanitization() {
  * The optionsframework_init loads all the required files and registers the settings.
  *
  * Read more about the Settings API in the WordPress codex:
- * http://codex.wordpress.org/Settings_API
+ * https://codex.wordpress.org/Settings_API
  *
  * The theme options are saved using a unique option id in the database.  Developers
  * traditionally set the option id via in theme using the function
@@ -240,16 +217,13 @@ function optionsframework_init() {
 	// Registers the settings fields and callback
 	register_setting( 'optionsframework', $optionsframework_settings['id'], 'optionsframework_validate' );
 
-	// Update cache.
-    add_action( 'update_option_' . $optionsframework_settings['id'], 'optionsframework_update_options_cache', 10, 2 );
-
 	// Change the capability required to save the 'optionsframework' options group.
 	add_filter( 'option_page_capability_optionsframework', 'optionsframework_page_capability' );
 }
 
 /**
  * Ensures that a user with the 'edit_theme_options' capability can actually set the options
- * See: http://core.trac.wordpress.org/ticket/14365
+ * See: https://core.trac.wordpress.org/ticket/14365
  *
  * @param string $capability The capability used for the page, which is manage_options by default.
  * @return string The capability to actually use.
@@ -269,7 +243,7 @@ function optionsframework_read_capability() {
  * activation since most people won't be editing the options.php
  * on a regular basis.
  *
- * http://codex.wordpress.org/Function_Reference/add_option
+ * https://codex.wordpress.org/Function_Reference/add_option
  *
  */
 
@@ -487,7 +461,7 @@ function of_load_global_admin_assets() {
 }
 
 if ( !function_exists( 'optionsframework_page' ) ) :
-	
+
 	function optionsframework_page() {
 		if ( presscore_options_debug() ) {
 			$wrap_class = ' of-debug';
@@ -514,7 +488,13 @@ if ( !function_exists( 'optionsframework_page' ) ) :
 			if ( isset( $_GET['tab'] ) ) {
 				$active_tab = sanitize_key( $_GET['tab'] );
 			}
-			$of_interface = new The7_Options( optionsframework_get_page_options( $cur_page_id ) );
+
+			$options_to_display = apply_filters( 'the7_replace_theme_options_to_display', [], $cur_page_id );
+			if ( ! $options_to_display ) {
+				$options_to_display = optionsframework_get_page_options( $cur_page_id );
+			}
+
+			$of_interface = new The7_Options( $options_to_display );
 			?>
 
 			<?php do_action( 'optionsframework_before_tabs' ); ?>
@@ -1035,7 +1015,7 @@ function optionsframework_catch_last_php_error() {
 	    delete_transient( 'the7_options_errors' );
 
 		if ( strpos( $last_php_error['message'], 'Allowed memory size' ) !== false ) {
-			$error = _x( 'Theme options cannot be saved. Not enough memory available. Please try to increase <a href="http://support.dream-theme.com/knowledgebase/allowed-memory-size-error/" title="memory limit">memory limit</a>', 'theme-options', 'the7mk2' );
+			$error = _x( 'Theme options cannot be saved. Not enough memory available. Please try to increase <a href="https://support.dream-theme.com/knowledgebase/allowed-memory-size-error/" title="memory limit">memory limit</a>', 'theme-options', 'the7mk2' );
 			set_transient( 'the7_options_errors', $error, 30 );
 		}
 	}
@@ -1197,7 +1177,7 @@ function optionsframework_admin_bar_theme_options( $wp_admin_bar ) {
 	$wp_admin_bar->add_menu( array(
 		'id'    => $parent_menu_id,
 		'title' => optionsframework_get_main_title(),
-		'href'  => admin_url( 'admin.php?page=' . urlencode( $parent_menu_item->get( 'slug' ) ) ),
+		'href'  => admin_url( 'admin.php?page=options-framework' ),
 	));
 
 	foreach( $menu_items as $menu_item ) {
@@ -1389,28 +1369,14 @@ function optionsframework_get_view_device() {
 }
 
 /**
- * Description here.
+ * Retrieve theme options array.
  *
+ * @return array
  */
 function optionsframework_get_options() {
-	$config_id = optionsframework_get_options_id();
-	$config = get_option( 'optionsframework' );
-	if ( !isset($config['knownoptions']) || !in_array($config_id, $config['knownoptions']) ) {
-		return null;
-	}
+	$options = get_option( optionsframework_get_options_id() );
 
-	return get_option( $config_id );
-}
-
-/**
- * Update 'saved_options' cache after theme options save.
- *
- * @param $old_value
- * @param $value
- */
-function optionsframework_update_options_cache( $old_value, $value ) {
-	$value = apply_filters( 'dt_of_get_option_static', $value );
-	wp_cache_set( 'saved_options', $value, 'optionsframework' );
+	return is_array( $options ) ? $options : [];
 }
 
 if ( ! function_exists( 'of_get_option' ) ) :
@@ -1428,22 +1394,19 @@ if ( ! function_exists( 'of_get_option' ) ) :
 	 * @return mixed Theme option value.
 	 */
 	function of_get_option( $name, $default = false ) {
-		if ( false === ( $saved_options = wp_cache_get( 'saved_options', 'optionsframework' ) ) ) {
-
-			$saved_options = optionsframework_get_options();
-			$saved_options = apply_filters( 'dt_of_get_option_static', $saved_options );
-
-			wp_cache_set( 'saved_options', $saved_options, 'optionsframework' );
-		}
-
-		$options = apply_filters( 'dt_of_get_option', $saved_options, $name );
+		$options = apply_filters( 'dt_of_get_option_static', optionsframework_get_options() );
+		$options = apply_filters( 'dt_of_get_option', $options, $name );
 
 		if ( isset( $options[ $name ] ) ) {
-			return apply_filters( "dt_of_get_option-{$name}", $options[ $name ] );
+			return apply_filters( "dt_of_get_option-{$name}", $options[ $name ] ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 		}
 
-		if ( false === $default && null !== ( $def_val = _optionsframework_get_option_default_value( $name ) ) ) {
-			return $def_val;
+		if ( false === $default ) {
+			$def_val = _optionsframework_get_option_default_value( $name );
+
+			if ( $def_val !== null ) {
+				return $def_val;
+			}
 		}
 
 		return $default;
@@ -1617,3 +1580,9 @@ function optionsframework_fonts_ajax_response() {
 }
 
 add_action( 'wp_ajax_of_get_fonts', 'optionsframework_fonts_ajax_response' );
+
+function of_save_unsanitized_options( $options ) {
+	add_filter( 'optionsframework_get_validated_options', 'the7_skip_options_sanitizing', 10, 2 );
+	update_option( optionsframework_get_options_id(), $options );
+	remove_filter( 'optionsframework_get_validated_options', 'the7_skip_options_sanitizing', 10 );
+}

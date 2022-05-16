@@ -5,6 +5,9 @@
 		.content & {
 			background-color: fade(@base-color, 15%);
 		}
+		.dt-mega-menu .dt-mega-parent .sidebar-content & {
+			background-color: fade(@mega-menu-widget-color, 15%);
+		}
 		.sidebar &,
 		.sidebar-content & {
 			background-color: fade(@widget-sidebar-color, 15%);
@@ -17,8 +20,8 @@
 	//.dt-team-shortcode.dt-icon-bg-on .soc-ico a:before,
 	.dt-shortcode-icon.dt-icon-bg-on .icon-inner:before,
 	.text-icon.dt-icon-bg-on .icon-inner:before {
-		border-color: @accent-bg-color;
-		background-color: @accent-bg-color;
+		border-color: var(--the7-accent-color);
+		background-color: var(--the7-accent-color);
 		.accent-gradient & {
 			.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
 		}
@@ -26,7 +29,7 @@
 	.dt-team-shortcode.dt-icon-bg-on .soc-ico a:before {
 		.dt-icon-bg-on& { 
 			.content & {
-				background-color: @accent-bg-color;
+				background-color: var(--the7-accent-color);
 			}
 			.accent-gradient .content & {
 				.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
@@ -34,18 +37,16 @@
 		}
 		.dt-icon-border-on& {
 			.content & {
-				border-color: @accent-bg-color;
+				border-color: var(--the7-accent-color);
 			}
 		}
 	}
 	.dt-shortcode-soc-icons a,
 	.dt-shortcode-icon,
 	.text-icon {
-		&.dt-icon-border-on:before {
-			border-color: @accent-bg-color;
-		}
-		&.dt-icon-hover-border-on:after {
-			border-color: @accent-bg-color;
+		&.dt-icon-border-on:before,
+        &.dt-icon-hover-border-on:after {
+			border-color: var(--the7-accent-color);
 		}
 	}
 			
@@ -57,7 +58,7 @@
 				.box-shadow (none);
 			}
 			&:after {
-				background-color: @accent-bg-color;
+				background-color: var(--the7-accent-color);
 				.box-shadow (none);
 			}
 		}
@@ -88,8 +89,8 @@
 	.dt-shortcode-icon.dt-icon-hover-bg-on .icon-inner,
 	.text-icon.dt-icon-hover-bg-on .icon-inner {
 		&:after {
-			border-color: @accent-bg-color;
-			background-color: @accent-bg-color;
+			border-color: var(--the7-accent-color);
+			background-color: var(--the7-accent-color);
 			.accent-gradient & {
 				.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
 			}
@@ -98,7 +99,7 @@
 	.dt-team-shortcode.dt-icon-bg-on .soc-ico a:after {
 		.dt-icon-hover-bg-on& { 
 			.content & {
-				background-color: @accent-bg-color;
+				background-color: var(--the7-accent-color);
 			}
 			.accent-gradient .content & {
 				.background-gradient (@startColor: @accent-bg-color, @endColor: @accent-bg-color-2);
@@ -106,7 +107,7 @@
 		}
 		.dt-icon-border-hover-on& {
 			.content & {
-				border-color: @accent-bg-color;
+				border-color: var(--the7-accent-color);
 			}
 		}
 	}
@@ -114,8 +115,7 @@
 	#main .dt-team-shortcode .soc-ico a .soc-font-icon,
 	.dt-shortcode-icon .soc-icon,
 	.text-icon .soc-icon {
-
-		color: @accent-bg-color;
+		color: var(--the7-accent-color);
 		.accent-gradient & {
 			.text-gradient (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
 		}
@@ -123,7 +123,7 @@
 
 	.soc-ico a:not(:hover) .soc-font-icon {
 		.content & {
-			color: @base-color;
+			color: var(--the7-base-color);
 		}
 		.sidebar &,
 		.sidebar-content & {

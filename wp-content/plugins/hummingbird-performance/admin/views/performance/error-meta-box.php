@@ -14,15 +14,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-?>
-
-<div class="sui-notice sui-notice-error">
-	<p><?php echo $error_text; ?></p>
-	<div id="wphb-error-details">
-		<p><code><?php echo $error_details; ?></code></p>
-	</div>
-	<div class="sui-notice-buttons">
-		<a href="<?php echo esc_url( $retry_url ); ?>" class="sui-button sui-button-blue button-notice"><?php esc_html_e( 'Try again', 'wphb' ); ?></a>
-		<a target="_blank" href="<?php echo esc_url( \Hummingbird\Core\Utils::get_link( 'support' ) ); ?>" class="sui-button sui-button-blue button-notice"><?php esc_html_e( 'Support', 'wphb' ); ?></a>
-	</div>
-</div>
+$this->admin_notices->show_inline(
+	$error_text,
+	'error',
+	'<code>' . $error_details . '</code>',
+	sprintf( /* translators: %1$s - opening a tag, %2$s - </a> */
+		esc_html__( '%1$sTry again%2$s', 'wphb' ),
+		'<a href="' . esc_url( $retry_url ) . '" class="sui-button sui-button-blue">',
+		'</a>'
+	) . sprintf( /* translators: %1$s - opening a tag, %2$s - </a> */
+		esc_html__( '%1$sSupport%2$s', 'wphb' ),
+		'<a href="' . esc_url( \Hummingbird\Core\Utils::get_link( 'support' ) ) . '" target="_blank" class="sui-button sui-button-blue">',
+		'</a>'
+	)
+);

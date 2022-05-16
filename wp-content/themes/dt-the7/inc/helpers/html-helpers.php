@@ -561,7 +561,7 @@ if ( ! function_exists( 'presscore_post_details_link' ) ) :
 	 *
 	 * @return string
 	 */
-	function presscore_post_details_link( $post_id = null, $class = null, $link_text = null ) {
+	function presscore_post_details_link( $post_id = null, $classes = null, $link_text = null ) {
 		global $post;
 
 		if ( ! $post_id && ! $post ) {
@@ -576,23 +576,34 @@ if ( ! function_exists( 'presscore_post_details_link' ) ) :
 			return '';
 		}
 
-		if ( $class === null ) {
-			$class = array(
+		if ( $classes === null ) {
+			$classes = [
 				'details',
 				'more-link',
-			);
-		} elseif ( ! is_array( $class ) ) {
-			$class = explode( ' ', $class );
+			];
+		} elseif ( is_string( $classes ) ) {
+			$classes = explode( ' ', $classes );
 		}
 
 		$output = '';
-		$url    = get_permalink( $post_id );
+		$aria_label = '';
+		$href    = get_permalink( $post_id );
+		if ( $href ) {
+			$class = implode( ' ', $classes );
+			$aria_label = the7_get_read_more_aria_label();
+			$caption = is_string( $link_text ) ? $link_text : esc_html__( 'Details', 'the7mk2' );
 
-		if ( $url ) {
-			$output = sprintf( '<a href="%1$s" class="%2$s" rel="nofollow">%3$s</a>', esc_url( $url ), esc_attr( implode( ' ', $class ) ), is_string( $link_text ) ? $link_text : esc_html__( 'Details', 'the7mk2' ) );
+			ob_start();
+			presscore_get_template_part(
+				'theme',
+				'general/read-more-button',
+				null,
+				compact( 'href', 'class', 'aria_label', 'caption' )
+			);
+			$output = ob_get_clean();
 		}
 
-		return apply_filters( 'presscore_post_details_link', $output, $post_id, $class );
+		return apply_filters( 'presscore_post_details_link', $output, $post_id, $classes, $link_text, $aria_label );
 	}
 
 endif;
@@ -685,7 +696,9 @@ if ( ! function_exists( 'presscore_display_post_author' ) ) :
 			if ( $avatar ) {
 				echo '<div class="author-avatar round-images">' . $avatar . '</div>';
 			} else {
-				echo '<span class="author-avatar no-avatar"></span>';
+				echo '<span class="author-avatar no-avatar"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve"><path d="M8,8c2.2,0,4-1.8,4-4s-1.8-4-4-4S4,1.8,4,4S5.8,8,8,8z M8,10c-2.7,0-8,1.3-8,4v1c0,0.5,0.4,1,1,1h14c0.5,0,1-0.5,1-1v-1
+	C16,11.3,10.7,10,8,10z"/></svg></span>';
 			}
             ?>
 			<div class="author-description">
@@ -1061,7 +1074,7 @@ if ( ! function_exists( 'presscore_the_title_trim' ) ) :
 	/**
 	 * Replace protected and private title part.
 	 *
-	 * From http://wordpress.org/support/topic/how-to-remove-private-from-private-pages
+	 * From https://wordpress.org/support/topic/how-to-remove-private-from-private-pages
 	 *
 	 * @return string Clear title.
 	 */
@@ -2180,7 +2193,7 @@ function the7_get_share_buttons_list( $place, $post_id = null ) {
 				$icon_class = 'facebook';
 				$url        = add_query_arg(
 					array( 'u' => rawurlencode( $u ), 't' => urlencode( $t ) ),
-					'http://www.facebook.com/sharer.php'
+					'https://www.facebook.com/sharer.php'
 				);
 				break;
 			case 'pinterest':
@@ -2254,4 +2267,42 @@ function the7_generate_post_css( $post_id ) {
 		the7_get_new_shortcode_less_vars_manager(),
 		new The7_Less_Compiler()
 	);
+}
+
+/**
+ * @param null|WP_Post $post
+ *
+ * @return string
+ */
+function the7_get_read_more_aria_label( $post = null ) {
+	return apply_filters(
+		'the7_read_more_aria_label',
+		sprintf(
+			// translators: %s: post title
+			esc_html__( 'Read more about %s', 'the7mk2' ),
+			get_the_title( $post )
+		),
+		$post
+	);
+}
+
+/**
+ * Escapes 'href' and 'src' attributes with the esc_url and the rest with the esc_attr.
+ *
+ * @param array $attributes
+ *
+ * @return string
+ */
+function the7_get_html_attributes_string( $attributes ) {
+	$attributes = array_filter( $attributes );
+	foreach ( $attributes as $att => &$value ) {
+		if ( $att === 'href' || $att === 'src' ) {
+			$value = esc_url( $value );
+		} else {
+			$value = esc_attr( $value );
+		}
+	}
+	unset( $value );
+
+	return implode( ' ', presscore_convert_indexed2numeric_array( '=', $attributes, '', '"%s"' ) );
 }

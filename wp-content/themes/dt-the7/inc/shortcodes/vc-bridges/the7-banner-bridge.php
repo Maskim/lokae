@@ -6,6 +6,7 @@ return array(
 	"weight" => -1,
 	"name" => __("Banner", 'the7mk2'),
 	"base" => "dt_banner",
+	'description' => '',
 	"icon" => "dt_vc_ico_banner",
 	"class" => "dt_vc_sc_banner",
 	"category" => __('The7 Old', 'the7mk2'),

@@ -3,7 +3,7 @@
  * @package The7
  */
 
-namespace The7\Adapters\Elementor\Page_Settings;
+namespace The7\Mods\Compatibility\Elementor\Page_Settings;
 use Elementor\Modules\PageTemplates\Module as PageTemplatesModule;
 
 use Elementor\Controls_Manager;
@@ -65,11 +65,11 @@ return [
 		'the7_document_padding_top'           => [
 			'meta'    => '_dt_page_overrides_top_margin',
 			'on_save' => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
 				'update_padding',
 			],
 			'on_read' => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
 				'get_padding',
 			],
 			'args'    => [
@@ -97,11 +97,11 @@ return [
 		'the7_document_padding_right'         => [
 			'meta'    => '_dt_page_overrides_right_margin',
 			'on_save' => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
 				'update_padding',
 			],
 			'on_read' => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
 				'get_padding',
 			],
 			'args'    => [
@@ -129,11 +129,11 @@ return [
 		'the7_document_padding_bottom'        => [
 			'meta'    => '_dt_page_overrides_bottom_margin',
 			'on_save' => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
 				'update_padding',
 			],
 			'on_read' => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
 				'get_padding',
 			],
 			'args'    => [
@@ -161,11 +161,11 @@ return [
 		'the7_document_padding_left'          => [
 			'meta'    => '_dt_page_overrides_left_margin',
 			'on_save' => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
 				'update_padding',
 			],
 			'on_read' => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
 				'get_padding',
 			],
 			'args'    => [
@@ -200,11 +200,11 @@ return [
 		'the7_document_mobile_padding_top'    => [
 			'meta'    => '_dt_mobile_page_padding_top',
 			'on_save' => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
 				'update_padding',
 			],
 			'on_read' => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
 				'get_padding',
 			],
 			'args'    => [
@@ -232,11 +232,11 @@ return [
 		'the7_document_mobile_padding_right'  => [
 			'meta'    => '_dt_mobile_page_padding_right',
 			'on_save' => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
 				'update_padding',
 			],
 			'on_read' => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
 				'get_padding',
 			],
 			'args'    => [
@@ -264,11 +264,11 @@ return [
 		'the7_document_mobile_padding_bottom' => [
 			'meta'    => '_dt_mobile_page_padding_bottom',
 			'on_save' => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
 				'update_padding',
 			],
 			'on_read' => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
 				'get_padding',
 			],
 			'args'    => [
@@ -296,11 +296,11 @@ return [
 		'the7_document_mobile_padding_left'   => [
 			'meta'    => '_dt_mobile_page_padding_left',
 			'on_save' => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
 				'update_padding',
 			],
 			'on_read' => [
-				\The7\Adapters\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
+				\The7\Mods\Compatibility\Elementor\Meta_Adapters\The7_Elementor_Padding_Meta_Adapter::class,
 				'get_padding',
 			],
 			'args'    => [

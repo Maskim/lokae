@@ -8,10 +8,10 @@
 namespace Hummingbird\Admin\Pages;
 
 use Hummingbird\Admin\Page;
+use Hummingbird\Core\Configs;
 use Hummingbird\Core\Modules\Advanced;
 use Hummingbird\Core\Modules\Performance;
 use Hummingbird\Core\Modules\Uptime;
-use Hummingbird\Core\Settings;
 use Hummingbird\Core\Utils;
 use stdClass;
 use WP_Error;
@@ -98,14 +98,18 @@ class Dashboard extends Page {
 		$this->performance->report_dismissed = Performance::report_dismissed();
 		$this->performance->is_doing_report  = Performance::is_doing_report();
 
-		$widget_settings         = Settings::get_setting( 'widget', 'performance' );
-		$this->performance->type = $widget_settings['desktop'] ? 'desktop' : 'mobile';
+		$selected_type = filter_input( INPUT_GET, 'type', FILTER_UNSAFE_RAW );
+		$selected_type = sanitize_text_field( $selected_type );
+
+		$this->performance->type = 'mobile' === $selected_type ? 'mobile' : 'desktop';
 	}
 
 	/**
 	 * Function triggered when the page is loaded before render any content.
 	 */
 	public function on_load() {
+		add_action( 'admin_enqueue_scripts', array( new Configs(), 'enqueue_react_scripts' ) );
+
 		if ( is_multisite() && ! is_network_admin() ) {
 			$minify_module = Utils::get_module( 'minify' );
 
@@ -153,54 +157,67 @@ class Dashboard extends Page {
 	 * From WPMU DEV Dashboard
 	 */
 	public function render_header() {
-		if ( isset( $_GET['wphb-cache-cleared'] ) ) { // Input var ok.
-			$this->admin_notices->show( 'updated', __( 'Your cache has been successfully cleared. Your assets will regenerate the next time someone visits your website.', 'wphb' ), 'success' );
+		if ( filter_input( INPUT_GET, 'wphb-cache-cleared' ) ) {
+			$this->admin_notices->show_floating( __( 'Your cache has been successfully cleared. Your assets will regenerate the next time someone visits your website.', 'wphb' ) );
 		}
 
-		if ( isset( $_GET['wphb-cache-cleared-with-cloudflare'] ) ) { // Input var ok.
-			$this->admin_notices->show( 'updated', __( 'Your local and Cloudflare caches have been successfully cleared. Your assets will regenerate the next time someone visits your website.', 'wphb' ), 'success' );
+		if ( filter_input( INPUT_GET, 'wphb-cache-cleared-with-cloudflare' ) ) {
+			$this->admin_notices->show_floating( __( 'Your local and Cloudflare caches have been successfully cleared. Your assets will regenerate the next time someone visits your website.', 'wphb' ) );
 		}
 
-		$tooltip          = '';
-		$modules          = Utils::get_active_cache_modules();
-		$show_clear_cache = false;
+		add_action( 'wphb_sui_header_sui_actions_right', array( $this, 'add_header_actions' ) );
 
-		if ( count( $modules ) > 0 ) {
-			$show_clear_cache = true;
-			if ( count( $modules ) === 1 ) {
-				/* translators: %s: module name. */
-				$tooltip = sprintf( __( 'This will clear your %s cache', 'wphb' ), array_pop( $modules ) );
-			} else {
-				$last         = array_pop( $modules );
-				$module_names = implode( ', ', $modules ) . ' & ' . $last;
-				/* translators: %s: module name. */
-				$tooltip = sprintf( __( 'This will clear your %s caches', 'wphb' ), $module_names );
-			}
+		parent::render_header();
+	}
+
+	/**
+	 * Add content to the header.
+	 *
+	 * @since 2.5.0
+	 */
+	public function add_header_actions() {
+		$modules = Utils::get_active_cache_modules();
+		if ( count( $modules ) <= 0 ) {
+			return;
 		}
+
+		add_filter( 'wphb_active_cache_modules', array( $this, 'maybe_add_cache_module' ) );
 		?>
-		<div class="sui-notice-top sui-notice-success sui-hidden" id="wphb-notice-settings-updated">
-			<p><?php esc_html_e( 'Settings Updated', 'wphb' ); ?></p>
-		</div>
-		<div class="sui-header">
-			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-			<div class="sui-actions-right">
-				<?php
-				if ( $show_clear_cache ) {
-					$clear_cache_url = wp_nonce_url( add_query_arg( 'wphb-clear-files', 'true' ), 'wphb-clear-files' );
-					?>
-					<a href="<?php echo esc_url( $clear_cache_url ); ?>" class="sui-button sui-tooltip sui-tooltip-bottom-right sui-tooltip-constrained" data-tooltip="<?php echo esc_attr( $tooltip ); ?>" aria-hidden="true">
-						<?php esc_html_e( 'Clear Cache', 'wphb' ); ?>
-					</a>
-				<?php } ?>
-				<?php if ( ! apply_filters( 'wpmudev_branding_hide_doc_link', false ) ) : ?>
-					<a href="<?php echo esc_url( Utils::get_documentation_url( $this->slug, $this->get_current_tab() ) ); ?>" target="_blank" class="sui-button sui-button-ghost">
-						<i class="sui-icon-academy" aria-hidden="true"></i>
-						<?php esc_html_e( 'View Documentation', 'wphb' ); ?>
-					</a>
-				<?php endif; ?>
-			</div>
-		</div><!-- end header -->
+		<button type="button" class="sui-button sui-tooltip sui-tooltip-bottom-right sui-tooltip-constrained"
+			data-tooltip="<?php esc_attr_e( 'Clear all active cache types from one place.', 'wphb' ); ?>"
+			data-modal-open="clear-cache-modal" data-modal-open-focus="clear-cache-modal-button">
+			<?php esc_html_e( 'Clear Cache', 'wphb' ); ?>
+		</button>
 		<?php
+	}
+
+	/**
+	 * Make sure we are adding the missing modules for page cache.
+	 *
+	 * @since 2.7.1
+	 *
+	 * @param array $modules  List of active modules.
+	 */
+	public function maybe_add_cache_module( $modules ) {
+		if ( ! isset( $modules['page_cache'] ) ) {
+			return $modules;
+		}
+
+		$options = Utils::get_module( 'page_cache' )->get_options();
+
+		if ( empty( $options['integrations'] ) ) {
+			return $modules;
+		}
+
+		if ( isset( $options['integrations']['varnish'] ) && $options['integrations']['varnish'] ) {
+			$modules['varnish'] = __( 'Varnish Cache', 'wphb' );
+		}
+
+		if ( isset( $options['integrations']['opcache'] ) && $options['integrations']['opcache'] ) {
+			$modules['opcache'] = __( 'OpCache', 'wphb' );
+		}
+
+		return $modules;
 	}
 
 	/**
@@ -256,7 +273,7 @@ class Dashboard extends Page {
 			null,
 			'main',
 			array(
-				'box_class'         => 'sui-box sui-summary',
+				'box_class'         => 'sui-box sui-summary ' . Utils::get_whitelabel_class(),
 				'box_content_class' => false,
 			)
 		);
@@ -283,8 +300,7 @@ class Dashboard extends Page {
 				'box-dashboard-left'
 			);
 		} elseif ( ! $this->performance->is_doing_report && $this->performance->last_report && ! $this->performance->report_dismissed ) {
-			$module  = Utils::get_module( 'performance' );
-			$options = $module->get_options();
+			$options = Utils::get_module( 'performance' )->get_options();
 			if ( ! is_multisite() || is_network_admin() || ( $options['subsite_tests'] && is_super_admin() ) || ( ! is_network_admin() && true === $options['subsite_tests'] ) ) {
 				$this->add_meta_box(
 					'dashboard-performance-module',
@@ -365,7 +381,7 @@ class Dashboard extends Page {
 			}
 
 			$this->add_meta_box(
-				'dashboard-browser-caching-module',
+				'dashboard/caching/browser',
 				__( 'Browser Caching', 'wphb' ),
 				array( $this, 'dashboard_browser_caching_module_metabox' ),
 				array( $this, 'dashboard_browser_caching_module_metabox_header' ),
@@ -377,9 +393,8 @@ class Dashboard extends Page {
 			/**
 			 * Gravatar caching
 			 */
-			$module = Utils::get_module( 'gravatar' );
 			$footer = null;
-			if ( $module->is_active() ) {
+			if ( Utils::get_module( 'gravatar' )->is_active() ) {
 				$footer = array( $this, 'dashboard_gravatar_caching_module_metabox_footer' );
 			}
 			$this->add_meta_box(
@@ -465,18 +480,17 @@ class Dashboard extends Page {
 
 		/* Smush */
 		if ( is_main_site() || is_network_admin() || ( is_multisite() && $this->is_smush_enabled() && get_site_option( 'wp-smush-networkwide' ) ) ) {
-			$smush_id     = Utils::is_member() ? 'dashboard-smush' : 'dashboard/smush/no-membership';
-			$smush_footer = array( $this, 'dashboard_smush_metabox_footer' );
-			if ( ! $this->is_smush_installed() || ! $this->is_smush_enabled() || ! $this->is_smush_configurable() ) {
-				$smush_footer = null;
+			$smush_footer = null;
+			if ( $this->is_smush_installed() && $this->is_smush_enabled() && $this->is_smush_configurable() ) {
+				$smush_footer = array( $this, 'dashboard_smush_metabox_footer' );
 			}
-			$box_content_class = Utils::is_member() ? 'sui-box-body' : 'sui-box-body sui-upsell-items';
+			$box_content_class = Utils::is_member() && $this->is_smush_pro ? 'sui-box-body' : 'sui-box-body sui-upsell-items';
 
 			$this->add_meta_box(
-				$smush_id,
+				'dashboard-smush',
 				__( 'Image Optimization', 'wphb' ),
 				array( $this, 'dashboard_smush_metabox' ),
-				array( $this, 'dashboard_smush_metabox_header' ),
+				null,
 				$smush_footer,
 				'box-dashboard-left',
 				array(
@@ -497,10 +511,7 @@ class Dashboard extends Page {
 				null,
 				array( $this, 'dashboard_uptime_module_metabox_header' ),
 				null,
-				'box-dashboard-right',
-				array(
-					'box_content_class' => 'sui-box-body sui-upsell-items',
-				)
+				'box-dashboard-right'
 			);
 		} elseif ( is_wp_error( $this->uptime_report ) && $this->uptime_active ) {
 			$this->add_meta_box(
@@ -525,7 +536,7 @@ class Dashboard extends Page {
 				'dashboard-uptime',
 				__( 'Uptime Monitoring', 'wphb' ),
 				array( $this, 'dashboard_uptime_metabox' ),
-				array( $this, 'dashboard_uptime_module_metabox_header' ),
+				null,
 				array( $this, 'dashboard_uptime_module_metabox_footer' ),
 				'box-dashboard-right',
 				array(
@@ -537,15 +548,12 @@ class Dashboard extends Page {
 		/* Reports */
 		if ( ! Utils::is_member() || ( defined( 'WPHB_WPORG' ) && WPHB_WPORG ) ) {
 			$this->add_meta_box(
-				'dashboard/reports/no-membership',
-				__( 'Reports', 'wphb' ),
+				'dashboard/reports',
+				__( 'Notifications', 'wphb' ),
 				null,
-				array( $this, 'dashboard_reports_module_metabox_header' ),
 				null,
-				'box-dashboard-right',
-				array(
-					'box_content_class' => 'sui-box-body sui-upsell-items',
-				)
+				null,
+				'box-dashboard-right'
 			);
 		}
 	}
@@ -607,14 +615,17 @@ class Dashboard extends Page {
 	 */
 	public function dashboard_network_summary_metabox() {
 		$db_items = Advanced::get_db_count();
+		$options  = Utils::get_module( 'minify' )->get_options();
 
-		$module  = Utils::get_module( 'minify' );
-		$options = $module->get_options();
+		$is_active = Utils::get_module( 'page_cache' )->is_active();
+		if ( 'blog-admins' === $is_active ) {
+			$is_active = true;
+		}
 
 		$this->view(
 			'dashboard/welcome/subsite-meta-box',
 			array(
-				'caching_enabled'  => Settings::get_setting( 'cache_blog', 'page_cache' ),
+				'caching_enabled'  => $is_active,
 				'database_items'   => $db_items->total,
 				'is_doing_report'  => $this->performance->is_doing_report,
 				'last_report'      => isset( $this->performance->last_report->data ) ? $this->performance->last_report->data : false,
@@ -666,20 +677,20 @@ class Dashboard extends Page {
 			// Save status.
 			$cf_server = $cf_module->has_cloudflare();
 
-			$cf_tooltip       = 691200 === $cf_current ? __( 'Caching is enabled', 'wphb' ) : __( "Caching is enabled but you aren't using our recommended value", 'wphb' );
+			$cf_tooltip       = YEAR_IN_SECONDS === $cf_current ? __( 'Caching is enabled', 'wphb' ) : __( "Caching is enabled but you aren't using our recommended value", 'wphb' );
 			$cf_current_human = Utils::human_read_time_diff( $cf_current );
 		} elseif ( ! get_site_option( 'wphb-cloudflare-dash-notice' ) && 'dismissed' !== get_site_option( 'wphb-cloudflare-dash-notice' ) ) {
 			$show_cf_notice = true;
 		}
-		$cf_notice = $cf_server ? __( 'Ahoi, we’ve detected you’re using CloudFlare!', 'wphb' ) : __( 'Using CloudFlare?', 'wphb' );
+		$cf_notice = $cf_server ? __( 'We’ve detected you’re using Cloudflare!', 'wphb' ) : __( 'Using Cloudflare?', 'wphb' );
 
 		// Get number of issues for notification box.
 		$issues = 0;
 		if ( ! $cf_active ) {
 			$issues = Utils::get_number_of_issues( 'caching', $caching_status );
-		} elseif ( 691200 > $expiration ) {
+		} elseif ( YEAR_IN_SECONDS > $expiration ) {
 			$issues = count( $caching_status );
-			// Add an issue for the CloudFlare type.
+			// Add an issue for the Cloudflare type.
 			$issues++;
 		}
 		$human_results = array_map( array( 'Hummingbird\\Core\\Utils', 'human_read_time_diff' ), $caching_status );
@@ -695,14 +706,14 @@ class Dashboard extends Page {
 			'issues'                => $issues,
 			'cf_notice'             => $cf_notice,
 			'show_cf_notice'        => $show_cf_notice,
-			'cf_connect_url'        => Utils::get_admin_menu_url( 'caching' ) . '&view=caching&connect-cloudflare=true',
+			'cf_connect_url'        => Utils::get_admin_menu_url( 'caching' ) . '&view=caching&connect-cloudflare=true#connect-cloudflare',
 			'caching_type_tooltips' => $caching->get_types(),
 			'configure_caching_url' => Utils::get_admin_menu_url( 'caching' ) . '&view=caching#wphb-box-caching-settings',
 		);
 		if ( $cf_active ) {
 			$this->view( 'dashboard/caching/cloudflare-module-meta-box', $args );
 		} else {
-			$this->view( 'dashboard/caching/module-meta-box', $args );
+			$this->view( 'dashboard/caching/browser-meta-box', $args );
 		}
 	}
 
@@ -726,7 +737,7 @@ class Dashboard extends Page {
 		}
 
 		$args = compact( 'title', 'issues', 'cf_active', 'cf_current' );
-		$this->view( 'dashboard/caching/module-meta-box-header', $args );
+		$this->view( 'dashboard/caching/browser-meta-box-header', $args );
 	}
 
 	/**
@@ -737,7 +748,7 @@ class Dashboard extends Page {
 	public function dashboard_browser_caching_module_metabox_footer() {
 		$cf_module = Utils::get_module( 'cloudflare' );
 		$this->view(
-			'dashboard/caching/module-meta-box-footer',
+			'dashboard/caching/browser-meta-box-footer',
 			array(
 				'caching_url' => Utils::get_admin_menu_url( 'caching' ) . '&view=caching',
 				'cf_active'   => $cf_module->is_connected() && $cf_module->is_zone_selected(),
@@ -751,7 +762,6 @@ class Dashboard extends Page {
 	 * @since 1.7.0
 	 */
 	public function dashboard_page_caching_module_metabox() {
-		$module       = Utils::get_module( 'page_cache' );
 		$activate_url = add_query_arg(
 			array(
 				'action' => 'enable',
@@ -761,7 +771,7 @@ class Dashboard extends Page {
 		);
 		$activate_url = wp_nonce_url( $activate_url, 'wphb-caching-actions' );
 
-		$is_active = $module->is_active();
+		$is_active = Utils::get_module( 'page_cache' )->is_active();
 
 		if ( 'blog-admins' === $is_active ) {
 			$is_active = true;
@@ -786,7 +796,6 @@ class Dashboard extends Page {
 	 * @since 1.7.0
 	 */
 	public function dashboard_gravatar_caching_module_metabox() {
-		$module       = Utils::get_module( 'gravatar' );
 		$activate_url = add_query_arg(
 			array(
 				'action' => 'enable',
@@ -797,7 +806,7 @@ class Dashboard extends Page {
 		);
 		$activate_url = wp_nonce_url( $activate_url, 'wphb-caching-actions' );
 
-		$is_active = $module->is_active();
+		$is_active = Utils::get_module( 'gravatar' )->is_active();
 
 		$this->view( 'dashboard/caching/gravatar-module-meta-box', compact( 'is_active', 'activate_url' ) );
 	}
@@ -885,25 +894,27 @@ class Dashboard extends Page {
 
 		// Remove those assets that we don't want to display.
 		foreach ( $collection['styles'] as $key => $item ) {
-			if ( ! apply_filters( 'wphb_minification_display_enqueued_file', true, $item, 'styles' ) ) {
+			if ( ! apply_filters( 'wphb_minification_display_enqueued_file', true, $item, 'styles' )
+				|| ! isset( $item['original_size'], $item['compressed_size'] ) ) {
 				unset( $collection['styles'][ $key ] );
 			}
 		}
 		foreach ( $collection['scripts'] as $key => $item ) {
-			if ( ! apply_filters( 'wphb_minification_display_enqueued_file', true, $item, 'scripts' ) ) {
+			if ( ! apply_filters( 'wphb_minification_display_enqueued_file', true, $item, 'scripts' )
+				|| ! isset( $item['original_size'], $item['compressed_size'] ) ) {
 				unset( $collection['scripts'][ $key ] );
 			}
 		}
 
 		$enqueued_files = count( $collection['scripts'] ) + count( $collection['styles'] );
 
-		$original_size_styles  = Utils::calculate_sum( @wp_list_pluck( $collection['styles'], 'original_size' ) );
-		$original_size_scripts = Utils::calculate_sum( @wp_list_pluck( $collection['scripts'], 'original_size' ) );
+		$original_size_styles  = Utils::calculate_sum( wp_list_pluck( $collection['styles'], 'original_size' ) );
+		$original_size_scripts = Utils::calculate_sum( wp_list_pluck( $collection['scripts'], 'original_size' ) );
 
 		$original_size = $original_size_scripts + $original_size_styles;
 
-		$compressed_size_styles  = Utils::calculate_sum( @wp_list_pluck( $collection['styles'], 'compressed_size' ) );
-		$compressed_size_scripts = Utils::calculate_sum( @wp_list_pluck( $collection['scripts'], 'compressed_size' ) );
+		$compressed_size_styles  = Utils::calculate_sum( wp_list_pluck( $collection['styles'], 'compressed_size' ) );
+		$compressed_size_scripts = Utils::calculate_sum( wp_list_pluck( $collection['scripts'], 'compressed_size' ) );
 		$compressed_size         = $compressed_size_scripts + $compressed_size_styles;
 
 		if ( ( $original_size_scripts + $original_size_styles ) <= 0 ) {
@@ -1079,9 +1090,7 @@ class Dashboard extends Page {
 			'dashboard/performance/module-meta-box',
 			array(
 				'report'          => $this->performance->last_report->data->{$this->performance->type},
-				'type'            => $this->performance->type,
-				'viewreport_link' => Utils::get_admin_menu_url( 'performance' ),
-				'widgets'         => Settings::get_setting( 'widget', 'performance' ),
+				'performance_url' => Utils::get_admin_menu_url( 'performance' ) . '&type=' . $this->performance->type,
 			)
 		);
 	}
@@ -1189,26 +1198,25 @@ class Dashboard extends Page {
 			'percent' => 0,
 		);
 
+		$smush_enabled   = $this->is_smush_enabled();
+		$smush_installed = $this->is_smush_installed();
+
+		if ( $smush_enabled && $smush_installed ) {
+			$smush_data = get_option( 'smush_global_stats', $smush_data );
+		}
+
 		$this->view(
 			'dashboard/smush/meta-box',
 			array(
 				'activate_url'     => wp_nonce_url( 'plugins.php?action=activate&amp;plugin=wp-smushit/wp-smush.php', 'activate-plugin_wp-smushit/wp-smush.php' ),
 				'activate_pro_url' => wp_nonce_url( 'plugins.php?action=activate&amp;plugin=wp-smush-pro/wp-smush.php', 'activate-plugin_wp-smush-pro/wp-smush.php' ),
 				'can_activate'     => is_main_site() || is_network_admin(),
-				'is_active'        => $this->is_smush_enabled(),
-				'is_installed'     => $this->is_smush_installed(),
-				'smush_data'       => apply_filters( 'wpmudev_api_project_extra_data-912164', $smush_data ),
+				'is_active'        => $smush_enabled,
+				'is_installed'     => $smush_installed,
+				'smush_data'       => $smush_data,
 				'is_pro'           => $this->is_smush_pro,
 			)
 		);
-	}
-
-	/**
-	 * Smush meta box haeder.
-	 */
-	public function dashboard_smush_metabox_header() {
-		$title = __( 'Image Optimization', 'wphb' );
-		$this->view( 'dashboard/smush/meta-box-header', compact( 'title' ) );
 	}
 
 	/**
@@ -1217,21 +1225,6 @@ class Dashboard extends Page {
 	public function dashboard_smush_metabox_footer() {
 		$url = is_network_admin() ? network_admin_url( 'admin.php?page=smush' ) : admin_url( 'admin.php?page=smush' );
 		$this->view( 'dashboard/smush/meta-box-footer', compact( 'url' ) );
-	}
-
-	/**
-	 * *************************
-	 * REPORTS
-	 ***************************/
-
-	/**
-	 * Reports header meta box
-	 *
-	 * @since 1.4.5
-	 */
-	public function dashboard_reports_module_metabox_header() {
-		$title = __( 'Reports', 'wphb' );
-		$this->view( 'dashboard/reports/meta-box-header', compact( 'title' ) );
 	}
 
 }

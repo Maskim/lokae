@@ -1,5 +1,29 @@
 <?php
 
+if ( !function_exists( 'wpdesk_activated_plugin_activation_date' ) ) {
+	function wpdesk_activated_plugin_activation_date( $plugin, $network_wide ) {
+		$option_name = 'plugin_activation_' . $plugin;
+		$activation_date = get_option( $option_name, '' );
+		if ( $activation_date == '' ) {
+			$activation_date = current_time( 'mysql' );
+			update_option( $option_name, $activation_date );
+		}
+	}
+	add_action( 'activated_plugin', 'wpdesk_activated_plugin_activation_date', 10, 2 );
+}
+
+if ( !function_exists( 'wpdesk_tracker_enabled' ) ) {
+	function wpdesk_tracker_enabled() {
+		$tracker_enabled = true;
+		if ( !empty( $_SERVER['SERVER_ADDR'] ) && $_SERVER['SERVER_ADDR'] == '127.0.0.1' ) {
+			$tracker_enabled = false;
+		}
+		return apply_filters( 'wpdesk_tracker_enabled', $tracker_enabled );
+		// add_filter( 'wpdesk_tracker_enabled', '__return_true' );
+		// add_filter( 'wpdesk_tracker_do_not_ask', '__return_true' );
+	}
+}
+
 function flexible_checkout_fields() {
 	$object = new stdClass();
 	return apply_filters( 'flexible_checkout_fields', $object );

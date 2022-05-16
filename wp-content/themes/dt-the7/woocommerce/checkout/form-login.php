@@ -24,7 +24,7 @@ if ( is_user_logged_in() || 'no' === get_option( 'woocommerce_enable_checkout_lo
 ?>
 <div class="wc-login-wrap">
 <?php
-$info_message  = apply_filters( 'woocommerce_checkout_login_message',  ' <span class="showlogin-tag"><i class="icomoon-the7-font-the7-login-04" aria-hidden="true"></i>' .__( 'Returning customer?', 'the7mk2' ) ) . '</span>';
+$info_message  = apply_filters( 'woocommerce_checkout_login_message',  ' <span class="showlogin-tag">' .__( 'Returning customer?', 'the7mk2' ) ) . '</span>';
 $info_message .= ' <a href="#" class="showlogin">' . __( 'Click here to login', 'the7mk2' ) . '</a>';
 wc_print_notice( $info_message, 'notice' );
 

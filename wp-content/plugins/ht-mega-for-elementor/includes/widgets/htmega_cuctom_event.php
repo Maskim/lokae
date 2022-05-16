@@ -1,6 +1,10 @@
 <?php
 namespace Elementor;
 
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class HTMega_Elementor_Widget_Custom_Event extends Widget_Base {
@@ -135,13 +139,9 @@ class HTMega_Elementor_Widget_Custom_Event extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default' => '#000000',
                             'selectors' => [
-                                '{{WRAPPER}} .ht-event .content h4' => 'color: {{VALUE}};',
+                                '{{WRAPPER}} .ht-event .content h4 a' => 'color: {{VALUE}};',
                             ],
                         ]
                     );
@@ -195,10 +195,6 @@ class HTMega_Elementor_Widget_Custom_Event extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default' => '#000000',
                             'selectors' => [
                                 '{{WRAPPER}} .ht-event .content h4 a:hover' => 'color: {{VALUE}};',
@@ -229,10 +225,6 @@ class HTMega_Elementor_Widget_Custom_Event extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#727272',
                     'selectors' => [
                         '{{WRAPPER}} .ht-event .content p' => 'color: {{VALUE}};',
@@ -291,10 +283,6 @@ class HTMega_Elementor_Widget_Custom_Event extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#909090',
                     'selectors' => [
                         '{{WRAPPER}} .ht-event .content ul.event-time li' => 'color: {{VALUE}};',
@@ -341,10 +329,6 @@ class HTMega_Elementor_Widget_Custom_Event extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#fff',
                     'selectors' => [
                         '{{WRAPPER}} .ht-event .thumb .event-date' => 'color: {{VALUE}};',
@@ -357,10 +341,6 @@ class HTMega_Elementor_Widget_Custom_Event extends Widget_Base {
                 [
                     'label' => __( 'Background Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#141414',
                     'selectors' => [
                         '{{WRAPPER}} .ht-event .thumb .event-date' => 'background-color: {{VALUE}};',
@@ -418,10 +398,6 @@ class HTMega_Elementor_Widget_Custom_Event extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default' => '#727272',
                             'selectors' => [
                                 '{{WRAPPER}} .ht-event .content .event-btn a' => 'color: {{VALUE}};',
@@ -473,10 +449,6 @@ class HTMega_Elementor_Widget_Custom_Event extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default' => '#727272',
                             'selectors' => [
                                 '{{WRAPPER}} .ht-event .content .event-btn a:hover' => 'color: {{VALUE}};',

@@ -21,46 +21,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 </p>
 
 <h4><?php esc_html_e( 'Status', 'wphb' ); ?></h4>
-<?php if ( isset( $audit->errorMessage ) && ! isset( $audit->score ) ) { ?>
-	<div class="sui-notice sui-notice-error">
-		<p>
-			<?php
-			printf(
-				/* translators: %s - error message */
-				esc_html__( 'Error: %s', 'wphb' ),
-				esc_html( $audit->errorMessage )
-			);
-			?>
-		</p>
-	</div>
-	<?php
+<?php if ( isset( $audit->errorMessage ) && ! isset( $audit->score ) ) {
+	$this->admin_notices->show_inline( /* translators: %s - error message */
+		sprintf( esc_html__( 'Error: %s', 'wphb' ), esc_html( $audit->errorMessage ) ),
+		'error'
+	);
 	return;
 }
 ?>
 <?php if ( isset( $audit->score ) && 1 === $audit->score ) : ?>
-	<div class="sui-notice sui-notice-success">
-		<p>
-			<?php
-			printf(
-				/* translators: %s - size in kb */
-				esc_html__( 'Nice! Your page makes only %s of total network requests.', 'wphb' ),
-				esc_html( str_replace( 'Total size was ', '', $audit->displayValue ) )
-			);
-			?>
-		</p>
-	</div>
+	<?php
+	$this->admin_notices->show_inline(
+		sprintf( /* translators: %s - size in kb */
+			esc_html__( 'Nice! Your page makes only %s of total network requests.', 'wphb' ),
+			esc_html( str_replace( 'Total size was ', '', $audit->displayValue ) )
+		)
+	);
+	?>
 <?php else : ?>
-	<div class="sui-notice sui-notice-<?php echo esc_attr( \Hummingbird\Core\Modules\Performance::get_impact_class( $audit->score ) ); ?>">
-		<p>
-			<?php
-			printf(
-				/* translators: %s - size in kb */
-				esc_html__( 'Your page makes %s of total network requests and following are the resources with large size.', 'wphb' ),
-				esc_html( str_replace( 'Total size was ', '', $audit->displayValue ) )
-			);
-			?>
-		</p>
-	</div>
+	<?php
+	$this->admin_notices->show_inline(
+		sprintf( /* translators: %s - size in kb */
+			esc_html__( 'Your page makes %s of total network requests and following are the resources with large size.', 'wphb' ),
+			esc_html( str_replace( 'Total size was ', '', $audit->displayValue ) )
+		),
+		\Hummingbird\Core\Modules\Performance::get_impact_class( $audit->score )
+	);
+	?>
 
 	<?php if ( $audit->details->items ) : ?>
 		<table class="sui-table">
@@ -142,25 +129,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 				src="<?php echo esc_url( WPHB_DIR_URL . 'admin/assets/image/smush-share-widget.png' ); ?>"
 				srcset="<?php echo esc_url( WPHB_DIR_URL . 'admin/assets/image/smush-share-widget@2x.png' ); ?> 2x"
 				alt="<?php esc_attr_e( 'Get WP Smush Pro', 'wphb' ); ?>">
-			<div class="sui-notice sui-notice-purple">
-				<p>
-					<?php
-					printf(
-						/* translators: %1$s - link to Smush project page, %2$s - closing a tag */
-						esc_html__( "Upgrade to %1\$sSmush Pro%2\$s, and start serving your images in WebP format using the Smush CDN. You'll also get 2x better compression on your images along with other pro features. %3\$sTry it out today with a free WMPU DEV membership%2\$s!", 'wphb' ),
-						'<a href="' . esc_html( \Hummingbird\Core\Utils::get_link( 'smush', 'hummingbird_report_smush_upsell_link' ) ) . '" target="_blank">',
-						'</a>',
-						'<a href="#" data-modal-open="wphb-upgrade-membership-modal" data-modal-open-focus="upgrade-to-pro-button" data-modal-mask="true">'
-					);
-					?>
-				</p>
-
-				<div class="sui-notice-buttons">
-					<a href="<?php echo esc_html( \Hummingbird\Core\Utils::get_link( 'smush', 'hummingbird_report_smush_upsell_link' ) ); ?>" target="_blank" class="sui-button sui-button-purple">
-						<?php esc_html_e( 'Learn More', 'wphb' ); ?>
-					</a>
-				</div>
-			</div>
+			<?php
+			$this->admin_notices->show_inline(
+				sprintf( /* translators: %1$s - link to Smush project page, %2$s - closing a tag */
+					esc_html__( "Upgrade to %1\$sSmush Pro%2\$s, and start serving your images in WebP format using the Smush CDN. You'll also get 2x better compression on your images along with other pro features. %3\$sTry it out today with a free WMPU DEV membership%2\$s!", 'wphb' ),
+					'<a href="' . esc_html( \Hummingbird\Core\Utils::get_link( 'smush', 'hummingbird_report_smush_upsell_link' ) ) . '" target="_blank">',
+					'</a>',
+					'<a href="#" data-modal-open="wphb-upgrade-membership-modal" data-modal-open-focus="upgrade-to-pro-button" data-modal-mask="true">'
+				),
+				'upsell',
+				sprintf( /* translators: %1$s - opening a tag, %2$s - </a> */
+					esc_html__( '%1$sLearn More%2$s', 'wphb' ),
+					'<a href="' . esc_html( \Hummingbird\Core\Utils::get_link( 'smush', 'hummingbird_report_smush_upsell_link' ) ) . '" target="_blank" class="sui-button sui-button-purple">',
+					'</a>'
+				)
+			);
+			?>
 		</div>
 	<?php endif; ?>
 <?php endif; ?>

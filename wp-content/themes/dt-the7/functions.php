@@ -7,7 +7,6 @@
  * @package The7
  */
 
-
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -25,3 +24,4 @@ if ( ! isset( $content_width ) ) {
  * @since 1.0.0
  */
 require trailingslashit( get_template_directory() ) . 'inc/init.php';
+

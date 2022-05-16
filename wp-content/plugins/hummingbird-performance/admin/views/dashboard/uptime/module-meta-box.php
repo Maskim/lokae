@@ -14,9 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <p><?php esc_html_e( 'Monitor your website and get notified if/when it’s inaccessible. We’ll also watch your server response time.', 'wphb' ); ?></p>
 
-<div class="sui-notice sui-notice-success">
-	<p><?php esc_html_e( 'Your website is currently up and humming.', 'wphb' ); ?></p>
-</div>
+<?php $this->admin_notices->show_inline( esc_html__( 'Your website is currently up and humming.', 'wphb' ) ); ?>
 
 <ul class="sui-list sui-margin-top sui-no-margin-bottom">
 	<li>

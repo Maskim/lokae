@@ -248,7 +248,7 @@ if (!\class_exists('FcfVendor\\WPDesk_Basic_Requirement_Checker')) {
          */
         public static function is_wc_at_least($min_version)
         {
-            return \defined('FcfVendor\\WC_VERSION') && \version_compare(\FcfVendor\WC_VERSION, $min_version, '>=');
+            return \defined('WC_VERSION') && \version_compare(\WC_VERSION, $min_version, '>=');
         }
         /**
          * Checks if ssl version is valid
@@ -274,7 +274,7 @@ if (!\class_exists('FcfVendor\\WPDesk_Basic_Requirement_Checker')) {
             if (\count($required_plugins) > 0) {
                 foreach ($required_plugins as $plugin) {
                     if (\version_compare($plugin['Version'], $plugin[self::PLUGIN_INFO_APPEND_PLUGIN_DATA], '<')) {
-                        $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin requires at least %s version of %s to work correctly. Please update it', $this->get_text_domain()), \esc_html($this->plugin_name), $plugin[self::PLUGIN_INFO_APPEND_PLUGIN_DATA], $plugin['Name']));
+                        $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%1$s&#8221; plugin requires at least %2$s version of %3$s to work correctly. Please update it to its latest release.', $this->get_text_domain()), \esc_html($this->plugin_name), $plugin[self::PLUGIN_INFO_APPEND_PLUGIN_DATA], $plugin['Name']));
                     }
                 }
             }
@@ -287,6 +287,17 @@ if (!\class_exists('FcfVendor\\WPDesk_Basic_Requirement_Checker')) {
          */
         private static function retrieve_plugins_data_in_transient()
         {
+            static $never_executed = \true;
+            if ($never_executed) {
+                $never_executed = \false;
+                /** Required when WC starts later and these data should be in cache */
+                \add_filter('extra_plugin_headers', function ($headers = array()) {
+                    $headers[] = 'WC tested up to';
+                    $headers[] = 'WC requires at least';
+                    $headers[] = 'Woo';
+                    return \array_unique($headers);
+                });
+            }
             $plugins = \get_transient(self::PLUGIN_INFO_TRANSIENT_NAME);
             if ($plugins === \false) {
                 if (!\function_exists('get_plugins')) {
@@ -365,8 +376,7 @@ if (!\class_exists('FcfVendor\\WPDesk_Basic_Requirement_Checker')) {
                 $api = new \stdClass();
                 $api->name = $plugin_info['nice_name'];
                 // self in closures requires 5.4
-                $api->version = $plugin_info['version'];
-                // self in closures requires 5.4
+                $api->version = '';
                 $api->download_link = \esc_url($plugin_info['repository_url']);
                 // self in closures requires 5.4
                 return $api;
@@ -515,7 +525,7 @@ if (!\class_exists('FcfVendor\\WPDesk_Basic_Requirement_Checker')) {
         /**
          * Triggers the transient delete after plugin deactivated
          *
-         *@return void
+         * @return void
          */
         public function transient_delete_on_plugin_version_changed()
         {

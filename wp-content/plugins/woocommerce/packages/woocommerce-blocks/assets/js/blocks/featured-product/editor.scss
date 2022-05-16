@@ -1,8 +1,5 @@
 .wc-block-featured-product {
-	&.components-placeholder {
-		// Reset the background for the placeholders.
-		background-color: rgba(139, 139, 150, 0.1);
-	}
+	background-color: inherit;
 
 	.components-resizable-box__handle {
 		z-index: 10;

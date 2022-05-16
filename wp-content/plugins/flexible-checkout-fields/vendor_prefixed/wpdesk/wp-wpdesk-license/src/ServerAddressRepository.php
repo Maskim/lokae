@@ -36,7 +36,13 @@ class ServerAddressRepository
     public function get_server_urls()
     {
         // PL version should be default for most plugins
-        $servers = ['https://www.wpdesk.pl', 'https://www.wpdesk.net', 'https://shopmagic.app'];
+        $servers = ['https://www.wpdesk.pl', 'https://www.wpdesk.net'];
+        $servers[] = 'https://flexibleinvoices.com';
+        if ($this->is_invoice_product($this->product_id)) {
+            $servers = \array_reverse($servers);
+            // set invoice server as first to check
+        }
+        $servers[] = 'https://shopmagic.app';
         if ($this->is_magic_plugin($this->product_id)) {
             $servers = \array_reverse($servers);
             // set magic server as first to check
@@ -58,6 +64,17 @@ class ServerAddressRepository
     private function is_magic_plugin($product_id)
     {
         return \stripos($product_id, 'ShopMagic') !== \false;
+    }
+    /**
+     * Is product id of a ShopMagic Plugin?
+     *
+     * @param string $product_id
+     *
+     * @return bool
+     */
+    private function is_invoice_product($product_id)
+    {
+        return \stripos($product_id, 'Invoices') !== \false;
     }
     /**
      * Is product id of a Flexible Shipping plugin?

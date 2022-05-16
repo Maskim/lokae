@@ -1,9 +1,4 @@
 <?php
-/**
- * Search result watcher to save the meta data to an Indexable.
- *
- * @package Yoast\YoastSEO\Watchers
- */
 
 namespace Yoast\WP\SEO\Integrations\Watchers;
 
@@ -14,6 +9,8 @@ use Yoast\WP\SEO\Integrations\Integration_Interface;
 use Yoast\WP\SEO\Repositories\Indexable_Repository;
 
 /**
+ * Search result watcher to save the meta data to an Indexable.
+ *
  * Watches the search result options to save the meta information when updated.
  */
 class Indexable_System_Page_Watcher implements Integration_Interface {
@@ -21,7 +18,7 @@ class Indexable_System_Page_Watcher implements Integration_Interface {
 	/**
 	 * The indexable repository.
 	 *
-	 * @var \Yoast\WP\SEO\Repositories\Indexable_Repository
+	 * @var Indexable_Repository
 	 */
 	protected $repository;
 
@@ -33,14 +30,16 @@ class Indexable_System_Page_Watcher implements Integration_Interface {
 	protected $builder;
 
 	/**
-	 * @inheritDoc
+	 * Returns the conditionals based on which this loadable should be active.
+	 *
+	 * @return array
 	 */
 	public static function get_conditionals() {
 		return [ Migrations_Conditional::class ];
 	}
 
 	/**
-	 * Indexable_Author_Watcher constructor.
+	 * Indexable_System_Page_Watcher constructor.
 	 *
 	 * @param Indexable_Repository $repository The repository to use.
 	 * @param Indexable_Builder    $builder    The post builder to use.
@@ -51,10 +50,12 @@ class Indexable_System_Page_Watcher implements Integration_Interface {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Initializes the integration.
+	 *
+	 * This is the place to register hooks and filters.
 	 */
 	public function register_hooks() {
-		add_action( 'update_option_wpseo_titles', [ $this, 'check_option' ], 10, 2 );
+		\add_action( 'update_option_wpseo_titles', [ $this, 'check_option' ], 10, 2 );
 	}
 
 	/**
@@ -94,7 +95,6 @@ class Indexable_System_Page_Watcher implements Integration_Interface {
 	 */
 	public function build_indexable( $type ) {
 		$indexable = $this->repository->find_for_system_page( $type, false );
-		$indexable = $this->builder->build_for_system_page( $type, $indexable );
-		$indexable->save();
+		$this->builder->build_for_system_page( $type, $indexable );
 	}
 }

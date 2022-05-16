@@ -26,6 +26,22 @@ class Plugin implements \FcfVendor\Composer\Plugin\PluginInterface, \FcfVendor\C
         $this->composer = $composer;
         $this->io = $io;
     }
+    /**
+     * @inheritDoc
+     */
+    public function deactivate(\FcfVendor\Composer\Composer $composer, \FcfVendor\Composer\IO\IOInterface $io)
+    {
+        $this->composer = $composer;
+        $this->io = $io;
+    }
+    /**
+     * @inheritDoc
+     */
+    public function uninstall(\FcfVendor\Composer\Composer $composer, \FcfVendor\Composer\IO\IOInterface $io)
+    {
+        $this->composer = $composer;
+        $this->io = $io;
+    }
     public function getCapabilities()
     {
         return [\FcfVendor\Composer\Plugin\Capability\CommandProvider::class => \FcfVendor\WPDesk\Composer\Codeception\CommandProvider::class];

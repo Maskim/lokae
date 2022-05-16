@@ -32,7 +32,7 @@ class Varnish extends Request {
 	 *
 	 * @param string $path  Path.
 	 *
-	 * @return mixed|void
+	 * @return string
 	 */
 	public function get_api_url( $path = '' ) {
 		return get_option( 'home' ) . $path;
@@ -41,7 +41,7 @@ class Varnish extends Request {
 	/**
 	 * Add header args.
 	 *
-	 * @sicne 2.1.0
+	 * @since 2.1.0
 	 */
 	protected function sign_request() {
 		$this->add_header_argument( 'X-Purge-Method', $this->purge_method );
@@ -77,6 +77,50 @@ class Varnish extends Request {
 		}
 
 		return $body;
+	}
+
+	/**
+	 * Add an alternative method to purge Varnish cache.
+	 *
+	 * @since 2.7.2
+	 *
+	 * @param string $path  Relative path.
+	 */
+	public function clear_cache( $path ) {
+		$url = $this->get_api_url( $path );
+
+		if ( isset( $_SERVER['HTTP_HOST'] ) ) {
+			$domain = htmlentities( wp_unslash( $_SERVER['HTTP_HOST'] ) ); // Input var ok.
+		} else {
+			$domain = untrailingslashit( get_site_url( null, null, 'https' ) );
+		}
+		$resolver = str_replace( array( 'http://', 'https://' ), '', $domain ) . ':443:127.0.0.1';
+
+		try {
+			$ch = curl_init();
+
+			curl_setopt_array(
+				$ch,
+				array(
+					CURLOPT_URL                  => $url,
+					CURLOPT_RETURNTRANSFER       => true,
+					CURLOPT_NOBODY               => true,
+					CURLOPT_HEADER               => false,
+					CURLOPT_CUSTOMREQUEST        => 'PURGE',
+					CURLOPT_FOLLOWLOCATION       => true,
+					CURLOPT_DNS_USE_GLOBAL_CACHE => false,
+					CURLOPT_TIMEOUT              => 2000,
+					CURLOPT_RESOLVE              => array(
+						$resolver,
+					),
+				)
+			);
+
+			curl_exec( $ch );
+			curl_close( $ch );
+		} catch ( \Exception $e ) {
+			error_log( 'Error purging varnish cache: ' . $e->getMessage() );
+		}
 	}
 
 }

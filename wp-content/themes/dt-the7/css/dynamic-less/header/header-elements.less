@@ -163,20 +163,20 @@ input.field {
 .popup-search .popup-search-wrap {
 	
 	.masthead & {
-		top: calc(100% ~'+' 10px);
+		top: calc(100% ~'+' 8px);
 	}
 	.dt-mobile-header & {
 		width: 100%;
 	}
 	.masthead.side-header .mini-widgets & {
 		top: auto;
-		bottom: calc(100% ~'+' 10px);
+		bottom: calc(100% ~'+' 8px);
 	}
 }
 .popup-search .popup-search-wrap.bottom-overflow {
 	.masthead .mini-widgets & {
 		top: auto;
-		bottom: calc(100% ~'+' 10px);
+		bottom: calc(100% ~'+' 8px);
 	}
 }
 .masthead .mini-search input[type="text"]::-moz-placeholder {
@@ -218,7 +218,6 @@ input.field {
 		bottom: auto;
 	}
 
-@mw-search-color-temp: escape(~"@{mw-search-color}");
 	.overlay-search-microwidget .search-icon,
 	.mini-search .search-icon {
 		color: @mw-search-color;
@@ -513,7 +512,7 @@ input.field {
 .masthead .mini-widgets .soc-ico a:not(:hover) .soc-font-icon,
 .masthead .mobile-mini-widgets .soc-ico a:not(:hover) .soc-font-icon,
 .dt-mobile-header .soc-ico a:not(:hover) .soc-font-icon {
-	color: @accent-bg-color;
+	color: var(--the7-accent-color);
 	.accent-gradient & {
 		.text-gradient (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
 	}
@@ -525,7 +524,7 @@ input.field {
 .masthead .mobile-mini-widgets .soc-ico a:hover .soc-font-icon,
 //.masthead .soc-ico a:hover .soc-font-icon,
 .dt-mobile-header .soc-ico a:hover .soc-font-icon {
-	color: @accent-bg-color;
+	color: var(--the7-accent-color);
 	.accent-gradient & {
 		.text-gradient (@startColor: @accent-bg-color, @endColor: @accent-text-color-2);
 	}
@@ -572,13 +571,13 @@ input.field {
 .footer-sub-nav > li a .subtitle-text,
 .mini-nav .mini-sub-nav li a .subtitle-text {
 	.text-small;
-	font-size: @text-small - 2px;
+	font-size: calc(var(--the7-text-small-font-size) - 2);
 }
 .mini-sub-nav > li.act:not(.wpml-ls-item) > a .menu-text,
 .mini-sub-nav > li:not(.act):not(.wpml-ls-item):hover > a .menu-text,
 .mini-nav .mini-sub-nav > li.act:not(.wpml-ls-item) > a .subtitle-text,
 .mini-nav .mini-sub-nav > li:not(.act):not(.wpml-ls-item):hover > a .subtitle-text {
-	color: @accent-bg-color;
+	color: var(--the7-accent-color);
 	.custom-mixin-footer-color (@widget-footer-accent-color);
 }
 .menu-select,
@@ -619,7 +618,7 @@ input.field {
 .mini-nav .mini-sub-nav > li > a * {
 	.mobile-header-bar .mobile-mini-widgets & {
 		.light-preset-color.masthead:not(#phantom):not(.sticky-on):not(.sticky-mobile-on) & {
-			color: 222222 !important;
+			color: #222222 !important;
 		}
 	}
 }

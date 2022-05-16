@@ -21,7 +21,7 @@ class The7_Walker_Page extends Walker_Page {
 	 *
 	 * Calls parent function in wp-includes/class-wp-walker.php
 	 */
-	function display_element( $element, &$children_elements, $max_depth, $depth = 0, $args, &$output ) {
+	function display_element( $element, &$children_elements, $max_depth, $depth, $args, &$output ) {
 
 		if ( ! $element ) {
 			return;
@@ -58,16 +58,16 @@ class The7_Walker_Page extends Walker_Page {
 
 		if ( ! empty( $current_page ) ) {
 			$_current_page = get_post( $current_page );
-			if ( $_current_page && in_array( $page->ID, $_current_page->ancestors ) ) {
+			if ( $_current_page && in_array( $page->ID, $_current_page->ancestors, false ) ) {
 				$css_class[] = 'current_page_ancestor';
 			}
-			if ( $page->ID == $current_page ) {
+			if ( $page->ID === (int) $current_page ) {
 				$css_class[] = 'current_page_item';
 				$css_class[] = 'act';
-			} elseif ( $_current_page && $page->ID == $_current_page->post_parent ) {
+			} elseif ( $_current_page && $page->ID === (int) $_current_page->post_parent ) {
 				$css_class[] = 'current_page_parent';
 			}
-		} elseif ( $page->ID == get_option('page_for_posts') ) {
+		} elseif ( $page->ID === (int) get_option('page_for_posts') ) {
 			$css_class[] = 'current_page_parent';
 		}
 
@@ -75,7 +75,7 @@ class The7_Walker_Page extends Walker_Page {
 			$css_class[] = 'first';
 		}
 
-		$dt_is_parent = in_array( $page->ID, $this->dt_menu_parents );
+		$dt_is_parent = in_array( $page->ID, $this->dt_menu_parents, false );
 
 		// add parent class
 		if ( $dt_is_parent ) {
@@ -84,18 +84,12 @@ class The7_Walker_Page extends Walker_Page {
 
 		$atts = array();
 		$atts['href'] = get_permalink( $page->ID );
-
-		// nonclicable parent menu items
 		if ( $dt_is_parent && ! $args['parent_is_clickable'] ) {
 			$atts['class'] = 'not-clickable-item';
 		}
+		$atts['role'] = 'menuitem';
 
-		$attributes = '';
-		foreach ( $atts as $attr => $value ) {
-			if ( ! empty( $value ) ) {
-				$attributes .= " {$attr}='{$value}'";
-			}
-		}
+		$attributes = the7_get_html_attributes_string( $atts );
 
 		$css_classes = implode( ' ', apply_filters( 'page_css_class', $css_class, $page, $depth, $args, $current_page ) );
 
@@ -108,7 +102,7 @@ class The7_Walker_Page extends Walker_Page {
 		$args['link_after'] = empty( $args['link_after'] ) ? '' : $args['link_after'];
 
 		$output .= $indent . sprintf(
-				'<li class="%s"><a %s>%s%s%s</a>',
+				'<li class="%s" role="presentation"><a %s>%s%s%s</a>',
 				$css_classes,
 				$attributes,
 				$args['link_before'],
@@ -117,14 +111,14 @@ class The7_Walker_Page extends Walker_Page {
 			);
 
 		if ( ! empty( $args['show_date'] ) ) {
-			if ( 'modified' == $args['show_date'] ) {
+			if ( 'modified' === $args['show_date'] ) {
 				$time = $page->post_modified;
 			} else {
 				$time = $page->post_date;
 			}
 
 			$date_format = empty( $args['date_format'] ) ? '' : $args['date_format'];
-			$output .= " " . mysql2date( $date_format, $time );
+			$output .= ' ' . mysql2date( $date_format, $time );
 		}
 	}
 

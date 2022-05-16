@@ -3,6 +3,8 @@
  * @package The7
  */
 
+namespace The7\Mods\Compatibility\Elementor;
+
 defined( 'ABSPATH' ) || exit;
 
 class The7_Elementor_Icons_Extension {

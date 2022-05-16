@@ -1,6 +1,7 @@
 <?php
-
 namespace HTMega_Builder\Elementor\Widget;
+
+// Elementor Classes
 use Elementor\Plugin as Elementor;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
@@ -8,7 +9,8 @@ use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
-use Elementor\Scheme_Typography;
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -19,7 +21,7 @@ class Bl_Page_Title_ELement extends Widget_Base {
     }
 
     public function get_title() {
-        return __( 'BL: Page Title', 'ht-builder' );
+        return __( 'BL: Page Title', 'htmega-addons' );
     }
 
     public function get_icon() {
@@ -36,13 +38,13 @@ class Bl_Page_Title_ELement extends Widget_Base {
         $this->start_controls_section(
             'title_content',
             [
-                'label' => __( 'Page Title', 'ht-builder' ),
+                'label' => __( 'Page Title', 'htmega-addons' ),
             ]
         );
             $this->add_control(
                 'title_html_tag',
                 [
-                    'label'   => __( 'Title HTML Tag', 'ht-builder' ),
+                    'label'   => __( 'Title HTML Tag', 'htmega-addons' ),
                     'type'    => Controls_Manager::SELECT,
                     'options' => htmega_html_tag_lists(),
                     'default' => 'h1',
@@ -55,7 +57,7 @@ class Bl_Page_Title_ELement extends Widget_Base {
         $this->start_controls_section(
             'title_style_section',
             array(
-                'label' => __( 'Page Title', 'ht-builder' ),
+                'label' => __( 'Page Title', 'htmega-addons' ),
                 'tab' => Controls_Manager::TAB_STYLE,
             )
         );
@@ -63,7 +65,7 @@ class Bl_Page_Title_ELement extends Widget_Base {
             $this->add_control(
                 'title_color',
                 [
-                    'label'     => __( 'Color', 'ht-builder' ),
+                    'label'     => __( 'Color', 'htmega-addons' ),
                     'type'      => Controls_Manager::COLOR,
                     'selectors' => [
                         '{{WRAPPER}} .htpage-title' => 'color: {{VALUE}};',
@@ -75,7 +77,7 @@ class Bl_Page_Title_ELement extends Widget_Base {
                 Group_Control_Typography::get_type(),
                 array(
                     'name'      => 'title_typography',
-                    'label'     => __( 'Typography', 'ht-builder' ),
+                    'label'     => __( 'Typography', 'htmega-addons' ),
                     'selector'  => '{{WRAPPER}} .htpage-title',
                 )
             );
@@ -84,7 +86,7 @@ class Bl_Page_Title_ELement extends Widget_Base {
                 Group_Control_Border::get_type(),
                 [
                     'name' => 'title_border',
-                    'label' => __( 'Border', 'ht-builder' ),
+                    'label' => __( 'Border', 'htmega-addons' ),
                     'selector' => '{{WRAPPER}} .htpage-title',
                     'separator' => 'before',
                 ]
@@ -93,7 +95,7 @@ class Bl_Page_Title_ELement extends Widget_Base {
             $this->add_responsive_control(
                 'title_border_radius',
                 [
-                    'label' => __( 'Border Radius', 'ht-builder' ),
+                    'label' => __( 'Border Radius', 'htmega-addons' ),
                     'type' => Controls_Manager::DIMENSIONS,
                     'size_units' => [ 'px', '%', 'em' ],
                     'selectors' => [
@@ -105,7 +107,7 @@ class Bl_Page_Title_ELement extends Widget_Base {
             $this->add_responsive_control(
                 'title_padding',
                 [
-                    'label' => __( 'Padding', 'ht-builder' ),
+                    'label' => __( 'Padding', 'htmega-addons' ),
                     'type' => Controls_Manager::DIMENSIONS,
                     'size_units' => [ 'px', '%', 'em' ],
                     'selectors' => [
@@ -118,7 +120,7 @@ class Bl_Page_Title_ELement extends Widget_Base {
             $this->add_responsive_control(
                 'title_margin',
                 [
-                    'label' => __( 'Margin', 'ht-builder' ),
+                    'label' => __( 'Margin', 'htmega-addons' ),
                     'type' => Controls_Manager::DIMENSIONS,
                     'size_units' => [ 'px', '%', 'em' ],
                     'selectors' => [
@@ -130,23 +132,23 @@ class Bl_Page_Title_ELement extends Widget_Base {
             $this->add_responsive_control(
                 'title_align',
                 [
-                    'label'        => __( 'Alignment', 'ht-builder' ),
+                    'label'        => __( 'Alignment', 'htmega-addons' ),
                     'type'         => Controls_Manager::CHOOSE,
                     'options'      => [
                         'left'   => [
-                            'title' => __( 'Left', 'ht-builder' ),
+                            'title' => __( 'Left', 'htmega-addons' ),
                             'icon'  => 'fa fa-align-left',
                         ],
                         'center' => [
-                            'title' => __( 'Center', 'ht-builder' ),
+                            'title' => __( 'Center', 'htmega-addons' ),
                             'icon'  => 'fa fa-align-center',
                         ],
                         'right'  => [
-                            'title' => __( 'Right', 'ht-builder' ),
+                            'title' => __( 'Right', 'htmega-addons' ),
                             'icon'  => 'fa fa-align-right',
                         ],
                         'justify' => [
-                            'title' => __( 'Justified', 'ht-builder' ),
+                            'title' => __( 'Justified', 'htmega-addons' ),
                             'icon' => 'fa fa-align-justify',
                         ],
                     ],
@@ -161,10 +163,13 @@ class Bl_Page_Title_ELement extends Widget_Base {
 
     protected function render( $instance = [] ) {
         $settings = $this->get_settings_for_display();
+
+        $title_tag = htmega_validate_html_tag( $settings['title_html_tag'] );
+
         if( Elementor::instance()->editor->is_edit_mode() ){
-            echo sprintf( '<%1$s class="htpage-title">' . __('Page Title', 'ht-builder' ). '</%1$s>', $settings['title_html_tag'] );
+            echo sprintf( '<%1$s class="htpage-title">' . __('Page Title', 'htmega-addons' ). '</%1$s>', $title_tag );
         }else{
-            echo sprintf( '<%1$s class="htpage-title">%2$s</%1$s>' , $settings['title_html_tag'], wp_title( '', false )  );
+            echo sprintf( '<%1$s class="htpage-title">%2$s</%1$s>', $title_tag, wp_title( '', false )  );
         }
     }
 

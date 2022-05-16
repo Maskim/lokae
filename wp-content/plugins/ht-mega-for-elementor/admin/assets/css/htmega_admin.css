@@ -114,8 +114,6 @@
 .htmega_table_row.pro span,.htmegapro .description span {
   color: #FF0000;
 }
-
-
 /* 
 * General Tab HTML 
 */
@@ -238,6 +236,130 @@ ul#menu-to-edit li.menu-item-depth-0 .field-columntitle{
   color: red;
 }
 
+/* Sidebar Add banner */
+.htoptions-area {
+  width: 75%;
+  float: left;
+}
+.htoptions-area + .htoptions-sidebar-adds-area {
+  width: 22%;
+  float: right;
+}
+
+.htoption-banner-area {
+  background: #fff;
+  font-size: 14px;
+  line-height: 24px;
+  color: #444444;
+  padding: 30px;
+  box-shadow: 0 0 28px rgba(0,0,0,0.1);
+}
+
+.htoption-banner-area .htoption-logo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.htoption-logo img {
+  width: 90px;
+}
+.htoption-banner-area .htoption-intro {
+  text-align: center;
+  margin-bottom: 45px;
+}
+.htoption-banner-area .htoption-intro p {
+  line-height: 25px;
+}
+
+ul.htoption-feature{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+ul.htoption-feature li {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 30px;
+}
+ul.htoption-feature li::before {
+  position: absolute;
+  content: url(../images/icon/check.png);
+  width: 15px;
+  height: 20px;
+  top: 4px;
+  left: 0;
+  margin: 0;
+}
+ul.htoption-feature li + li {
+  margin-top: 15px;
+}
+.htoption-action-btn {
+  text-align: center;
+  margin-top: 45px;
+}
+.htoption-action-btn a.htoption-btn {
+  background: #2bc48a;
+  font-size: 14px;
+  line-height: 24px;
+  color: #fff;
+  border: 1px solid #2bc48a;
+  padding: 5px 5px 5px 20px;
+  border-radius: 25px;
+  outline: 0;
+  transition: 0.4s;
+  display: inline-block;
+  text-decoration: none;
+  transition: 0.4s;
+}
+.htoption-action-btn a.htoption-btn:hover{
+  background: #3aab80;
+  box-shadow: 0 0 28px rgba(0,0,0,0.1);
+}
+.htoption-action-btn a.htoption-btn .htoption-btn-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 100%;
+  display: inline-block;
+  text-align: center;
+  line-height: 40px;
+  margin-left: 15px;
+}
+
+.htoption-rating-area {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 14px;
+  line-height: 24px;
+  color: #444444;
+  padding: 30px;
+  background: #fff;
+  box-shadow: 0 0 28px rgba(0,0,0,0.1);
+  margin-top: 45px;
+}
+.htoption-rating-area .htoption-rating-icon {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  width: auto;
+  max-width: none;
+  padding-right: 20px;
+}
+.htoption-rating-area .htoption-rating-intro {
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  width: 100%;
+  max-width: 100%;
+}
+
 /*
 * Responsive CSS Here 
 */
@@ -245,45 +367,25 @@ ul#menu-to-edit li.menu-item-depth-0 .field-columntitle{
 /* Large Device :1200px. */
 @media (min-width: 1200px) and (max-width: 1400px) {
   
-  #tp-grid li {
-    width: 25% !important;
-  }
-  
 }
 
 /* Normal desktop :992px. */
 @media (min-width: 992px) and (max-width: 1199px) {
-  
-  #tp-grid li {
-    width: 40% !important;
-  }
 
 }
 
  
 /* Tablet desktop :768px. */
 @media (min-width: 768px) and (max-width: 991px) {
-  
-  #tp-grid li {
-    width: 40% !important;
-  }
 
 }
 
 /* small mobile :320px. */
 @media (max-width: 767px) {
-  
-  #tp-grid li {
-    width: 90% !important;
-  }
 
 }
 
 /* Large Mobile :480px. */
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-   
-   #tp-grid li {
-    width: 40% !important;
-  }
 
 }

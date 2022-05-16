@@ -1,6 +1,10 @@
 <?php
 namespace Elementor;
 
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class HTMega_Elementor_Widget_Verticle_Time_Line extends Widget_Base {
@@ -87,7 +91,7 @@ class HTMega_Elementor_Widget_Verticle_Time_Line extends Widget_Base {
                 'custom_content_list',
                 [
                     'type'    => Controls_Manager::REPEATER,
-                    'fields'  => array_values( $repeater->get_controls() ),
+                    'fields'  => $repeater->get_controls(),
                     'default' => [
                         [
                             'content_date' => __( 'Sep<br/>2018', 'htmega-addons' ),

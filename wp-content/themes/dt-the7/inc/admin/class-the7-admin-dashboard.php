@@ -104,18 +104,7 @@ class The7_Admin_Dashboard {
 		// Additional actions:
 
 		// Demo content.
-		add_action( 'load-' . $sub_page_hook_suffix['the7-demo-content'], array(
-			the7_demo_content()->remote,
-			'update_check',
-		) );
-		add_action( 'admin_print_styles-' . $sub_page_hook_suffix['the7-demo-content'], array(
-			the7_demo_content()->admin,
-			'enqueue_styles',
-		) );
-		add_action( 'admin_print_scripts-' . $sub_page_hook_suffix['the7-demo-content'], array(
-			the7_demo_content()->admin,
-			'enqueue_scripts',
-		) );
+		the7_demo_content()->setup_admin_page_hooks( $sub_page_hook_suffix['the7-demo-content'] );
 
 		// Plugins.
 		Presscore_Modules_TGMPAModule::setup_hooks( $sub_page_hook_suffix['the7-plugins'] );
@@ -141,10 +130,7 @@ class The7_Admin_Dashboard {
 	public function menu_page_screen() {
 		global $plugin_page;
 
-		$view_file = PRESSCORE_ADMIN_DIR . '/screens/' . basename( $plugin_page ) . '.php';
-		if ( is_readable( $view_file ) ) {
-			include $view_file;
-		}
+		include PRESSCORE_ADMIN_DIR . '/screens/' . basename( $plugin_page ) . '.php';
 	}
 
 	/**

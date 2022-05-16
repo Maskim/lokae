@@ -39,6 +39,7 @@ $model                      = (object) [
 					\OTGS\Installer\Templates\Repository\Expired::render( $model );
 				} else if ( $this->repository_has_refunded_subscription( $repository_id ) ) {
 					$model->expired = true;
+					$model->shouldDisplayUnregisterLink = $this->should_display_unregister_link_on_refund_notice();
 					\OTGS\Installer\Templates\Repository\Refunded::render( $model );
 				} else {
 					$this->show_subscription_renew_warning( $repository_id, $subscription_type );
@@ -47,9 +48,6 @@ $model                      = (object) [
 
 			}
 			?>
-
-            <div class="installer-error-box hidden"></div>
-
         </td>
     </tr>
 
@@ -73,15 +71,17 @@ $model                      = (object) [
 			<td>
 				<p><strong><?php echo $package['name'] ?></strong></p>
 				<p><?php echo $package['description'] ?></p>
-
-				<?php if($package['products']): ?>
-					<?php foreach($package['products'] as $product): ?>
-					<ul class="installer-products-list" style="display:inline">
-						<li>
-							<a class="button-secondary" href="<?php echo $product['url'] ?>"><?php echo $product['label'] ?></a>
-						</li>
-					</ul>
-					<?php endforeach; ?>
+				<?php if ( $package['products'] ): ?>
+					<?php foreach ( $package['products'] as $product ):
+						if ( $product['shouldDisplay'] ):?>
+                            <ul class="installer-products-list" style="display:inline">
+                                <li>
+                                    <a class="button-secondary"
+                                       href="<?php echo $product['url'] ?>"><?php echo $product['label'] ?></a>
+                                </li>
+                            </ul>
+						<?php endif;
+					endforeach; ?>
 				<?php endif; ?>
 
 				<?php

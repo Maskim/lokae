@@ -1,5 +1,7 @@
 <?php
 
+use function WPML\Container\make;
+
 /**
  * Class woocommerce_wpml
  */
@@ -71,8 +73,12 @@ class woocommerce_wpml {
 	// NOTE: reverted back to public after wcml-1218.
 	/** @var  WCML_Compatibility */
 	public $compatibility;
-	/** @var  WCML_xDomain_Data */
-	private $xdomain_data;
+	/** @var WCML_Currency_Switcher_Properties|null $cs_properties */
+	public $cs_properties;
+	/** @var WCML_WC_Admin_Duplicate_Product|null $duplicate_product */
+	public $duplicate_product;
+	/** @var WCML_Page_Builders|null $page_builders */
+	public $page_builders;
 
 	/**
 	 * @var WCML_Products_Screen_Options
@@ -102,25 +108,10 @@ class woocommerce_wpml {
 	}
 
 	private function load_rest_api() {
-		global $sitepress, $wpdb, $wpml_query_filter, $wpml_post_translations;
+		global $sitepress;
 
-		$wcml_rest_api = new WCML_REST_API();
-
-		if ( class_exists( 'WooCommerce' ) && defined( 'WC_VERSION' ) && ! is_null( $sitepress ) && $wcml_rest_api->is_rest_api_request() ) {
-			$wcml_rest_api_query_filters_products = new WCML_REST_API_Query_Filters_Products( $wpml_query_filter );
-			$wcml_rest_api_query_filters_orders   = new WCML_REST_API_Query_Filters_Orders( $wpdb );
-			$wcml_rest_api_query_filters_terms    = new WCML_REST_API_Query_Filters_Terms( $sitepress );
-
-			$wcml_rest_api_support = new WCML_REST_API_Support(
-				$this,
-				$sitepress,
-				$wcml_rest_api_query_filters_products,
-				$wcml_rest_api_query_filters_orders,
-				$wcml_rest_api_query_filters_terms,
-				$wpml_post_translations
-			);
-
-			$wcml_rest_api_support->add_hooks();
+		if ( class_exists( 'WooCommerce' ) && defined( 'WC_VERSION' ) && ! is_null( $sitepress ) && WCML\Rest\Functions::isRestApiRequest() ) {
+			WCML\Rest\Hooks::addHooks();
 		}
 	}
 
@@ -140,8 +131,6 @@ class woocommerce_wpml {
 	 */
 	public function init() {
 		global $sitepress, $wpdb, $woocommerce, $wpml_url_converter, $wpml_post_translations, $wpml_term_translations;
-
-		$this->load_rest_api();
 
 		$this->dependencies        = new WCML_Dependencies();
 		$this->dependencies_are_ok = $this->dependencies->check();
@@ -168,7 +157,6 @@ class woocommerce_wpml {
 
 		$actions_that_need_mc = [
 			'save-mc-options',
-			'wcml_new_currency',
 			'wcml_save_currency',
 			'wcml_delete_currency',
 			'wcml_update_currency_lang',
@@ -186,7 +174,7 @@ class woocommerce_wpml {
 			|| ( isset( $_GET['page'] ) && 'wpml-wcml' === $_GET['page'] && isset( $_GET['tab'] ) && 'multi-currency' === $_GET['tab'] )
 			|| ( isset( $_POST['action'] ) && in_array( $_POST['action'], $actions_that_need_mc, true ) )
 		) {
-			$this->multi_currency = new WCML_Multi_Currency();
+			$this->get_multi_currency();
 			$wcml_price_filters   = new WCML_Price_Filter( $this );
 			$wcml_price_filters->add_hooks();
 		} else {
@@ -196,12 +184,13 @@ class woocommerce_wpml {
 		$this->currencies = new WCML_Currencies( $this );
 		$this->currencies->add_hooks();
 
+		$this->sync_variations_data = new WCML_Synchronize_Variations_Data( $this, $sitepress, $wpdb );
+
 		if ( is_admin() || wpml_is_rest_request() ) {
 			$this->translation_editor = new WCML_Translation_Editor( $this, $sitepress, $wpdb );
 			$this->translation_editor->add_hooks();
 			$tp_support = new WCML_TP_Support( $this, $wpdb, new WPML_Element_Translation_Package(), $sitepress->get_setting( 'translation-management', [] ) );
 			$tp_support->add_hooks();
-			$this->sync_variations_data = new WCML_Synchronize_Variations_Data( $this, $sitepress, $wpdb );
 		}
 
 		if ( is_admin() ) {
@@ -276,6 +265,8 @@ class woocommerce_wpml {
 		$url_filters_redirect_location->add_hooks();
 
 		add_action( 'wp_ajax_wcml_update_setting_ajx', [ $this, 'update_setting_ajx' ] );
+
+		$this->load_rest_api();
 
 		return true;
 	}
@@ -447,7 +438,7 @@ class woocommerce_wpml {
 	 */
 	public function get_multi_currency() {
 		if ( ! isset( $this->multi_currency ) ) {
-			$this->multi_currency = new WCML_Multi_Currency();
+			$this->multi_currency = make( WCML_Multi_Currency::class );
 		}
 		return $this->multi_currency;
 	}

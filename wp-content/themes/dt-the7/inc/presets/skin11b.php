@@ -49,6 +49,24 @@
   'breadcrumbs_border_width' => '0px',
   'breadcrumbs_margin' => '15px 0px 5px 0px',
   'breadcrumbs_padding' => '3px 20px 3px 20px',
+  'button-shadow' => 
+  array (
+    'color' => 'rgba(0, 0, 0, 0)',
+    'horizontal' => '0',
+    'vertical' => '0',
+    'blur' => '10',
+    'spread' => '0',
+    'position' => 'outline',
+  ),
+  'button-shadow-hover' => 
+  array (
+    'color' => 'rgba(0, 0, 0, 0)',
+    'horizontal' => '0',
+    'vertical' => '0',
+    'blur' => '10',
+    'spread' => '0',
+    'position' => 'outline',
+  ),
   'buttons-border-color' => '#ffffff',
   'buttons-border-color_mode' => 'accent',
   'buttons-color' => '#81d742',
@@ -59,6 +77,7 @@
   'buttons-hover_color' => '#8eca15',
   'buttons-hover_color_gradient' => '135deg|#1083b8 30%|#16b6d6 100%',
   'buttons-hover_color_mode' => 'gradient',
+  'buttons-l-custom-icon-size' => 1,
   'buttons-l-icon-size' => 16,
   'buttons-l-typography' => 
   array (
@@ -69,6 +88,13 @@
   'buttons-l_border_radius' => '100px',
   'buttons-l_border_width' => '0px',
   'buttons-l_padding' => '16px 34px 16px 34px',
+  'buttons-lg-custom-icon-size' => 1,
+  'buttons-lg-typography' => 
+  array (
+    'font_family' => 'Roboto:700',
+    'text_transform' => 'uppercase',
+  ),
+  'buttons-m-custom-icon-size' => 1,
   'buttons-m-icon-size' => 14,
   'buttons-m-typography' => 
   array (
@@ -79,6 +105,7 @@
   'buttons-m_border_radius' => '100px',
   'buttons-m_border_width' => '0px',
   'buttons-m_padding' => '14px 28px 14px 28px',
+  'buttons-s-custom-icon-size' => 1,
   'buttons-s-icon-size' => 12,
   'buttons-s-typography' => 
   array (
@@ -89,11 +116,16 @@
   'buttons-s_border_radius' => '100px',
   'buttons-s_border_width' => '0px',
   'buttons-s_padding' => '8px 20px 7px 20px',
-  'buttons-style' => 'flat',
   'buttons-text_color' => '#ffffff',
   'buttons-text_color_mode' => 'color',
   'buttons-text_hover_color' => '#ffffff',
   'buttons-text_hover_color_mode' => 'color',
+  'buttons-xl-custom-icon-size' => 1,
+  'buttons-xl-typography' => 
+  array (
+    'font_family' => 'Roboto:700',
+    'text_transform' => 'uppercase',
+  ),
   'contact_form_message' => '1',
   'content-headers_color' => '#333333',
   'content-links_color' => '#0d76a6',
@@ -109,55 +141,102 @@
     'font_size' => 15,
     'text_transform' => 'uppercase',
   ),
-  'fonts-big_size' => 16,
-  'fonts-big_size_line_height' => 28,
+  'fonts-big_size' => 
+  array (
+    'font_size' => '16px',
+    'line_height' => '1.6em',
+  ),
   'fonts-font_family' => 'Roboto',
   'fonts-h1-typography' => 
   array (
     'font_family' => 'Roboto Condensed:700',
-    'font_size' => '44',
-    'line_height' => '54',
     'text_transform' => 'none',
+    'responsive_font_size' => 
+    array (
+      'desktop' => '44px',
+      'tablet' => '34px',
+      'mobile' => '34px',
+    ),
+    'responsive_line_height' => 
+    array (
+      'desktop' => '54px',
+    ),
   ),
   'fonts-h2-typography' => 
   array (
     'font_family' => 'Roboto Condensed:700',
-    'font_size' => '34',
-    'line_height' => '44',
     'text_transform' => 'none',
+    'responsive_font_size' => 
+    array (
+      'desktop' => '34px',
+    ),
+    'responsive_line_height' => 
+    array (
+      'desktop' => '44px',
+    ),
   ),
   'fonts-h3-typography' => 
   array (
     'font_family' => 'Roboto Condensed:700',
-    'font_size' => '24',
-    'line_height' => '34',
     'text_transform' => 'none',
+    'responsive_font_size' => 
+    array (
+      'desktop' => '24px',
+    ),
+    'responsive_line_height' => 
+    array (
+      'desktop' => '34px',
+    ),
   ),
   'fonts-h4-typography' => 
   array (
     'font_family' => 'Roboto Condensed:700',
-    'font_size' => '20',
-    'line_height' => '30',
     'text_transform' => 'none',
+    'responsive_font_size' => 
+    array (
+      'desktop' => '20px',
+    ),
+    'responsive_line_height' => 
+    array (
+      'desktop' => '30px',
+    ),
   ),
   'fonts-h5-typography' => 
   array (
     'font_family' => 'Roboto Condensed:700',
-    'font_size' => '16',
-    'line_height' => '26',
     'text_transform' => 'none',
+    'responsive_font_size' => 
+    array (
+      'desktop' => '16px',
+    ),
+    'responsive_line_height' => 
+    array (
+      'desktop' => '26px',
+    ),
   ),
   'fonts-h6-typography' => 
   array (
     'font_family' => 'Roboto Condensed:700',
-    'font_size' => '14',
-    'line_height' => '24',
     'text_transform' => 'none',
+    'responsive_font_size' => 
+    array (
+      'desktop' => '14px',
+    ),
+    'responsive_line_height' => 
+    array (
+      'desktop' => '24px',
+    ),
   ),
-  'fonts-normal_size' => 15,
-  'fonts-normal_size_line_height' => 27,
-  'fonts-small_size' => 13,
-  'fonts-small_size_line_height' => 25,
+  'fonts-normal_size' => 
+  array (
+    'font_size' => '15px',
+    'line_height' => '1.5em',
+  ),
+  'fonts-small_size' => 
+  array (
+    'font_size' => '13px',
+    'line_height' => '1.4em',
+  ),
   'footer-accent_text_color' => '',
   'footer-bg_color' => 'rgba(26,28,32,1)',
   'footer-bg_image' => 
@@ -499,7 +578,7 @@
   'header-elements-login-logout_url' => '',
   'header-elements-login-on-desktops' => 'show',
   'header-elements-login-second-header-switch' => 'in_menu',
-  'header-elements-login-url' => 'http://themeforest.net',
+  'header-elements-login-url' => 'https://themeforest.net',
   'header-elements-login-use_logout_url' => false,
   'header-elements-logout-caption' => 'Logout',
   'header-elements-menu-first-header-switch' => 'near_logo',
@@ -597,6 +676,19 @@
   'header-elements-woocommerce_cart-counter-style' => 'rectangular',
   'header-elements-woocommerce_cart-custom-icon' => 'the7-mw-icon-cart-bold',
   'header-elements-woocommerce_cart-first-header-switch' => 'near_logo',
+  'header-elements-woocommerce_cart-font-content' => 
+  array (
+    'font_family' => 'Roboto',
+    'responsive_font_size' => 
+    array (
+      'desktop' => '15px',
+    ),
+    'responsive_line_height' => 
+    array (
+      'desktop' => '1.4em',
+    ),
+    'text_transform' => 'none',
+  ),
   'header-elements-woocommerce_cart-icon' => 'custom',
   'header-elements-woocommerce_cart-on-desktops' => 'show',
   'header-elements-woocommerce_cart-second-header-switch' => 'near_logo',
@@ -1279,6 +1371,7 @@
   ),
   'top_bar_mobile_paddings' => '7px 20px 7px 20px',
   'wc_view_mode' => 'view_mode',
+  'widget_gap' => '20px',
   'woocommerce-product_zoom' => '1',
   'woocommerce_cart_padding' => '70px 10px',
   'woocommerce_cart_switch' => '990px',

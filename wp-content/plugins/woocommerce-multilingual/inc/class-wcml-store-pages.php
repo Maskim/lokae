@@ -11,6 +11,13 @@ class WCML_Store_Pages {
 	 */
 	private $sitepress;
 
+	/** @var int|string $front_page_id */
+	private $front_page_id;
+	/** @var int $shop_page_id */
+	private $shop_page_id;
+	/** @var WP_Post|null $shop_page */
+	private $shop_page;
+
 	public function __construct( woocommerce_wpml $woocommerce_wpml, SitePress $sitepress ) {
 
 		$this->woocommerce_wpml = $woocommerce_wpml;
@@ -319,9 +326,7 @@ class WCML_Store_Pages {
 	public function create_missing_store_pages_with_redirect() {
 		$this->create_missing_store_pages();
 
-		wp_redirect( admin_url( 'admin.php?page=wpml-wcml&tab=status' ) );
-		exit;
-
+		wcml_safe_redirect( admin_url( 'admin.php?page=wpml-wcml&tab=status' ) );
 	}
 
 	/**
@@ -552,7 +557,7 @@ class WCML_Store_Pages {
 
 			if ( $current_language != $default_language ) {
 
-				$templates = [ 'woocommerce.php' ];
+				$templates = [];
 
 				$term = get_queried_object();
 

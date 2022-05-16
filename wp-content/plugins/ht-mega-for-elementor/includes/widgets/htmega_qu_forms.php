@@ -1,6 +1,10 @@
 <?php
 namespace Elementor;
 
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class HTMega_Elementor_Widget_QUforms extends Widget_Base {
@@ -250,10 +254,6 @@ class HTMega_Elementor_Widget_QUforms extends Widget_Base {
                 [
                     'label' => __( 'Background Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#ffffff',
                     'selectors'         => [
                         '{{WRAPPER}} .quform-form-inner .quform-input input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .quform-form-inner .quform-input select' => 'background-color: {{VALUE}}',
@@ -266,10 +266,6 @@ class HTMega_Elementor_Widget_QUforms extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#212529',
                     'selectors'         => [
                         '{{WRAPPER}} .quform-form-inner .quform-input input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .quform-form-inner .quform-input select' => 'color: {{VALUE}}',
@@ -369,10 +365,6 @@ class HTMega_Elementor_Widget_QUforms extends Widget_Base {
                 [
                     'label' => __( 'Background Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#ffffff',
                     'selectors'         => [
                         '{{WRAPPER}} .quform-form-inner .quform-input-textarea textarea' => 'background-color: {{VALUE}}',
@@ -385,12 +377,8 @@ class HTMega_Elementor_Widget_QUforms extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default' => '#212529',
-                    'selectors'         => [
+                    'selectors'  => [
                         '{{WRAPPER}} .quform-form-inner .quform-input-textarea textarea' => 'color: {{VALUE}}',
                     ],
                 ]

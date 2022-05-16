@@ -91,7 +91,7 @@ class HTMega_Elementor_Widget_Brand extends Widget_Base {
                 'htmega_brand_list',
                 [
                     'type'    => Controls_Manager::REPEATER,
-                    'fields'  => array_values( $repeater->get_controls() ),
+                    'fields'  => $repeater->get_controls(),
                     'default' => [
 
                         [

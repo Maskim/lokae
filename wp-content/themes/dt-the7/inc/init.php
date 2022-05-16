@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'THE7_MINIMUM_COMPATIBLE_WP_VERSION', '4.9.0' );
+define( 'THE7_MINIMUM_COMPATIBLE_WP_VERSION', '5.3.0' );
 
 /**
  * Display notice about incompatible WP version.
@@ -59,7 +59,7 @@ if ( version_compare( $wp_version, THE7_MINIMUM_COMPATIBLE_WP_VERSION, '<' ) ) {
 require_once trailingslashit( get_template_directory() ) . 'inc/constants.php';
 
 require_once PRESSCORE_DIR . '/class-the7-autoloader.php';
-new The7_Aoutoloader();
+new The7_Autoloader();
 
 if ( ! class_exists( 'Color', false ) ) {
 	require_once PRESSCORE_DIR . '/vendor/color/color.php';
@@ -113,21 +113,21 @@ require_once PRESSCORE_ADMIN_DIR . '/admin-notices.php';
 require_once PRESSCORE_MODS_DIR . '/dev-tools/main-module.class.php';
 The7_DevToolMainModule::init();
 
-if ( The7_Admin_Dashboard_Settings::get( 'critical-alerts' ) ) {
+//if ( The7_Admin_Dashboard_Settings::get( 'critical-alerts' ) ) {
 	$critical_alert_email = The7_Admin_Dashboard_Settings::get( 'critical-alerts-email' );
 	if ( ! $critical_alert_email ) {
 		$critical_alert_email = get_site_option( 'admin_email' );
 	}
 	$critical_alerts = new The7_Critical_Alerts( $critical_alert_email, new The7_Remote_API( presscore_get_purchase_code() ) );
 	$critical_alerts->bootstrap();
-}
+//}
 
 if ( is_admin() ) {
 	$the7_admin_dashboard = new The7_Admin_Dashboard();
 	$the7_admin_dashboard->init();
 
 	require_once PRESSCORE_ADMIN_DIR . '/admin-functions.php';
-	require_once PRESSCORE_ADMIN_DIR . '/the7-site-health-tests.php';
+	require_once PRESSCORE_ADMIN_DIR . '/site-health-tests/the7-site-health-tests.php';
 	require_once PRESSCORE_ADMIN_DIR . '/admin-bulk-actions.php';
 	require_once locate_template( 'inc/admin/load-meta-boxes.php' );
 

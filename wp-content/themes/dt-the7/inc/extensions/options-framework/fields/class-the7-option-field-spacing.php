@@ -13,6 +13,10 @@ class The7_Option_Field_Spacing extends The7_Option_Field_Abstract {
 		if ( isset( $this->option['units'] ) ) {
 			$units = $this->option['units'];
 		}
+		$is_single_unit = false;
+		if ( isset( $this->option['single-unit'] ) ) {
+			$is_single_unit = $this->option['single-unit'] ;
+		}
 		if ( isset( $this->option['fields'] ) ) {
 			$fields = $this->option['fields'];
 		} else {
@@ -25,7 +29,7 @@ class The7_Option_Field_Spacing extends The7_Option_Field_Abstract {
 			);
 		}
 
-		return self::static_html( $this->option_name, $field_id, $this->val, $fields, $units );
+		return self::static_html( $this->option_name, $field_id, $this->val, $fields, $units, $is_single_unit );
 	}
 
 	/**
@@ -39,7 +43,7 @@ class The7_Option_Field_Spacing extends The7_Option_Field_Abstract {
 	 *
 	 * @return string
 	 */
-	public static function static_html( $name, $id, $value, $fields = array(), $units = array( 'px' ) ) {
+	public static function static_html( $name, $id, $value, $fields = array(), $units = array( 'px' ), $is_single_unit = false ) {
 		if ( empty( $fields ) || ! is_array( $fields ) ) {
 			$fields = array( 'Top', 'Right', 'Bottom', 'Left' );
 		}
@@ -47,6 +51,12 @@ class The7_Option_Field_Spacing extends The7_Option_Field_Abstract {
 		$html = '';
 		$units = self::decode_units( $units );
 		$spacing = self::sanitize( $value, $units, count( $fields ) );
+		$last = end($fields);
+
+		$single_unit_class = '';
+		if ($is_single_unit){
+			$single_unit_class = ' single-unit';
+		}
 		foreach ( $fields as $i=>$desc ) {
 			$cur_units = $spacing[ $i ]['units'];
 			$val = $spacing[ $i ]['val'];
@@ -55,24 +65,29 @@ class The7_Option_Field_Spacing extends The7_Option_Field_Abstract {
 			$units_html = '';
 			$units_wrap_class = 'dt_spacing-units-wrap';
 			if ( count( $units ) > 1 ) {
-				$units_wrap_class .= ' select';
-				foreach ( $units as $u ) {
-					$units_html .= '<option value="' . esc_attr( $u ) . '" ' . selected( $u, $cur_units, false ) . '>' . esc_html( $u ) . '</option>';
+				if ($is_single_unit && $desc !== $last) {
+					$units_html = '<span class="dt_spacing-units" data-units="' . esc_attr( $cur_units ) . '"></span>';
 				}
-				$units_html = '<select class="dt_spacing-units" data-units="' . esc_attr( $cur_units ) . '">' . $units_html . '</select>';
-			} else {
+				else {
+					$units_wrap_class .= ' select';
+					foreach ( $units as $u ) {
+						$units_html .= '<option value="' . esc_attr( $u ) . '" ' . selected( $u, $cur_units, false ) . '>' . esc_html( $u ) . '</option>';
+					}
+					$units_html = '<select class="dt_spacing-units" data-units="' . esc_attr( $cur_units ) . '">' . $units_html . '</select>';
+				}
+			}
+			else {
 				$units_html = '<span class="dt_spacing-units" data-units="' . esc_attr( $cur_units ) . '">' . esc_html( $cur_units ) . '</span>';
 			}
 
 			$units_html = '<div class="' . $units_wrap_class . '">' . $units_html . '</div>';
 
 			// Space HTML.
-			$html .= '<div class="dt_spacing-space"><input type="number" class="dt_spacing-value" value="' . esc_attr( $val ) . '">' . $units_html . '<div class="explain">' . esc_html( $desc ) . '</div></div>';
+			$html .= '<div class="dt_spacing-space' . $single_unit_class . '"><input type="number" class="dt_spacing-value" value="' . esc_attr( $val ) . '">' . $units_html . '<div class="explain">' . esc_html( $desc ) . '</div></div>';
 		}
-
 		// Param value.
 		$encoded_spacing = self::encode( $spacing );
-		$html .= '<input type="hidden" id="' . esc_attr( $id ) . '" class="the7-option-field-value" name="' . esc_attr( $name ) . '" value="' . esc_attr( $encoded_spacing ) . '">';
+		$html .= '<input type="hidden" id="' . esc_attr( $id ) . '" class="the7-option-field-value' . $single_unit_class . '" name="' . esc_attr( $name ) . '" value="' . esc_attr( $encoded_spacing ) . '">';
 
 		return $html;
 	}
@@ -86,7 +101,7 @@ class The7_Option_Field_Spacing extends The7_Option_Field_Abstract {
 	 *
 	 * @return array
 	 */
-	public static function sanitize( $spacing, $units, $fields_num = 4 ) {
+	public static function sanitize( $spacing, $units, $fields_num = 4) {
 		$spacing = self::decode( $spacing );
 		$units = self::decode_units( $units );
 		$max_val = 999;

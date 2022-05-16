@@ -251,6 +251,7 @@
             if (htwptSearchFieldValue != "") {
                 htwptProjectGroupData = htwptProjectGroupData.filter(i => i.tags.filter(j => j == htwptSearchFieldValue)[0])
             }
+
             let $this = $(this),
                 $group = $this.data('group'),
                 htwptPrintGroupData = htwptProjectGroupData.filter(i => i.shareId == $group),
@@ -268,7 +269,6 @@
                     freePlugins,
                     proPlugins,
                     requiredtheme,
-                    fullimage
                 } = htwptPrintGroupData[i];
                 if(isPro == '1' ){
                     $impbutton = `<a href="${HTTM.prolink}" target="_blank">${HTTM.buttontxt.buynow}</a>`;
@@ -281,7 +281,7 @@
                             <div class="htwpt-project-item">
                                 <div class="htwpt-project-thumb">
                                     <a href="${thumbnail}" class="htwpt-image htwpt-image-popup">
-                                        <img src="${thumbnail}" data-preview='{"templpateid":"${id}","templpattitle":"${title}","parentid":"${shareId}","fullimage":"${fullimage}"}' alt="${title}" />
+                                        <img src="${thumbnail}" data-preview='{"templpateid":"${id}","templpattitle":"${title}","parentid":"${shareId}","fullimage":"${thumbnail}"}' alt="${title}" />
                                         <span class="img-loader"></span>
                                     </a>
                                     <div class="htwpt-actions">
@@ -294,7 +294,7 @@
                                     <h6 class="sub-title">${shareId}</h6>
                                 </div>
                             </div>
-                            <div id="htwpt-popup-prev-${id}" style="display: none;"><img src="${fullimage}" alt="${title}" style="width:100%;"/></div>
+                            <div id="htwpt-popup-prev-${id}" style="display: none;"><img src="${thumbnail}" alt="${title}" style="width:100%;"/></div>
                         </div>`;
             }
             if (!$(htwptLoaderSelector).hasClass('finish')) {

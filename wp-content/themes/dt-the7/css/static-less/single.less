@@ -26,6 +26,7 @@
 		.flex-flow( row wrap);
 		overflow: hidden;
 		.content-align-center  &,
+		.content-align-centre &,
 		.related-projects & {
 			.justify-content(@justify: center);
 		}
@@ -465,9 +466,9 @@
 		height: 80px;
 		border-radius: 50%;
 	}
-	.author-avatar.no-avatar.no-avatar:after {
-	    content: "\e502";
-	    font-size: 36px;
+	.author-avatar.no-avatar.no-avatar svg {
+	    width: 36px;
+	    height: auto;
 	}
 	.author-description {
 		& h4 {
@@ -713,30 +714,21 @@
 	.flex-display(@display: flex);
 	.flex-flow( column nowrap);
 	& > h3 {
-		position: relative;
-		.align-self(@align: center);
-		padding-bottom: 10px;
-		margin-bottom: 40px;
-		&:after {
-			position: absolute;
-			bottom: 0;
-			left: 50%;
-			width: 60px;
-			height: 3px;
-			margin-left: -30px;
-			content: "";
-		}
+		margin-bottom: 30px;
 
 	}
 }
+.comment-respond a {
+	text-decoration: none;
+}
 .single-related-posts {
 	& > h3 {
-		margin-bottom: 35px;
+		margin-bottom: 30px;
 	}
 	.single-portfolio & {
 		padding-bottom: 60px;
 		& > h3 {
-			margin-bottom: 40px;
+			margin-bottom: 30px;
 		}
 	}
 }
@@ -757,7 +749,7 @@
 		}
 			.comment-list .comment-body {
 				position: relative;
-				padding: 30px 30px 15px 120px;
+				padding: 20px 20px 10px 100px;
 				margin-top: 20px;
 				.box-sizing (border-box);
 			}
@@ -780,7 +772,7 @@
 					.comment-author .avatar,
 					.comment-author .rollover {
 						float: left;
-						margin: 0px 30px 15px -90px;
+						margin: 0px 20px 15px -80px;
 					}
 					.comment-author .rollover i,
 					.comment-author .rollover,
@@ -799,25 +791,19 @@
 						text-align: right;
 						margin-bottom: 10px;
 					}
-					//.comment-meta,
 					.comment-reply-link {
-						
 						margin-left: 10px;
-						font-weight: bold;
 					}
 					.comment-reply-title > small {
 						display: block;
 						text-align: center;
 					}
 					.comment-reply-title #cancel-comment-reply-link {
-						display: inline-block;
-						float: none;
-						padding-left: 15px;
-						text-align: center;
+						float: left;
+						margin-top: 10px;
 					}
 					.comment-notes,
 					.logged-in-as {
-						text-align: center;
 						margin-bottom: 15px;
 					}
 					.comment-form .form-fields {

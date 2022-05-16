@@ -19,7 +19,9 @@ div.mc4wp-form button[type="submit"],
 .tml-submit-wrap input[type="submit"],
 .woocommerce-widget-layered-nav-dropdown__submit {
 	position: relative;
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	//border: none;
 	text-decoration: none;
 	white-space: nowrap;
@@ -155,11 +157,6 @@ button.button,
 	transform: translateY(0px);
 }
 
-
-/*Material buttons*/
-.btn-shadow .dt-btn {
-	transform: translateZ(0);
-}
 /*Font icons for button*/
 	.dt-btn i,
 	.btn-link i,
@@ -184,64 +181,6 @@ button.button,
 		margin-left: 9px;
 	}
 
-/* # 3D, Flat Buttons
-================================================== */
-.dt-btn:not(.btn-light):not(.light-bg-btn):not(.outline-btn):not(.outline-bg-btn),
-button.button,
-a.button,
-.dt-form button,
-.widget .dt-form .dt-btn,
-input[type="reset"],
-.nsu-submit,
-.wpcf7-submit,
-.dt-wc-btn,
-.checkout-button,
-#place_order,
-input[name="apply_coupon"],
-input[name="login"],
-button[name="calc_shipping"],
-.single_add_to_cart_button.button,
-.button.wc-backward,
-.woocommerce-Button.button,
-.woocommerce-Reviews .submit,
-.woocommerce-Button[name="register"],
-.track_order input[name="track"],
-input#place_order,
-input[name="save_address"],
-.post-password-form input[type="submit"],
-.mc4wp-form input[type="submit"],
-div.mc4wp-form button[type="submit"],
-.tml-submit-wrap input[type="submit"],
-.wpcf7-form input[type="submit"],
-input[type="submit"]:not([name="update_cart"]),
-.woocommerce-widget-layered-nav-dropdown__submit {
-	.btn-3d & {
-		top: 0;
-		transition: none;
-	}
-	.btn-flat &,
-	.btn-3d &,
-	.btn-shadow & {
-		&:after {
-			position: absolute;
-			display: block;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			content: "";
-			border-radius:			inherit;
-		}
-	}
-	.btn-flat &,
-	.btn-3d &,
-	.btn-shadow & {
-		&:active:after {
-			background-color: rgba(0,0,0,0.2);
-		}
-	}
-}
-
 /* # Light Buttons
 ================================================== */
 .btn-light,
@@ -251,13 +190,10 @@ input[type="submit"]:not([name="update_cart"]),
 	transition: background 0.2s ease-out, color 0.2s ease-out, border-color 0.2s ease-out;
 }
 
-
 .outline-bg-btn {
 	transition: all 0.2s ease-out;
 }
 
-.btn-3d .dt-btn.btn-light:before,
-.btn-3d .dt-btn.btn-light:after,
 #page .btn-light:after {
 	display: none;
 }

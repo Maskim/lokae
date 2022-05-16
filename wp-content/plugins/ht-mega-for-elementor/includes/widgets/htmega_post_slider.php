@@ -1,6 +1,10 @@
 <?php
 namespace Elementor;
 
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class HTMega_Elementor_Widget_Post_Slider extends Widget_Base {
@@ -589,10 +593,6 @@ class HTMega_Elementor_Widget_Post_Slider extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default'=>'#18012c',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-single-post-slide .content .post-inner h2 a' => 'color: {{VALUE}}',
@@ -681,10 +681,6 @@ class HTMega_Elementor_Widget_Post_Slider extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default'=>'#18012c',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-single-post-slide .content .post-inner p' => 'color: {{VALUE}}',
@@ -783,10 +779,6 @@ class HTMega_Elementor_Widget_Post_Slider extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default'=>'#ffffff',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-single-post-slide .content ul.post-category li a' => 'color: {{VALUE}}',
@@ -851,10 +843,6 @@ class HTMega_Elementor_Widget_Post_Slider extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default'=>'#ffffff',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-single-post-slide .content ul.post-category li a:hover' => 'color: {{VALUE}}',
@@ -891,10 +879,6 @@ class HTMega_Elementor_Widget_Post_Slider extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default'=>'#18012c',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-single-post-slide ul.meta' => 'color: {{VALUE}}',
@@ -995,10 +979,6 @@ class HTMega_Elementor_Widget_Post_Slider extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default'=>'#464545',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-single-post-slide .post-btn a.readmore-btn' => 'color: {{VALUE}}',
@@ -1083,10 +1063,6 @@ class HTMega_Elementor_Widget_Post_Slider extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default'=>'#ffffff',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-single-post-slide .post-btn a.readmore-btn:hover' => 'color: {{VALUE}}',
@@ -1223,10 +1199,6 @@ class HTMega_Elementor_Widget_Post_Slider extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default' => '#00282a',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-postslider-area button.slick-arrow' => 'color: {{VALUE}};',
@@ -1373,10 +1345,6 @@ class HTMega_Elementor_Widget_Post_Slider extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default' => '#00282a',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-postslider-area button.slick-arrow:hover' => 'color: {{VALUE}};',

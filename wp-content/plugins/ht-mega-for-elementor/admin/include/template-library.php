@@ -7,8 +7,8 @@ class HTMega_Template_Library{
     const TRANSIENT_KEY = 'htmega_template_info';
     public static $buylink = null;
 
-    public static $endpoint     = HTMEGA_ADDONS_PL_URL.'admin/json/layoutinfofree.json';
-    public static $templateapi  = 'https://api.hasthemes.com/api/htmega/v1/layouts-free/%s.json';
+    public static $endpoint     = 'https://htmega.hasthemes.com/library/wp-json/htmega/v1/templates';
+    public static $templateapi  = 'https://htmega.hasthemes.com/library/wp-json/htmega/v1/templates/%s';
 
     public static $api_args = [];
 
@@ -21,7 +21,7 @@ class HTMega_Template_Library{
     }
 
     function __construct(){
-        self::$buylink = isset( $this->get_templates_info()['pro_link'][0]['url']) ? $this->get_templates_info()['pro_link'][0]['url'] : '#';
+        self::$buylink = isset( HTMega_Addons_Elementor::$template_info['pro_link'] ) ? HTMega_Addons_Elementor::$template_info['pro_link'] : '#';
         if ( is_admin() ) {
             add_action( 'admin_menu', [ $this, 'admin_menu' ], 225 );
             add_action( 'wp_ajax_htmega_ajax_request', [ $this, 'templates_ajax_request' ] );
@@ -89,18 +89,23 @@ class HTMega_Template_Library{
 
     public static function request_remote_templates_info( $force_update ) {
         global $wp_version;
-        $body_args = apply_filters( 'htmegatemplates/api/get_templates/body_args', self::$api_args );
+
+        $timeout = ( $force_update ) ? 25 : 8;
         $request = wp_remote_get(
             self::get_api_endpoint(),
             [
-                'timeout'    => $force_update ? 25 : 10,
-                'user-agent' => 'WordPress/' . $wp_version . '; ' . home_url(),
-                'body'       => $body_args,
-                'sslverify'  => false,
+                'timeout'    => $timeout,
+                'user-agent' => 'WordPress/' . $wp_version . '; ' . home_url()
             ]
         );
+
+        if ( is_wp_error( $request ) || 200 !== (int) wp_remote_retrieve_response_code( $request ) ) {
+            return [];
+        }
+
         $response = json_decode( wp_remote_retrieve_body( $request ), true );
         return $response;
+
     }
 
     /**
@@ -156,10 +161,10 @@ class HTMega_Template_Library{
 
         if ( isset( $_REQUEST ) ) {
 
-            $template_id        = $_REQUEST['httemplateid'];
-            $template_parentid  = $_REQUEST['htparentid'];
-            $template_title     = $_REQUEST['httitle'];
-            $page_title         = $_REQUEST['pagetitle'];
+            $template_id        = sanitize_text_field( $_REQUEST['httemplateid'] );
+            $template_parentid  = sanitize_text_field( $_REQUEST['htparentid'] );
+            $template_title     = sanitize_text_field( $_REQUEST['httitle'] );
+            $page_title         = sanitize_text_field( $_REQUEST['pagetitle'] );
 
             $templateurl    = sprintf( self::get_api_templateapi(), $template_id );
             $response_data  = $this->templates_get_content_remote_request( $templateurl );
@@ -172,12 +177,16 @@ class HTMega_Template_Library{
                 'post_title'   => !empty( $page_title ) ? $page_title : $defaulttitle,
                 'post_content' => '',
             ];
+
             $new_post_id = wp_insert_post( $args );
 
-            update_post_meta( $new_post_id, '_elementor_data', $response_data['content'] );
-            update_post_meta( $new_post_id, '_elementor_page_settings', $response_data['page_settings'] );
+            update_post_meta( $new_post_id, '_elementor_data', $response_data['content']['content'] );
             update_post_meta( $new_post_id, '_elementor_template_type', $response_data['type'] );
             update_post_meta( $new_post_id, '_elementor_edit_mode', 'builder' );
+            
+            if( isset( $response_data['page_settings'] ) ){
+                update_post_meta( $new_post_id, '_elementor_page_settings', $response_data['page_settings'] );
+            }
 
             if ( $new_post_id && ! is_wp_error( $new_post_id ) ) {
                 update_post_meta( $new_post_id, '_wp_page_template', !empty( $response_data['page_template'] ) ? $response_data['page_template'] : 'elementor_canvas' );
@@ -197,14 +206,21 @@ class HTMega_Template_Library{
     /*
     * Remote data
     */
-    function templates_get_content_remote_request( $templateurl ){
-        $url = $templateurl;
-        $response = wp_remote_get( $url, array(
-            'timeout'   => 60,
-            'sslverify' => false
+    public function templates_get_content_remote_request( $templateurl ){
+        global $wp_version;
+
+        $response = wp_remote_get( $templateurl, array(
+            'timeout'    => 25,
+            'user-agent' => 'WordPress/' . $wp_version . '; ' . home_url()
         ) );
+
+        if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
+            return [];
+        }
+
         $result = json_decode( wp_remote_retrieve_body( $response ), true );
         return $result;
+
     }
 
     /*

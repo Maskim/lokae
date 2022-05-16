@@ -252,8 +252,7 @@ class Flexible_Checkout_Fields_Field {
 	 */
 	public function get_name_for_address_format() {
 		$name = $this->field_data['name'];
-		if ( $this->get_type() === self::FIELD_TYPE_STATE
-			&& isset( $this->field_data[ $this->prepare_display_on_option_name( self::DISPLAY_OPTION_STATE_CODE ) ] )
+		if ( isset( $this->field_data[ $this->prepare_display_on_option_name( self::DISPLAY_OPTION_STATE_CODE ) ] )
 		    && 1 === intval( $this->field_data[ $this->prepare_display_on_option_name( self::DISPLAY_OPTION_STATE_CODE ) ] )
 		) {
 			$name = 'state_code';

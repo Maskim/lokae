@@ -1,6 +1,10 @@
 <?php
 namespace Elementor;
 
+// Elementor Classes
+use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Schemes\Typography as Scheme_Typography;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class HTMega_Elementor_Widget_Post_Carousel extends Widget_Base {
@@ -588,10 +592,6 @@ class HTMega_Elementor_Widget_Post_Carousel extends Widget_Base {
                 [
                     'label' => __( 'Border Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default'=>'#b5b5b5',
                     'selectors' => [
                         '{{WRAPPER}} .post-carousel-wrapper .htmega-postslider-layout-2 .content .post-inner' => 'border-color: {{VALUE}}',
@@ -604,10 +604,6 @@ class HTMega_Elementor_Widget_Post_Carousel extends Widget_Base {
                 [
                     'label' => __( 'Hover Border Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default'=>'#0056ff',
                     'selectors' => [
                         '{{WRAPPER}} .post-carousel-wrapper .htmega-postslider-layout-2:hover .content .post-inner' => 'border-color: {{VALUE}}',
@@ -633,10 +629,6 @@ class HTMega_Elementor_Widget_Post_Carousel extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default'=>'#18012c',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-single-post-slide .content .post-inner h2 a' => 'color: {{VALUE}}',
@@ -725,10 +717,6 @@ class HTMega_Elementor_Widget_Post_Carousel extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default'=>'#18012c',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-single-post-slide .content .post-inner p' => 'color: {{VALUE}}',
@@ -801,6 +789,52 @@ class HTMega_Elementor_Widget_Post_Carousel extends Widget_Base {
 
         $this->end_controls_section();
 
+        //style thumbnail opacity section
+        $this->start_controls_section(
+            'post_thumbnail_opacity_section',
+            [
+                'label' => __( 'Thumbnail', 'htmega-addons' ),
+                'tab' => Controls_Manager::TAB_STYLE,
+                'condition'=>[
+                    'post_carousel_style'=>'3',
+                ]
+            ]
+        );
+
+        $this->add_control(
+            'post_thumbnail_opacity_color',
+            [
+                'label' => esc_html__( 'Opacity Color', 'htmega-addons' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .htmega-postslider-layout-3 .thumb:before' => 'content: ""; background: {{VALUE}}; width: 100%; height: 100%; position: absolute;',
+                ]
+            ]
+        );
+
+        $this->add_control(
+            'post_thumbnail_opacity_opacity',
+            [
+                'label'   => __( 'Opacity (%)', 'htmega-addons' ),
+                'type'    => Controls_Manager::SLIDER,
+                'default' => [
+                    'size' => 0.8,
+                ],
+                'range' => [
+                    'px' => [
+                        'max'  => 1,
+                        'min'  => 0.10,
+                        'step' => 0.01,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .htmega-postslider-layout-3 .thumb:before' => 'opacity: {{SIZE}};',
+                ]
+            ]
+        );
+
+        $this->end_controls_section();
+
         // Style Category tab section
         $this->start_controls_section(
             'post_slider_category_style_section',
@@ -827,10 +861,6 @@ class HTMega_Elementor_Widget_Post_Carousel extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default'=>'#ffffff',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-single-post-slide .content ul.post-category li a' => 'color: {{VALUE}}',
@@ -895,10 +925,6 @@ class HTMega_Elementor_Widget_Post_Carousel extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default'=>'#ffffff',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-single-post-slide .content ul.post-category li a:hover' => 'color: {{VALUE}}',
@@ -935,10 +961,6 @@ class HTMega_Elementor_Widget_Post_Carousel extends Widget_Base {
                 [
                     'label' => __( 'Color', 'htmega-addons' ),
                     'type' => Controls_Manager::COLOR,
-                    'scheme' => [
-                        'type' => Scheme_Color::get_type(),
-                        'value' => Scheme_Color::COLOR_1,
-                    ],
                     'default'=>'#18012c',
                     'selectors' => [
                         '{{WRAPPER}} .htmega-single-post-slide ul.meta' => 'color: {{VALUE}}',
@@ -1039,13 +1061,9 @@ class HTMega_Elementor_Widget_Post_Carousel extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default'=>'#464545',
                             'selectors' => [
-                                '{{WRAPPER}} .htmega-single-post-slide .post-btn a.readmore-btn' => 'color: {{VALUE}}',
+                                '{{WRAPPER}} .htmega-single-post-slide .post-btn a.readmore-btn' => 'color: {{VALUE}}; border-bottom: 1px solid {{VALUE}}',
                             ],
                         ]
                     );
@@ -1127,10 +1145,6 @@ class HTMega_Elementor_Widget_Post_Carousel extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default'=>'#ffffff',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-single-post-slide .post-btn a.readmore-btn:hover' => 'color: {{VALUE}}',
@@ -1203,10 +1217,6 @@ class HTMega_Elementor_Widget_Post_Carousel extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default' => '#00282a',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-carousel-activation button.slick-arrow' => 'color: {{VALUE}};',
@@ -1353,10 +1363,6 @@ class HTMega_Elementor_Widget_Post_Carousel extends Widget_Base {
                         [
                             'label' => __( 'Color', 'htmega-addons' ),
                             'type' => Controls_Manager::COLOR,
-                            'scheme' => [
-                                'type' => Scheme_Color::get_type(),
-                                'value' => Scheme_Color::COLOR_1,
-                            ],
                             'default' => '#00282a',
                             'selectors' => [
                                 '{{WRAPPER}} .htmega-carousel-activation button.slick-arrow:hover' => 'color: {{VALUE}};',

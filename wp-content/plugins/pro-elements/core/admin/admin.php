@@ -84,7 +84,7 @@ class Admin extends App {
 	}
 
 	public function remove_go_pro_menu() {
-		if (defined('ELEMENTOR_DISABLE_PRO')) {
+		if (defined('IS_PRO_ELEMENTS')) {
 			remove_submenu_page( "elementor", "elementor_custom_fonts" );
 			remove_submenu_page( "elementor", "elementor_custom_icons" );
 			remove_submenu_page( \Elementor\TemplateLibrary\Source_Local::ADMIN_MENU_SLUG, "theme_templates" );
@@ -114,7 +114,16 @@ class Admin extends App {
 					break;
 				}
 
-				if ( preg_match( '/(trunk|beta|rc)/i', strtolower( $version ) ) ) {
+				$lowercase_version = strtolower( $version );
+				$is_valid_rollback_version = ! preg_match( '/(trunk|beta|rc|dev)/i', $lowercase_version );
+
+				$is_valid_rollback_version = apply_filters(
+					'elementor-pro/settings/tools/rollback/is_valid_rollback_version',
+					$is_valid_rollback_version,
+					$lowercase_version
+				);
+
+				if ( ! $is_valid_rollback_version ) {
 					continue;
 				}
 
@@ -241,22 +250,24 @@ class Admin extends App {
 	 * Admin constructor.
 	 */
 	public function __construct() {
+		if (!defined('IS_PRO_ELEMENTS'))
 		$this->add_component( 'canary-deployment', new Canary_Deployment() );
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_styles' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
-		if (!defined('ELEMENTOR_DISABLE_PRO'))
+		if (!defined('IS_PRO_ELEMENTS'))
 		add_action( 'admin_menu', [ $this, 'remove_go_pro_menu' ], 0 );
 		else add_action( 'admin_menu', [ $this, 'remove_go_pro_menu' ], 999 );
-
-		add_action( 'elementor/admin/after_create_settings/' . Tools::PAGE_ID, [ $this, 'register_admin_tools_fields' ], 50 );
-		if (!defined('ELEMENTOR_DISABLE_PRO'))
-		add_filter( 'plugin_action_links_' . ELEMENTOR_PLUGIN_BASE, [ $this, 'plugin_action_links' ], 50 );
-		add_filter( 'plugin_row_meta', [ $this, 'plugin_row_meta' ], 10, 2 );
 
 		add_filter( 'elementor/finder/categories', [ $this, 'add_finder_items' ] );
 
 		add_filter( 'elementor/tracker/send_tracking_data_params', [ $this, 'change_tracker_params' ], 200 );
+
+		if (defined('IS_PRO_ELEMENTS')) return;
+		add_action( 'elementor/admin/after_create_settings/' . Tools::PAGE_ID, [ $this, 'register_admin_tools_fields' ], 50 );
+		add_filter( 'plugin_action_links_' . ELEMENTOR_PLUGIN_BASE, [ $this, 'plugin_action_links' ], 50 );
+		add_filter( 'plugin_row_meta', [ $this, 'plugin_row_meta' ], 10, 2 );
+
 		add_action( 'admin_post_elementor_pro_rollback', [ $this, 'post_elementor_pro_rollback' ] );
 	}
 }

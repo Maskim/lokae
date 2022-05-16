@@ -2,6 +2,8 @@
 /**
  * Advanced tools: system information meta box.
  *
+ * @package Hummingbird
+ *
  * @var array $system_info Array of system information ( PHP, MySQL, WordPress & Server) settings and values.
  */
 
@@ -18,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 </div>
 
 <div class="sui-form-field sui-input-md">
-	<select id="wphb-system-info-dropdown" class="sui-form-field wphb-system-info-dropdown" name="system-info">
+	<select id="wphb-system-info-dropdown" class="sui-select sui-form-field wphb-system-info-dropdown" name="system-info" aria-label="<?php esc_attr_e( 'Select system', 'wphb' ); ?>">
 		<option value="php"><?php esc_html_e( 'PHP', 'wphb' ); ?></option>
 		<option value="db"><?php esc_html_e( 'MySQL', 'wphb' ); ?></option>
 		<option value="wp"><?php esc_html_e( 'WordPress', 'wphb' ); ?></option>
@@ -32,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php foreach ( $system_info_arr as $name => $value ) : ?>
 			<tr>
 				<td><?php echo esc_html( $name ); ?></td>
-				<td><?php echo $value; ?></td>
+				<td><?php echo wp_kses_post( $value ); ?></td>
 			</tr>
 		<?php endforeach; ?>
 		</tbody>

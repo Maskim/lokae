@@ -14,23 +14,22 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 if ( ! class_exists( 'Hummingbird\\Core\\Modules\\Page_Cache' ) ) {
-	if ( is_dir( WP_CONTENT_DIR . '/plugins/wp-hummingbird/' ) ) {
-		$plugin_path = WP_CONTENT_DIR . '/plugins/wp-hummingbird/';
-	} else {
-		$plugin_path = WP_CONTENT_DIR . '/plugins/hummingbird-performance/';
+	if ( defined( 'WP_ADMIN' ) && WP_ADMIN ) {
+		return;
 	}
 
-	/* @noinspection PhpIncludeInspection */
-	include_once $plugin_path . 'core/class-utils.php';
-	/* @noinspection PhpIncludeInspection */
-	include_once $plugin_path . 'core/class-module.php';
-	/* @noinspection PhpIncludeInspection */
-	include_once $plugin_path . 'core/modules/class-page-cache.php';
+	if ( is_dir( WP_CONTENT_DIR . '/plugins/wp-hummingbird/' ) ) {
+		$plugin_path = WP_CONTENT_DIR . '/plugins/wp-hummingbird/';
+	} elseif ( is_dir( WP_CONTENT_DIR . '/plugins/hummingbird-performance/' ) ) {
+		$plugin_path = WP_CONTENT_DIR . '/plugins/hummingbird-performance/';
+	} else {
+		return;
+	}
 
-	if ( ! method_exists( 'Hummingbird\\Core\\Modules\\Page_Cache', 'serve_cache' ) ) {
+	if ( ! file_exists( $plugin_path . 'core/cache.php' ) ) {
 		return;
 	}
 
 	define( 'WPHB_ADVANCED_CACHE', true );
-	\Hummingbird\Core\Modules\Page_Cache::serve_cache();
+	include_once $plugin_path . 'core/cache.php';
 }

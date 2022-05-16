@@ -3,6 +3,8 @@
  * Class Gravatar is responsible for handling Gravatar Cache.
  *
  * @since 1.6.0
+ *
+ * @package Hummingbird\Core\Modules
  */
 
 namespace Hummingbird\Core\Modules;
@@ -21,8 +23,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Class Gravatar
- *
- * @package Hummingbird\Core\Modules
  */
 class Gravatar extends Module {
 
@@ -63,7 +63,7 @@ class Gravatar extends Module {
 		}
 
 		// Everything else is only for frontend.
-		if ( is_admin() ) {
+		if ( is_admin() && ! ( wp_doing_ajax() && isset( $_REQUEST['action'] ) && 'get_comments_template' === $_REQUEST['action'] ) ) {
 			return;
 		}
 
@@ -80,7 +80,11 @@ class Gravatar extends Module {
 	 * @since  1.7.1 name changed from delete_files to clear_cache
 	 */
 	public function clear_cache() {
-		/* @var Filesystem $wphb_fs */
+		/**
+		 * Filesystem.
+		 *
+		 * @global Filesystem $wphb_fs
+		 */
 		global $wphb_fs;
 
 		return $wphb_fs->purge( 'gravatar' );
@@ -116,7 +120,11 @@ class Gravatar extends Module {
 	 * @return bool|WP_Error       Returns true if file write is ok, WP_Error on error.
 	 */
 	private function get_remote_avatar( $id_or_email, $size ) {
-		/* @var Filesystem $wphb_fs */
+		/**
+		 * Filesystem.
+		 *
+		 * @global Filesystem $wphb_fs
+		 */
 		global $wphb_fs;
 
 		$gravatar = get_avatar_data(
@@ -166,7 +174,9 @@ class Gravatar extends Module {
 	 */
 	private function get_email_hash( $id_or_email ) {
 		$email_hash = '';
-		$user       = $email = false;
+
+		$user  = false;
+		$email = false;
 
 		// Process the user identifier.
 		if ( is_numeric( $id_or_email ) ) {
@@ -236,7 +246,11 @@ class Gravatar extends Module {
 	 * @deprecated 1.6.1
 	 */
 	public function get_cached_avatar( $image, $id_or_email, $size, $default, $alt, $args ) {
-		/* @var Filesystem $wphb_fs */
+		/**
+		 * Filesystem.
+		 *
+		 * @global Filesystem $wphb_fs
+		 */
 		global $wphb_fs;
 
 		$email_hash = $this->get_email_hash( $id_or_email );
@@ -283,7 +297,7 @@ class Gravatar extends Module {
 			}
 		}
 
-		$avatar = sprintf(
+		return sprintf(
 			"<img alt='%s' src='%s' srcset='%s' class='%s' height='%d' width='%d'/>",
 			esc_attr( $alt ),
 			esc_url( $src ),
@@ -292,8 +306,6 @@ class Gravatar extends Module {
 			(int) $size,
 			(int) $size
 		);
-
-		return $avatar;
 	}
 
 	/**
@@ -303,10 +315,14 @@ class Gravatar extends Module {
 	 * @param  array $args        Arguments passed to get_avatar_data(), after processing.
 	 * @param  mixed $id_or_email The Gravatar to retrieve. Accepts a user_id, gravatar md5 hash,
 	 *                            user email, WP_User object, WP_Post object, or WP_Comment object.
-	 * @return mixed
+	 * @return array
 	 */
 	public function get_avatar_data( $args, $id_or_email ) {
-		/* @var Filesystem $wphb_fs */
+		/**
+		 * Filesystem.
+		 *
+		 * @global Filesystem $wphb_fs
+		 */
 		global $wphb_fs;
 
 		$email_hash = $this->get_email_hash( $id_or_email );

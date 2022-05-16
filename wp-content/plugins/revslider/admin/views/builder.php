@@ -8,11 +8,12 @@
 if(!defined('ABSPATH')) exit();
 
 $rs_data = new RevSliderData();
-$rs_f = new RevSliderFunctions();
+$rs_f = RevSliderGlobals::instance()->get('RevSliderFunctions');
 $slider = new RevSliderSlider();
 $slide = new RevSliderSlide();
 $rs_nav = new RevSliderNavigation();
 $wpml = new RevSliderWpml();
+$rs_favorite = RevSliderGlobals::instance()->get('RevSliderFavorite');
 
 $slide_id = RevSliderFunctions::esc_attr_deep($rs_f->get_get_var('id'));
 $slide_alias = RevSliderFunctions::esc_attr_deep($rs_f->get_get_var('alias'));
@@ -31,7 +32,10 @@ $animationsRaw = $this->get_layer_animations(true);
 //get Image Sizes
 $img_sizes = $rs_f->get_all_image_sizes();
 
-
+//get transitions
+$rs_base_transitions = $rs_f->get_base_transitions();
+$rs_custom_transitions = $rs_f->get_custom_slidetransitions();														  
+$rs_favorite_transitions = $rs_favorite->get_favorite('slide_transitions');
 
 require_once(RS_PLUGIN_PATH . 'admin/views/modals-copyright.php');
 
@@ -144,14 +148,14 @@ require_once(RS_PLUGIN_PATH . 'admin/views/modals-copyright.php');
 						</div><!--
 						--><div id="do_delete_layer" class="toolbar_btn justicon"><i class="norightmargin material-icons">delete</i></div><!--
 						--><div id="do_lock_layer" class="toolbar_btn justicon tool_drop">
-							<div id="layer_lock_iconswitch" class="icon_switcher" data-ref="#layer_Lock"><i class="material-icons icon_state_off">lock_open</i><i class="material-icons icon_state_on">lock_outline</i><input class="easyinit layerinput callEvent" id="layer_Lock" data-updateviaevt="true" data-evt="lockLayer" data-setclasson="#layer_lock_iconswitch" data-class="icsw_on" type="checkbox" data-r="visibility.lock"></div>
+							<div id="layer_lock_iconswitch" class="icon_switcher" data-ref="#layer_Lock"><i class="material-icons icon_state_off">lock_open</i><i class="material-icons icon_state_on">lock_outline</i><input class="easyinit layerinput callEvent" id="layer_Lock" data-updateviaevt="true" data-evt="lockLayer" data-setclasson="layer_lock_iconswitch" data-class="icsw_on" type="checkbox" data-r="visibility.lock"></div>
 							<div id="locked_layers_list" class="tool_dd_wrap outicon_dd_rwap">
 								<div id="toggle_lock_layer" class="lockstep_main"><i class="material-icons">radio_button_checked</i><?php _e('Lock/Unlock Selected', 'revslider');?></div>
 								<div id="unlock_all_layer" class="lockstep_main"><i class="material-icons">lock_open</i><?php _e('Unlock All', 'revslider');?></div>
 							</div>
 						</div><!--
 						--><div id="do_show_layer" class="toolbar_btn justicon">
-							<div id="layer_visibility_iconswitch" class="norightmargin icon_switcher icsw_on" data-ref="#layer_Visibility"><i class="material-icons icon_state_off">visibility_off</i><i class="material-icons icon_state_on">visibility</i><input class="easyinit layerinput callEvent" id="layer_Visibility" data-updateviaevt="true" data-evt="showHideLayer" data-setclasson="#layer_visibility_iconswitch" data-class="icsw_on" type="checkbox" checked="checked" data-default="true" data-r="visibility.visible" ></div>
+							<div id="layer_visibility_iconswitch" class="norightmargin icon_switcher icsw_on" data-ref="#layer_Visibility"><i class="material-icons icon_state_off">visibility_off</i><i class="material-icons icon_state_on">visibility</i><input class="easyinit layerinput callEvent" id="layer_Visibility" data-updateviaevt="true" data-evt="showHideLayer" data-setclasson="layer_visibility_iconswitch" data-class="icsw_on" type="checkbox" checked="checked" data-default="true" data-r="visibility.visible" ></div>
 							<div id="unvisible_layers_list" class="tool_dd_wrap outicon_dd_rwap">
 								<div id="hide_highlight_boxes" class="visiblestep_main"><i class="hhb_a material-icons">border_all</i><i class="hhb_b material-icons">border_clear</i><span class="hhb_a"><?php _e('Hide Highlight Boxes', 'revslider');?></span><span class="hhb_b"><?php _e('Show Highlight Boxes', 'revslider');?></span></div>
 								<div id="toggle_visible_layer" class="visiblestep_main"><i class="material-icons">radio_button_checked</i><?php _e('Show/Hide Selected', 'revslider');?></div>
@@ -171,8 +175,25 @@ require_once(RS_PLUGIN_PATH . 'admin/views/modals-copyright.php');
 						--><div id="current_sel_display" class="selected_placeholder"><i id="screen_selector_ph_icon_sr" class="toptoolbaricon material-icons">desktop_windows</i></div><!--
 						--><div id="current_width_height"><i class="material-icons rotateleft">unfold_more</i><span id="show_c_width">1920px</span><i class="material-icons">unfold_more</i><span id="show_c_height">1920px</span></div><!--
 					--></div>
-					<div id="right_top_toolbar_wrap" class="toolbar_rightoriented">
-						<div class="drawselector_wrap toolbar_selector_icons" id="toolkit_selector_wrap">
+					<div id="right_top_toolbar_wrap" class="toolbar_rightoriented"><!--
+						--><div id="zoomer_wrap_toolbar" class="zoomer_wrap toolbar_selector_icons">
+							<div class="selected_placeholder"><i id="zoomer_icon" style="font-size: 17px;margin-top: -2px;"class="toptoolbaricon material-icons">search</i><div id="zoomer_factor">100%</div></div>
+							<div class="tool_dd_wrap"><!--
+								--><div id="ezoomer_wrap">
+									
+									<div id="ezoomer">
+										<div id="ezoomer_pin"></div>
+										<div class="ezzomer_marks" style="left:0px"></div>
+										<div class="ezzomer_marks" style="left:50px"></div>
+										<div class="ezzomer_marks" style="left:100px"></div>
+										<div class="ezzomer_marks" style="left:150px"></div>
+										<div class="ezzomer_marks" style="left:200px"></div>									
+									</div>
+									
+								</div><!--
+							--></div>
+						</div><!--
+						--><div class="drawselector_wrap toolbar_selector_icons" id="toolkit_selector_wrap">
 							<div class="selected_placeholder"><i id="toolkit_selector_ph_icon" class="toptoolbaricon material-icons mirrorhorizontal">near_me</i><i id="toolkit_selector_ph_icon_sub" class="material-icons near_me_addon"></i></div>
 							<div class="tool_dd_wrap">
 								<div class="toolkit_selector callEvent selected" id="select_by_cursor" data-toolkiticon="near_me" data-toolkiticonsub=" " data-evt="cursorselection"><i class="material-icons mirrorhorizontal">near_me</i><?php _e('Single Select', 'revslider');?></div>
@@ -198,21 +219,21 @@ require_once(RS_PLUGIN_PATH . 'admin/views/modals-copyright.php');
 							<div class="selected_placeholder"><i id="screen_selector_ph_icon" class="toptoolbaricon material-icons">desktop_windows</i><span class="highlight_arrow"></span></div>
 							<div id="screen_selector_top_list" class="tool_dd_wrap">
 								<div id="screen_selecotr_ss_d" class="screen_selector ss_d selected callEvent" data-evt="screenSelectorChanged"  data-screenicon="desktop_windows" data-triggerinp="#screenselector" data-triggerinpval="d"><i class="material-icons">desktop_windows</i><?php _e('Desktop', 'revslider');?></div>
-								<div id="screen_selecotr_ss_n" class="screen_selector ss_n callEvent" data-evt="screenSelectorChanged"  data-screenicon="laptop" data-triggerinp="#screenselector" data-triggerinpval="n"><i class="material-icons">laptop</i><?php _e('Notebook', 'revslider');?><input type="checkbox" id="sr_custom_n_opt" class="sliderinput" data-evt="device_area_availibity" data-r="size.custom.n"></div>
-								<div id="screen_selecotr_ss_t" class="screen_selector ss_t callEvent" data-evt="screenSelectorChanged"  data-screenicon="tablet_mac" data-triggerinp="#screenselector" data-triggerinpval="t"><i class="material-icons">tablet_mac</i><?php _e('Tablet', 'revslider');?><input type="checkbox" id="sr_custom_t_opt" class="sliderinput" data-evt="device_area_availibity" data-r="size.custom.t"></div>
-								<div id="screen_selecotr_ss_m" class="screen_selector ss_m no_rm callEvent" data-evt="screenSelectorChanged"  data-screenicon="phone_android" data-triggerinp="#screenselector" data-triggerinpval="m"><i class="material-icons">phone_android</i><?php _e('Mobile', 'revslider');?><input type="checkbox" id="sr_custom_m_opt" class="sliderinput" data-evt="device_area_availibity" data-r="size.custom.m"></div>
+								<div id="screen_selecotr_ss_n" class="screen_selector ss_n callEvent" data-evt="screenSelectorChanged"  data-screenicon="laptop" data-triggerinp="#screenselector" data-triggerinpval="n"><i class="material-icons">laptop</i><?php _e('Notebook', 'revslider');?><input type="checkbox" id="sr_custom_n_opt" class="sliderinput easyinit" data-evt="device_area_availibity" data-r="size.custom.n"></div>
+								<div id="screen_selecotr_ss_t" class="screen_selector ss_t callEvent" data-evt="screenSelectorChanged"  data-screenicon="tablet_mac" data-triggerinp="#screenselector" data-triggerinpval="t"><i class="material-icons">tablet_mac</i><?php _e('Tablet', 'revslider');?><input type="checkbox" id="sr_custom_t_opt" class="sliderinput easyinit" data-evt="device_area_availibity" data-r="size.custom.t"></div>
+								<div id="screen_selecotr_ss_m" class="screen_selector ss_m no_rm callEvent" data-evt="screenSelectorChanged"  data-screenicon="phone_android" data-triggerinp="#screenselector" data-triggerinpval="m"><i class="material-icons">phone_android</i><?php _e('Mobile', 'revslider');?><input type="checkbox" id="sr_custom_m_opt" class="sliderinput easyinit" data-evt="device_area_availibity" data-r="size.custom.m"></div>
 							</div>
 						</div><!--
 						--><div class="toolbar_btn help_wrap"><i class="toptoolbaricon material-icons">help_outline</i></div><!--<div class="toolbar_btn tooltip_wrap"><i class="toptoolbaricon material-icons">comment</i></div>--><!--
-						--><div id="quick_style_trigger" class="toolbar_btn quick_style_wrap"><i class="toptoolbaricon material-icons">invert_colors</i></div>		<!--<span class="toolbar_btn_txt"><?php _e('Quick Style', 'revslider');?></span>-->
-					</div>
+					--></div>
 				</div><!-- END OF MAIN HORIZONTAL TOOLBAR -->
 				<div id="rev_builder_wrapper">
 					<!-- HORIZONTAL AND VERTICAL RULERS -->
 					<div id="ruler_hor_marker"></div>
 					<div id="ruler_ver_marker"></div>
-					<div id="ruler_top"><div id="ruler_top_offset"></div></div>
-					<div id="ruler_left"><div id="ruler_left_offset"></div></div>
+					<div id="ruler_top"><canvas id="ruler_top_offset"></canvas></div>
+					<div id="ruler_left"><canvas id="ruler_left_offset"></canvas></div>
+					<div id="ruler_left_top_cover"></div>
 					<!-- REV BUILDER CONTAINER -->
 					<div id="rev_builder">
 						<div id="rev_builder_inner">
@@ -233,11 +254,7 @@ require_once(RS_PLUGIN_PATH . 'admin/views/modals-copyright.php');
 										</div><!-- END OF LAYOUT SLIDE ELEMENT -->
 
 										<!-- TEMPLATE FOR SLIDE LI's -->
-										<div class="slide_li aable markable" data-multiplemark="false" data-updateruler="layergrid" id="slide_li_template">
-											<div class="slots_wrapper">
-												<rs-sbg-wrap class="slotwrapper_prev"><rs-sbg class="tp-bgimg defaultimg"></rs-sbg></rs-sbg-wrap>
-												<rs-sbg-wrap class="slotwrapper_cur"><rs-sbg class="tp-bgimg defaultimg"></rs-sbg></rs-sbg-wrap>
-											</div>
+										<div class="slide_li aable markable" data-multiplemark="false" data-updateruler="layergrid" id="slide_li_template">											
 											<div class="layer_grid" data-updateruler="layergrid"><div class="lg_topborder"></div><div class="lg_bottomborder"></div><div class="lg_leftborder"></div><div class="lg_rightborder"></div><div class="row_wrapper_top"></div><div class="row_wrapper_middle"></div><div class="row_wrapper_bottom"></div></div>
 										</div><!-- END OF TEMPLATE FOR SLIDE LI's -->
 
@@ -333,8 +350,7 @@ require_once(RS_PLUGIN_PATH . 'admin/views/modals-copyright.php');
 
 
 <script>
-	jQuery(document).ready(function() {
-
+	function rs_builder_inits() {
 		RVS.LIB.LAYERANIMS = {customLTIn:{},customLTOut:{}};
 
 <?php
@@ -352,25 +368,15 @@ if(isset($animationsRaw['out'])){ ?>
 <?php
 }
 ?>		
-
-		//Build Transition Table
-		RVS.LIB.SLIDEANIMS = {	"basics":{alias:"Basics", "notransition":"No Transition","fade":"Fade","crossfade":"Fade Cross", "fadethroughdark":"Fade Through Black", "fadethroughlight":"Fade Through Light", "fadethroughtransparent":"Fade Through Transparent"},
-									"slidesimple":{alias:"Slide Simple","slideup": "Slide To Top", "slidedown": "Slide To Bottom","slideleft": "Slide To Left","slideright": "Slide To Right","slidevertical": "Slide Vertical ","slidehorizontal": "Slide Horizontal"},
-									"slideover":{alias:"Slide Over", "slideoverdown": "Slide Over To Bottom","slideoverhorizontal": "Slide Over Horizontal ","slideoverleft": "Slide Over To Left","slideoverright": "Slide Over To Right","slideoverup": "Slide Over To Top","slideoververtical": "Slide Over Vertical"},
-									"slideandremove":{alias:"Slide and Remove", "slideremovedown": "Slide Remove To Bottom","slideremovehorizontal": "Slide Remove Horizontal ","slideremoveleft": "Slide Remove To Left","slideremoveright": "Slide Remove To Right","slideremoveup": "Slide Remove To Top","slideremovevertical": "Slide Remove Vertical"},
-									"slidingoverlays":{alias:"Sliding Overlays", "slidingoverlaydown": "Sliding Overlays To Bottom","slidingoverlayhorizontal": "Sliding Overlays Horizontal ","slidingoverlayleft": "Sliding Overlays To Left","slidingoverlayright": "Sliding Overlays To Right","slidingoverlayup": "Sliding Overlays To Top","slidingoverlayvertical": "Sliding Overlays Vertical"},
-									"fadeandslide":{alias:"Fade & Slide", "fadefrombottom": "Fade & Slide from Bottom","fadefromleft": "Fade & Slide from Left","fadefromright": "Fade & Slide from Right","fadefromtop": "Fade & Slide from Top","fadetobottomfadefromtop": "To Bottom From Top","fadetoleftfadefromright": "To Left From Right","fadetorightfadefromleft": "To Right From Left","fadetotopfadefrombottom": "To Top From Bottom"},
-									"slotsandboxes":{alias:"Slots and Boxes", "slotfade-horizontal": "Fade Slots Horizontal","slotfade-vertical": "Fade Slots Vertical","slotslide-horizontal": "Slide Slots Horizontal","slotslide-vertical": "Slide Slots Vertical","boxfade": "Fade Boxes","boxslide": "Slide Boxes","boxrandomrotate": "Random Box Rotate"},
-									"parallax":{alias:"Parallax", "parallaxhorizontal": "Parallax Horizontal","parallaxtobottom": "Parallax to Bottom","parallaxtoleft": "Parallax to Left","parallaxtoright": "Parallax to Right","parallaxtotop": "Parallax to Top","parallaxvertical": "Parallax Vertical"},
-									"zoomt":{alias:"Zoom Transitions", "zoomin": "ZoomIn","zoomout": "ZoomOut","slotzoom-horizontal": "Zoom Slots Horizontal","slotzoom-vertical": "Zoom Slots Vertical","slotzoom-mixed": "Zoom Slots Mixed","scaledownfrombottom": "Zoom Out & Fade From Bottom","scaledownfromleft": "Zoom Out & Fade From Left","scaledownfromright": "Zoom Out & Fade From Right","scaledownfromtop": "Zoom Out & Fade From Top"},
-									"curtain":{alias:"Curtain Transitions", "curtain-1": "Curtain from Left","curtain-2": "Curtain from Right","curtain-3": "Curtain from Middle"},
-									"filters":{alias:"Filter Transitions", "blurlight": "Blur Light Transition","blurlightcross": "Blur Light Cross Transition","blurstrong": "Blur Strong Transition","blurstrongcross": "Blur Strong Cross Transition","brightness": "Brightness Transition","brightnesscross": "Brightness Cross Transition","grayscale": "Grayscale Transition","grayscalecross": "Grayscale Cross Transition"},
-									"premium":{alias:"Premium Transitions", "3dcurtain-horizontal": "3D Curtain Horizontal","3dcurtain-vertical": "3D Curtain Vertical","cube": "Cube Vertical","cube-horizontal": "Cube Horizontal","flyin": "Fly In","incube": "In Cube Vertical","incube-horizontal": "In Cube Horizontal","papercut": "Paper Cut","turnoff": "TurnOff Horizontal","turnoff-vertical": "TurnOff Vertical"},
-									"random":{alias:"Random", "random": "Random Flat & Premium","random-premium": "Random Premium","random-selected": "Random of Selected","random-static": "Random Flat"}
-									}
+		
+		//Init Transition Presets
+		RVS.LIB.SLTR = JSON.parse(<?php echo (empty($rs_base_transitions)) ? "'{}'" : str_replace('[]', '{}', $rs_f->json_encode_client_side($rs_base_transitions)); ?>);
+		RVS.LIB.SLTR_CUSTOM = JSON.parse(<?php echo (empty($rs_custom_transitions)) ? "'{}'" : str_replace('[]', '{}', $rs_f->json_encode_client_side($rs_custom_transitions)); ?>);
+		RVS.LIB.SLTR_FAVORIT = JSON.parse(<?php echo (empty($rs_favorite_transitions)) ? "'{}'" : str_replace('[]', '{}', $rs_f->json_encode_client_side($rs_favorite_transitions)); ?>);
+		
 
 		//Init Navigation Presets
-		RVS.F.migrateNavigation(jQuery.parseJSON(<?php echo $rs_f->json_encode_client_side($arr_navigations); ?>));
+		RVS.F.migrateNavigation(JSON.parse(<?php echo $rs_f->json_encode_client_side($arr_navigations); ?>));
 
 
 
@@ -380,17 +386,33 @@ if(isset($animationsRaw['out'])){ ?>
 		<?php }?>
 
 		if (!RVS.V.ignoreAutoStart) RVS.F.loadSlider({id:"<?php echo $slide_id; ?>", alias: "<?php echo $slide_alias; ?>"});
+	}
 
-	});
+
+	// INITIALISE PROCESSES
+	var RSBUILDERINITS_once = false
+	if (document.readyState === "loading") 
+		document.addEventListener('readystatechange',function(){
+			if ((document.readyState === "interactive" || document.readyState === "complete") && !RSBUILDERINITS_once) {
+				RSBUILDERINITS_once = true;
+				rs_builder_inits();	
+			}
+		});
+	else {
+		RSBUILDERINITS_once = true;
+		rs_builder_inits();	
+	}
+
 	
-		<?php
-		
-		/* temp */
-		// delete_option('revslider_hide_tooltips', true);
-		
-		$showToolTips = get_option('revslider_hide_tooltips');
-		$showToolTips = empty($hideToolTips) ? 'true' : 'false';
-		?>
-		var revSliderToolTips = <?php echo $showToolTips; ?>;
+	
+	<?php
+	
+	/* temp */
+	// delete_option('revslider_hide_tooltips', true);
+	
+	$showToolTips = get_option('revslider_hide_tooltips');
+	$showToolTips = empty($hideToolTips) ? 'true' : 'false';
+	?>
+	var revSliderToolTips = <?php echo $showToolTips; ?>;
 
 </script>
